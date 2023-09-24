@@ -16,62 +16,45 @@ function Login() {
 
 
   const submit = async (e) => {
-    let obj = {
-      firstname: "Youssef",
-      lastname: "Mohamed",
-      name: "test name",
-      businessName: "Test Company",
-      industry: "Ajman",
-      country: "UAE",
-      month: "Auguest",
-      email: "mh@g.com",
-      password: "123456",
-      token: "token",
-      department: "Admin"
-    }
     e.preventDefault()
-    toast.success("Welcome Youssef", { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-    localStorage.setItem('myUser', JSON.stringify({ token: obj.token, email: obj.email, businessName: obj.businessName, department: obj.department }))
-    router.push(`/panel`);
-
+    
     // fetch the data from form to makes a file in local system
-    // const data = { email: obj.email, password: obj.password };
+    const data = { email, password };
 
-    // let res = await fetch(`/api/login`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-//     let response = await res.json()
-//     if (response.success === true) {
-//       toast.success(response.message, { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-// ,
-//   if (response.businessName) {
-//     response = obj;
-//     localStorage.setItem('myUser', JSON.stringify({ token: response.token, email: response.email, businessName: response.businessName, department: response.department }))
-//   }
-//   else {
-//     localStorage.setItem('myUser', JSON.stringify({ token: response.token, email: response.email, name: response.name, department: response.department }))
-//   }
-//   setTimeout(() => {
-//     router.push(`/panel`);
-//   }, 1500);
-// }
-// if (!response.success == true) {
-//   toast.error(response.message, { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-// }
+      let res = await fetch(`/api/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let response = await res.json()
+    if (response.success === true) {
+      toast.success(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+
+      if(response.businessName){
+        localStorage.setItem('myUser', JSON.stringify({token: response.token, email: response.email, businessName:response.businessName, department:response.department, role: response.role}))
+      }
+      else{
+        localStorage.setItem('myUser', JSON.stringify({token: response.token, email: response.email, name: response.name, department:response.department }))
+      }
+      setTimeout(() => {
+        router.push(`/panel`);
+      }, 1500);
+    }
+    else{
+      toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+    }
   }
 
-const handleChange = (e) => {
-  if (e.target.name === 'email') {
-    setEmail(e.target.value)
+  const handleChange = (e) => {
+    if (e.target.name === 'email') {
+      setEmail(e.target.value)
+    }
+    else if (e.target.name === 'password') {
+      setPassword(e.target.value)
+    }
   }
-  else if (e.target.name === 'password') {
-    setPassword(e.target.value)
-  }
-}
 
 
 return (

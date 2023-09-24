@@ -7,7 +7,7 @@ import { Menu, MenuItem, SubMenu, Sidebar } from 'react-pro-sidebar';
 
 import {AiOutlineBank, AiOutlineCloseCircle, AiOutlineContacts, AiOutlineFundProjectionScreen, AiOutlineProject, AiOutlineSetting, AiOutlineShoppingCart, AiOutlineTeam, AiOutlineUser, AiOutlineUserSwitch } from 'react-icons/ai'
 import { BiFingerprint, BiHomeAlt, BiLocationPlus, BiPurchaseTagAlt, BiUserCheck, BiUserCircle } from 'react-icons/bi'
-import {MdOutlineInventory2, MdPayment, MdProductionQuantityLimits} from 'react-icons/md'
+import {MdOutlineInventory2, MdOutlineRealEstateAgent, MdPayment, MdProductionQuantityLimits} from 'react-icons/md'
 import {IoPieChartSharp, IoBusinessOutline} from 'react-icons/io5'
 import {HiOutlineCash, HiOutlineDocumentReport, HiOutlineReceiptTax} from 'react-icons/hi'
 
@@ -15,7 +15,7 @@ import {HiOutlineBanknotes} from 'react-icons/hi2'
 
 import {BsBank, BsChatQuote, BsShop} from 'react-icons/bs'
 import {FiShoppingBag, FiUserPlus, FiUsers} from 'react-icons/fi'
-import {FaToriiGate} from 'react-icons/fa'
+import {FaRegBuilding, FaToriiGate} from 'react-icons/fa'
 import {TbFileInvoice} from 'react-icons/tb'
 import {RiBankCardLine, RiBankLine, RiBillLine} from 'react-icons/ri'
 import {SlCalender} from 'react-icons/sl'
@@ -174,6 +174,12 @@ const Sidebar2 = ({ showMobilemenu }) => {
             Dashboard
           </MenuItem>
     
+          <SubMenu label="Real Estate" icon={<MdOutlineRealEstateAgent className='text-lg'/>}>
+            <MenuItem href="/panel/realEstate/buildings" icon={<FaRegBuilding className='text-lg'/>} className={ location === '/panel/realEstate/buildings' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+              Buildings and Owner
+            </MenuItem>
+          </SubMenu>
+
           <SubMenu label="User Managment" icon={<AiOutlineUser className='text-lg'/>}>
             <MenuItem href="/panel/userManagment/addRole" icon={<BiUserCheck className='text-lg'/>} className={ location === '/panel/userManagment/addRole' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Add Role
