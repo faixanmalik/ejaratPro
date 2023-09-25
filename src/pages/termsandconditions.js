@@ -5,7 +5,7 @@ function TermsAndConditions() {
   return (
     <>
     <Head>
-      <title>Terms_Accounting_Software</title>
+      <title>Terms_EjaratPro</title>
       <meta name="description" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
    </Head>
 

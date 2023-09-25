@@ -122,7 +122,7 @@ function Signup() {
 
     <>
     <Head>
-        <title>SignUp_Accounting_Software</title>
+        <title>SignUp__EjaratPro</title>
         <meta name="description" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
     </Head>
     <form action="POST" onSubmit={submit}>

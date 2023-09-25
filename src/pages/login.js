@@ -60,7 +60,7 @@ function Login() {
 return (
   <>
     <Head>
-      <title>Login_Accounting_Software</title>
+      <title>Login_EjaratPro</title>
       <meta name="description" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
     </Head>
     {/* React tostify */}
@@ -118,7 +118,7 @@ return (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 inline-block align-text-top">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                <span className="inline-block ml-1"><Link href={"/"}>Back to Accounting_Software</Link></span>
+                <span className="inline-block ml-1"><Link href={"/"}>Back to Ejarat_Pro</Link></span>
               </button>
             </div>
           </div>
