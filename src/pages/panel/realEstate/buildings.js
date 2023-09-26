@@ -19,9 +19,44 @@ import Project from 'models/Project';
 import ReactToPrint from 'react-to-print';
 import PaymentType from 'models/PaymentMethod';
 
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import {
+  Square3Stack3DIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+} from "@heroicons/react/24/solid";
+
+import {
+  Accordion,
+  AccordionHeader,
+  AccordionBody,
+} from "@material-tailwind/react";
+
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
+  }
+
+
+  function Icon({ id, open }) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className={`${id === open ? "rotate-180" : ""} h-5 w-5 transition-transform`}
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+      </svg>
+    );
   }
 
   const Buildings = ({ dbVouchers, dbProducts, dbPaymentType, dbContacts, dbEmployees, dbTaxRate, dbProject }) => {
@@ -84,11 +119,77 @@ import PaymentType from 'models/PaymentMethod';
       { journalNo, date: journalDate, products: '', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'', discount: discount},
     ]);
 
+
+    const [openExtraForm, setOpenExtraForm] = React.useState(1);
+    const handleOpen = (value) => setOpenExtraForm(openExtraForm === value ? 0 : value);
+
+    const [nameInInvoice, setNameInInvoice] = useState('')
+    const [lessorName, setLessorName] = useState('')
+    const [adjective, setAdjective] = useState('')
+    const [buildingType, setBuildingType] = useState('')
+    const [idNumber, setIdNumber] = useState('')
+    const [expID, setExpID] = useState('')
+    const [bank, setBank] = useState('')
+    const [passPortNumber, setPassPortNumber] = useState('')
+    const [expPassPort, setExpPassPort] = useState('')
+    const [nationality, setNationality] = useState('')
+    const [ibanNo, setIbanNo] = useState('')
+    const [vatRegistrationNo, setVatRegistrationNo] = useState('')
+    const [bankAccountNumber, setBankAccountNumber] = useState('')
+    const [tradeLicenseNo, setTradeLicenseNo] = useState('')
+    
+
+
+
     // JV
     const handleChange = (e) => {
       if(e.target.name === 'journalDate'){
         setJournalDate(e.target.value)
       }
+      else if(e.target.name === 'tradeLicenseNo'){
+        setTradeLicenseNo(e.target.value)
+      }
+      else if(e.target.name === 'bankAccountNumber'){
+        setBankAccountNumber(e.target.value)
+      }
+      else if(e.target.name === 'vatRegistrationNo'){
+        setVatRegistrationNo(e.target.value)
+      }
+      else if(e.target.name === 'ibanNo'){
+        setIbanNo(e.target.value)
+      }
+      else if(e.target.name === 'nameInInvoice'){
+        setNameInInvoice(e.target.value)
+      }
+      else if(e.target.name === 'lessorName'){
+        setLessorName(e.target.value)
+      }
+      else if(e.target.name === 'adjective'){
+        setAdjective(e.target.value)
+      }
+      else if(e.target.name === 'buildingType'){
+        setBuildingType(e.target.value)
+      }
+      else if(e.target.name === 'bank'){
+        setBank(e.target.value)
+      }
+      else if(e.target.name === 'idNumber'){
+        setIdNumber(e.target.value)
+      }
+      else if(e.target.name === 'expID'){
+        setExpID(e.target.value)
+      }
+      else if(e.target.name === 'passPortNumber'){
+        setPassPortNumber(e.target.value)
+      }
+      else if(e.target.name === 'expPassPort'){
+        setExpPassPort(e.target.value)
+      }
+      else if(e.target.name === 'nationality'){
+        setNationality(e.target.value)
+      }
+
+
       else if(e.target.name === 'dueDate'){
         setDueDate(e.target.value)
       }
@@ -181,19 +282,7 @@ import PaymentType from 'models/PaymentMethod';
       }
     }
 
-    // JV
-    const addLines = () => {
-      setInputList([...inputList,
-        {journalNo:journalNo, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'',  discount: discount},
-      ])
-    }
-
-    const delLines = (indexToDelete) => {
-      const updatedInputList = [...inputList];
-      updatedInputList.splice(indexToDelete, 1);
-      setInputList(updatedInputList);
-    };
-
+    
     function calculateTax(percentage, whole) {
       return (percentage / 100) * whole;
     }
@@ -327,6 +416,302 @@ import PaymentType from 'models/PaymentMethod';
     //   return item.name.toLowerCase().includes(search.toLowerCase());
     // });
 
+    let adjectives = ['Agent', 'Owner' ];
+    let buildingTypes = ['Management', 'Owned', 'Investment']
+    let bankAccounts = ['Dubai Islamic Bank', 'Meezan Bank', 'Ajman Bank', 'FAB']
+    let nationalities = ['Jordian', 'UAE', 'Indian', 'Pakistani', 'Morco', 'Egypt']
+
+
+    const data = [
+      {
+        label: "Owner",
+        value: "owner",
+        icon: Square3Stack3DIcon,
+        desc: (
+          <div>
+
+            <div className='flex space-x-4 mb-14'>
+              <div className="w-full">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  Name
+                </label>
+                <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option value=''>select contacts</option>
+                  {dbContacts.map((item, index)=>{
+                    return <option key={index} value={item.name}>{item.name} - {item.type}
+                    </option>
+                  })}
+                </select>
+              </div>
+              <div className="w-full">
+                <label htmlFor="nameInInvoice" className="block text-sm font-medium text-gray-700">
+                  Name In Invoice
+                </label>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  name="nameInInvoice"
+                  value={nameInInvoice}
+                  id="nameInInvoice"
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+
+              <div className="w-full">
+                <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
+                  Phone No:
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="phoneNo"
+                  value={phoneNo}
+                  id="phoneNo"
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+
+              <div className="w-full">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email:
+                </label>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  name="email"
+                  value={email}
+                  id="email"
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </div>
+
+
+            <div className='flex space-x-4 mb-14'>
+              <div className="w-full">
+                <label htmlFor="lessorName" className="block text-sm font-medium text-gray-700">
+                  Lessor Name
+                </label>
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  name="lessorName"
+                  value={lessorName}
+                  id="lessorName"
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="w-full">
+                <label htmlFor="adjective" className="block text-sm font-medium text-gray-700">
+                  Adjective
+                </label>
+                <select id="adjective" name="adjective" onChange={ handleChange } value={adjective} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option value=''>select adjective</option>
+                  {adjectives.map((item, index)=>{
+                    return <option key={index} value={item}>{item}</option>
+                  })}
+                </select>
+              </div>
+              <div className="w-full">
+                <label htmlFor="buildingType" className="block text-sm font-medium text-gray-700">
+                  Building Type
+                </label>
+                <select id="buildingType" name="buildingType" onChange={ handleChange } value={buildingType} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option value=''>select building type</option>
+                  {buildingTypes.map((item, index)=>{
+                    return <option key={index} value={item}>{item}</option>
+                  })}
+                </select>
+              </div>
+              
+            </div>
+
+            <Accordion open={openExtraForm === 0} icon={<Icon id={1} open={openExtraForm} />}>
+              <AccordionHeader onClick={() => handleOpen(1)}>Add More? Then click!</AccordionHeader>
+              <AccordionBody>
+                <div>
+                  <div className='flex space-x-4 mb-14'>
+                    <div className="w-full">
+                      <label htmlFor="idNumber" className="block text-sm font-medium text-gray-700">
+                        ID Number
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="idNumber"
+                        value={idNumber}
+                        id="idNumber"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="expID" className="block text-sm font-medium text-gray-700">
+                        Expiry Date ID Number
+                      </label>
+                      <input 
+                        type="date"
+                        onChange={handleChange}
+                        name="expID"
+                        id="expID"
+                        value={expID}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="bank" className="block text-sm font-medium text-gray-700">
+                        Bank
+                      </label>
+                      <select id="bank" name="bank" onChange={ handleChange } value={bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select bank</option>
+                        {bankAccounts.map((item, index)=>{
+                          return <option key={index} value={item}>{item}</option>
+                        })}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className='flex space-x-4 mb-14'>
+                    <div className="w-full">
+                      <label htmlFor="passPortNumber" className="block text-sm font-medium text-gray-700">
+                        Passport Number
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="passPortNumber"
+                        value={passPortNumber}
+                        id="passPortNumber"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="expPassPort" className="block text-sm font-medium text-gray-700">
+                        Expiry Date Passport
+                      </label>
+                      <input 
+                        type="date"
+                        onChange={handleChange}
+                        name="expPassPort"
+                        id="expPassPort"
+                        value={expPassPort}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="nationality" className="block text-sm font-medium text-gray-700">
+                        Nationality
+                      </label>
+                      <select id="nationality" name="nationality" onChange={ handleChange } value={nationality} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select nationality</option>
+                        {nationalities.map((item, index)=>{
+                          return <option key={index} value={item}>{item}</option>
+                        })}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className='flex space-x-4 mb-14'>
+                    <div className="w-full">
+                      <label htmlFor="ibanNo" className="block text-sm font-medium text-gray-700">
+                        IBAN Number
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="ibanNo"
+                        value={ibanNo}
+                        id="ibanNo"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="vatRegistrationNo" className="block text-sm font-medium text-gray-700">
+                        Vat Registration No
+                      </label>
+                      <input 
+                        type="number"
+                        onChange={handleChange}
+                        name="vatRegistrationNo"
+                        id="vatRegistrationNo"
+                        value={vatRegistrationNo}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="bankAccountNumber" className="block text-sm font-medium text-gray-700">
+                        Bank Account Number
+                      </label>
+                      <input 
+                        type="number"
+                        onChange={handleChange}
+                        name="bankAccountNumber"
+                        id="bankAccountNumber"
+                        value={bankAccountNumber}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="tradeLicenseNo" className="block text-sm font-medium text-gray-700">
+                        Trade License Number
+                      </label>
+                      <input 
+                        type="number"
+                        onChange={handleChange}
+                        name="tradeLicenseNo"
+                        id="tradeLicenseNo"
+                        value={tradeLicenseNo}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                  </div>
+
+                </div>
+                
+              </AccordionBody>
+            </Accordion>
+
+            <div class="flex items-center justify-center w-full mt-10">
+              <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                      <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                      </svg>
+                      <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                      <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                  </div>
+                  <input id="dropzone-file" type="file" class="hidden" />
+              </label>
+          </div> 
+            
+
+          </div>
+        ),
+      },
+      {
+        label: "Building Details",
+        value: "buildingDetails",
+        icon: UserCircleIcon,
+        desc: `Because it's about motivating the doers. Because I'm here
+        to follow my dreams and inspire other people to follow their dreams, too.`,
+      },
+      {
+        label: "Management/Investment Details",
+        value: "management",
+        icon: Cog6ToothIcon,
+        desc: `We're not always in the position that we want to be at.
+        We're constantly growing. We're constantly making mistakes. We're
+        constantly trying to express ourselves and actualize our dreams.`,
+      },
+      {
+        label: "Receive Units",
+        value: "receiveUnits",
+        icon: Cog6ToothIcon,
+        desc: `We're not always in the position that we want to be at.
+        We're constantly growing. We're constantly making mistakes. We're
+        constantly trying to express ourselves and actualize our dreams.`,
+      },
+    ];
+
     
 
   return (
@@ -404,8 +789,6 @@ import PaymentType from 'models/PaymentMethod';
                   <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Buildings..." required/>
                 </div>
               </div>
-
-
             </div>
 
             <div className='flex'>
@@ -433,13 +816,11 @@ import PaymentType from 'models/PaymentMethod';
 
             </div>
           
-
-            
           </div>
           <form method="POST">
             <div className="overflow-hidden shadow sm:rounded-md">
               
-              <div className="overflow-x-auto shadow-sm">
+              <div className="mt-2 overflow-x-auto shadow-sm">
                 <table ref={componentRef} className="w-full text-sm text-left text-gray-500 ">
                   <thead className="text-xs text-gray-700 uppercase bg-[#e9ecf7]">
                     <tr>
@@ -526,7 +907,7 @@ import PaymentType from 'models/PaymentMethod';
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
-              <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-5xl">
+              <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-7xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
                     <span className="sr-only">Close</span>
@@ -538,7 +919,28 @@ import PaymentType from 'models/PaymentMethod';
                       <div className="overflow-hidden shadow sm:rounded-md">
                         <div ref={speceficComponentRef} className="bg-white px-4 py-5 sm:p-6">
 
-                          <div className='flex space-x-4 mb-14'>
+
+                        <Tabs value="owner">
+                          <TabsHeader>
+                            {data.map(({ label, value, icon }) => (
+                              <Tab key={value} value={value}>
+                                <div className="flex items-center gap-2">
+                                  {React.createElement(icon, { className: "w-5 h-5" })}
+                                  {label}
+                                </div>
+                              </Tab>
+                            ))}
+                          </TabsHeader>
+                          <TabsBody>
+                            {data.map(({ value, desc }) => (
+                              <TabPanel key={value} value={value}>
+                                {desc}
+                              </TabPanel>
+                            ))}
+                          </TabsBody>
+                        </Tabs>
+
+                          {/* <div className='flex space-x-4 mb-14'>
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
@@ -570,48 +972,11 @@ import PaymentType from 'models/PaymentMethod';
                           </div>
 
                           <div className='flex space-x-4 mb-14'>
-                            <div className="w-full">
-                              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Name:
-                              </label>
-                              <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                <option value=''>select contacts</option>
-                                {dbContacts.map((item, index)=>{
-                                  return <option key={index} value={item.name}>{item.name} - {item.type}
-                                  </option>
-                                })}
-                              </select>
-                            </div>
-
                             
 
-                            <div className="w-full">
-                              <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                                Phone No:
-                              </label>
-                              <input
-                                type="number"
-                                onChange={handleChange}
-                                name="phoneNo"
-                                value={phoneNo}
-                                id="phoneNo"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              />
-                            </div>
                             
-                            <div className="w-full">
-                              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email:
-                              </label>
-                              <input
-                                type="text"
-                                onChange={handleChange}
-                                name="email"
-                                value={email}
-                                id="email"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              />
-                            </div>
+                            
+                            
 
                             <div className="w-full">
                               <label htmlFor="city" className="block text-sm font-medium text-gray-700">
@@ -851,7 +1216,7 @@ import PaymentType from 'models/PaymentMethod';
                                 value={memo}
                                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             </textarea>
-                          </div>
+                          </div> */}
                             
                           {/* <div className="mt-7">
                             <label htmlFor="attachment" className="block text-sm font-medium text-gray-700">
