@@ -16,6 +16,7 @@ import CreditSalesInvoice from 'models/CreditSalesInvoice';
 import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentMethod from 'models/PaymentMethod';
 import JournalVoucher from 'models/JournalVoucher';
+import Buildings from 'models/Buildings';
 
 
 export default async function handler(req, res) {
@@ -191,10 +192,6 @@ export default async function handler(req, res) {
         }
 
 
-
-
-
-
         // Payment Voucher Invoice
         else if( path === 'PaymentVoucher'){
             const { phoneNo, email, city, reference, fromAccount, paidBy, amount, dueDate, inputList, name,  memo, journalDate, journalNo, totalPaid, totalBalance, attachment, path, importEntries, row } = req.body;
@@ -229,12 +226,7 @@ export default async function handler(req, res) {
 
             res.status(200).json({ success: true, message: "Entry Added !" }) 
         }
-
-
-
-
-
-        
+    
         // Receipt Voucher Invoice
         else if( path === 'ReceiptVoucher'){
             const { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, project, attachment, path, importEntries, row } = req.body;
@@ -254,6 +246,17 @@ export default async function handler(req, res) {
             }
             
             let newEntry = new ReceiptVoucher( { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, project, attachment, type:path } );
+            await newEntry.save();
+
+            res.status(200).json({ success: true, message: "Entry Added !" }) 
+        }
+
+
+        // Receipt Voucher Invoice
+        else if( path === 'Buildings'){
+            const { receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email, path, importEntries, row } = req.body;
+
+            let newEntry = new Buildings( { receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email, type:path } );
             await newEntry.save();
 
             res.status(200).json({ success: true, message: "Entry Added !" }) 

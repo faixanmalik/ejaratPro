@@ -6,7 +6,8 @@ import { Menu, Dialog, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineUser, AiOutlinePlusCircle, AiOutlinePrinter, AiOutlineSave } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineEdit, AiOutlinePlusCircle, AiOutlinePrinter, AiOutlineSave } from 'react-icons/ai';
+import dbSalesInvoice from 'models/SalesInvoice';
 import Contact from 'models/Contact';
 import Charts from 'models/Charts';
 import { ProSidebarProvider } from 'react-pro-sidebar';
@@ -17,7 +18,8 @@ import TaxRate from 'models/TaxRate';
 import Project from 'models/Project';
 import ReactToPrint from 'react-to-print';
 import PaymentType from 'models/PaymentMethod';
-import dbBuildings from 'models/Buildings'; 
+
+import { AiOutlineUser } from 'react-icons/ai';
 
 import {
   Tabs,
@@ -26,13 +28,17 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
+import {
+  Square3Stack3DIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+} from "@heroicons/react/24/solid";
 
 import {
   Accordion,
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
@@ -59,7 +65,7 @@ import { MdAdUnits } from 'react-icons/md';
     );
   }
 
-  const Buildings = ({ dbVouchers, dbContacts }) => {
+  const Buildings = ({ dbVouchers, dbProducts, dbPaymentType, dbContacts, dbEmployees, dbTaxRate, dbProject }) => {
     
     const [open, setOpen] = useState(false)
     const [contacts, setContacts] = useState([])
@@ -81,7 +87,7 @@ import { MdAdUnits } from 'react-icons/md';
     }
 
     useEffect(() => {
-      setContacts(dbContacts)
+      setContacts(dbContacts, dbEmployees)
 
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
@@ -89,6 +95,14 @@ import { MdAdUnits } from 'react-icons/md';
       }
     }, [])
 
+
+    // JV
+    const [journalNo, setJournalNo] = useState('')
+
+    // Date
+    const today = new Date().toISOString().split('T')[0];
+    const [journalDate, setJournalDate] = useState(today)
+  
     const [attachment, setAttachment] = useState('')
     const [name, setName] = useState('')
     const [phoneNo, setPhoneNo] = useState(0)
@@ -96,10 +110,22 @@ import { MdAdUnits } from 'react-icons/md';
 
     const [search, setSearch] = useState('')
 
+    // JV
+    const [inputList, setInputList] = useState([
+      { },
+    ]);
+
 
     const [openExtraForm, setOpenExtraForm] = React.useState(1);
     const handleOpenExtraForm = (value) => setOpenExtraForm(openExtraForm === value ? 0 : value);
     
+    const [openReceiveUnits, setOpenReceiveUnits] = React.useState({});
+    const handleOpenReceiveUnits = (id) => {
+      setOpenReceiveUnits((prevOpen) => ({
+        ...prevOpen,
+        [id]: !prevOpen[id],
+      }));
+    };
 
     const [nameInInvoice, setNameInInvoice] = useState('')
     const [lessorName, setLessorName] = useState('')
@@ -140,10 +166,7 @@ import { MdAdUnits } from 'react-icons/md';
     const [gracePeriodTo, setGracePeriodTo] = useState('')
     const [paymentScheduling, setPaymentScheduling] = useState('')
 
-    const incrementUnitNo = 100;
-    const [unitNo, setUnitNo] = useState(incrementUnitNo)
-
-    const [unitName, setUnitName] = useState('')
+    const [unitNo, setUnitNo] = useState('')
     const [unitRent, setUnitRent] = useState('')
     const [unitType, setUnitType] = useState('')
     const [unitUse, setUnitUse] = useState('')
@@ -157,10 +180,23 @@ import { MdAdUnits } from 'react-icons/md';
     const [receiveUnitsArray, setReceiveUnitsArray] = useState([])
 
 
+    
+
+    
+
+
+    
+
+
+
+    // JV
     const handleChange = (e) => {
       const { name, value } = e.target;
       
-      if(name === 'tradeLicenseNo'){
+      if(name === 'journalDate'){
+        setJournalDate(value)
+      }
+      else if(name === 'tradeLicenseNo'){
         setTradeLicenseNo(value)
       }
       else if(name === 'bankAccountNumber'){
@@ -268,8 +304,8 @@ import { MdAdUnits } from 'react-icons/md';
       else if (name === 'paymentScheduling') {
         setPaymentScheduling(value);
       }
-      else if (name === 'unitName') {
-        setUnitName(value);
+      else if (name === 'unitNo') {
+        setUnitNo(value);
       } 
       else if (name === 'unitRent') {
         setUnitRent(value);
@@ -330,7 +366,7 @@ import { MdAdUnits } from 'react-icons/md';
       e.preventDefault()
 
       // fetch the data from form to makes a file in local system
-      const data = { receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
+      const data = { nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -350,6 +386,10 @@ import { MdAdUnits } from 'react-icons/md';
     }
 
     
+    function calculateTax(percentage, whole) {
+      return (percentage / 100) * whole;
+    }
+
 
     const editEntry = async(id)=>{
       setOpen(true)
@@ -450,18 +490,18 @@ import { MdAdUnits } from 'react-icons/md';
     let aces = ['Window', 'Split', 'Central']
     let unitStatuses = ['Available', 'Occupied', 'Booked', 'Hold', 'Rent Dispute']
 
-
-
     const saveUnit = async(e) => {
       e.preventDefault();
-      setUnitNo(unitNo + incrementUnitNo)
 
-      const data = { unitNo, unitName, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus} 
+      const data = { unitNo, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus} 
       setReceiveUnitsArray([...receiveUnitsArray, data]);
     }
 
     const editUnit = async(e, index) => {
       e.preventDefault();
+
+      console.log(receiveUnitsArray)
+      console.log(index);
     }
 
 
@@ -712,16 +752,16 @@ import { MdAdUnits } from 'react-icons/md';
               </AccordionBody>
             </Accordion>
 
-            <div className="flex items-center justify-center w-full mt-10">
-              <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            <div class="flex items-center justify-center w-full mt-10">
+              <label htmlFor="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                   </svg>
-                  <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                  <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                  <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                  <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                 </div>
-                <input id="dropzone-file" type="file" className="hidden" />
+                <input id="dropzone-file" type="file" class="hidden" />
               </label>
             </div>
 
@@ -935,16 +975,16 @@ import { MdAdUnits } from 'react-icons/md';
               </div>
               
             </div>
-            <div className="flex items-center justify-center w-full mt-10">
-              <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            <div class="flex items-center justify-center w-full mt-10">
+              <label htmlFor="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                   </svg>
-                  <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                  <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                  <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                  <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                 </div>
-                <input id="dropzone-file" type="file" className="hidden" />
+                <input id="dropzone-file" type="file" class="hidden" />
               </label>
             </div>
 
@@ -1071,23 +1111,10 @@ import { MdAdUnits } from 'react-icons/md';
                 </label>
                 <input
                   type="number"
+                  onChange={handleChange}
                   name="unitNo"
                   value={unitNo}
                   id="unitNo"
-                  className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  disabled
-                />
-              </div>
-              <div className="w-full">
-                <label htmlFor="unitName" className="block text-sm font-medium text-gray-700">
-                  Unit Name
-                </label>
-                <input
-                  type="number"
-                  onChange={handleChange}
-                  name="unitName"
-                  value={unitName}
-                  id="unitName"
                   className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
@@ -1214,102 +1241,172 @@ import { MdAdUnits } from 'react-icons/md';
 
             </div>
 
-            <div className="mt-2 overflow-x-auto shadow-sm">
-              <table ref={componentRef} className="w-full text-sm text-left text-gray-500 ">
-                <thead className="text-xs text-gray-700 uppercase bg-[#e9ecf7]">
-                  <tr>
-                    <th scope="col" className="py-4 pl-4">
-                        Unit No
-                    </th>
-                    <th scope="col" className="px-1">
-                        Unit Name
-                    </th>
-                    <th scope="col" className="p-1">
-                        Unit Rent
-                    </th>
-                    <th scope="col" className="p-1">
-                        Unit Type
-                    </th>
-                    <th scope="col" className="p-1">
-                        Unit Use
-                    </th>
-                    <th scope="col" className="p-1">
-                        Unit Size
-                    </th>
-                    <th scope="col" className="p-1">
-                        Bathroom
-                    </th>
-                    <th scope="col" className="p-1">
-                        Parking
-                    </th>
-                    <th scope="col" className="p-1">
-                        Balcony
-                    </th>
-                    <th scope="col" className="p-1">
-                        AC
-                    </th>
-                    <th scope="col" className="p-1">
-                        Unit Status
-                    </th>
-                    <th scope="col" className="p-1">
-                        Edit/Del
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {receiveUnitsArray.map((item, index)=>{
-                  return <tr key={index} className="bg-white border-b hover:bg-gray-50">
-                    <td className="pl-4 py-3">
-                      <div className=' text-black font-semibold'>{item.unitNo}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.unitName}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.unitRent}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.unitType}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.unitUse}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.unitSize}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.bathroom}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.parking}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.balcony}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.ac}</div>
-                    </td>
-                    <td className="p-1">
-                      <div className=''>{item.unitStatus}</div>
-                    </td>
-                    <td className="flex items-center px-3 mr-5 space-x-4">
-                      {/* <button type='button' onClick={()=>{getData(item._id)}} 
-                          className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
-                          <AiOutlineEdit className='text-lg'/>
-                        </button> */}
-                      <button type='button' onClick={()=>{editUnit(index)}} 
-                        className={`font-medium mt-3 text-blue-600 dark:text-blue-500 hover:underline`}>
-                        <AiOutlineEdit className='text-xl my-auto font'/>
-                      </button>
+            {receiveUnitsArray.map((item,index)=>{
 
-                    </td>
-                        
-                  </tr>})}
+              const accordionId = `accordion-${index}`;
+
+              return <Accordion key={index} className='bg-zinc-50 px-10' open={openReceiveUnits[accordionId]} icon={<Icon id={1} open={openReceiveUnits[accordionId]} />}>
+              
+              
+              <AccordionHeader  onClick={() => handleOpenReceiveUnits(accordionId)}>
+                <div className='space-x-10 font-bold'>
+                  <span className=''>Unit No : 
+                  <span className='text-blue-600 ml-2'>{item.unitNo}</span>
+                  </span>  
+                  <span className=''>|</span>  
+                  <span className=''>Unit Type :
+                    <span className='text-blue-600 ml-2'>{item.unitType}</span>
+                  </span> 
+                  <span className=''>|</span>
+                  <span className=''>Unit Use :
+                    <span className='text-blue-600 ml-2'>{item.unitUse}</span>
+                  </span>
+                </div>
+              </AccordionHeader>
+              
+
+              <AccordionBody>
+                <div>
+                  <div className='flex space-x-4 mb-14'>
+                    <div className="w-full">
+                      <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
+                        Unit No
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="unitNo"
+                        value={item.unitNo}
+                        id="unitNo"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="unitRent" className="block text-sm font-medium text-gray-700">
+                        Unit Rent
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="unitRent"
+                        value={item.unitRent}
+                        id="unitRent"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="unitType" className="block text-sm font-medium text-gray-700">
+                        Unit Type
+                      </label>
+                      <select id="unitType" name="unitType" onChange={ handleChange } value={item.unitType} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select unit type</option>
+                        {unitTypes.map((item, index)=>{
+                          return <option key={index} value={item}>{item}</option>
+                        })}
+                      </select>
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="unitUse" className="block text-sm font-medium text-gray-700">
+                        Unit Use
+                      </label>
+                      <select id="unitUse" name="unitUse" onChange={ handleChange } value={item.unitUse} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select unit use</option>
+                        {unitUses.map((item, index)=>{
+                          return <option key={index} value={item}>{item}</option>
+                        })}
+                      </select>
+                    </div>
+
+                    <div className="w-full">
+                      <label htmlFor="unitSize" className="block text-sm font-medium text-gray-700">
+                        Unit Size
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="unitSize"
+                        value={item.unitSize}
+                        id="unitSize"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                  </div>
                   
-                </tbody>
-              </table>
-              { receiveUnitsArray.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
-            </div>
+                  <div className='flex space-x-4 mb-14'>
+                    <div className="w-11/12">
+                      <label htmlFor="bathroom" className="block text-sm font-medium text-gray-700">
+                        Bathroom
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="bathroom"
+                        value={item.bathroom}
+                        id="bathroom"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-11/12">
+                      <label htmlFor="parking" className="block text-sm font-medium text-gray-700">
+                        Parking
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="parking"
+                        value={item.parking}
+                        id="parking"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-11/12">
+                      <label htmlFor="balcony" className="block text-sm font-medium text-gray-700">
+                        Balcony
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="balcony"
+                        value={item.balcony}
+                        id="balcony"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="ac" className="block text-sm font-medium text-gray-700">
+                        AC
+                      </label>
+                      <select id="ac" name="ac" onChange={ handleChange } value={item.ac} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select ac</option>
+                        {aces.map((item, index)=>{
+                          return <option key={index} value={item}>{item}</option>
+                        })}
+                      </select>
+                    </div>
+                    <div className="w-full">
+                      <label htmlFor="unitStatus" className="block text-sm font-medium text-gray-700">
+                        Unit Status
+                      </label>
+                      <select id="unitStatus" name="unitStatus" value={item.unitStatus} onChange={ handleChange } className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select unit status</option>
+                        {unitStatuses.map((item, index)=>{
+                          return <option key={index} value={item}>{item}</option>
+                        })}
+                      </select>
+                    </div>
+
+                    <div className="w-full mt-auto">
+                      <button onClick={(e) => editUnit(e, index)} className='ml-auto text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2'>
+                        Edit Unit
+                        <AiOutlineEdit className='text-xl ml-2'/>
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </AccordionBody>
+            </Accordion>})}
+
 
           </div>
         ),
@@ -1403,37 +1500,32 @@ import { MdAdUnits } from 'react-icons/md';
               
               <div className="mt-2 overflow-x-auto shadow-sm">
                 <table ref={componentRef} className="w-full text-sm text-left text-gray-500 ">
-                  <thead className="text-[11px] text-gray-700 uppercase bg-[#e9ecf7]">
-                    <tr className=''>
+                  <thead className="text-xs text-gray-700 uppercase bg-[#e9ecf7]">
+                    <tr>
                       <th scope="col" className="p-4">
                         <div className="flex items-center">
                           <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </div>
                       </th>
                       <th scope="col" className="p-1">
-                          Building Name
+                          Voucher No
                       </th>
                       <th scope="col" className="p-1">
-                          Building Type
+                          Date
                       </th>
                       <th scope="col" className="p-1">
-                          Owner
+                          Name
                       </th>
                       <th scope="col" className="p-1">
-                          Area
+                          Received By
                       </th>
                       <th scope="col" className="p-1">
-                          Start Date
+                          Due Date
                       </th>
                       <th scope="col" className="p-1">
-                          End Date
+                          Total Amount
                       </th>
-                      <th scope="col" className="p-1">
-                          Investment
-                      </th>
-                      <th scope="col" className="w-[80px]">
-                          Investment Structure
-                      </th>
+                      
                       <th scope="col" className="p-1">
                         View/Edit
                       </th>
@@ -1441,35 +1533,29 @@ import { MdAdUnits } from 'react-icons/md';
                   </thead>
                   <tbody>
                     {dbVouchers.map((item, index)=>{
-                    return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
+                    return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
                           <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </div>
                       </td>
-                      <td className="p-1 w-[100px]">
-                        <div className=' text-black font-semibold'>{item.buildingNameInEnglish}</div>
+                      <td className="p-1">
+                        <div className='text-sm text-black font-semibold'>{item.journalNo}</div>
                       </td>
                       <td className="p-1">
-                        <div className=''>{item.buildingType}</div>
-                      </td>
-                      <td className="p-1 w-[100px]">
-                        <div className=''>{item.nameInInvoice}</div>
-                      </td>
-                      <td className="p-1 w-[100px]">
-                        <div className=''>{item.area}</div>
+                        <div className='text-sm'>{moment(item.journalDate).utc().format('D MMM YYYY')}</div>
                       </td>
                       <td className="p-1">
-                        <div className=' text-black font-semibold'>{moment(item.contractStartDate).format('D MMM YYYY')}</div>
+                        <div className='text-sm'>{item.name}</div>
                       </td>
                       <td className="p-1">
-                        <div className=' text-black font-semibold'>{moment(item.contractEndDate).format('D MMM YYYY')}</div>
+                        <div className='text-sm'>{item.receivedBy}</div>
                       </td>
                       <td className="p-1">
-                        <div className=' text-black font-semibold'>{parseInt(item.amount).toLocaleString()}</div>
+                        <div className='text-sm text-black font-semibold'>{moment(item.dueDate).format('D MMM YYYY')}</div>
                       </td>
                       <td className="p-1">
-                        <div className=''>{item.investmentStructure}</div>
+                        <div className='text-sm text-black font-semibold'>{parseInt(item.totalAmount).toLocaleString()}</div>
                       </td>
                       <td className="flex items-center px-3 mr-5 py-4 space-x-4">
                         <button type='button' onClick={()=>{getData(item._id)}} 
@@ -1499,17 +1585,17 @@ import { MdAdUnits } from 'react-icons/md';
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
-              <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-2 lg:max-w-7xl">
-                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6">
+              <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-7xl">
+                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
 
                   <div className='w-full'>
-                    <form method="POST" onSubmit={(e)=>{submit(e)}}>
+                    <form method="POST" onSubmit={()=>{submit}}>
                       <div className="overflow-hidden shadow sm:rounded-md">
-                        <div ref={speceficComponentRef} className="bg-white py-5">
+                        <div ref={speceficComponentRef} className="bg-white px-2 py-5 sm:p-6">
 
 
                           <Tabs value="owner">
@@ -1531,6 +1617,109 @@ import { MdAdUnits } from 'react-icons/md';
                               ))}
                             </TabsBody>
                           </Tabs>
+
+                          {/* <div className='flex space-x-4 my-10'>
+                            <table className="w-full text-sm text-left text-gray-500 ">
+                              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                  <th scope="col" className="p-2">
+                                      Products / Services
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Description 
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Amount
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Tax Rate
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Tax Amount
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Total
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Add/Del
+                                  </th>
+                                </tr>
+                              </thead>
+                            
+                              <tbody >
+                              {inputList.map(( inputList , index)=>{
+                                return <tr key={index} className="bg-white text-black border-b hover:bg-gray-50">
+                                
+                                  <td className="p-2 w-1/5">
+                                    <select id="products" name="products" onChange={ e => change(e, index) } value={inputList.products} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                      <option value=''>select products</option>
+                                      {dbProducts.map((item, index)=>{
+                                        return <option key={index} value={item.name}>{item.name}</option>
+                                      })}
+                                    </select>
+                                  </td>
+                                  <td className="p-2">
+                                    <input
+                                      type="text"
+                                      onChange={ e=> change(e, index) }
+                                      value={ inputList.desc }
+                                      name="desc"
+                                      id="desc"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
+                                  <td className="p-2">
+                                    <input
+                                        type="number"
+                                        onChange={ e=> change(e, index) }
+                                        value={ inputList.amount }
+                                        name="amount"
+                                        id="amount"
+                                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
+                                  <td className="p-2 w-1/6">
+                                    <select id="taxRate" name="taxRate" onChange={ e => change(e, index) } value={inputList.taxRate} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                      <option>select tax</option>
+                                      {dbTaxRate.map((item, index)=>{
+                                        return <option key={index} value={item.taxRate}>{item.name}({item.taxRate}%) </option>
+                                      })}
+                                    </select>
+                                  </td>
+
+                                  <td className="p-2">
+                                    <input
+                                      type="number"
+                                      value={ inputList.taxAmount }
+                                      name="taxAmount"
+                                      id="taxAmount"
+                                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      readOnly
+                                    />
+                                  </td>
+
+                                  <td className="p-2">
+                                    <input
+                                      type="number"
+                                      value = { inputList.totalAmountPerItem }
+                                      name="totalAmountPerItem"
+                                      id="totalAmountPerItem"
+                                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      readOnly
+                                      />
+                                  </td>
+                                  <td className="p-1 flex items-center mt-[18px]">
+                                    <button type='button' className='mx-auto' onClick={addLines}><AiOutlinePlusCircle className='text-xl text-green-600'/></button>
+                                    <button type='button' className='mx-auto'><AiOutlineDelete onClick={()=>index != 0 && delLines(index)} className='text-xl text-red-700'/></button>
+                                  </td>
+
+                                </tr>})}
+                                  
+                              </tbody>
+                            </table>
+                          </div> */}
 
                           <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
 
@@ -1578,14 +1767,24 @@ export async function getServerSideProps() {
     mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGO_URI)
   }
-  let dbVouchers = await dbBuildings.find()
+  let dbVouchers = await dbSalesInvoice.find()
   let dbContacts = await Contact.find()
+  let dbEmployees = await Employees.find()
+  let dbProducts = await Product.find()
+  let dbTaxRate = await TaxRate.find()
+  let dbPaymentType = await PaymentType.find()
+  let dbProject = await Project.find()
 
   // Pass data to the page via props
   return {
     props: {
       dbVouchers: JSON.parse(JSON.stringify(dbVouchers)),
-      dbContacts: JSON.parse(JSON.stringify(dbContacts)),
+      dbContacts: JSON.parse(JSON.stringify(dbContacts)), 
+      dbProducts: JSON.parse(JSON.stringify(dbProducts)), 
+      dbTaxRate: JSON.parse(JSON.stringify(dbTaxRate)), 
+      dbPaymentType: JSON.parse(JSON.stringify(dbPaymentType)), 
+      dbEmployees: JSON.parse(JSON.stringify(dbEmployees)), 
+      dbProject: JSON.parse(JSON.stringify(dbProject)), 
     }
   }
 }   
