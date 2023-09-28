@@ -16,6 +16,7 @@ import PaymentVoucher from 'models/PaymentVoucher';
 import CreditSalesInvoice from 'models/CreditSalesInvoice';
 import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentMethod from 'models/PaymentMethod';
+import Buildings from 'models/Buildings';
 
 
 export default async function handler(req, res) {
@@ -185,7 +186,11 @@ export default async function handler(req, res) {
             } catch (error) {
                 res.status(400).json({ success: false, message: "Internal Server Error !" }) 
             }
-            
+        }
+        else if (path === 'Buildings'){
+            const { selectedIds } = req.body;
+            await Buildings.deleteMany( { _id: { $in: selectedIds } } )
+            res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
 
         

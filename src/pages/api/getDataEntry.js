@@ -16,6 +16,7 @@ import PaymentVoucher from 'models/PaymentVoucher';
 import CreditSalesInvoice from 'models/CreditSalesInvoice';
 import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentMethod from 'models/PaymentMethod';
+import Buildings from 'models/Buildings';
 
 
 export default async function handler(req, res) {
@@ -206,6 +207,16 @@ export default async function handler(req, res) {
         else if( path === 'ReceiptVoucher' ){
             const { id } = req.body;
             let data = await ReceiptVoucher.findById(id)
+            if(data){
+                res.status(200).json({ success: true, data}) 
+            }
+            else{
+                res.status(400).json({ success: false, message: "Internal server error!" }) 
+            }
+        }
+        else if( path === 'Buildings' ){
+            const { id } = req.body;
+            let data = await Buildings.findById(id)
             if(data){
                 res.status(200).json({ success: true, data}) 
             }

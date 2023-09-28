@@ -140,9 +140,7 @@ import { MdAdUnits } from 'react-icons/md';
     const [gracePeriodTo, setGracePeriodTo] = useState('')
     const [paymentScheduling, setPaymentScheduling] = useState('')
 
-    const incrementUnitNo = 100;
-    const [unitNo, setUnitNo] = useState(incrementUnitNo)
-
+    const [unitNo, setUnitNo] = useState(0)
     const [unitName, setUnitName] = useState('')
     const [unitRent, setUnitRent] = useState('')
     const [unitType, setUnitType] = useState('')
@@ -156,6 +154,19 @@ import { MdAdUnits } from 'react-icons/md';
 
     const [receiveUnitsArray, setReceiveUnitsArray] = useState([])
 
+    useEffect(() => {
+      
+      let highestValue = receiveUnitsArray.reduce((max, item) => Math.max(max, item.unitNo), -Infinity);
+      if(receiveUnitsArray.length === 0){
+        setUnitNo(100)
+      }
+      else{
+        setUnitNo(highestValue + 100)
+      }
+
+    }, [receiveUnitsArray])
+    
+
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -168,6 +179,9 @@ import { MdAdUnits } from 'react-icons/md';
       }
       else if(name === 'vatRegistrationNo'){
         setVatRegistrationNo(value)
+      }
+      else if(name === 'phoneNo'){
+        setPhoneNo(value)
       }
       else if(name === 'ibanNo'){
         setIbanNo(value)
@@ -314,13 +328,11 @@ import { MdAdUnits } from 'react-icons/md';
           setEmail(newData[0].email)
           setPhoneNo(newData[0].phoneNo)
           setCity(newData[0].city)
-          setReceivedBy(newData[0].streetreceivedBy)
         }
         else{
           setEmail('')
           setPhoneNo('')
           setCity('')
-          setReceivedBy('')
         }
       }
     }
@@ -354,7 +366,7 @@ import { MdAdUnits } from 'react-icons/md';
     const editEntry = async(id)=>{
       setOpen(true)
 
-      const data = { id, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
+      const data = { id, receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
       
       let res = await fetch(`/api/editEntry`, {
         method: 'POST',
@@ -375,7 +387,7 @@ import { MdAdUnits } from 'react-icons/md';
 
     const delEntry = async()=>{
 
-      const data = { selectedIds , path: 'SalesInvoice' };
+      const data = { selectedIds , path: 'Buildings' };
       let res = await fetch(`/api/delEntry`, {
         method: 'POST',
         headers: { 
@@ -397,7 +409,7 @@ import { MdAdUnits } from 'react-icons/md';
       setOpen(true)
       setIsOpenSaveChange(false)
 
-      const data = { id, path: 'SalesInvoice' };
+      const data = { id, path: 'Buildings' };
       let res = await fetch(`/api/getDataEntry`, {
         method: 'POST',
         headers: {
@@ -408,23 +420,57 @@ import { MdAdUnits } from 'react-icons/md';
       let response = await res.json()
 
       if (response.success === true){
-        const dbJournalDate = moment(response.data.journalDate).utc().format('YYYY-MM-DD')
-        const dbDueDate = moment(response.data.dueDate).utc().format('YYYY-MM-DD')
+        const {receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email} = response.data;
         
+        let dbContractStartDate = moment(contractStartDate).utc().format('YYYY-MM-DD')
+        let dbContractEndDate = moment(contractEndDate).utc().format('YYYY-MM-DD')
+        let dbGracePeriodFromDate = moment(gracePeriodFrom).utc().format('YYYY-MM-DD')
+        let dbGracePeriodToDate = moment(gracePeriodTo).utc().format('YYYY-MM-DD')
+        let dbExpDate = moment(expID).utc().format('YYYY-MM-DD')
+        let dbPassPortDate = moment(expPassPort).utc().format('YYYY-MM-DD')
+
         setId(response.data._id)
-        setJournalDate(dbJournalDate)
-        setJournalNo(response.data.journalNo)
-        setInputList(response.data.inputList)
-        setName(response.data.name)
-        setAttachment(response.data.attachment.data)
-        setFullTax(response.data.fullTax)
-        setDiscount(response.data.discount)
-        setPhoneNo(response.data.phoneNo)
-        setName(response.data.name)
-        setEmail(response.data.email)
-        setCity(response.data.city)
-        setReceivedBy(response.data.receivedBy)
-        setDueDate(dbDueDate)
+        setReceiveUnitsArray(receiveUnitsArray);
+        setNameInInvoice(nameInInvoice);
+        setLessorName(lessorName);
+        setAdjective(adjective);
+        setBuildingType(buildingType);
+        setIdNumber(idNumber);
+        setExpID(dbExpDate);
+        setBank(bank);
+        setPassPortNumber(passPortNumber);
+        setExpPassPort(dbPassPortDate);
+        setNationality(nationality);
+        setIbanNo(ibanNo);
+        setVatRegistrationNo(vatRegistrationNo);
+        setBankAccountNumber(bankAccountNumber);
+        setTradeLicenseNo(tradeLicenseNo);
+        setBuildingNameInArabic(buildingNameInArabic);
+        setBuildingNameInEnglish(buildingNameInEnglish);
+        setTotalUnits(totalUnits);
+        setUnitsPerFloor(unitsPerFloor);
+        setParkings(parkings);
+        setRoof(roof);
+        setCountry(country);
+        setCity(city);
+        setArea(area);
+        setMizan(mizan);
+        setPlotArea(plotArea);
+        setFloor(floor);
+        setBuildingArea(buildingArea);
+        setElectricityMeterNo(electricityMeterNo);
+        setTitleDeedNo(titleDeedNo);
+        setContractStartDate(dbContractStartDate);
+        setInvestmentStructure(investmentStructure);
+        setGracePeriodFrom(dbGracePeriodFromDate);
+        setContractEndDate(dbContractEndDate);
+        setAmount(amount);
+        setGracePeriodTo(dbGracePeriodToDate);
+        setPaymentScheduling(paymentScheduling);
+        setAttachment(attachment);
+        setName(name);
+        setPhoneNo(phoneNo);
+        setEmail(email);
       }
     }
 
@@ -454,14 +500,63 @@ import { MdAdUnits } from 'react-icons/md';
 
     const saveUnit = async(e) => {
       e.preventDefault();
-      setUnitNo(unitNo + incrementUnitNo)
-
       const data = { unitNo, unitName, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus} 
-      setReceiveUnitsArray([...receiveUnitsArray, data]);
+
+      
+      let newArray = receiveUnitsArray.filter((item)=>{
+        return unitNo === item.unitNo;
+      })
+      if(newArray.length > 0){
+        // edit the array
+        setReceiveUnitsArray((prevReceiveUnitsArray) => {
+          const updatedArray = [...prevReceiveUnitsArray];
+          const indexToUpdate = updatedArray.findIndex((item) => item.unitNo === unitNo);
+          if (indexToUpdate !== -1) {
+            // Update the unit properties
+            updatedArray[indexToUpdate].unitName = unitName;
+            updatedArray[indexToUpdate].unitRent = unitRent;
+            updatedArray[indexToUpdate].unitType = unitType;
+            updatedArray[indexToUpdate].unitUse = unitUse;
+            updatedArray[indexToUpdate].unitSize = unitSize;
+            updatedArray[indexToUpdate].bathroom = bathroom;
+            updatedArray[indexToUpdate].parking = parking;
+            updatedArray[indexToUpdate].balcony = balcony;
+            updatedArray[indexToUpdate].ac = ac;
+            updatedArray[indexToUpdate].unitStatus = unitStatus;
+          }
+          return updatedArray;
+        });
+      }
+      else{
+        setReceiveUnitsArray([...receiveUnitsArray, data]);
+      }
+
     }
 
     const editUnit = async(e, index) => {
       e.preventDefault();
+
+      let editingdata = receiveUnitsArray[index];
+      const { unitNo, unitName, unitRent, unitType, unitUse, unitSize, bathroom,
+      parking, balcony, ac, unitStatus } = editingdata;
+
+      setUnitNo(unitNo)
+      setUnitName(unitName)
+      setUnitRent(unitRent)
+      setUnitType(unitType)
+      setUnitUse(unitUse)
+      setUnitSize(unitSize)
+      setBathroom(bathroom)
+      setParking(parking)
+      setBalcony(balcony)
+      setAc(ac)
+      setUnitStatus(unitStatus)
+    }
+
+    const delUnit = async(indexToDelete) => {
+      const updatedUnitsArray = [...receiveUnitsArray];
+      updatedUnitsArray.splice(indexToDelete, 1);
+      setReceiveUnitsArray(updatedUnitsArray);
     }
 
 
@@ -1083,7 +1178,7 @@ import { MdAdUnits } from 'react-icons/md';
                   Unit Name
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   onChange={handleChange}
                   name="unitName"
                   value={unitName}
@@ -1297,9 +1392,14 @@ import { MdAdUnits } from 'react-icons/md';
                           className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                           <AiOutlineEdit className='text-lg'/>
                         </button> */}
-                      <button type='button' onClick={()=>{editUnit(index)}} 
+                      <button type='button' onClick={(e)=>{editUnit(e,index)}} 
                         className={`font-medium mt-3 text-blue-600 dark:text-blue-500 hover:underline`}>
                         <AiOutlineEdit className='text-xl my-auto font'/>
+                      </button>
+
+                      <button type='button' onClick={()=>{delUnit(index)}} 
+                        className={`font-medium mt-3 text-blue-600 dark:text-blue-500 hover:underline`}>
+                        <AiOutlineDelete className='text-xl my-auto font'/>
                       </button>
 
                     </td>
@@ -1331,238 +1431,274 @@ import { MdAdUnits } from 'react-icons/md';
       `}</style>
     <FullLayout>
 
-    {/* React tostify */}
-    <ToastContainer position="bottom-center" autoClose={1000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light"/>
+      {/* React tostify */}
+      <ToastContainer position="bottom-center" autoClose={1000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light"/>
 
-    <div className="mt-10 sm:mt-0">
-      <div className="md:grid md:grid-cols-1 md:gap-6">
-        <div className="md:col-span-1">
-          <div className="pl-4 flex">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Buildings and Owners</h3>
-            <button 
-              onClick={()=>{
-                setOpen(true)
-                setId('')
-                setAttachment('')
-                setPhoneNo(0)
-                setName('')
-                setEmail('')
-                setCity('')
-                setIsOpenSaveChange(true)
-              }} 
-              className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
-            </button>
+      <div className="mt-10 sm:mt-0">
+        <div className="md:grid md:grid-cols-1 md:gap-6">
+          <div className="md:col-span-1">
+            <div className="pl-4 flex">
+              <h3 className="text-lg font-medium leading-6 text-gray-900">Buildings and Owners</h3>
+              <button 
+                onClick={()=>{
+                  setOpen(true)
+                  setId('')
+                  setIsOpenSaveChange(true)
+                  setReceiveUnitsArray([]);
+                  setNameInInvoice('');
+                  setLessorName('');
+                  setAdjective('');
+                  setBuildingType('');
+                  setIdNumber('');
+                  setExpID('');
+                  setBank('');
+                  setPassPortNumber('');
+                  setExpPassPort('');
+                  setNationality('');
+                  setIbanNo('');
+                  setVatRegistrationNo('');
+                  setBankAccountNumber('');
+                  setTradeLicenseNo('');
+                  setBuildingNameInArabic('');
+                  setBuildingNameInEnglish('');
+                  setTotalUnits('');
+                  setUnitsPerFloor('');
+                  setParkings('');
+                  setRoof('');
+                  setCountry('');
+                  setCity('');
+                  setArea('');
+                  setMizan('');
+                  setPlotArea('');
+                  setFloor('');
+                  setBuildingArea('');
+                  setElectricityMeterNo('');
+                  setTitleDeedNo('');
+                  setContractStartDate('');
+                  setInvestmentStructure('');
+                  setGracePeriodFrom('');
+                  setContractEndDate('');
+                  setAmount('');
+                  setGracePeriodTo('');
+                  setPaymentScheduling('');
+                  setAttachment('');
+                  setName('');
+                  setPhoneNo('');
+                  setEmail('');
+                }} 
+                className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
+                New
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="mt-4 md:col-span-2 md:mt-0">
-          <div className='flex justify-between'>
+          <div className="mt-4 md:col-span-2 md:mt-0">
+            <div className='flex justify-between'>
 
-            <div className='w-1/4'>
+              <div className='w-1/4'>
 
-              <div className="relative rounded-lg bg-gray-50 border-2 border-blue-800">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <svg className="w-4 h-4 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                </div>
-                <div className='pl-8'>
-                  <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Buildings..." required/>
+                <div className="relative rounded-lg bg-gray-50 border-2 border-blue-800">
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                      <svg className="w-4 h-4 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                      </svg>
+                  </div>
+                  <div className='pl-8'>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Buildings..." required/>
+                  </div>
                 </div>
               </div>
+
+              <div className='flex'>
+
+                <button onClick={delEntry}
+                  className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
+                  >
+                    Delete
+                  <AiOutlineDelete className='text-lg ml-2'/>
+                </button>
+
+                <ReactToPrint
+                  trigger={()=>{
+                    return <button 
+                      type='button'
+                      className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                      Print All
+                      <AiOutlinePrinter className='text-lg ml-2'/>
+                    </button>
+                  }}
+                  content={() => componentRef.current}
+                  documentTitle='Buildings and Owners'
+                  pageStyle='print'
+                />
+
+              </div>
+            
             </div>
-
-            <div className='flex'>
-
-              <button onClick={delEntry}
-                className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
-                >
-                  Delete
-                <AiOutlineDelete className='text-lg ml-2'/>
-              </button>
-
-              <ReactToPrint
-                trigger={()=>{
-                  return <button 
-                    type='button'
-                    className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                    Print All
-                    <AiOutlinePrinter className='text-lg ml-2'/>
-                  </button>
-                }}
-                content={() => componentRef.current}
-                documentTitle='Buildings and Owners'
-                pageStyle='print'
-              />
-
-            </div>
-          
-          </div>
-          <form method="POST">
-            <div className="overflow-hidden shadow sm:rounded-md">
-              
-              <div className="mt-2 overflow-x-auto shadow-sm">
-                <table ref={componentRef} className="w-full text-sm text-left text-gray-500 ">
-                  <thead className="text-[11px] text-gray-700 uppercase bg-[#e9ecf7]">
-                    <tr className=''>
-                      <th scope="col" className="p-4">
-                        <div className="flex items-center">
-                          <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                        </div>
-                      </th>
-                      <th scope="col" className="p-1">
-                          Building Name
-                      </th>
-                      <th scope="col" className="p-1">
-                          Building Type
-                      </th>
-                      <th scope="col" className="p-1">
-                          Owner
-                      </th>
-                      <th scope="col" className="p-1">
-                          Area
-                      </th>
-                      <th scope="col" className="p-1">
-                          Start Date
-                      </th>
-                      <th scope="col" className="p-1">
-                          End Date
-                      </th>
-                      <th scope="col" className="p-1">
-                          Investment
-                      </th>
-                      <th scope="col" className="w-[80px]">
-                          Investment Structure
-                      </th>
-                      <th scope="col" className="p-1">
-                        View/Edit
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dbVouchers.map((item, index)=>{
-                    return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
-                      <td className="w-4 p-4">
-                        <div className="flex items-center">
-                          <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                        </div>
-                      </td>
-                      <td className="p-1 w-[100px]">
-                        <div className=' text-black font-semibold'>{item.buildingNameInEnglish}</div>
-                      </td>
-                      <td className="p-1">
-                        <div className=''>{item.buildingType}</div>
-                      </td>
-                      <td className="p-1 w-[100px]">
-                        <div className=''>{item.nameInInvoice}</div>
-                      </td>
-                      <td className="p-1 w-[100px]">
-                        <div className=''>{item.area}</div>
-                      </td>
-                      <td className="p-1">
-                        <div className=' text-black font-semibold'>{moment(item.contractStartDate).format('D MMM YYYY')}</div>
-                      </td>
-                      <td className="p-1">
-                        <div className=' text-black font-semibold'>{moment(item.contractEndDate).format('D MMM YYYY')}</div>
-                      </td>
-                      <td className="p-1">
-                        <div className=' text-black font-semibold'>{parseInt(item.amount).toLocaleString()}</div>
-                      </td>
-                      <td className="p-1">
-                        <div className=''>{item.investmentStructure}</div>
-                      </td>
-                      <td className="flex items-center px-3 mr-5 py-4 space-x-4">
-                        <button type='button' onClick={()=>{getData(item._id)}} 
+            <form method="POST">
+              <div className="overflow-hidden shadow sm:rounded-md">
+                
+                <div className="mt-2 overflow-x-auto shadow-sm">
+                  <table ref={componentRef} className="w-full text-sm text-left text-gray-500 ">
+                    <thead className="text-[11px] text-gray-700 uppercase bg-[#e9ecf7]">
+                      <tr className=''>
+                        <th scope="col" className="p-4">
+                          <div className="flex items-center">
+                            <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                          </div>
+                        </th>
+                        <th scope="col" className="p-1">
+                            Building Name
+                        </th>
+                        <th scope="col" className="p-1">
+                            Building Type
+                        </th>
+                        <th scope="col" className="p-1">
+                            Owner
+                        </th>
+                        <th scope="col" className="p-1">
+                            Area
+                        </th>
+                        <th scope="col" className="p-1">
+                            Start Date
+                        </th>
+                        <th scope="col" className="p-1">
+                            End Date
+                        </th>
+                        <th scope="col" className="p-1">
+                            Investment
+                        </th>
+                        <th scope="col" className="w-[80px]">
+                            Investment Structure
+                        </th>
+                        <th scope="col" className="p-1">
+                          View/Edit
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dbVouchers.map((item, index)=>{
+                      return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
+                        <td className="w-4 p-4">
+                          <div className="flex items-center">
+                            <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                          </div>
+                        </td>
+                        <td className="p-1 w-[100px]">
+                          <div className=' text-black font-semibold'>{item.buildingNameInEnglish}</div>
+                        </td>
+                        <td className="p-1">
+                          <div className=''>{item.buildingType}</div>
+                        </td>
+                        <td className="p-1 w-[100px]">
+                          <div className=''>{item.nameInInvoice}</div>
+                        </td>
+                        <td className="p-1 w-[100px]">
+                          <div className=''>{item.area}</div>
+                        </td>
+                        <td className="p-1">
+                          <div className=' text-black font-semibold'>{moment(item.contractStartDate).format('D MMM YYYY')}</div>
+                        </td>
+                        <td className="p-1">
+                          <div className=' text-black font-semibold'>{moment(item.contractEndDate).format('D MMM YYYY')}</div>
+                        </td>
+                        <td className="p-1">
+                          <div className=' text-black font-semibold'>{parseInt(item.amount).toLocaleString()}</div>
+                        </td>
+                        <td className="p-1">
+                          <div className=''>{item.investmentStructure}</div>
+                        </td>
+                        <td className="flex items-center px-3 mr-5 py-4 space-x-4">
+                          <button type='button' onClick={()=>{getData(item._id)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
                           </button>
-                      </td>
-                          
-                    </tr>})}
-                    
-                  </tbody>
-                </table>
-                { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
-              </div>
-
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-20" onClose={()=>{setOpen(false)}}>
-        <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
-          <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
-        </Transition.Child>
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
-            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
-              <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-2 lg:max-w-7xl">
-                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6">
-                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
-                    <span className="sr-only">Close</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-
-                  <div className='w-full'>
-                    <form method="POST" onSubmit={(e)=>{submit(e)}}>
-                      <div className="overflow-hidden shadow sm:rounded-md">
-                        <div ref={speceficComponentRef} className="bg-white py-5">
-
-
-                          <Tabs value="owner">
-                            <TabsHeader>
-                              {data.map(({ label, value, icon }) => (
-                                <Tab key={value} value={value}>
-                                  <div className="flex items-center gap-2">
-                                    {React.createElement(icon, { className: "w-5 h-5" })}
-                                    {label}
-                                  </div>
-                                </Tab>
-                              ))}
-                            </TabsHeader>
-                            <TabsBody className='mt-5'>
-                              {data.map(({ value, desc }) => (
-                                <TabPanel key={value} value={value}>
-                                  {desc}
-                                </TabPanel>
-                              ))}
-                            </TabsBody>
-                          </Tabs>
-
-                          <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-
-                            <ReactToPrint
-                              trigger={()=>{
-                                return <button 
-                                  type="button"
-                                  className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                  Print
-                                  <AiOutlinePrinter className='text-lg ml-2'/>
-                                </button>
-                              }}
-                              content={() => speceficComponentRef.current}
-                              documentTitle='Building and Owner'
-                              pageStyle='print'
-                            />
-
-                            <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                            {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
+                        </td>
+                            
+                      </tr>})}
+                      
+                    </tbody>
+                  </table>
+                  { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+
+              </div>
+            </form>
           </div>
         </div>
-      </Dialog>
-    </Transition.Root>
+      </div>
+
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog as="div" className="relative z-20" onClose={()=>{setOpen(false)}}>
+          <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+            <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
+          </Transition.Child>
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+              <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
+                <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-2 lg:max-w-7xl">
+                  <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6">
+                    <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
+                      <span className="sr-only">Close</span>
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+
+                    <div className='w-full'>
+                      <form method="POST" onSubmit={(e)=>{submit(e)}}>
+                        <div className="overflow-hidden shadow sm:rounded-md">
+                          <div ref={speceficComponentRef} className="bg-white py-5">
+
+
+                            <Tabs value="owner">
+                              <TabsHeader>
+                                {data.map(({ label, value, icon }) => (
+                                  <Tab key={value} value={value}>
+                                    <div className="flex items-center gap-2">
+                                      {React.createElement(icon, { className: "w-5 h-5" })}
+                                      {label}
+                                    </div>
+                                  </Tab>
+                                ))}
+                              </TabsHeader>
+                              <TabsBody className='mt-5'>
+                                {data.map(({ value, desc }) => (
+                                  <TabPanel key={value} value={value}>
+                                    {desc}
+                                  </TabPanel>
+                                ))}
+                              </TabsBody>
+                            </Tabs>
+
+                            <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+
+                              <ReactToPrint
+                                trigger={()=>{
+                                  return <button 
+                                    type="button"
+                                    className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+                                    Print
+                                    <AiOutlinePrinter className='text-lg ml-2'/>
+                                  </button>
+                                }}
+                                content={() => speceficComponentRef.current}
+                                documentTitle='Building and Owner'
+                                pageStyle='print'
+                              />
+
+                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
+                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
 
     </FullLayout>
     </ProSidebarProvider>

@@ -15,6 +15,7 @@ import SalesInvoice from 'models/SalesInvoice';
 import Expenses from 'models/Expenses';
 import CreditSalesInvoice from 'models/CreditSalesInvoice';
 import PaymentMethod from 'models/PaymentMethod';
+import Buildings from 'models/Buildings';
 
 
 export default async function handler(req, res) {
@@ -772,6 +773,27 @@ export default async function handler(req, res) {
             else{
                 res.status(400).json({ success: false, message: "Internal server error!" }) 
             }
+        }
+
+
+
+        else if(path === 'Buildings'){
+
+            const { id } = req.body;
+
+            try {
+                // Attempt to update the document
+                const updatedBuilding = await Buildings.findByIdAndUpdate(id, req.body, { new: true });
+              
+                if (!updatedBuilding) {
+                  return res.status(404).json({ success: false, message: 'Building not found' });
+                }
+              
+                res.status(200).json({ success: true, message: 'Update Successfully!', data: updatedBuilding });
+            } catch (error) {
+                res.status(500).json({ success: false, message: 'Internal server error', error: error.message });
+            }
+
         }
 
 
