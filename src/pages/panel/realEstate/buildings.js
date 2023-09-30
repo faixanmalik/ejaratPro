@@ -140,7 +140,7 @@ import { MdAdUnits } from 'react-icons/md';
     const [gracePeriodTo, setGracePeriodTo] = useState('')
     const [paymentScheduling, setPaymentScheduling] = useState('')
 
-    const [unitNo, setUnitNo] = useState(0)
+    const [unitNo, setUnitNo] = useState(100)
     const [unitName, setUnitName] = useState('')
     const [unitRent, setUnitRent] = useState('')
     const [unitType, setUnitType] = useState('')
@@ -151,8 +151,11 @@ import { MdAdUnits } from 'react-icons/md';
     const [balcony, setBalcony] = useState('')
     const [ac, setAc] = useState('')
     const [unitStatus, setUnitStatus] = useState('')
+    const [noOfFunctionLoop, setNoOfFunctionLoop] = useState(1)
 
     const [receiveUnitsArray, setReceiveUnitsArray] = useState([])
+    const [increment, setIncrement] = useState(100)
+
 
     useEffect(() => {
       
@@ -173,6 +176,9 @@ import { MdAdUnits } from 'react-icons/md';
       
       if(name === 'tradeLicenseNo'){
         setTradeLicenseNo(value)
+      }
+      else if(name === 'noOfFunctionLoop'){
+        setNoOfFunctionLoop(value)
       }
       else if(name === 'bankAccountNumber'){
         setBankAccountNumber(value)
@@ -500,36 +506,62 @@ import { MdAdUnits } from 'react-icons/md';
 
     const saveUnit = async(e) => {
       e.preventDefault();
-      const data = { unitNo, unitName, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus} 
+
+      let unitNoIncrement = unitNo; // Starting unitNo value
+
+      for (let i = 0; i < noOfFunctionLoop; i++) {
+        const data = {
+          unitNo: unitNoIncrement,
+          unitName,
+          unitRent,
+          unitType,
+          unitUse,
+          unitSize,
+          bathroom,
+          parking,
+          balcony,
+          ac,
+          unitStatus,
+        };
+    
+        setReceiveUnitsArray((prevReceiveUnitsArray) => {
+          return [...prevReceiveUnitsArray, data];
+        });
+    
+        // Increment unitNo for the next iteration
+        unitNoIncrement += increment;
+      }
 
       
-      let newArray = receiveUnitsArray.filter((item)=>{
-        return unitNo === item.unitNo;
-      })
-      if(newArray.length > 0){
-        // edit the array
-        setReceiveUnitsArray((prevReceiveUnitsArray) => {
-          const updatedArray = [...prevReceiveUnitsArray];
-          const indexToUpdate = updatedArray.findIndex((item) => item.unitNo === unitNo);
-          if (indexToUpdate !== -1) {
-            // Update the unit properties
-            updatedArray[indexToUpdate].unitName = unitName;
-            updatedArray[indexToUpdate].unitRent = unitRent;
-            updatedArray[indexToUpdate].unitType = unitType;
-            updatedArray[indexToUpdate].unitUse = unitUse;
-            updatedArray[indexToUpdate].unitSize = unitSize;
-            updatedArray[indexToUpdate].bathroom = bathroom;
-            updatedArray[indexToUpdate].parking = parking;
-            updatedArray[indexToUpdate].balcony = balcony;
-            updatedArray[indexToUpdate].ac = ac;
-            updatedArray[indexToUpdate].unitStatus = unitStatus;
-          }
-          return updatedArray;
-        });
-      }
-      else{
-        setReceiveUnitsArray([...receiveUnitsArray, data]);
-      }
+      
+      // const data = { unitNo, unitName, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus} 
+      // let newArray = receiveUnitsArray.filter((item)=>{
+      //   return unitNo === item.unitNo;
+      // })
+      // if(newArray.length > 0){
+      //   // edit the array
+      //   setReceiveUnitsArray((prevReceiveUnitsArray) => {
+      //     const updatedArray = [...prevReceiveUnitsArray];
+      //     const indexToUpdate = updatedArray.findIndex((item) => item.unitNo === unitNo);
+      //     if (indexToUpdate !== -1) {
+      //       // Update the unit properties
+      //       updatedArray[indexToUpdate].unitName = unitName;
+      //       updatedArray[indexToUpdate].unitRent = unitRent;
+      //       updatedArray[indexToUpdate].unitType = unitType;
+      //       updatedArray[indexToUpdate].unitUse = unitUse;
+      //       updatedArray[indexToUpdate].unitSize = unitSize;
+      //       updatedArray[indexToUpdate].bathroom = bathroom;
+      //       updatedArray[indexToUpdate].parking = parking;
+      //       updatedArray[indexToUpdate].balcony = balcony;
+      //       updatedArray[indexToUpdate].ac = ac;
+      //       updatedArray[indexToUpdate].unitStatus = unitStatus;
+      //     }
+      //     return updatedArray;
+      //   });
+      // }
+      // else{
+      //   setReceiveUnitsArray([...receiveUnitsArray, data]);
+      // }
 
     }
 
@@ -1298,6 +1330,20 @@ import { MdAdUnits } from 'react-icons/md';
                     return <option key={index} value={item}>{item}</option>
                   })}
                 </select>
+              </div>
+
+              <div className="w-11/12">
+                <label htmlFor="noOfFunctionLoop" className="block text-sm font-medium text-gray-700">
+                  No's to save
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="noOfFunctionLoop"
+                  value={noOfFunctionLoop}
+                  id="noOfFunctionLoop"
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
               </div>
 
               <div className="w-full mt-auto">
