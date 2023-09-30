@@ -367,8 +367,6 @@ import { MdAdUnits } from 'react-icons/md';
       }
     }
 
-    
-
     const editEntry = async(id)=>{
       setOpen(true)
 
@@ -510,23 +508,26 @@ import { MdAdUnits } from 'react-icons/md';
       let unitNoIncrement = unitNo; // Starting unitNo value
 
       for (let i = 0; i < noOfFunctionLoop; i++) {
-        const data = {
-          unitNo: unitNoIncrement,
-          unitName,
-          unitRent,
-          unitType,
-          unitUse,
-          unitSize,
-          bathroom,
-          parking,
-          balcony,
-          ac,
-          unitStatus,
-        };
-    
-        setReceiveUnitsArray((prevReceiveUnitsArray) => {
-          return [...prevReceiveUnitsArray, data];
-        });
+        const data = { unitNo: unitNoIncrement, unitName, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus};
+
+        const indexToUpdate = receiveUnitsArray.findIndex((item) => item.unitNo === unitNo);
+
+        if (indexToUpdate !== -1) {
+          // Update the unit properties
+          setReceiveUnitsArray((prevReceiveUnitsArray) => {
+            const updatedArray = [...prevReceiveUnitsArray];
+            updatedArray[indexToUpdate] = {
+              ...updatedArray[indexToUpdate],
+              ...data,
+            };
+            return updatedArray;
+          });
+        }
+        else{
+          setReceiveUnitsArray((prevReceiveUnitsArray) => {
+            return [...prevReceiveUnitsArray, data];
+          });
+        }
     
         // Increment unitNo for the next iteration
         unitNoIncrement += increment;
