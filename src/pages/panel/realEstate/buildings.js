@@ -533,37 +533,6 @@ import { MdAdUnits } from 'react-icons/md';
         unitNoIncrement += increment;
       }
 
-      
-      
-      // const data = { unitNo, unitName, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus} 
-      // let newArray = receiveUnitsArray.filter((item)=>{
-      //   return unitNo === item.unitNo;
-      // })
-      // if(newArray.length > 0){
-      //   // edit the array
-      //   setReceiveUnitsArray((prevReceiveUnitsArray) => {
-      //     const updatedArray = [...prevReceiveUnitsArray];
-      //     const indexToUpdate = updatedArray.findIndex((item) => item.unitNo === unitNo);
-      //     if (indexToUpdate !== -1) {
-      //       // Update the unit properties
-      //       updatedArray[indexToUpdate].unitName = unitName;
-      //       updatedArray[indexToUpdate].unitRent = unitRent;
-      //       updatedArray[indexToUpdate].unitType = unitType;
-      //       updatedArray[indexToUpdate].unitUse = unitUse;
-      //       updatedArray[indexToUpdate].unitSize = unitSize;
-      //       updatedArray[indexToUpdate].bathroom = bathroom;
-      //       updatedArray[indexToUpdate].parking = parking;
-      //       updatedArray[indexToUpdate].balcony = balcony;
-      //       updatedArray[indexToUpdate].ac = ac;
-      //       updatedArray[indexToUpdate].unitStatus = unitStatus;
-      //     }
-      //     return updatedArray;
-      //   });
-      // }
-      // else{
-      //   setReceiveUnitsArray([...receiveUnitsArray, data]);
-      // }
-
     }
 
     const editUnit = async(e, index) => {
