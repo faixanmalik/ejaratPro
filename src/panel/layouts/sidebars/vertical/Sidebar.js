@@ -17,7 +17,7 @@ import {BsBank, BsChatQuote, BsShop} from 'react-icons/bs'
 import {FiShoppingBag, FiUserPlus, FiUsers} from 'react-icons/fi'
 import {FaRegBuilding, FaToriiGate} from 'react-icons/fa'
 import {TbFileInvoice} from 'react-icons/tb'
-import {RiBankCardLine, RiBankLine, RiBillLine} from 'react-icons/ri'
+import {RiBankCardLine, RiBankLine, RiBillLine, RiCommunityLine} from 'react-icons/ri'
 import {SlCalender} from 'react-icons/sl'
 import { Link } from 'react-feather';
 
@@ -177,6 +177,9 @@ const Sidebar2 = ({ showMobilemenu }) => {
           <SubMenu label="Real Estate" icon={<MdOutlineRealEstateAgent className='text-lg'/>}>
             <MenuItem href="/panel/realEstate/buildings" icon={<FaRegBuilding className='text-lg'/>} className={ location === '/panel/realEstate/buildings' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Buildings and Owner
+            </MenuItem>
+            <MenuItem href="/panel/realEstate/units" icon={<RiCommunityLine className='text-lg'/>} className={ location === '/panel/realEstate/units' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+              Units
             </MenuItem>
           </SubMenu>
 

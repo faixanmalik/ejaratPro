@@ -2,21 +2,14 @@ import React, {Fragment, useEffect, useRef, useState} from 'react'
 import mongoose from "mongoose";
 import moment from 'moment/moment';
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Menu, Dialog, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { Dialog, Transition } from '@headlessui/react'
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineUser, AiOutlinePlusCircle, AiOutlinePrinter, AiOutlineSave } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineEdit, AiOutlinePrinter, AiOutlineSave } from 'react-icons/ai';
 import Contact from 'models/Contact';
-import Charts from 'models/Charts';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import FullLayout from '@/panel/layouts/FullLayout';
-import Employees from 'models/Employees';
-import Product from 'models/Product';
-import TaxRate from 'models/TaxRate';
-import Project from 'models/Project';
 import ReactToPrint from 'react-to-print';
-import PaymentType from 'models/PaymentMethod';
 import dbBuildings from 'models/Buildings'; 
 
 import {
@@ -1514,9 +1507,9 @@ import { MdAdUnits } from 'react-icons/md';
 
                 <div className="relative rounded-lg bg-gray-50 border-2 border-blue-800">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                      <svg className="w-4 h-4 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                      </svg>
+                    <svg className="w-4 h-4 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
                   </div>
                   <div className='pl-8'>
                     <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Buildings..." required/>
@@ -1665,7 +1658,7 @@ import { MdAdUnits } from 'react-icons/md';
 
 
                             <Tabs value="owner">
-                              <TabsHeader>
+                              <TabsHeader className='bg-[#f0f3f4]'>
                                 {data.map(({ label, value, icon }) => (
                                   <Tab key={value} value={value}>
                                     <div className="flex items-center gap-2">

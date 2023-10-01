@@ -16,6 +16,7 @@ import Expenses from 'models/Expenses';
 import CreditSalesInvoice from 'models/CreditSalesInvoice';
 import PaymentMethod from 'models/PaymentMethod';
 import Buildings from 'models/Buildings';
+import Units from 'models/Units';
 
 
 export default async function handler(req, res) {
@@ -783,6 +784,16 @@ export default async function handler(req, res) {
             
             // Attempt to update the document
             await Buildings.updateOne({ _id: id }, req.body);
+            res.status(200).json({ success: true, message: 'Update Successfully!' });
+            
+        }
+
+        else if(path === 'Units'){
+
+            const { id } = req.body;
+            
+            // Attempt to update the document
+            await Units.updateOne({ _id: id }, req.body);
             res.status(200).json({ success: true, message: 'Update Successfully!' });
             
         }
