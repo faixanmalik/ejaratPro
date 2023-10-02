@@ -977,27 +977,18 @@ import { Pagination, PaginationItem } from '@mui/material';
       },
     ];
 
-
-    const getItemProps = (index) =>
-    ({
-      variant: active === index ? "filled" : "text",
-      color: "gray",
-      onClick: () => setActive(index),
-    });
-
     const next = () => {
-        if (active === 10) return;
-    
-        setActive(active + 1);
+      if (active === 10) return;
+      setActive(active + 1);
     };
      
     const prev = () => {
-        if (active === 1) return;
-    
-        setActive(active - 1);
+      if (active === 1) return;
+      setActive(active - 1);
     };
 
     useEffect(() => {
+
       let pageSize = 10
       let totalNoOfPages = Math.ceil(dbVouchers.length / pageSize);
       
@@ -1007,6 +998,7 @@ import { Pagination, PaginationItem } from '@mui/material';
       const endIndex = startIndex + pageSize;
       const currentItems = dbVouchers.slice(startIndex, endIndex);
       setFilteredData(currentItems)
+
     }, [active])
     
     
