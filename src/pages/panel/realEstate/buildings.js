@@ -30,6 +30,7 @@ import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
 import { MdAdUnits } from 'react-icons/md';
+import Charts from 'models/Charts';
 
 
   function classNames(...classes) {
@@ -52,7 +53,7 @@ import { MdAdUnits } from 'react-icons/md';
     );
   }
 
-  const Buildings = ({ dbVouchers, dbContacts }) => {
+  const Buildings = ({ dbVouchers, dbContacts, dbCharts }) => {
     
     const [open, setOpen] = useState(false)
     const [contacts, setContacts] = useState([])
@@ -99,6 +100,9 @@ import { MdAdUnits } from 'react-icons/md';
     const [adjective, setAdjective] = useState('')
     const [buildingType, setBuildingType] = useState('')
     const [idNumber, setIdNumber] = useState('')
+
+    const [chartsOfAccount, setChartsOfAccount] = useState('')
+
     const [expID, setExpID] = useState('')
     const [bank, setBank] = useState('')
     const [passPortNumber, setPassPortNumber] = useState('')
@@ -172,6 +176,9 @@ import { MdAdUnits } from 'react-icons/md';
       }
       else if(name === 'noOfFunctionLoop'){
         setNoOfFunctionLoop(value)
+      }
+      else if(name === 'chartsOfAccount'){
+        setChartsOfAccount(value)
       }
       else if(name === 'bankAccountNumber'){
         setBankAccountNumber(value)
@@ -341,7 +348,7 @@ import { MdAdUnits } from 'react-icons/md';
       e.preventDefault()
 
       // fetch the data from form to makes a file in local system
-      const data = { receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
+      const data = { receiveUnitsArray, chartsOfAccount, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -363,7 +370,7 @@ import { MdAdUnits } from 'react-icons/md';
     const editEntry = async(id)=>{
       setOpen(true)
 
-      const data = { id, receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
+      const data = { id, receiveUnitsArray, chartsOfAccount, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
       
       let res = await fetch(`/api/editEntry`, {
         method: 'POST',
@@ -417,7 +424,7 @@ import { MdAdUnits } from 'react-icons/md';
       let response = await res.json()
 
       if (response.success === true){
-        const {receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email} = response.data;
+        const {receiveUnitsArray, chartsOfAccount, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email} = response.data;
         
         let dbContractStartDate = moment(contractStartDate).utc().format('YYYY-MM-DD')
         let dbContractEndDate = moment(contractEndDate).utc().format('YYYY-MM-DD')
@@ -431,6 +438,7 @@ import { MdAdUnits } from 'react-icons/md';
         setNameInInvoice(nameInInvoice);
         setLessorName(lessorName);
         setAdjective(adjective);
+        setChartsOfAccount(chartsOfAccount);
         setBuildingType(buildingType);
         setIdNumber(idNumber);
         setExpID(dbExpDate);
@@ -652,6 +660,17 @@ import { MdAdUnits } from 'react-icons/md';
                   <option value=''>select building type</option>
                   {buildingTypes.map((item, index)=>{
                     return <option key={index} value={item}>{item}</option>
+                  })}
+                </select>
+              </div>
+              <div className="w-full">
+                <label htmlFor="chartsOfAccount" className="block text-sm font-medium text-gray-700">
+                  Charts Of Account
+                </label>
+                <select id="chartsOfAccount" name="chartsOfAccount" onChange={ handleChange } value={chartsOfAccount} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option value=''>select charts</option>
+                  {dbCharts && dbCharts.map((item, index)=>{
+                    return <option key={index} value={item.accountName}>{item.accountName}</option>
                   })}
                 </select>
               </div>
@@ -1725,12 +1744,14 @@ export async function getServerSideProps() {
   }
   let dbVouchers = await dbBuildings.find()
   let dbContacts = await Contact.find()
+  let dbCharts = await Charts.find()
 
   // Pass data to the page via props
   return {
     props: {
       dbVouchers: JSON.parse(JSON.stringify(dbVouchers)),
       dbContacts: JSON.parse(JSON.stringify(dbContacts)),
+      dbCharts: JSON.parse(JSON.stringify(dbCharts)),
     }
   }
 }   
