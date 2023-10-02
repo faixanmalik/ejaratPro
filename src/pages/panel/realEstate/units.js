@@ -1158,7 +1158,7 @@ import { Pagination, PaginationItem } from '@mui/material';
                         <th scope="col" className="p-1">
                             Area
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="pr-3">
                           View/Edit
                         </th>
                       </tr>
