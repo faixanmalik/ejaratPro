@@ -243,7 +243,7 @@ const PaymentMethod = ({dbPaymentMethods, charts}) => {
                 </tbody>
 
               </table>
-                {dbPaymentMethods.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No Bank Account found</h1> : ''}
+                {dbPaymentMethods.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
             </div>
             </div>
           </form>

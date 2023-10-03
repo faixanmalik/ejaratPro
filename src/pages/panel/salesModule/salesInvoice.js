@@ -1,3 +1,4 @@
+'use client'
 import React, {Fragment, useEffect, useRef, useState} from 'react'
 import mongoose from "mongoose";
 import moment from 'moment/moment';
@@ -18,15 +19,23 @@ import TaxRate from 'models/TaxRate';
 import Project from 'models/Project';
 import ReactToPrint from 'react-to-print';
 import PaymentType from 'models/PaymentMethod';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link';
 
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
+
   const SalesInvoice = ({ dbVouchers, dbProducts, dbPaymentType, dbContacts, dbEmployees, dbTaxRate, dbProject }) => {
-    
-    const [open, setOpen] = useState(false)
+
+    const router = useRouter();
+    const searchParams = useSearchParams()
+    const open = searchParams.get('open')
+    const refer = searchParams.get('refer')
+
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
@@ -53,6 +62,12 @@ import PaymentType from 'models/PaymentMethod';
         setIsAdmin(true)
       }
     }, [])
+
+    useEffect(() => {
+      openSettings();
+    }, [refer])
+    
+    
 
 
     // JV
@@ -169,7 +184,7 @@ import PaymentType from 'models/PaymentMethod';
       let response = await res.json()
 
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -234,7 +249,7 @@ import PaymentType from 'models/PaymentMethod';
     }
 
     const editEntry = async(id)=>{
-      setOpen(true)
+      router.push('?open=true');
 
       const data = { id, phoneNo, discount, email, city, fromAccount:receivedBy, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'SalesInvoice' };
       
@@ -248,7 +263,7 @@ import PaymentType from 'models/PaymentMethod';
       let response = await res.json()
       
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -276,7 +291,8 @@ import PaymentType from 'models/PaymentMethod';
     }
 
     const getData = async (id) =>{
-      setOpen(true)
+
+      router.push('?open=true');
       setIsOpenSaveChange(false)
 
       const data = { id, path: 'SalesInvoice' };
@@ -318,6 +334,41 @@ import PaymentType from 'models/PaymentMethod';
     const componentRef = useRef();
     const speceficComponentRef = useRef();
 
+
+    const openSettings = async ()=>{
+      
+      setId('')
+      setJournalDate(today)
+
+      setJournalNo(`SI-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
+        ? dbVouchers.length + 1
+        : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(3)) + 1}`)
+
+
+      setInputList([
+        {journalNo : `SI-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
+          ? dbVouchers.length + 1
+          : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(3)) + 1}`,
+          
+          discount: discount, date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
+      ])
+      setMemo('')
+      setAttachment('')
+      setFullAmount(0)
+      setFullTax(0)
+      setTotalAmount(0)
+      setPhoneNo(0)
+      setDiscount(0)
+      setName('')
+      setReceivedBy('')
+      setEmail('')
+      setCity('')
+      setProject('')
+      setReceivedBy('')
+      setDueDate('')
+      setIsOpenSaveChange(true)
+    }
+
   return (
     <>
     <ProSidebarProvider>
@@ -339,43 +390,12 @@ import PaymentType from 'models/PaymentMethod';
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
             <h3 className="text-lg font-medium leading-6 text-gray-900">Sales Invoices</h3>
-            <button 
-              onClick={()=>{
-                setOpen(true)
-                setId('')
-                setJournalDate(today)
-
-                setJournalNo(`SI-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                  ? dbVouchers.length + 1
-                  : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(3)) + 1}`)
-
-
-                setInputList([
-                  {journalNo : `SI-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                    ? dbVouchers.length + 1
-                    : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(3)) + 1}`,
-                    
-                    discount: discount, date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
-                ])
-                setMemo('')
-                setAttachment('')
-                setFullAmount(0)
-                setFullTax(0)
-                setTotalAmount(0)
-                setPhoneNo(0)
-                setDiscount(0)
-                setName('')
-                setReceivedBy('')
-                setEmail('')
-                setCity('')
-                setProject('')
-                setReceivedBy('')
-                setDueDate('')
-                setIsOpenSaveChange(true)
-              }} 
-              className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
+            <Link
+              onClick={()=>openSettings()}
+              href={'?open=true'}
+              className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
               New
-            </button>
+            </Link>
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
@@ -483,8 +503,8 @@ import PaymentType from 'models/PaymentMethod';
       </div>
     </div>
 
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-20" onClose={()=>{setOpen(false)}}>
+    <Transition.Root show={open === 'true' ? true : false} as={Fragment}>
+      <Dialog as="div" className="relative z-20" onClose={()=>{router.push('?open=false')}}>
         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
         </Transition.Child>
@@ -493,7 +513,7 @@ import PaymentType from 'models/PaymentMethod';
             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-5xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
+                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => router.push('?open=false')}>
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -817,21 +837,6 @@ import PaymentType from 'models/PaymentMethod';
                                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             </textarea>
                           </div>
-                            
-                          {/* <div className="mt-7">
-                            <label htmlFor="attachment" className="block text-sm font-medium text-gray-700">
-                                Attachment:
-                            </label>
-                            <input
-                                type="file"
-                                onChange={handleChange}
-                                name="attachment"
-                                value={attachment}
-                                id="attachment"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                multiple
-                            />
-                          </div> */}
 
                         </div>
                         <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">

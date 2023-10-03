@@ -37,6 +37,7 @@ import Buildings from 'models/Buildings';
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { Pagination, PaginationItem } from '@mui/material';
+import Link from 'next/link';
 
 
   function classNames(...classes) {
@@ -73,9 +74,13 @@ import { Pagination, PaginationItem } from '@mui/material';
     const [isAdmin, setIsAdmin] = useState(false)
 
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
+    const [isChecked, setIsChecked] = useState(false);
 
 
     function handleRowCheckboxChange(e, id) {
+
+      setIsChecked((prevChecked) => !prevChecked);
+
       if (e.target.checked) {
         setSelectedIds([...selectedIds, id]);
       } 
@@ -1076,7 +1081,10 @@ import { Pagination, PaginationItem } from '@mui/material';
               </button>
             </div>
           </div>
-          <div className="mt-4 md:col-span-2 md:mt-0">
+          <div className="mt-2 md:col-span-2 md:mt-0">
+
+
+
             <div className='flex justify-between'>
 
               <div className='w-1/4'>
@@ -1095,12 +1103,12 @@ import { Pagination, PaginationItem } from '@mui/material';
 
               <div className='flex'>
 
-                <button onClick={delEntry}
+                {/* <button onClick={delEntry}
                   className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
                   >
                     Delete
                   <AiOutlineDelete className='text-lg ml-2'/>
-                </button>
+                </button> */}
 
                 <ReactToPrint
                   trigger={()=>{
@@ -1119,6 +1127,35 @@ import { Pagination, PaginationItem } from '@mui/material';
               </div>
             
             </div>
+
+
+            {isChecked === true ? <div className='flex justify-end my-2'>
+
+
+              <Link href={'/panel/salesModule/salesInvoice?open=true&refer=true'} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 no-underline flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Reserve Units
+              </Link>
+              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                New Contract
+              </button>
+              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Change Unit Status
+              </button>
+              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Archive Unit
+              </button>
+
+              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-red-800 flex hover:text-white border-2 border-red-800 hover:bg-red-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Delete
+                <AiOutlineDelete className='text-lg ml-2'/>
+              </button>
+              
+            </div>: ''}
+
+
+
+
+
             <form method="POST">
               <div className="overflow-hidden shadow sm:rounded-md">
                 
@@ -1168,7 +1205,7 @@ import { Pagination, PaginationItem } from '@mui/material';
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
-                            <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            <input id="checkbox-table-search-1" checked={isChecked} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                           </div>
                         </td>
                         <td className="p-1 w-[140px]">
