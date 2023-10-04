@@ -153,6 +153,8 @@ import Charts from 'models/Charts';
     const [receiveUnitsArray, setReceiveUnitsArray] = useState([])
     const [increment, setIncrement] = useState(100)
 
+    const [filteredData, setFilteredData] = useState([])
+
 
     useEffect(() => {
       
@@ -343,6 +345,15 @@ import Charts from 'models/Charts';
       }
     }
 
+    useEffect(() => {
+      
+      const newFilteredData = dbVouchers.filter((item)=>{
+        return item.buildingNameInEnglish.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilteredData(newFilteredData)
+
+    }, [search])
+
     // JV
     const submit = async(e)=>{
       e.preventDefault()
@@ -483,9 +494,6 @@ import Charts from 'models/Charts';
     const componentRef = useRef();
     const speceficComponentRef = useRef();
 
-    // const filteredData = personList.filter((item)=>{
-    //   return item.name.toLowerCase().includes(search.toLowerCase());
-    // });
 
     let adjectives = ['Agent', 'Owner' ];
     let buildingTypes = ['Management', 'Owned', 'Investment']
@@ -1604,7 +1612,7 @@ import Charts from 'models/Charts';
                       </tr>
                     </thead>
                     <tbody>
-                      {dbVouchers.map((item, index)=>{
+                      {filteredData.map((item, index)=>{
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
@@ -1646,7 +1654,7 @@ import Charts from 'models/Charts';
                       
                     </tbody>
                   </table>
-                  { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                  { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                 </div>
 
               </div>

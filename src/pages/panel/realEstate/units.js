@@ -80,12 +80,12 @@ import Link from 'next/link';
     function handleRowCheckboxChange(e, id) {
 
       setIsChecked((prevChecked) => !prevChecked);
+      const isChecked = selectedIds.includes(id);
 
-      if (e.target.checked) {
-        setSelectedIds([...selectedIds, id]);
-      } 
-      else {
+      if (isChecked) {
         setSelectedIds(selectedIds.filter(rowId => rowId !== id));
+      } else {
+        setSelectedIds([...selectedIds, id]);
       }
     }
 
@@ -150,14 +150,28 @@ import Link from 'next/link';
 
     const [filteredData, setFilteredData] = useState([])
 
+    useEffect(() => {
+      
+      const newFilteredData = dbVouchers.filter((item)=>{
+        return item.buildingNameInEnglish.toLowerCase().includes(search.toLowerCase());
+      });
+      setFilteredData(newFilteredData)
+
+    }, [search])
+    
+
 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         
         if (name === 'attachment') {
-            setAttachment(value);
-        } else if (name === 'phoneNo') {
+          setAttachment(value);
+        }
+        else if (name === 'search') {
+          setSearch(value);
+        }
+        else if (name === 'phoneNo') {
             setPhoneNo(value);
         } else if (name === 'email') {
             setEmail(value);
@@ -391,9 +405,7 @@ import Link from 'next/link';
     const componentRef = useRef();
     const speceficComponentRef = useRef();
 
-    // const filteredData = personList.filter((item)=>{
-    //   return item.name.toLowerCase().includes(search.toLowerCase());
-    // });
+    
 
     let countries = [ "United States", "China", "India", "Brazil", "Russia", "Japan", "United Kingdom", "Germany", "France", "Canada", "Australia", "South Korea", "Mexico", "Spain", "Italy", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark", "Finland", "Argentina", "Chile", "South Africa", "Egypt", "Nigeria", "Kenya", "Saudi Arabia", "United Arab Emirates"];
     let cities = [ "New York City, USA", "Tokyo, Japan", "Mumbai, India", "Beijing, China", "London, United Kingdom", "Paris, France", "Moscow, Russia", "Cairo, Egypt", "Rio de Janeiro, Brazil", "Sydney, Australia", "Cape Town, South Africa", "Mexico City, Mexico", "Toronto, Canada", "Dubai, United Arab Emirates", "Seoul, South Korea", "Buenos Aires, Argentina", "Nairobi, Kenya"];
@@ -1205,7 +1217,7 @@ import Link from 'next/link';
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
-                            <input id="checkbox-table-search-1" checked={isChecked} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            <input id={`checkbox-table-search-${item._id}`} checked={selectedIds.includes(item._id)} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                           </div>
                         </td>
                         <td className="p-1 w-[140px]">
