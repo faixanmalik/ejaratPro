@@ -1087,9 +1087,6 @@ import Buildings from 'models/Buildings';
         setTenantOpeningBalance(openingBalance)
       }
     }, [tenant])
-    
-
-
 
 
     const newContractData = [
