@@ -11,6 +11,8 @@ import { ProSidebarProvider } from 'react-pro-sidebar';
 import FullLayout from '@/panel/layouts/FullLayout';
 import ReactToPrint from 'react-to-print';
 import dbUnits from 'models/Units'; 
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import Link from 'next/link';
 
 import {
   Tabs,
@@ -19,7 +21,11 @@ import {
   Tab,
   TabPanel,
   Typography,
+  Select, 
+  Option,
+  IconButton
 } from "@material-tailwind/react";
+
 
 import {
   Accordion,
@@ -30,14 +36,10 @@ import {
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
-import { MdAdUnits } from 'react-icons/md';
+import { FiUsers } from 'react-icons/fi';
 import Buildings from 'models/Buildings';
 
 
-import { Button, IconButton } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { Pagination, PaginationItem } from '@mui/material';
-import Link from 'next/link';
 
 
   function classNames(...classes) {
@@ -60,9 +62,11 @@ import Link from 'next/link';
     );
   }
 
-  const Units = ({ dbVouchers, dbContacts, dbBuildings }) => {
+  const Units = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
     const [open, setOpen] = useState(false)
+    const [openNewContract, setOpenNewContract] = useState(false)
+
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
@@ -79,7 +83,6 @@ import Link from 'next/link';
 
     function handleRowCheckboxChange(e, id) {
 
-      setIsChecked((prevChecked) => !prevChecked);
       const isChecked = selectedIds.includes(id);
 
       if (isChecked) {
@@ -88,6 +91,17 @@ import Link from 'next/link';
         setSelectedIds([...selectedIds, id]);
       }
     }
+
+    useEffect(() => {
+      if(selectedIds.length > 0) {
+        setIsChecked(true);
+      }
+      else{
+        setIsChecked(false);
+      }
+      
+    }, [selectedIds])
+    
 
     useEffect(() => {
       setContacts(dbContacts)
@@ -147,8 +161,37 @@ import Link from 'next/link';
     const [notes, setNotes] = useState('')  
 
     const [totalNoOfPages, setTotalNoOfPages] = useState(1)
-
+    
     const [filteredData, setFilteredData] = useState([])
+
+    const [openTenantExtraForm, setOpenTenantExtraForm] = React.useState(1);
+    const handleOpenTenantExtraForm = (value) => setOpenTenantExtraForm(openTenantExtraForm === value ? 0 : value);
+    
+    const [tenant, setTenant] = useState('')
+    const [tenantName, setTenantName] = useState('')
+    const [tenantEmail, setTenantEmail] = useState('')
+    const [tenantPhoneNo, setTenantPhoneNo] = useState('')
+    const [tenantOpeningBalance, setTenantOpeningBalance] = useState('')
+
+    const [tenantPassPortNumber, setTenantPassPortNumber] = useState('')
+    const [tenantExpPassPort, setTenantExpPassPort] = useState('')
+    const [tenantVatRegistrationNo, setTenantVatRegistrationNo] = useState('')
+    const [tenantIbanNo, setTenantIbanNo] = useState('')
+    const [tenantBank, setTenantBank] = useState('')
+    const [tenantBankAccountNumber, setTenantBankAccountNumber] = useState('')
+    
+    const [newContractStartDate, setNewContractStartDate] = useState('')
+    const [newContractEndDate, setNewContractEndDate] = useState('')
+    const [newContractUnitRent, setNewContractUnitRent] = useState('')
+    const [newContractCommision, setNewContractCommision] = useState('')
+    const [newContractRentParking, setNewContractRentParking] = useState('')
+    const [newContractBouncedChequeFine, setNewContractBouncedChequeFine] = useState('')
+    const [newContractStatus, setNewContractStatus] = useState('')
+    const [newContractPaymentScheduling, setNewContractPaymentScheduling] = useState('')
+    const [newContractSecurityDeposit, setNewContractSecurityDeposit] = useState('')
+    const [newContractNotes, setNewContractNotes] = useState('')
+
+
 
     useEffect(() => {
       
@@ -165,13 +208,24 @@ import Link from 'next/link';
     const handleChange = (e) => {
         const { name, value } = e.target;
         
-        if (name === 'attachment') {
+        if (name === 'tenantPassPortNumber') {
+          setTenantPassPortNumber(value);
+        } else if (name === 'tenantExpPassPort') {
+          setTenantExpPassPort(value);
+        } else if (name === 'tenantVatRegistrationNo') {
+          setTenantVatRegistrationNo(value);
+        } else if (name === 'tenantIbanNo') {
+          setTenantIbanNo(value);
+        } else if (name === 'tenantBank') {
+          setTenantBank(value);
+        } else if (name === 'tenantBankAccountNumber') {
+          setTenantBankAccountNumber(value);
+        } 
+        else if (name === 'attachment') {
           setAttachment(value);
-        }
-        else if (name === 'search') {
+        } else if (name === 'search') {
           setSearch(value);
-        }
-        else if (name === 'phoneNo') {
+        } else if (name === 'phoneNo') {
             setPhoneNo(value);
         } else if (name === 'email') {
             setEmail(value);
@@ -331,7 +385,6 @@ import Link from 'next/link';
     }
 
     const getData = async (id) =>{
-      setOpen(true)
       setIsOpenSaveChange(false)
 
       const data = { id, path: 'Units' };
@@ -348,12 +401,12 @@ import Link from 'next/link';
 
         const { attachment, name, phoneNo, email, nameInBill, idNumber, expID, building, passPortNumber, expPassPort, buildingNameInArabic, buildingNameInEnglish, parkings, roof, country, city, area, electricityMeterNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, unitNo, balcony, ac, unitType, unitUse, bathroom, unitStatus, plotNo, rent, rentParking, size, waterMeterNumber, sewageNumber, view, notes} = response.data;
         
-        let dbContractStartDate = moment(contractStartDate).utc().format('YYYY-MM-DD')
-        let dbContractEndDate = moment(contractEndDate).utc().format('YYYY-MM-DD')
-        let dbGracePeriodFromDate = moment(gracePeriodFrom).utc().format('YYYY-MM-DD')
-        let dbGracePeriodToDate = moment(gracePeriodTo).utc().format('YYYY-MM-DD')
-        let dbExpDate = moment(expID).utc().format('YYYY-MM-DD')
-        let dbPassPortDate = moment(expPassPort).utc().format('YYYY-MM-DD')
+        let dbContractStartDate = moment(contractStartDate).utc().format('YYYY-MM-DD') || ''
+        let dbContractEndDate = moment(contractEndDate).utc().format('YYYY-MM-DD') || ''
+        let dbGracePeriodFromDate = moment(gracePeriodFrom).utc().format('YYYY-MM-DD') || ''
+        let dbGracePeriodToDate = moment(gracePeriodTo).utc().format('YYYY-MM-DD') || ''
+        let dbExpDate = moment(expID).utc().format('YYYY-MM-DD') || ''
+        let dbPassPortDate = moment(expPassPort).utc().format('YYYY-MM-DD') || ''
 
         setId(response.data._id)
 
@@ -364,40 +417,40 @@ import Link from 'next/link';
         setExpPassPort(dbPassPortDate);
         setExpID(dbExpDate);
 
-        setAttachment(attachment);
-        setPhoneNo(phoneNo);
-        setEmail(email);
-        setNameInBill(nameInBill);
-        setIdNumber(idNumber);
-        setBuilding(building);
-        setPassPortNumber(passPortNumber);
-        setBuildingNameInArabic(buildingNameInArabic);
-        setBuildingNameInEnglish(buildingNameInEnglish);
-        setParkings(parkings);
-        setRoof(roof);
-        setCountry(country);
-        setCity(city);
-        setArea(area);
-        setElectricityMeterNo(electricityMeterNo);
-        setInvestmentStructure(investmentStructure);
-        setAmount(amount);
-        setPaymentScheduling(paymentScheduling);
-        setUnitNo(unitNo);
-        setBalcony(balcony);
-        setAc(ac);
-        setUnitType(unitType);
-        setUnitUse(unitUse);
-        setBathroom(bathroom);
-        setUnitStatus(unitStatus);
-        setPlotNo(plotNo);
-        setRent(rent);
-        setRentParking(rentParking);
-        setSize(size);
-        setWaterMeterNumber(waterMeterNumber);
-        setSewageNumber(sewageNumber);
-        setView(view);
-        setNotes(notes);
-        setName(name);
+        setAttachment(attachment || '');
+        setPhoneNo(phoneNo || '');
+        setEmail(email || '');
+        setNameInBill(nameInBill || '');
+        setIdNumber(idNumber || '');
+        setBuilding(building || '');
+        setPassPortNumber(passPortNumber || '');
+        setBuildingNameInArabic(buildingNameInArabic || '');
+        setBuildingNameInEnglish(buildingNameInEnglish || '');
+        setParkings(parkings || '');
+        setRoof(roof || '');
+        setCountry(country || '');
+        setCity(city || '');
+        setArea(area || '');
+        setElectricityMeterNo(electricityMeterNo || '');
+        setInvestmentStructure(investmentStructure || '');
+        setAmount(amount || '');
+        setPaymentScheduling(paymentScheduling || '');
+        setUnitNo(unitNo || '');
+        setBalcony(balcony || '');
+        setAc(ac || '');
+        setUnitType(unitType || '');
+        setUnitUse(unitUse || '');
+        setBathroom(bathroom || '');
+        setUnitStatus(unitStatus || '');
+        setPlotNo(plotNo || '');
+        setRent(rent || '');
+        setRentParking(rentParking || '');
+        setSize(size || '');
+        setWaterMeterNumber(waterMeterNumber || '');
+        setSewageNumber(sewageNumber || '');
+        setView(view || '');
+        setNotes(notes || '');
+        setName(name || '');
       }
     }
 
@@ -416,6 +469,7 @@ import Link from 'next/link';
     let unitUses = ['Residencial', 'Commercial']
     let aces = ['Window', 'Split', 'Central']
     let unitStatuses = ['Available', 'Occupied', 'Booked', 'Hold', 'Rent Dispute']
+    let newContractStatusArray = ['Active','Expired','Close']
 
 
     const data = [
@@ -482,72 +536,72 @@ import Link from 'next/link';
             </div> 
 
             <div className='flex space-x-4 mb-14'>
-                <div className="w-full">
-                    <label htmlFor="idNumber" className="block text-sm font-medium text-gray-700">
-                    ID Number
-                    </label>
-                    <input
-                        type="number"
-                        onChange={handleChange}
-                        name="idNumber"
-                        value={idNumber}
-                        id="idNumber"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                </div>
-                <div className="w-full">
-                    <label htmlFor="expID" className="block text-sm font-medium text-gray-700">
-                    Expiry Date ID Number
-                    </label>
-                    <input 
-                        type="date"
-                        onChange={handleChange}
-                        name="expID"
-                        id="expID"
-                        value={expID}
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                </div>
-                <div className="w-full">
-                    <label htmlFor="building" className="block text-sm font-medium text-gray-700">
-                    building
-                    </label>
-                    <select id="building" name="building" onChange={ handleChange } value={building} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                        <option value=''>select building</option>
-                        {dbBuildings.map((item, index)=>{
-                            return <option key={index} value={item.buildingNameInEnglish}>{item.buildingNameInEnglish}</option>
-                        })}
-                    </select>
-                </div>
+              <div className="w-full">
+                  <label htmlFor="idNumber" className="block text-sm font-medium text-gray-700">
+                  ID Number
+                  </label>
+                  <input
+                      type="number"
+                      onChange={handleChange}
+                      name="idNumber"
+                      value={idNumber}
+                      id="idNumber"
+                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  />
+              </div>
+              <div className="w-full">
+                  <label htmlFor="expID" className="block text-sm font-medium text-gray-700">
+                  Expiry Date ID Number
+                  </label>
+                  <input 
+                      type="date"
+                      onChange={handleChange}
+                      name="expID"
+                      id="expID"
+                      value={expID}
+                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  />
+              </div>
+              <div className="w-full">
+                  <label htmlFor="building" className="block text-sm font-medium text-gray-700">
+                  building
+                  </label>
+                  <select id="building" name="building" onChange={ handleChange } value={building} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                      <option value=''>select building</option>
+                      {dbBuildings.map((item, index)=>{
+                          return <option key={index} value={item.buildingNameInEnglish}>{item.buildingNameInEnglish}</option>
+                      })}
+                  </select>
+              </div>
             </div>
 
             <div className='flex space-x-4 mb-14'>
-                <div className="w-1/3">
-                    <label htmlFor="passPortNumber" className="block text-sm font-medium text-gray-700">
-                    Passport Number
-                    </label>
-                    <input
-                    type="number"
-                    onChange={handleChange}
-                    name="passPortNumber"
-                    value={passPortNumber}
-                    id="passPortNumber"
-                    className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                </div>
-                <div className="w-1/3">
-                    <label htmlFor="expPassPort" className="block text-sm font-medium text-gray-700">
-                    Expiry Date Passport
-                    </label>
-                    <input 
-                    type="date"
-                    onChange={handleChange}
-                    name="expPassPort"
-                    id="expPassPort"
-                    value={expPassPort}
-                    className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                </div>
+              <div className="w-1/3">
+                  <label htmlFor="passPortNumber" className="block text-sm font-medium text-gray-700">
+                  Passport Number
+                  </label>
+                  <input
+                  type="number"
+                  onChange={handleChange}
+                  name="passPortNumber"
+                  value={passPortNumber}
+                  id="passPortNumber"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  />
+              </div>
+              <div className="w-1/3">
+                  <label htmlFor="expPassPort" className="block text-sm font-medium text-gray-700">
+                  Expiry Date Passport
+                  </label>
+                  <input 
+                  type="date"
+                  onChange={handleChange}
+                  name="expPassPort"
+                  id="expPassPort"
+                  value={expPassPort}
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  />
+              </div>
             </div>
 
             <div className="flex items-center justify-center w-full mt-10">
@@ -1017,6 +1071,684 @@ import Link from 'next/link';
       setFilteredData(currentItems)
 
     }, [active])
+
+    useEffect(() => {
+
+      let data = dbTenants.filter((item)=>{
+        return item.name === tenant;
+      })
+
+      if(data.length > 0) {
+        let {name, email, phoneNo, openingBalance} = data[0];
+
+        setTenantName(name)
+        setTenantEmail(email)
+        setTenantPhoneNo(phoneNo)
+        setTenantOpeningBalance(openingBalance)
+      }
+    }, [tenant])
+    
+
+
+
+
+    const newContractData = [
+      
+      {
+        label: "Unit Details",
+        value: "unitDetails",
+        icon: HiOutlineBuildingOffice2,
+        desc: (
+          <div>
+
+            <div className='flex space-x-4 mb-14'>
+
+                <div className="w-8/12">
+                    <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
+                        Unit Number
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="unitNo"
+                        value={unitNo}
+                        id="unitNo"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-full">
+                    <label htmlFor="buildingNameInArabic" className="block text-sm font-medium text-gray-700">
+                        Building Name In Arabic
+                    </label>
+                    <input
+                        type="text"
+                        onChange={handleChange}
+                        name="buildingNameInArabic"
+                        value={buildingNameInArabic}
+                        id="buildingNameInArabic"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-full">
+                    <label htmlFor="buildingNameInEnglish" className="block text-sm font-medium text-gray-700">
+                        Building Name In English
+                    </label>
+                    <input
+                        type="text"
+                        onChange={handleChange}
+                        name="buildingNameInEnglish"
+                        value={buildingNameInEnglish}
+                        id="buildingNameInEnglish"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-8/12">
+                    <label htmlFor="plotNo" className="block text-sm font-medium text-gray-700">
+                        Plot Number
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="plotNo"
+                        value={plotNo}
+                        id="plotNo"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-8/12">
+                    <label htmlFor="rent" className="block text-sm font-medium text-gray-700">
+                        Rent
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="rent"
+                        value={rent}
+                        id="rent"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+            </div>
+
+            <div className='flex space-x-4 mb-14'>
+
+                <div className="w-8/12">
+                    <label htmlFor="bathroom" className="block text-sm font-medium text-gray-700">
+                        Bathroom
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="bathroom"
+                        value={bathroom}
+                        id="bathroom"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-8/12">
+                    <label htmlFor="parkings" className="block text-sm font-medium text-gray-700">
+                        Parkings
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="parkings"
+                        value={parkings}
+                        id="parkings"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-8/12">
+                    <label htmlFor="rentParking" className="block text-sm font-medium text-gray-700">
+                        Rent Parking
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="rentParking"
+                        value={rentParking}
+                        id="rentParking"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-8/12">
+                    <label htmlFor="roof" className="block text-sm font-medium text-gray-700">
+                        Roof
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="roof"
+                        value={roof}
+                        id="roof"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-8/12">
+                    <label htmlFor="balcony" className="block text-sm font-medium text-gray-700">
+                        Balcony
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="balcony"
+                        value={balcony}
+                        id="balcony"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-8/12">
+                    <label htmlFor="size" className="block text-sm font-medium text-gray-700">
+                        Size
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="size"
+                        value={size}
+                        id="size"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+            </div>
+
+            <div className='flex space-x-4 mb-14'>
+                <div className="w-full">
+                    <label htmlFor="electricityMeterNo" className="block text-sm font-medium text-gray-700">
+                        Electricity Meter No
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="electricityMeterNo"
+                        value={electricityMeterNo}
+                        id="electricityMeterNo"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+
+                <div className="w-full">
+                    <label htmlFor="waterMeterNumber" className="block text-sm font-medium text-gray-700">
+                        Water Meter Number
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="waterMeterNumber"
+                        value={waterMeterNumber}
+                        id="waterMeterNumber"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+                <div className="w-full">
+                    <label htmlFor="sewageNumber" className="block text-sm font-medium text-gray-700">
+                        Sewage Number
+                    </label>
+                    <input
+                        type="number"
+                        onChange={handleChange}
+                        name="sewageNumber"
+                        value={sewageNumber}
+                        id="sewageNumber"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+
+            </div>
+
+            <div className='flex space-x-4 mb-14'>
+                <div className="w-full">
+                    <label htmlFor="ac" className="block text-sm font-medium text-gray-700">
+                        AC
+                    </label>
+                    <select id="ac" name="ac" onChange={ handleChange } value={ac} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select ac</option>
+                        {aces.map((item, index)=>{
+                            return <option key={index} value={item}>{item}</option>
+                        })}
+                    </select>
+                </div>
+                <div className="w-full">
+                    <label htmlFor="unitType" className="block text-sm font-medium text-gray-700">
+                        Unit Type
+                    </label>
+                    <select id="unitType" name="unitType" onChange={ handleChange } value={unitType} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select unit type</option>
+                        {unitTypes.map((item, index)=>{
+                            return <option key={index} value={item}>{item}</option>
+                        })}
+                    </select>
+                </div>
+                <div className="w-full">
+                    <label htmlFor="unitUse" className="block text-sm font-medium text-gray-700">
+                        Unit Use
+                    </label>
+                    <select id="unitUse" name="unitUse" onChange={ handleChange } value={unitUse} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select unit use</option>
+                        {unitUses.map((item, index)=>{ 
+                            return <option key={index} value={item}>{item}</option>
+                        })}
+                    </select>
+                </div>
+
+                
+                
+
+                <div className="w-full">
+                    <label htmlFor="unitStatus" className="block text-sm font-medium text-gray-700">
+                        Unit Status
+                    </label>
+                    <select id="unitStatus" name="unitStatus" onChange={ handleChange } value={unitStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select unit status</option>
+                        {unitStatuses.map((item, index)=>{ 
+                            return <option key={index} value={item}>{item}</option>
+                        })}
+                    </select>
+                </div>
+
+                <div className="w-full">
+                    <label htmlFor="view" className="block text-sm font-medium text-gray-700">
+                        View
+                    </label>
+                    <input
+                        type="text"
+                        onChange={handleChange}
+                        name="view"
+                        value={view}
+                        id="view"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                </div>
+            </div>
+
+            <div className='flex space-x-4 mb-14'>
+
+                <div className="w-full">
+                    <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                        Country
+                    </label>
+                    <select id="country" name="country" onChange={ handleChange } value={country} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select country</option>
+                        {countries.map((item, index)=>{
+                            return <option key={index} value={item}>{item}</option>
+                        })}
+                    </select>
+                </div>
+                <div className="w-full">
+                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                        City
+                    </label>
+                    <select id="city" name="city" onChange={ handleChange } value={city} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select city</option>
+                        {cities.map((item, index)=>{
+                            return <option key={index} value={item}>{item}</option>
+                        })}
+                    </select>
+                </div>
+                <div className="w-full">
+                    <label htmlFor="area" className="block text-sm font-medium text-gray-700">
+                        Area
+                    </label>
+                    <select id="area" name="area" onChange={ handleChange } value={area} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                        <option value=''>select area</option>
+                        {areas.map((item, index)=>{
+                            return <option key={index} value={item}>{item}</option>
+                        })}
+                    </select>
+                </div>
+
+            </div>
+
+            <div className='flex space-x-4 mb-14'>
+                <textarea cols="30" rows="5" type="text"
+                    onChange={ handleChange }
+                    name="notes"
+                    placeholder='add your notes here...'
+                    value={notes}
+                    id="notes"
+                    className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </textarea>
+            </div>
+
+          </div>
+        ),
+      },
+      {
+        label: "Customer Details",
+        value: "customerDetails",
+        icon: FiUsers,
+        desc: (
+          <div>
+            <div>
+              <Select size="md" label="Tenant Profile" name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
+                {dbTenants.map((item, index) => {
+                  return <Option key={index} value={item.name}>{item.name}</Option>;
+                })}
+              </Select>
+            </div>
+            <div className="bg-white py-5">
+              <div className="grid grid-cols-6 gap-6">
+
+                <div className="col-span-6 sm:col-span-2">
+                  <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">Name:</label>
+                  <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                </div>
+
+
+                <div className="col-span-6 sm:col-span-2">
+                  <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">Email address</label>
+                  <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                </div>
+
+                <div className="col-span-6 sm:col-span-1">
+                  <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                  <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                </div>
+
+                <div className="col-span-6 sm:col-span-1">
+                  <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">Opening Balance</label>
+                  <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                </div>
+
+              </div>
+            </div>
+            <Accordion open={openTenantExtraForm === 0} icon={<Icon id={1} open={openTenantExtraForm} />}>
+              <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>Add More? Then click!</AccordionHeader>
+              <AccordionBody>
+                <div>
+                  <div className='flex space-x-4 mb-14'>
+
+                    <div className="w-full">
+                      <label htmlFor="tenantPassPortNumber" className="block text-sm font-medium text-gray-700">
+                        Passport Number
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="tenantPassPortNumber"
+                        value={tenantPassPortNumber}
+                        id="tenantPassPortNumber"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+
+                    <div className="w-full">
+                      <label htmlFor="tenantExpPassPort" className="block text-sm font-medium text-gray-700">
+                        Expiry Date Passport
+                      </label>
+                      <input 
+                        type="date"
+                        onChange={handleChange}
+                        name="tenantExpPassPort"
+                        id="tenantExpPassPort"
+                        value={tenantExpPassPort}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+
+                    <div className="w-full">
+                      <label htmlFor="tenantVatRegistrationNo" className="block text-sm font-medium text-gray-700">
+                        Vat Registration No
+                      </label>
+                      <input 
+                        type="number"
+                        onChange={handleChange}
+                        name="tenantVatRegistrationNo"
+                        id="tenantVatRegistrationNo"
+                        value={tenantVatRegistrationNo}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div> 
+                  </div>
+
+                  <div className='flex space-x-4 mb-14'>
+                    <div className="w-full">
+                      <label htmlFor="tenantIbanNo" className="block text-sm font-medium text-gray-700">
+                        IBAN Number
+                      </label>
+                      <input
+                        type="number"
+                        onChange={handleChange}
+                        name="tenantIbanNo"
+                        value={tenantIbanNo}
+                        id="tenantIbanNo"
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+
+                    <div className="w-full">
+                      <label htmlFor="tenantBank" className="block text-sm font-medium text-gray-700">
+                        The Bank
+                      </label>
+                      <input 
+                        type="text"
+                        onChange={handleChange}
+                        name="tenantBank"
+                        id="tenantBank"
+                        value={tenantBank}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+
+                    <div className="w-full">
+                      <label htmlFor="tenantBankAccountNumber" className="block text-sm font-medium text-gray-700">
+                        Bank Account Number
+                      </label>
+                      <input 
+                        type="number"
+                        onChange={handleChange}
+                        name="tenantBankAccountNumber"
+                        id="tenantBankAccountNumber"
+                        value={tenantBankAccountNumber}
+                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                    </div>
+                    
+                  </div>
+                </div>
+                
+              </AccordionBody>
+            </Accordion>
+
+            <div className="flex items-center justify-center w-full mt-10">
+              <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                  <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                </div>
+                <input id="dropzone-file" type="file" className="hidden" />
+              </label>
+            </div>
+
+
+          </div>
+        ),
+      },
+      {
+        label: "Rent",
+        value: "rent",
+        icon: BsCashCoin,
+        desc: (
+          <div>
+
+            <div className='flex space-x-4 mb-14'>
+              <div className="w-full">
+                <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
+                 Contract Start Date
+                </label>
+                <input
+                  type="date"
+                  onChange={handleChange}
+                  name="newContractStartDate"
+                  value={newContractStartDate}
+                  id="newContractStartDate"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="w-full">
+                <label htmlFor="newContractEndDate" className="block text-sm font-medium text-gray-700">
+                 Contract End Date
+                </label>
+                <input
+                  type="date"
+                  onChange={handleChange}
+                  name="newContractEndDate"
+                  value={newContractEndDate}
+                  id="newContractEndDate"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="w-full">
+                <label htmlFor="newContractUnitRent" className="block text-sm font-medium text-gray-700">
+                  Unit Rent
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="newContractUnitRent"
+                  value={newContractUnitRent}
+                  id="newContractUnitRent"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div className='flex space-x-4 mb-14'>
+              
+              <div className="w-full">
+                <label htmlFor="newContractCommision" className="block text-sm font-medium text-gray-700">
+                  Commision
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="newContractCommision"
+                  value={newContractCommision}
+                  id="newContractCommision"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="w-full">
+                <label htmlFor="newContractRentParking" className="block text-sm font-medium text-gray-700">
+                  Rent Parking
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="newContractRentParking"
+                  value={newContractRentParking}
+                  id="newContractRentParking"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="w-full">
+                <label htmlFor="newContractBouncedChequeFine" className="block text-sm font-medium text-gray-700">
+                  Bounced Cheque Fine
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="newContractBouncedChequeFine"
+                  value={newContractBouncedChequeFine}
+                  id="newContractBouncedChequeFine"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+            </div>
+            <div className='flex space-x-4 mb-14'>
+
+              <div className="w-full">
+                <label htmlFor="newContractSecurityDeposit" className="block text-sm font-medium text-gray-700">
+                  Security Deposit
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="newContractSecurityDeposit"
+                  value={newContractSecurityDeposit}
+                  id="newContractSecurityDeposit"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="w-full">
+                <label htmlFor="newContractStatus" className="block text-sm font-medium text-gray-700">
+                  Contract Status
+                </label>
+                <select id="newContractStatus" name="newContractStatus" onChange={ handleChange } value={newContractStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option value=''>select contract status</option>
+                  {newContractStatusArray.map((item, index)=>{
+                    return <option key={index} value={item}>{item}</option>
+                  })}
+                </select>
+              </div>
+              <div className="w-full">
+                <label htmlFor="newContractPaymentScheduling" className="block text-sm font-medium text-gray-700">
+                  Payment Scheduling
+                </label>
+                <select id="newContractPaymentScheduling" name="newContractPaymentScheduling" onChange={ handleChange } value={newContractPaymentScheduling} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option value=''>select payment scheduling</option>
+                  {paymentSchedulings.map((item, index)=>{
+                    return <option key={index} value={item}>{item}</option>
+                  })}
+                </select>
+              </div>
+              
+            </div>
+            <div className='flex space-x-4'>
+
+              <div className="w-full">
+                <textarea cols="30" rows="5" type="text"
+                  onChange={handleChange}
+                  value={newContractNotes}
+                  name="newContractNotes"
+                  id="newContractNotes"
+                  placeholder='add your notes here...'
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </textarea>
+                
+              </div>
+              
+            </div>
+
+            <div className="flex items-center justify-center w-full mt-10">
+              <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                  <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                </div>
+                <input id="dropzone-file" type="file" className="hidden" />
+              </label>
+            </div>
+          </div>
+        ),
+      },
+    ];
+
+
+
+    const newContract = async(e)=>{
+      e.preventDefault();
+      
+      if(selectedIds.length > 1){
+        toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+      else{
+        setOpenNewContract(true);
+        let id = selectedIds[0];
+        getData(id);
+        
+      }
+    }
+
+    const submitNewContract = async() => {
+      console.log('Submit new contract');
+    }
+
     
     
 
@@ -1095,8 +1827,6 @@ import Link from 'next/link';
           </div>
           <div className="mt-2 md:col-span-2 md:mt-0">
 
-
-
             <div className='flex justify-between'>
 
               <div className='w-1/4'>
@@ -1114,13 +1844,6 @@ import Link from 'next/link';
               </div>
 
               <div className='flex'>
-
-                {/* <button onClick={delEntry}
-                  className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
-                  >
-                    Delete
-                  <AiOutlineDelete className='text-lg ml-2'/>
-                </button> */}
 
                 <ReactToPrint
                   trigger={()=>{
@@ -1147,7 +1870,7 @@ import Link from 'next/link';
               <Link href={'/panel/salesModule/salesInvoice?open=true&refer=true'} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 no-underline flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Reserve Units
               </Link>
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button onClick={(e)=>newContract(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 New Contract
               </button>
               <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
@@ -1163,10 +1886,6 @@ import Link from 'next/link';
               </button>
               
             </div>: ''}
-
-
-
-
 
             <form method="POST">
               <div className="overflow-hidden shadow sm:rounded-md">
@@ -1249,7 +1968,7 @@ import Link from 'next/link';
                         </td>
                         
                         <td className="flex items-center px-3 mr-5 py-4 space-x-4">
-                          <button type='button' onClick={()=>{getData(item._id)}} 
+                          <button type='button' onClick={()=>{getData(item._id), setOpen(true)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
                           </button>
@@ -1396,6 +2115,80 @@ import Link from 'next/link';
         </Dialog>
       </Transition.Root>
 
+
+      <Transition.Root show={openNewContract} as={Fragment}>
+        <Dialog as="div" className="relative z-20" onClose={()=>{setOpenNewContract(false)}}>
+          <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+            <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
+          </Transition.Child>
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+              <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
+                <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-2 lg:max-w-6xl">
+                  <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6">
+                    <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpenNewContract(false)}>
+                      <span className="sr-only">Close</span>
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+
+                    <div className='w-full'>
+                      <form method="POST" onSubmit={(e)=>{submitNewContract(e)}}>
+                        <div className="overflow-hidden shadow sm:rounded-md">
+                          <div ref={speceficComponentRef} className="bg-white py-5">
+
+
+                            <Tabs value="unitDetails">
+                              <TabsHeader className='bg-[#f0f3f4]'>
+                                {newContractData.map(({ label, value, icon }) => (
+                                  <Tab key={value} value={value}>
+                                    <div className="flex items-center gap-2">
+                                      {React.createElement(icon, { className: "w-5 h-5" })}
+                                      {label}
+                                    </div>
+                                  </Tab>
+                                ))}
+                              </TabsHeader>
+                              <TabsBody className='mt-5'>
+                                {newContractData.map(({ value, desc }) => (
+                                  <TabPanel key={value} value={value}>
+                                    {desc}
+                                  </TabPanel>
+                                ))}
+                              </TabsBody>
+                            </Tabs>
+
+                            <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+
+                              <ReactToPrint
+                                trigger={()=>{
+                                  return <button 
+                                    type="button"
+                                    className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+                                    Print
+                                    <AiOutlinePrinter className='text-lg ml-2'/>
+                                  </button>
+                                }}
+                                content={() => speceficComponentRef.current}
+                                documentTitle='Building and Owner'
+                                pageStyle='print'
+                              />
+
+                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
+                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+
     </FullLayout>
     </ProSidebarProvider>
 
@@ -1413,12 +2206,14 @@ export async function getServerSideProps() {
   let dbVouchers = await dbUnits.find()
   let dbBuildings = await Buildings.find()
   let dbContacts = await Contact.find()
+  let dbTenants = await Contact.find({'type': 'Tenant'})
 
   // Pass data to the page via props
   return {
     props: {
       dbVouchers: JSON.parse(JSON.stringify(dbVouchers)),
       dbContacts: JSON.parse(JSON.stringify(dbContacts)),
+      dbTenants: JSON.parse(JSON.stringify(dbTenants)),
       dbBuildings: JSON.parse(JSON.stringify(dbBuildings)),
     }
   }

@@ -293,6 +293,9 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
       }
   }
 
+
+  let contactType = ['Customer','Supplier', 'Tenant', 'Owner']
+
   return (
     <>
     <ProSidebarProvider>
@@ -482,8 +485,9 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                                       <label htmlFor="type" className="block text-sm font-medium text-gray-700">Contact Type:</label>
                                       <select id="type" name="type" onChange={handleChange} value={type} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>Select Contact Type</option>
-                                        <option value={'Customer'}>Customer</option>
-                                        <option value={'Supplier'}>Supplier</option>
+                                        {contactType.map((item, index)=>{
+                                          return <option key={index} value={item}>{item}</option>
+                                        })}
                                       </select>
                                     </div>
 
