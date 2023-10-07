@@ -38,6 +38,7 @@ import { BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
 import { FiUsers } from 'react-icons/fi';
 import Buildings from 'models/Buildings';
+import { useRouter } from 'next/router';
 
 
 
@@ -64,6 +65,7 @@ import Buildings from 'models/Buildings';
 
   const Units = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
+    const router = useRouter();
     const [open, setOpen] = useState(false)
     const [openNewContract, setOpenNewContract] = useState(false)
 
@@ -179,18 +181,19 @@ import Buildings from 'models/Buildings';
     const [tenantIbanNo, setTenantIbanNo] = useState('')
     const [tenantBank, setTenantBank] = useState('')
     const [tenantBankAccountNumber, setTenantBankAccountNumber] = useState('')
-    
+    const [tenantIdNumber, setTenantIdNumber] = useState('')
+    const [tenantExpIdNumber, setTenantExpIdNumber] = useState('')
+
     const [newContractStartDate, setNewContractStartDate] = useState('')
     const [newContractEndDate, setNewContractEndDate] = useState('')
     const [newContractUnitRent, setNewContractUnitRent] = useState('')
-    const [newContractCommision, setNewContractCommision] = useState('')
+    const [newContractCommission, setNewContractCommission] = useState('')
     const [newContractRentParking, setNewContractRentParking] = useState('')
     const [newContractBouncedChequeFine, setNewContractBouncedChequeFine] = useState('')
     const [newContractStatus, setNewContractStatus] = useState('')
     const [newContractPaymentScheduling, setNewContractPaymentScheduling] = useState('')
     const [newContractSecurityDeposit, setNewContractSecurityDeposit] = useState('')
     const [newContractNotes, setNewContractNotes] = useState('')
-
 
 
     useEffect(() => {
@@ -203,119 +206,140 @@ import Buildings from 'models/Buildings';
     }, [search])
     
 
-
-
     const handleChange = (e) => {
-        const { name, value } = e.target;
+      const { name, value } = e.target;
         
-        if (name === 'tenantPassPortNumber') {
-          setTenantPassPortNumber(value);
-        } else if (name === 'tenantExpPassPort') {
-          setTenantExpPassPort(value);
-        } else if (name === 'tenantVatRegistrationNo') {
-          setTenantVatRegistrationNo(value);
-        } else if (name === 'tenantIbanNo') {
-          setTenantIbanNo(value);
-        } else if (name === 'tenantBank') {
-          setTenantBank(value);
-        } else if (name === 'tenantBankAccountNumber') {
-          setTenantBankAccountNumber(value);
-        } 
-        else if (name === 'attachment') {
-          setAttachment(value);
-        } else if (name === 'search') {
-          setSearch(value);
-        } else if (name === 'phoneNo') {
-            setPhoneNo(value);
-        } else if (name === 'email') {
-            setEmail(value);
-        } else if (name === 'nameInBill') {
-            setNameInBill(value);
-        } else if (name === 'idNumber') {
-            setIdNumber(value);
-        } else if (name === 'expID') {
-            setExpID(value);
-        } else if (name === 'building') {
-            setBuilding(value);
-        } else if (name === 'passPortNumber') {
-            setPassPortNumber(value);
-        } else if (name === 'expPassPort') {
-            setExpPassPort(value);
-        } else if (name === 'buildingNameInArabic') {
-            setBuildingNameInArabic(value);
-        } else if (name === 'buildingNameInEnglish') {
-            setBuildingNameInEnglish(value);
-        } else if (name === 'parkings') {
-            setParkings(value);
-        } else if (name === 'roof') {
-            setRoof(value);
-        } else if (name === 'country') {
-            setCountry(value);
-        } else if (name === 'city') {
-            setCity(value);
-        } else if (name === 'area') {
-            setArea(value);
-        } else if (name === 'electricityMeterNo') {
-            setElectricityMeterNo(value);
-        } else if (name === 'contractStartDate') {
-            setContractStartDate(value);
-        } else if (name === 'investmentStructure') {
-            setInvestmentStructure(value);
-        } else if (name === 'gracePeriodFrom') {
-            setGracePeriodFrom(value);
-        } else if (name === 'contractEndDate') {
-            setContractEndDate(value);
-        } else if (name === 'amount') {
-            setAmount(value);
-        } else if (name === 'gracePeriodTo') {
-            setGracePeriodTo(value);
-        } else if (name === 'paymentScheduling') {
-            setPaymentScheduling(value);
-        } else if (name === 'unitNo') {
-            setUnitNo(value);
-        } else if (name === 'balcony') {
-            setBalcony(value);
-        } else if (name === 'ac') {
-            setAc(value);
-        } else if (name === 'unitType') {
-            setUnitType(value);
-        } else if (name === 'unitUse') {
-            setUnitUse(value);
-        } else if (name === 'bathroom') {
-            setBathroom(value);
-        } else if (name === 'unitStatus') {
-            setUnitStatus(value);
-        } else if (name === 'plotNo') {
-            setPlotNo(value);
-        } else if (name === 'rent') {
-            setRent(value);
-        } else if (name === 'rentParking') {
-            setRentParking(value);
-        } else if (name === 'size') {
-            setSize(value);
-        } else if (name === 'waterMeterNumber') {
-            setWaterMeterNumber(value);
-        } else if (name === 'sewageNumber') {
-            setSewageNumber(value);
-        } else if (name === 'view') {
-            setView(value);
-        } else if (name === 'notes') {
-            setNotes(value);
+      if (name === 'tenantIdNumber') {
+        setTenantIdNumber(value);
+      } else if (name === 'tenantExpIdNumber') {
+        setTenantExpIdNumber(value);
+      } else if (name === 'newContractStartDate') {
+        setNewContractStartDate(value);
+      } else if (name === 'newContractEndDate') {
+        setNewContractEndDate(value);
+      } else if (name === 'newContractUnitRent') {
+        setNewContractUnitRent(value);
+      } else if (name === 'newContractCommission') {
+        setNewContractCommission(value);
+      } else if (name === 'newContractRentParking') {
+        setNewContractRentParking(value);
+      } else if (name === 'newContractBouncedChequeFine') {
+        setNewContractBouncedChequeFine(value);
+      } else if (name === 'newContractStatus') {
+        setNewContractStatus(value);
+      } else if (name === 'newContractPaymentScheduling') {
+        setNewContractPaymentScheduling(value);
+      } else if (name === 'newContractSecurityDeposit') {
+        setNewContractSecurityDeposit(value);
+      } else if (name === 'newContractNotes') {
+        setNewContractNotes(value);
+      } else if (name === 'tenantPassPortNumber') {
+        setTenantPassPortNumber(value);
+      } else if (name === 'tenantExpPassPort') {
+        setTenantExpPassPort(value);
+      } else if (name === 'tenantVatRegistrationNo') {
+        setTenantVatRegistrationNo(value);
+      } else if (name === 'tenantIbanNo') {
+        setTenantIbanNo(value);
+      } else if (name === 'tenantBank') {
+        setTenantBank(value);
+      } else if (name === 'tenantBankAccountNumber') {
+        setTenantBankAccountNumber(value);
+      } else if (name === 'attachment') {
+        setAttachment(value);
+      } else if (name === 'search') {
+        setSearch(value);
+      } else if (name === 'phoneNo') {
+          setPhoneNo(value);
+      } else if (name === 'email') {
+          setEmail(value);
+      } else if (name === 'nameInBill') {
+          setNameInBill(value);
+      } else if (name === 'idNumber') {
+          setIdNumber(value);
+      } else if (name === 'expID') {
+          setExpID(value);
+      } else if (name === 'building') {
+          setBuilding(value);
+      } else if (name === 'passPortNumber') {
+          setPassPortNumber(value);
+      } else if (name === 'expPassPort') {
+          setExpPassPort(value);
+      } else if (name === 'buildingNameInArabic') {
+          setBuildingNameInArabic(value);
+      } else if (name === 'buildingNameInEnglish') {
+          setBuildingNameInEnglish(value);
+      } else if (name === 'parkings') {
+          setParkings(value);
+      } else if (name === 'roof') {
+          setRoof(value);
+      } else if (name === 'country') {
+          setCountry(value);
+      } else if (name === 'city') {
+          setCity(value);
+      } else if (name === 'area') {
+          setArea(value);
+      } else if (name === 'electricityMeterNo') {
+          setElectricityMeterNo(value);
+      } else if (name === 'contractStartDate') {
+          setContractStartDate(value);
+      } else if (name === 'investmentStructure') {
+          setInvestmentStructure(value);
+      } else if (name === 'gracePeriodFrom') {
+          setGracePeriodFrom(value);
+      } else if (name === 'contractEndDate') {
+          setContractEndDate(value);
+      } else if (name === 'amount') {
+          setAmount(value);
+      } else if (name === 'gracePeriodTo') {
+          setGracePeriodTo(value);
+      } else if (name === 'paymentScheduling') {
+          setPaymentScheduling(value);
+      } else if (name === 'unitNo') {
+          setUnitNo(value);
+      } else if (name === 'balcony') {
+          setBalcony(value);
+      } else if (name === 'ac') {
+          setAc(value);
+      } else if (name === 'unitType') {
+          setUnitType(value);
+      } else if (name === 'unitUse') {
+          setUnitUse(value);
+      } else if (name === 'bathroom') {
+          setBathroom(value);
+      } else if (name === 'unitStatus') {
+          setUnitStatus(value);
+      } else if (name === 'plotNo') {
+          setPlotNo(value);
+      } else if (name === 'rent') {
+          setRent(value);
+      } else if (name === 'rentParking') {
+          setRentParking(value);
+      } else if (name === 'size') {
+          setSize(value);
+      } else if (name === 'waterMeterNumber') {
+          setWaterMeterNumber(value);
+      } else if (name === 'sewageNumber') {
+          setSewageNumber(value);
+      } else if (name === 'view') {
+          setView(value);
+      } else if (name === 'notes') {
+          setNotes(value);
+      }
+      else if(name === 'name'){
+        setName(value)
+        const newData = dbContacts.filter(item => item.name === value);
+        if(newData.length > 0){
+          setEmail(newData[0].email)
+          setPhoneNo(newData[0].phoneNo)
+          setCity(newData[0].city)
         }
-        else if(name === 'name'){
-            setName(value)
-            const newData = dbContacts.filter(item => item.name === value);
-            if(newData.length > 0){
-                setEmail(newData[0].email)
-                setPhoneNo(newData[0].phoneNo)
-                setCity(newData[0].city)
-            }
-            else{
-                setEmail('')
-                setPhoneNo('')
-                setCity('')
-            }
+        else{
+          setEmail('')
+          setPhoneNo('')
+          setCity('')
         }
+      }
     }
 
     // JV
@@ -1426,13 +1450,13 @@ import Buildings from 'models/Buildings';
             <div className="bg-white py-5">
               <div className="grid grid-cols-6 gap-6">
 
-                <div className="col-span-6 sm:col-span-2">
+                <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">Name:</label>
                   <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
 
-                <div className="col-span-6 sm:col-span-2">
+                <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">Email address</label>
                   <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
@@ -1447,7 +1471,19 @@ import Buildings from 'models/Buildings';
                   <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
+                <div className="col-span-6 sm:col-span-1">
+                  <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">Id Personal Number</label>
+                  <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                </div>
+
+                <div className="col-span-6 sm:col-span-1">
+                  <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">Expiry Date Id Number</label>
+                  <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                </div>
+
               </div>
+
+
             </div>
             <Accordion open={openTenantExtraForm === 0} icon={<Icon id={1} open={openTenantExtraForm} />}>
               <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>Add More? Then click!</AccordionHeader>
@@ -1615,15 +1651,15 @@ import Buildings from 'models/Buildings';
             <div className='flex space-x-4 mb-14'>
               
               <div className="w-full">
-                <label htmlFor="newContractCommision" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="newContractCommission" className="block text-sm font-medium text-gray-700">
                   Commision
                 </label>
                 <input
                   type="number"
                   onChange={handleChange}
-                  name="newContractCommision"
-                  value={newContractCommision}
-                  id="newContractCommision"
+                  name="newContractCommission"
+                  value={newContractCommission}
+                  id="newContractCommission"
                   className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
@@ -1738,12 +1774,25 @@ import Buildings from 'models/Buildings';
         setOpenNewContract(true);
         let id = selectedIds[0];
         getData(id);
-        
       }
     }
 
-    const submitNewContract = async() => {
-      console.log('Submit new contract');
+
+    const submitNewContract = async(e) => {
+      e.preventDefault();
+
+      let formData = {
+        open: true,
+        refer:true,
+        name: tenantName || '',
+        unitRent: newContractUnitRent || 0,
+        commission: newContractCommission || 0,
+        parkingRent: newContractRentParking || 0,
+        securityDeposit: newContractSecurityDeposit || 0,
+      }
+      const query = new URLSearchParams(formData).toString();
+      router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
+
     }
 
     
@@ -2171,7 +2220,7 @@ import Buildings from 'models/Buildings';
                               />
 
                               <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                              <button type="submit" onClick={(e)=>{submitNewContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Contract</button>
                             </div>
                           </div>
                         </div>

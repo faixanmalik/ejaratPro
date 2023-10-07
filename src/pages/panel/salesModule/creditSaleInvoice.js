@@ -15,15 +15,25 @@ import Employees from 'models/Employees';
 import TaxRate from 'models/TaxRate';
 import ReactToPrint from 'react-to-print';
 import Product from 'models/Product';
-
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link';
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
   }
 
   const CreditSalesInvoice = ({ dbVouchers, dbProducts, dbContacts, dbEmployees, dbTaxRate }) => {
+
+    const router = useRouter();
+    const searchParams = useSearchParams()
+    const open = searchParams.get('open')
+    const refer = searchParams.get('refer')
     
-    const [open, setOpen] = useState(false)
+    useEffect(() => {
+      openSettings();
+    }, [refer])
+
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
@@ -41,14 +51,7 @@ import Product from 'models/Product';
       }
     }
 
-    useEffect(() => {
-      setContacts(dbContacts, dbEmployees)
-
-      const myUser = JSON.parse(localStorage.getItem('myUser'))
-      if(myUser.department === 'Admin'){
-        setIsAdmin(true)
-      }
-    }, [])
+    
    
 
     // JV
@@ -79,7 +82,64 @@ import Product from 'models/Product';
     const [inputList, setInputList] = useState([
       { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'', discount: discount},
       { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'', discount: discount},
+      { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'', discount: discount},
+      { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'', discount: discount},
     ]);
+
+
+    useEffect(() => {
+      setContacts(dbContacts, dbEmployees)
+
+      
+      if(router.query.refer){
+        
+        let { name, unitRent, commission, parkingRent, securityDeposit } = router.query;
+
+        setName(name)
+        const newData = dbContacts.filter(item => item.name === name);
+        if(newData.length > 0){
+          setEmail(newData[0].email)
+          setPhoneNo(newData[0].phoneNo)
+          setCity(newData[0].city)
+          setAddress(newData[0].streetAddress)
+        }
+        else{
+          setEmail('')
+          setPhoneNo('')
+          setCity('')
+          setAddress('')
+        }
+
+        let referData = [
+          { name: 'Unit Rent', index: 0, amount: unitRent},
+          { name: 'Commission', index: 1, amount: commission},
+          { name: 'Parking Rent', index: 2, amount: parkingRent},
+          { name: 'Security Deposit', index: 3, amount: securityDeposit},
+        ]
+
+        let updatedInputList = inputList.map((item, index) => {
+          const matchingItem = referData.find((referItem) => referItem.index === index);
+          if (matchingItem) {
+            return {
+              ...item,
+              amount: matchingItem.amount,
+              products: matchingItem.name,
+            };
+          }
+          return item;
+        });
+
+        setInputList(updatedInputList);
+
+      }
+
+      
+
+      const myUser = JSON.parse(localStorage.getItem('myUser'))
+      if(myUser.department === 'Admin'){
+        setIsAdmin(true)
+      }
+    }, [router])
 
 
     // JV
@@ -148,8 +208,6 @@ import Product from 'models/Product';
       }
     }
 
-
-
     // JV
     const submit = async(e)=>{
       e.preventDefault()
@@ -172,7 +230,7 @@ import Product from 'models/Product';
       let response = await res.json()
 
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -186,9 +244,9 @@ import Product from 'models/Product';
       ])
     }
     const delLines = (indexToDelete) => {
-        const updatedInputList = [...inputList];
-        updatedInputList.splice(indexToDelete, 1);
-        setInputList(updatedInputList);
+      const updatedInputList = [...inputList];
+      updatedInputList.splice(indexToDelete, 1);
+      setInputList(updatedInputList);
     };
 
     function calculateTax(percentage, whole) {
@@ -231,7 +289,7 @@ import Product from 'models/Product';
     }
 
     const editEntry = async(id)=>{
-      setOpen(true)
+      router.push('?open=true');
 
       const data = { id, phoneNo, email, discount, amountPaid, amountReceived, billStatus, city, address, reference, dueDate, inputList, name,  memo, journalDate, billNo, fullAmount, fullTax, totalAmount, attachment, path:'CreditSalesInvoice' };
       
@@ -245,7 +303,7 @@ import Product from 'models/Product';
       let response = await res.json()
       
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -273,7 +331,7 @@ import Product from 'models/Product';
     }
 
     const getData = async (id) =>{
-      setOpen(true)
+      router.push('?open=true');
       setIsOpenSaveChange(false)
 
       const data = { id, path: 'CreditSalesInvoice' };
@@ -285,6 +343,7 @@ import Product from 'models/Product';
         body: JSON.stringify(data),
       })
       let response = await res.json()
+      console.log(response)
 
       if (response.success === true){
         const dbJournalDate = moment(response.data.journalDate).utc().format('YYYY-MM-DD')
@@ -293,7 +352,9 @@ import Product from 'models/Product';
         setId(response.data._id)
         setJournalDate(dbJournalDate)
         setBillNo(response.data.billNo)
+
         setInputList(response.data.inputList)
+
         setMemo(response.data.memo)
         setName(response.data.name)
         setAttachment(response.data.attachment.data)
@@ -311,6 +372,39 @@ import Product from 'models/Product';
       }
     }
 
+    const openSettings = async ()=>{
+
+      setId('')
+      setJournalDate(today)
+
+      setBillNo(`Inv-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
+        ? dbVouchers.length + 1
+        : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`)
+
+      setInputList([
+        { billNo : `Inv-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
+        ? dbVouchers.length + 1
+        : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`,
+      
+          date: journalDate, discount: discount, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' 
+        },
+      ])
+      setMemo('')
+      setAttachment('')
+      setFullAmount(0)
+      setFullTax(0)
+      setTotalAmount(0)
+      setPhoneNo(0)
+      setDiscount(0)
+      setName('')
+      setEmail('')
+      setCity('')
+      setReference('')
+      setAddress('')
+      setDueDate('')
+      setIsOpenSaveChange(true)
+    }
+
     // For print
     const componentRef = useRef();
     const speceficComponentRef = useRef();
@@ -318,7 +412,7 @@ import Product from 'models/Product';
   return (
     <>
     <ProSidebarProvider>
-    <style jsx global>{`
+      <style jsx global>{`
         footer {
           display: none;
         }
@@ -336,45 +430,12 @@ import Product from 'models/Product';
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
             <h3 className="text-lg font-medium leading-6 text-gray-900">Credit Sales Invoice</h3>
-            <button 
-              type='button'
-              onClick={()=>{
-                setOpen(true)
-                setId('')
-                setJournalDate(today)
-
-                setBillNo(`Inv-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                  ? dbVouchers.length + 1
-                  : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`)
-
-
-                setInputList([
-                    { billNo : `Inv-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                    ? dbVouchers.length + 1
-                    : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`,
-                  
-                      date: journalDate, discount: discount, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' 
-                    },
-                ])
-                setMemo('')
-                setAttachment('')
-                setFullAmount(0)
-                setFullTax(0)
-                setTotalAmount(0)
-                setPhoneNo(0)
-                setDiscount(0)
-                setName('')
-                setEmail('')
-                setCity('')
-                setReference('')
-                setAddress('')
-                setDueDate('')
-                setIsOpenSaveChange(true)
-
-              }} 
-              className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
+            <Link
+              onClick={()=>openSettings()}
+              href={'?open=true'}
+              className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
               New
-            </button>
+            </Link>
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
@@ -487,8 +548,8 @@ import Product from 'models/Product';
       </div>
     </div>
 
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-20" onClose={()=>{setOpen(false)}}>
+    <Transition.Root show={open === 'true' ? true : false} as={Fragment}>
+      <Dialog as="div" className="relative z-20" onClose={()=>{router.push('?open=false')}}>
         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
         </Transition.Child>
@@ -497,7 +558,7 @@ import Product from 'models/Product';
             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-5xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
+                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => router.push('?open=false')}>
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -843,9 +904,7 @@ import Product from 'models/Product';
 
                         </div>
                         <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-
-
-                        <ReactToPrint
+                          <ReactToPrint
                             trigger={()=>{
                               return <button 
                                 type="button"
