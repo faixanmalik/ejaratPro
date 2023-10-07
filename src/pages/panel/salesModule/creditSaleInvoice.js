@@ -90,7 +90,6 @@ import Link from 'next/link';
     useEffect(() => {
       setContacts(dbContacts, dbEmployees)
 
-      
       if(router.query.refer){
         
         let { name, unitRent, commission, parkingRent, securityDeposit } = router.query;
@@ -215,8 +214,7 @@ import Link from 'next/link';
       inputList.forEach(item => {
         item.date = journalDate;
       });
-
-
+      
       // fetch the data from form to makes a file in local system
       const data = { phoneNo, email, discount, amountPaid, amountReceived, billStatus, city, address, reference, dueDate, inputList, name,  memo, journalDate, billNo, fullAmount, fullTax, totalAmount, attachment, path:'CreditSalesInvoice' };
 
@@ -230,7 +228,7 @@ import Link from 'next/link';
       let response = await res.json()
 
       if (response.success === true) {
-        router.push('?open=false');
+        router.push('/panel/salesModule/receiptVoucher');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
