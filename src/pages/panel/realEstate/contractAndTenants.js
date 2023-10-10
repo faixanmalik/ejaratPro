@@ -10,7 +10,6 @@ import Contact from 'models/Contact';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 import FullLayout from '@/panel/layouts/FullLayout';
 import ReactToPrint from 'react-to-print';
-import dbUnits from 'models/Units'; 
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Link from 'next/link';
 
@@ -39,6 +38,8 @@ import { BsCashCoin } from 'react-icons/bs';
 import { FiUsers } from 'react-icons/fi';
 import Buildings from 'models/Buildings';
 import { useRouter } from 'next/router';
+import ContractAndTenant from 'models/ContractAndTenant';
+import { MdAccountBox } from 'react-icons/md';
 
 
 
@@ -63,7 +64,7 @@ import { useRouter } from 'next/router';
     );
   }
 
-  const Units = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
+  const ContractAndTenants = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
     const [open, setOpen] = useState(false)
@@ -129,6 +130,14 @@ import { useRouter } from 'next/router';
     const [passPortNumber, setPassPortNumber] = useState('')
     const [expPassPort, setExpPassPort] = useState('')
     
+    const [buildingNameInArabic, setBuildingNameInArabic] = useState('')
+    const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
+    const [parkings, setParkings] = useState('')
+    const [roof, setRoof] = useState('')
+    const [country, setCountry] = useState('')
+    const [city, setCity] = useState('')
+    const [area, setArea] = useState('')
+    const [electricityMeterNo, setElectricityMeterNo] = useState('')
     const [contractStartDate, setContractStartDate] = useState('')
     const [investmentStructure, setInvestmentStructure] = useState('')
     const [gracePeriodFrom, setGracePeriodFrom] = useState('')
@@ -136,34 +145,25 @@ import { useRouter } from 'next/router';
     const [amount, setAmount] = useState('')
     const [gracePeriodTo, setGracePeriodTo] = useState('')
     const [paymentScheduling, setPaymentScheduling] = useState('')
-    
-    
     const [unitNo, setUnitNo] = useState(100)
-    const [buildingNameInArabic, setBuildingNameInArabic] = useState('')
-    const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
-    const [plotNo, setPlotNo] = useState('')
-    const [rent, setRent] = useState('')
-    const [bathroom, setBathroom] = useState('')
-    const [parkings, setParkings] = useState('')
-    const [rentParking, setRentParking] = useState('')
-    const [roof, setRoof] = useState('')
+    
     const [balcony, setBalcony] = useState('')
-    const [size, setSize] = useState('')
-    const [electricityMeterNo, setElectricityMeterNo] = useState('')
-    const [waterMeterNumber, setWaterMeterNumber] = useState('')
-    const [sewageNumber, setSewageNumber] = useState('')
     const [ac, setAc] = useState('')
     const [unitType, setUnitType] = useState('')
     const [unitUse, setUnitUse] = useState('')
+    const [bathroom, setBathroom] = useState('')
     const [unitStatus, setUnitStatus] = useState('')
+
+    const [plotNo, setPlotNo] = useState('')
+    const [rent, setRent] = useState('')
+    const [rentParking, setRentParking] = useState('')
+    const [size, setSize] = useState('')
+    const [waterMeterNumber, setWaterMeterNumber] = useState('')
+    const [sewageNumber, setSewageNumber] = useState('')
     const [view, setView] = useState('')
-    const [country, setCountry] = useState('')
-    const [city, setCity] = useState('')
-    const [area, setArea] = useState('')
     const [notes, setNotes] = useState('')  
 
     const [totalNoOfPages, setTotalNoOfPages] = useState(1)
-    
     const [filteredData, setFilteredData] = useState([])
 
     const [openTenantExtraForm, setOpenTenantExtraForm] = React.useState(1);
@@ -342,30 +342,6 @@ import { useRouter } from 'next/router';
       }
     }
 
-    // JV
-    const submit = async(e)=>{
-      e.preventDefault()
-
-      // fetch the data from form to makes a file in local system
-      const data = { attachment, name, phoneNo, email, nameInBill, idNumber, expID, building, passPortNumber, expPassPort, buildingNameInArabic, buildingNameInEnglish, parkings, roof, country, city, area, electricityMeterNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, unitNo, balcony, ac, unitType, unitUse, bathroom, unitStatus, plotNo, rent, rentParking, size, waterMeterNumber, sewageNumber, view, notes , path:'Units' };
-
-      let res = await fetch(`/api/addEntry`, {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      let response = await res.json()
-
-      if (response.success === true) {
-        window.location.reload();
-      }
-      else {
-        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
-    }
-
     const editEntry = async(id)=>{
       setOpen(true)
 
@@ -390,7 +366,7 @@ import { useRouter } from 'next/router';
 
     const delEntry = async()=>{
 
-      const data = { selectedIds , path: 'Units' };
+      const data = { selectedIds , path: 'ContractAndTenants' };
       let res = await fetch(`/api/delEntry`, {
         method: 'POST',
         headers: { 
@@ -399,7 +375,6 @@ import { useRouter } from 'next/router';
         body: JSON.stringify(data),
       })
       let response = await res.json()
-
       if (response.success === true) {
         window.location.reload();
       }
@@ -411,7 +386,7 @@ import { useRouter } from 'next/router';
     const getData = async (id) =>{
       setIsOpenSaveChange(false)
 
-      const data = { id, path: 'Units' };
+      const data = { id, path: 'ContractAndTenants' };
       let res = await fetch(`/api/getDataEntry`, {
         method: 'POST',
         headers: {
@@ -422,58 +397,66 @@ import { useRouter } from 'next/router';
       let response = await res.json()
 
       if (response.success === true){
+        console.log(response.data)
 
-        const { attachment, name, phoneNo, email, nameInBill, idNumber, expID, building, passPortNumber, expPassPort, buildingNameInArabic, buildingNameInEnglish, parkings, roof, country, city, area, electricityMeterNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, unitNo, balcony, ac, unitType, unitUse, bathroom, unitStatus, plotNo, rent, rentParking, size, waterMeterNumber, sewageNumber, view, notes} = response.data;
+        const { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes} = response.data;
         
-        let dbContractStartDate = moment(contractStartDate).utc().format('YYYY-MM-DD') || '' ;
-        let dbContractEndDate = moment(contractEndDate).utc().format('YYYY-MM-DD') || '' ;
-        let dbGracePeriodFromDate = moment(gracePeriodFrom).utc().format('YYYY-MM-DD') || '' ;
-        let dbGracePeriodToDate = moment(gracePeriodTo).utc().format('YYYY-MM-DD') || '' ;
-        let dbExpDate = moment(expID).utc().format('YYYY-MM-DD') || '' ;
-        let dbPassPortDate = moment(expPassPort).utc().format('YYYY-MM-DD') || '' ;
+        let dbTenantExpPassPort = moment(tenantExpPassPort).utc().format('YYYY-MM-DD') || ''
+        let dbTenantExpIdNumber = moment(tenantExpIdNumber).utc().format('YYYY-MM-DD') || ''
+        let dbNewContractStartDate = moment(newContractStartDate).utc().format('YYYY-MM-DD') || ''
+        let dbNewContractEndDate = moment(newContractEndDate).utc().format('YYYY-MM-DD') || ''
+
+
+        setTenantExpPassPort(dbTenantExpPassPort);
+        setTenantExpIdNumber(dbTenantExpIdNumber); 
+        setNewContractStartDate(dbNewContractStartDate);
+        setNewContractEndDate(dbNewContractEndDate);
 
         setId(response.data._id)
-        setContractStartDate(dbContractStartDate);
-        setGracePeriodFrom(dbGracePeriodFromDate);
-        setContractEndDate(dbContractEndDate);
-        setGracePeriodTo(dbGracePeriodToDate);
-        setExpPassPort(dbPassPortDate);
-        setExpID(dbExpDate);
-
-        setAttachment(attachment || '');
-        setPhoneNo(phoneNo || '');
-        setEmail(email || '');
-        setNameInBill(nameInBill || '');
-        setIdNumber(idNumber || '');
-        setBuilding(building || '');
-        setPassPortNumber(passPortNumber || '');
+        setUnitNo(unitNo || '');
         setBuildingNameInArabic(buildingNameInArabic || '');
         setBuildingNameInEnglish(buildingNameInEnglish || '');
+        setPlotNo(plotNo || '');
+        setRent(rent || '');
+        setBathroom(bathroom || '');
         setParkings(parkings || '');
+        setRentParking(rentParking || '');
         setRoof(roof || '');
-        setCountry(country || '');
-        setCity(city || '');
-        setArea(area || '');
-        setElectricityMeterNo(electricityMeterNo || '');
-        setInvestmentStructure(investmentStructure || '');
-        setAmount(amount || '');
-        setPaymentScheduling(paymentScheduling || '');
-        setUnitNo(unitNo || '');
         setBalcony(balcony || '');
+        setSize(size || '');
+        setElectricityMeterNo(electricityMeterNo || '');
+        setWaterMeterNumber(waterMeterNumber || '');
+        setSewageNumber(sewageNumber || '');
         setAc(ac || '');
         setUnitType(unitType || '');
         setUnitUse(unitUse || '');
-        setBathroom(bathroom || '');
         setUnitStatus(unitStatus || '');
-        setPlotNo(plotNo || '');
-        setRent(rent || '');
-        setRentParking(rentParking || '');
-        setSize(size || '');
-        setWaterMeterNumber(waterMeterNumber || '');
-        setSewageNumber(sewageNumber || '');
         setView(view || '');
+        setCountry(country || '');
+        setCity(city || '');
+        setArea(area || '');
         setNotes(notes || '');
-        setName(name || '');
+
+        setTenant(tenantName || '');
+        setTenantName(tenantName || '');
+        setTenantEmail(tenantEmail || '');
+        setTenantPhoneNo(tenantPhoneNo || '');
+        setTenantOpeningBalance(tenantOpeningBalance || '');
+        setTenantPassPortNumber(tenantPassPortNumber || '');
+        setTenantVatRegistrationNo(tenantVatRegistrationNo || '');
+        setTenantIbanNo(tenantIbanNo || '');
+        setTenantBank(tenantBank || '');
+        setTenantBankAccountNumber(tenantBankAccountNumber || '');
+        setTenantIdNumber(tenantIdNumber || '');
+
+        setNewContractUnitRent(newContractUnitRent || '');
+        setNewContractCommission(newContractCommission || '');
+        setNewContractRentParking(newContractRentParking || '');
+        setNewContractBouncedChequeFine(newContractBouncedChequeFine || '');
+        setNewContractStatus(newContractStatus || '');
+        setNewContractPaymentScheduling(newContractPaymentScheduling || '');
+        setNewContractSecurityDeposit(newContractSecurityDeposit || '');
+        setNewContractNotes(newContractNotes || '');
       }
     }
 
@@ -481,7 +464,6 @@ import { useRouter } from 'next/router';
     const componentRef = useRef();
     const speceficComponentRef = useRef();
 
-    
 
     let countries = [ "United States", "China", "India", "Brazil", "Russia", "Japan", "United Kingdom", "Germany", "France", "Canada", "Australia", "South Korea", "Mexico", "Spain", "Italy", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark", "Finland", "Argentina", "Chile", "South Africa", "Egypt", "Nigeria", "Kenya", "Saudi Arabia", "United Arab Emirates"];
     let cities = [ "New York City, USA", "Tokyo, Japan", "Mumbai, India", "Beijing, China", "London, United Kingdom", "Paris, France", "Moscow, Russia", "Cairo, Egypt", "Rio de Janeiro, Brazil", "Sydney, Australia", "Cape Town, South Africa", "Mexico City, Mexico", "Toronto, Canada", "Dubai, United Arab Emirates", "Seoul, South Korea", "Buenos Aires, Argentina", "Nairobi, Kenya"];
@@ -1762,7 +1744,6 @@ import { useRouter } from 'next/router';
     ];
 
 
-
     const newContract = async(e)=>{
       e.preventDefault();
       
@@ -1780,39 +1761,17 @@ import { useRouter } from 'next/router';
     const submitNewContract = async(e) => {
       e.preventDefault();
 
-      let data = {
-        unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,
-        tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,
-        newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes,
-        path: 'NewContract'
+      let formData = {
+        open: true,
+        refer:true,
+        name: tenantName || '',
+        unitRent: newContractUnitRent || 0,
+        commission: newContractCommission || 0,
+        parkingRent: newContractRentParking || 0,
+        securityDeposit: newContractSecurityDeposit || 0,
       }
-
-      let res = await fetch(`/api/addEntry`, {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      let response = await res.json()
-
-      if (response.success === true) {
-
-        let formData = {
-          open: true,
-          refer:true,
-          name: tenantName || '',
-          unitRent: newContractUnitRent || 0,
-          commission: newContractCommission || 0,
-          parkingRent: newContractRentParking || 0,
-          securityDeposit: newContractSecurityDeposit || 0,
-        }
-        const query = new URLSearchParams(formData).toString();
-        router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
-      }
-      else {
-        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
+      const query = new URLSearchParams(formData).toString();
+      router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
     }
 
     
@@ -1838,57 +1797,7 @@ import { useRouter } from 'next/router';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Units</h3>
-              <button 
-                onClick={()=>{
-                    setOpen(true)
-                    setId('')
-                    setIsOpenSaveChange(true)
-
-                    setAttachment('');
-                    setPhoneNo('');
-                    setEmail('');
-                    setNameInBill('');
-                    setIdNumber('');
-                    setExpID('');
-                    setBuilding('');
-                    setPassPortNumber('');
-                    setExpPassPort('');
-                    setBuildingNameInArabic('');
-                    setBuildingNameInEnglish('');
-                    setParkings('');
-                    setRoof('');
-                    setCountry('');
-                    setCity('');
-                    setArea('');
-                    setElectricityMeterNo('');
-                    setContractStartDate('');
-                    setInvestmentStructure('');
-                    setGracePeriodFrom('');
-                    setContractEndDate('');
-                    setAmount('');
-                    setGracePeriodTo('');
-                    setPaymentScheduling('');
-                    setUnitNo(100); // You mentioned setting unitNo to 100 initially
-                    setBalcony('');
-                    setAc('');
-                    setUnitType('');
-                    setUnitUse('');
-                    setBathroom('');
-                    setUnitStatus('');
-                    setPlotNo('');
-                    setRent('');
-                    setRentParking('');
-                    setSize('');
-                    setWaterMeterNumber('');
-                    setSewageNumber('');
-                    setView('');
-                    setNotes('');
-                    setName('');
-                }} 
-                className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-                New
-              </button>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">Contract And Tenants</h3>
             </div>
           </div>
           <div className="mt-2 md:col-span-2 md:mt-0">
@@ -1904,13 +1813,12 @@ import { useRouter } from 'next/router';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Units..." required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Contract..." required/>
                   </div>
                 </div>
               </div>
 
               <div className='flex'>
-
                 <ReactToPrint
                   trigger={()=>{
                     return <button 
@@ -1926,13 +1834,9 @@ import { useRouter } from 'next/router';
                 />
 
               </div>
-            
             </div>
 
-
             {isChecked === true ? <div className='flex justify-end my-2'>
-
-
               <Link href={'/panel/salesModule/salesInvoice?open=true&refer=true'} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 no-underline flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Reserve Units
               </Link>
@@ -1966,34 +1870,31 @@ import { useRouter } from 'next/router';
                           </div>
                         </th>
                         <th scope="col" className="p-1">
-                            Building Name
+                            Tenant
+                        </th>
+                        <th scope="col" className="p-1">
+                            Building
                         </th>
                         <th scope="col" className="p-1">
                             Unit No
                         </th>
                         <th scope="col" className="p-1">
-                            Unit Status
-                        </th>
-                        <th scope="col" className="p-1">
                             Type
                         </th>
                         <th scope="col" className="p-1">
-                            Rent
+                            Contract Start Date
                         </th>
                         <th scope="col" className="p-1">
-                            The Use
+                            Contract End Date
                         </th>
                         <th scope="col" className="p-1">
-                            Space
+                            Contract Status
                         </th>
                         <th scope="col" className="p-1">
-                            City
-                        </th>
-                        <th scope="col" className="p-1">
-                            Area
+                            Statement
                         </th>
                         <th scope="col" className="pr-3">
-                          View/Edit
+                            View/Edit
                         </th>
                       </tr>
                     </thead>
@@ -2005,41 +1906,36 @@ import { useRouter } from 'next/router';
                             <input id={`checkbox-table-search-${item._id}`} checked={selectedIds.includes(item._id)} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                           </div>
                         </td>
-                        <td className="p-1 w-[140px]">
+                        <td className="p-1 w-[120px]">
+                          <div className=' text-black font-semibold'>{item.tenantName}</div>
+                        </td>
+                        <td className="p-1 w-[120px]">
                           <div className=' text-black font-semibold'>{item.buildingNameInEnglish}</div>
                         </td>
-                        <td className="p-1 w-[90px]">
+                        <td className="p-1 w-[80px]">
                           <div className='text-black font-semibold'>{item.unitNo}</div>
                         </td>
-                        <td className="p-1 w-[100px]">
-                          <div className=''>{item.unitStatus}</div>
-                        </td>
-                        <td className="p-1 w-[100px]">
+                        <td className="p-1 w-[90px]">
                           <div className=''>{item.unitType}</div>
                         </td>
                         <td className="p-1 w-[100px]">
-                          <div className=''>{item.rent}</div>
+                          <div className=''>{moment(item.newContractStartDate).utc().format('D MMM YYYY')}</div>
+                        </td>
+                        <td className="p-1 w-[90px]">
+                          <div className=''>{moment(item.newContractEndDate).utc().format('D MMM YYYY')}</div>
                         </td>
                         <td className="p-1 w-[100px]">
-                          <div className=''>{item.unitUse}</div>
+                          <div className=''>{item.newContractStatus}</div>
                         </td>
                         <td className="p-1 w-[100px]">
-                          <div className=''>{item.size}</div>
+                          <Link href={'/'} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
                         </td>
-                        <td className="p-1 w-[170px]">
-                          <div className=''>{item.city}</div>
-                        </td>
-                        <td className="p-1 w-[100px]">
-                          <div className=''>{item.area}</div>
-                        </td>
-                        
                         <td className="flex items-center px-3 mr-5 py-4 space-x-4">
-                          <button type='button' onClick={()=>{getData(item._id), setOpen(true)}} 
+                          <button type='button' onClick={()=>{getData(item._id), setOpenNewContract(true)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
                           </button>
                         </td>
-                            
                       </tr>})}
                       
                     </tbody>
@@ -2076,111 +1972,7 @@ import { useRouter } from 'next/router';
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
           </IconButton>
         </div>
-
-
-        {/* <div className="flex items-center gap-4 mt-10 justify-end">
-            <Button
-                variant="text"
-                className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300"
-                onClick={prev}
-                disabled={active === 1}
-            >
-                <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-            </Button>
-            <div className="flex items-center gap-2 text-center">
-                <IconButton className={` pb-3 pr-2 ${active === 1 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(1)}>1</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 2 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(2)}>2</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 3 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(3)}>3</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 4 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(4)}>4</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 5 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(5)}>5</IconButton>
-            </div>
-            <Button
-                variant="text"
-                className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300"
-                onClick={next}
-                disabled={active === 5}
-            >
-                Next
-                <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </Button>
-        </div> */}
-
-
       </div>
-
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-20" onClose={()=>{setOpen(false)}}>
-          <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
-          </Transition.Child>
-          <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
-              <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
-                <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-2 lg:max-w-6xl">
-                  <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6">
-                    <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
-                      <span className="sr-only">Close</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-
-                    <div className='w-full'>
-                      <form method="POST" onSubmit={(e)=>{submit(e)}}>
-                        <div className="overflow-hidden shadow sm:rounded-md">
-                          <div ref={speceficComponentRef} className="bg-white py-5">
-
-
-                            <Tabs value="owner">
-                              <TabsHeader className='bg-[#f0f3f4]'>
-                                {data.map(({ label, value, icon }) => (
-                                  <Tab key={value} value={value}>
-                                    <div className="flex items-center gap-2">
-                                      {React.createElement(icon, { className: "w-5 h-5" })}
-                                      {label}
-                                    </div>
-                                  </Tab>
-                                ))}
-                              </TabsHeader>
-                              <TabsBody className='mt-5'>
-                                {data.map(({ value, desc }) => (
-                                  <TabPanel key={value} value={value}>
-                                    {desc}
-                                  </TabPanel>
-                                ))}
-                              </TabsBody>
-                            </Tabs>
-
-                            <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-
-                              <ReactToPrint
-                                trigger={()=>{
-                                  return <button 
-                                    type="button"
-                                    className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                    Print
-                                    <AiOutlinePrinter className='text-lg ml-2'/>
-                                  </button>
-                                }}
-                                content={() => speceficComponentRef.current}
-                                documentTitle='Building and Owner'
-                                pageStyle='print'
-                              />
-
-                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition.Root>
-
 
       <Transition.Root show={openNewContract} as={Fragment}>
         <Dialog as="div" className="relative z-20" onClose={()=>{setOpenNewContract(false)}}>
@@ -2269,7 +2061,7 @@ export async function getServerSideProps() {
     mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGO_URI)
   }
-  let dbVouchers = await dbUnits.find()
+  let dbVouchers = await ContractAndTenant.find()
   let dbBuildings = await Buildings.find()
   let dbContacts = await Contact.find()
   let dbTenants = await Contact.find({'type': 'Tenant'})
@@ -2284,4 +2076,4 @@ export async function getServerSideProps() {
     }
   }
 }   
-export default Units;
+export default ContractAndTenants;

@@ -18,6 +18,7 @@ import PaymentMethod from 'models/PaymentMethod';
 import JournalVoucher from 'models/JournalVoucher';
 import Buildings from 'models/Buildings';
 import Units from 'models/Units';
+import ContractAndTenant from 'models/ContractAndTenant';
 
 
 export default async function handler(req, res) {
@@ -270,13 +271,15 @@ export default async function handler(req, res) {
 
             res.status(200).json({ success: true, message: "Entry Added !" }) 
         }
+        else if( path === 'NewContract'){
+            const { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes, path, importEntries, row } = req.body;
 
+            let newEntry = new ContractAndTenant( { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes, type:path } );
+            await newEntry.save();
 
+            res.status(200).json({ success: true, message: "Entry Added !" }) 
+        }
 
-
-        
-
-        
 
         else{
             res.status(400).json({ success: false, message: "Internal Server Error !" }) 

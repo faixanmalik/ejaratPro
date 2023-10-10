@@ -15,7 +15,7 @@ import {HiOutlineBanknotes} from 'react-icons/hi2'
 
 import {BsBank, BsChatQuote, BsShop} from 'react-icons/bs'
 import {FiShoppingBag, FiUserPlus, FiUsers} from 'react-icons/fi'
-import {FaRegBuilding, FaToriiGate} from 'react-icons/fa'
+import {FaFileContract, FaRegBuilding, FaToriiGate} from 'react-icons/fa'
 import {TbFileInvoice} from 'react-icons/tb'
 import {RiBankCardLine, RiBankLine, RiBillLine, RiCommunityLine} from 'react-icons/ri'
 import {SlCalender} from 'react-icons/sl'
@@ -180,6 +180,9 @@ const Sidebar2 = ({ showMobilemenu }) => {
             </MenuItem>
             <MenuItem href="/panel/realEstate/units" icon={<RiCommunityLine className='text-lg'/>} className={ location === '/panel/realEstate/units' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Units
+            </MenuItem>
+            <MenuItem href="/panel/realEstate/contractAndTenants" icon={<FaFileContract className='text-lg'/>} className={ location === '/panel/realEstate/contractAndTenants' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+              Contract And Tenants
             </MenuItem>
           </SubMenu>
 

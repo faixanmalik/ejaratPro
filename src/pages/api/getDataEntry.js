@@ -18,6 +18,7 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentMethod from 'models/PaymentMethod';
 import Buildings from 'models/Buildings';
 import Units from 'models/Units';
+import ContractAndTenant from 'models/ContractAndTenant';
 
 
 export default async function handler(req, res) {
@@ -228,6 +229,16 @@ export default async function handler(req, res) {
         else if( path === 'Units' ){
             const { id } = req.body;
             let data = await Units.findById(id)
+            if(data){
+                res.status(200).json({ success: true, data}) 
+            }
+            else{
+                res.status(400).json({ success: false, message: "Internal server error!" }) 
+            }
+        }
+        else if( path === 'ContractAndTenants' ){
+            const { id } = req.body;
+            let data = await ContractAndTenant.findById(id)
             if(data){
                 res.status(200).json({ success: true, data}) 
             }

@@ -18,6 +18,7 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentMethod from 'models/PaymentMethod';
 import Buildings from 'models/Buildings';
 import Units from 'models/Units';
+import ContractAndTenant from 'models/ContractAndTenant';
 
 
 export default async function handler(req, res) {
@@ -196,6 +197,11 @@ export default async function handler(req, res) {
         else if (path === 'Units'){
             const { selectedIds } = req.body;
             await Units.deleteMany( { _id: { $in: selectedIds } } )
+            res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
+        }
+        else if (path === 'ContractAndTenants'){
+            const { selectedIds } = req.body;
+            await ContractAndTenant.deleteMany( { _id: { $in: selectedIds } } )
             res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
 
