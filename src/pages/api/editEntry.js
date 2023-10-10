@@ -17,6 +17,7 @@ import CreditSalesInvoice from 'models/CreditSalesInvoice';
 import PaymentMethod from 'models/PaymentMethod';
 import Buildings from 'models/Buildings';
 import Units from 'models/Units';
+import ContractAndTenant from 'models/ContractAndTenant';
 
 
 export default async function handler(req, res) {
@@ -789,13 +790,19 @@ export default async function handler(req, res) {
         }
 
         else if(path === 'Units'){
-
             const { id } = req.body;
             
             // Attempt to update the document
             await Units.updateOne({ _id: id }, req.body);
             res.status(200).json({ success: true, message: 'Update Successfully!' });
+        }
+
+        else if(path === 'NewContract'){
+            const { id } = req.body;
             
+            // Attempt to update the document
+            await ContractAndTenant.updateOne({ _id: id }, req.body);
+            res.status(200).json({ success: true, message: 'Update Successfully!' });
         }
 
 
