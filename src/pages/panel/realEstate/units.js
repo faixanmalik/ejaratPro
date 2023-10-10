@@ -477,11 +477,11 @@ import { useRouter } from 'next/router';
       }
     }
 
+
     // For print
     const componentRef = useRef();
     const speceficComponentRef = useRef();
 
-    
 
     let countries = [ "United States", "China", "India", "Brazil", "Russia", "Japan", "United Kingdom", "Germany", "France", "Canada", "Australia", "South Korea", "Mexico", "Spain", "Italy", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark", "Finland", "Argentina", "Chile", "South Africa", "Egypt", "Nigeria", "Kenya", "Saudi Arabia", "United Arab Emirates"];
     let cities = [ "New York City, USA", "Tokyo, Japan", "Mumbai, India", "Beijing, China", "London, United Kingdom", "Paris, France", "Moscow, Russia", "Cairo, Egypt", "Rio de Janeiro, Brazil", "Sydney, Australia", "Cape Town, South Africa", "Mexico City, Mexico", "Toronto, Canada", "Dubai, United Arab Emirates", "Seoul, South Korea", "Buenos Aires, Argentina", "Nairobi, Kenya"];
@@ -1109,8 +1109,8 @@ import { useRouter } from 'next/router';
         setTenantPhoneNo(phoneNo)
         setTenantOpeningBalance(openingBalance)
       }
-    }, [tenant])
 
+    }, [tenant])
 
     const newContractData = [
       
@@ -1439,13 +1439,20 @@ import { useRouter } from 'next/router';
         icon: FiUsers,
         desc: (
           <div>
-            <div>
-              <Select size="md" label="Tenant Profile" name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
-                {dbTenants.map((item, index) => {
-                  return <Option key={index} value={item.name}>{item.name}</Option>;
-                })}
-              </Select>
+            <div className='flex justify-between'>
+              <div className=''>
+                <Select size="md" label="Tenant Profile" name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
+                  {dbTenants.map((item, index) => {
+                    return <Option key={index} value={item.name}>{item.name}</Option>
+                  })}
+                </Select>
+              </div>
+              <div>
+                <Link href={'/panel/businessSetup/contactList?open=true&openTenant=true'} className='text-sm font-medium text-blue-600 no-underline'>Add New Tenant ?</Link>
+              </div>
             </div>
+
+
             <div className="bg-white py-5">
               <div className="grid grid-cols-6 gap-6">
 
@@ -1761,8 +1768,6 @@ import { useRouter } from 'next/router';
       },
     ];
 
-
-
     const newContract = async(e)=>{
       e.preventDefault();
       
@@ -1775,7 +1780,6 @@ import { useRouter } from 'next/router';
         getData(id);
       }
     }
-
 
     const submitNewContract = async(e) => {
       e.preventDefault();
@@ -1815,13 +1819,11 @@ import { useRouter } from 'next/router';
       }
     }
 
-    
-    
 
   return (
     <>
     <ProSidebarProvider>
-    <style jsx global>{`
+      <style jsx global>{`
         footer {
           display: none;
         }
@@ -1908,7 +1910,6 @@ import { useRouter } from 'next/router';
                   </div>
                 </div>
               </div>
-
               <div className='flex'>
 
                 <ReactToPrint
@@ -1926,12 +1927,11 @@ import { useRouter } from 'next/router';
                 />
 
               </div>
-            
+          
             </div>
 
 
             {isChecked === true ? <div className='flex justify-end my-2'>
-
 
               <Link href={'/panel/salesModule/salesInvoice?open=true&refer=true'} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 no-underline flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Reserve Units
