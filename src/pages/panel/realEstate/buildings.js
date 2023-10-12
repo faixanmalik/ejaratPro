@@ -437,12 +437,12 @@ import Charts from 'models/Charts';
       if (response.success === true){
         const {receiveUnitsArray, chartsOfAccount, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email} = response.data;
         
-        let dbContractStartDate = moment(contractStartDate).utc().format('YYYY-MM-DD')
-        let dbContractEndDate = moment(contractEndDate).utc().format('YYYY-MM-DD')
-        let dbGracePeriodFromDate = moment(gracePeriodFrom).utc().format('YYYY-MM-DD')
-        let dbGracePeriodToDate = moment(gracePeriodTo).utc().format('YYYY-MM-DD')
-        let dbExpDate = moment(expID).utc().format('YYYY-MM-DD')
-        let dbPassPortDate = moment(expPassPort).utc().format('YYYY-MM-DD')
+        let dbContractStartDate = moment(contractStartDate, 'YYYY-MM-DD', true).isValid() ? moment(contractStartDate).utc().format('YYYY-MM-DD') : '';
+        let dbContractEndDate = moment(contractEndDate, 'YYYY-MM-DD', true).isValid() ? moment(contractEndDate).utc().format('YYYY-MM-DD') : '';
+        let dbGracePeriodFromDate = moment(gracePeriodFrom, 'YYYY-MM-DD', true).isValid() ? moment(gracePeriodFrom).utc().format('YYYY-MM-DD') : '';
+        let dbGracePeriodToDate = moment(gracePeriodTo, 'YYYY-MM-DD', true).isValid() ? moment(gracePeriodTo).utc().format('YYYY-MM-DD') : '';
+        let dbExpDate = moment(expID, 'YYYY-MM-DD', true).isValid() ? moment(expID).utc().format('YYYY-MM-DD') : '';
+        let dbPassPortDate = moment(expPassPort, 'YYYY-MM-DD', true).isValid() ? moment(expPassPort).utc().format('YYYY-MM-DD') : '';
 
         setId(response.data._id)
         setReceiveUnitsArray(receiveUnitsArray);

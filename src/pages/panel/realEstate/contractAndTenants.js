@@ -342,31 +342,6 @@ import { MdAccountBox } from 'react-icons/md';
       }
     }
 
-    const editEntry = async(id)=>{
-      setOpen(true)
-
-      const data = { id, unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,
-        tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,
-        newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes,
-        path: 'NewContract' };
-      
-      let res = await fetch(`/api/editEntry`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      let response = await res.json()
-      
-      if (response.success === true) {
-        window.location.reload();
-      }
-      else {
-        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
-    }
-
     const delEntry = async()=>{
 
       const data = { selectedIds , path: 'ContractAndTenants' };
@@ -386,9 +361,85 @@ import { MdAccountBox } from 'react-icons/md';
       }
     }
 
-    const getData = async (id) =>{
-      setIsOpenSaveChange(false)
+    // const getData = async (id) =>{
+    //   setIsOpenSaveChange(false)
 
+    //   const data = { id, path: 'ContractAndTenants' };
+    //   let res = await fetch(`/api/getDataEntry`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    //   })
+    //   let response = await res.json()
+
+    //   if (response.success === true){
+
+    //     const { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes} = response.data;
+        
+    //     let dbTenantExpIdNumber = moment(tenantExpIdNumber, 'YYYY-MM-DD', true).isValid() ? moment(tenantExpIdNumber).utc().format('YYYY-MM-DD') : '';
+    //     let dbTenantExpPassPort = moment(tenantExpPassPort, 'YYYY-MM-DD', true).isValid() ? moment(tenantExpPassPort).utc().format('YYYY-MM-DD') : '';
+    //     let dbNewContractStartDate = moment(newContractStartDate, 'YYYY-MM-DD', true).isValid() ? moment(newContractStartDate).utc().format('YYYY-MM-DD') : '';
+    //     let dbNewContractEndDate = moment(newContractEndDate, 'YYYY-MM-DD', true).isValid() ? moment(newContractEndDate).utc().format('YYYY-MM-DD') : '';
+
+    //     setTenantExpPassPort(dbTenantExpPassPort);
+    //     setTenantExpIdNumber(dbTenantExpIdNumber); 
+    //     setNewContractStartDate(dbNewContractStartDate);
+    //     setNewContractEndDate(dbNewContractEndDate);
+
+    //     setId(response.data._id)
+    //     setUnitNo(unitNo || '');
+    //     setBuildingNameInArabic(buildingNameInArabic || '');
+    //     setBuildingNameInEnglish(buildingNameInEnglish || '');
+    //     setPlotNo(plotNo || '');
+    //     setRent(rent || '');
+    //     setBathroom(bathroom || '');
+    //     setParkings(parkings || '');
+    //     setRentParking(rentParking || '');
+    //     setRoof(roof || '');
+    //     setBalcony(balcony || '');
+    //     setSize(size || '');
+    //     setElectricityMeterNo(electricityMeterNo || '');
+    //     setWaterMeterNumber(waterMeterNumber || '');
+    //     setSewageNumber(sewageNumber || '');
+    //     setAc(ac || '');
+    //     setUnitType(unitType || '');
+    //     setUnitUse(unitUse || '');
+    //     setUnitStatus(unitStatus || '');
+    //     setView(view || '');
+    //     setCountry(country || '');
+    //     setCity(city || '');
+    //     setArea(area || '');
+    //     setNotes(notes || '');
+
+    //     setTenant(tenantName || '');
+    //     setTenantName(tenantName || '');
+    //     setTenantEmail(tenantEmail || '');
+    //     setTenantPhoneNo(tenantPhoneNo || '');
+    //     setTenantOpeningBalance(tenantOpeningBalance || '');
+    //     setTenantPassPortNumber(tenantPassPortNumber || '');
+    //     setTenantVatRegistrationNo(tenantVatRegistrationNo || '');
+    //     setTenantIbanNo(tenantIbanNo || '');
+    //     setTenantBank(tenantBank || '');
+    //     setTenantBankAccountNumber(tenantBankAccountNumber || '');
+    //     setTenantIdNumber(tenantIdNumber || '');
+
+    //     setNewContractUnitRent(newContractUnitRent || '');
+    //     setNewContractCommission(newContractCommission || '');
+    //     setNewContractRentParking(newContractRentParking || '');
+    //     setNewContractBouncedChequeFine(newContractBouncedChequeFine || '');
+    //     setNewContractStatus(newContractStatus || '');
+    //     setNewContractPaymentScheduling(newContractPaymentScheduling || '');
+    //     setNewContractSecurityDeposit(newContractSecurityDeposit || '');
+    //     setNewContractNotes(newContractNotes || '');
+    //   }
+    // }
+
+
+    const getData = async (id) => {
+      setIsOpenSaveChange(false);
+    
       const data = { id, path: 'ContractAndTenants' };
       let res = await fetch(`/api/getDataEntry`, {
         method: 'POST',
@@ -396,26 +447,31 @@ import { MdAccountBox } from 'react-icons/md';
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      })
-      let response = await res.json()
-
-      if (response.success === true){
-        console.log(response.data)
-
-        const { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes} = response.data;
-        
-        let dbTenantExpPassPort = moment(tenantExpPassPort).utc().format('YYYY-MM-DD') || ''
-        let dbTenantExpIdNumber = moment(tenantExpIdNumber).utc().format('YYYY-MM-DD') || ''
-        let dbNewContractStartDate = moment(newContractStartDate).utc().format('YYYY-MM-DD') || ''
-        let dbNewContractEndDate = moment(newContractEndDate).utc().format('YYYY-MM-DD') || ''
-
-
+      });
+      let response = await res.json();
+    
+      if (response.success === true) {
+        const { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof, balcony, size, electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city, area, notes, tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber, newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes,} = response.data;
+    
+        let dbTenantExpIdNumber = moment(tenantExpIdNumber, 'YYYY-MM-DD', true).isValid()
+          ? moment(tenantExpIdNumber).utc().format('YYYY-MM-DD')
+          : '';
+        let dbTenantExpPassPort = moment(tenantExpPassPort, 'YYYY-MM-DD', true).isValid()
+          ? moment(tenantExpPassPort).utc().format('YYYY-MM-DD')
+          : '';
+        let dbNewContractStartDate = moment(newContractStartDate, 'YYYY-MM-DD', true).isValid()
+          ? moment(newContractStartDate).utc().format('YYYY-MM-DD')
+          : '';
+        let dbNewContractEndDate = moment(newContractEndDate, 'YYYY-MM-DD', true).isValid()
+          ? moment(newContractEndDate).utc().format('YYYY-MM-DD')
+          : '';
+    
         setTenantExpPassPort(dbTenantExpPassPort);
-        setTenantExpIdNumber(dbTenantExpIdNumber); 
+        setTenantExpIdNumber(dbTenantExpIdNumber);
         setNewContractStartDate(dbNewContractStartDate);
         setNewContractEndDate(dbNewContractEndDate);
-
-        setId(response.data._id)
+    
+        setId(response.data._id);
         setUnitNo(unitNo || '');
         setBuildingNameInArabic(buildingNameInArabic || '');
         setBuildingNameInEnglish(buildingNameInEnglish || '');
@@ -439,7 +495,7 @@ import { MdAccountBox } from 'react-icons/md';
         setCity(city || '');
         setArea(area || '');
         setNotes(notes || '');
-
+    
         setTenant(tenantName || '');
         setTenantName(tenantName || '');
         setTenantEmail(tenantEmail || '');
@@ -451,7 +507,7 @@ import { MdAccountBox } from 'react-icons/md';
         setTenantBank(tenantBank || '');
         setTenantBankAccountNumber(tenantBankAccountNumber || '');
         setTenantIdNumber(tenantIdNumber || '');
-
+    
         setNewContractUnitRent(newContractUnitRent || '');
         setNewContractCommission(newContractCommission || '');
         setNewContractRentParking(newContractRentParking || '');
@@ -460,8 +516,18 @@ import { MdAccountBox } from 'react-icons/md';
         setNewContractPaymentScheduling(newContractPaymentScheduling || '');
         setNewContractSecurityDeposit(newContractSecurityDeposit || '');
         setNewContractNotes(newContractNotes || '');
+    
+        // Now, return the data you want to use in the calling function
+        return {
+          unitRent: newContractUnitRent || 0,
+          commission: newContractCommission || 0,
+          parkingRent: newContractRentParking || 0,
+          securityDeposit: newContractSecurityDeposit || 0,
+        };
       }
     }
+
+    
 
     // For print
     const componentRef = useRef();
@@ -471,7 +537,6 @@ import { MdAccountBox } from 'react-icons/md';
     let countries = [ "United States", "China", "India", "Brazil", "Russia", "Japan", "United Kingdom", "Germany", "France", "Canada", "Australia", "South Korea", "Mexico", "Spain", "Italy", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark", "Finland", "Argentina", "Chile", "South Africa", "Egypt", "Nigeria", "Kenya", "Saudi Arabia", "United Arab Emirates"];
     let cities = [ "New York City, USA", "Tokyo, Japan", "Mumbai, India", "Beijing, China", "London, United Kingdom", "Paris, France", "Moscow, Russia", "Cairo, Egypt", "Rio de Janeiro, Brazil", "Sydney, Australia", "Cape Town, South Africa", "Mexico City, Mexico", "Toronto, Canada", "Dubai, United Arab Emirates", "Seoul, South Korea", "Buenos Aires, Argentina", "Nairobi, Kenya"];
     let areas = [ "North America", "South America", "Europe", "Asia", "Africa", "Oceania", "Middle East", "Central America", "Caribbean", "Mediterranean", "Scandinavia", "Balkans", "Southeast Asia", "Pacific Islands", "Arctic"];
-    let investmentStructures = [ 'Fixed', 'of Rent %', 'of Collection %' ]
     let paymentSchedulings = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     let unitTypes = ['Studio', '1 BHK', '2 BHK', 'SHOP']
     let unitUses = ['Residencial', 'Commercial']
@@ -1170,38 +1235,99 @@ import { MdAccountBox } from 'react-icons/md';
     ];
 
 
-    const newContract = async(e)=>{
+    const newContract = async (e, openContractValue) => {
       e.preventDefault();
-      
-      if(selectedIds.length > 1){
-        toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
-      else{
-        setOpenNewContract(true);
+    
+      if (selectedIds.length > 1) {
+        toast.error('Select only 1 item', {
+          position: "bottom-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        throw new Error("Select only 1 item");
+      } else {
+        setOpenNewContract(openContractValue);
         let id = selectedIds[0];
-        getData(id);
+    
+        try {
+          const data = await getData(id);
+          return data; // Return the data from getData
+        } catch (error) {
+          throw error;
+        }
       }
     }
-
 
     const submitNewContract = async(e) => {
       e.preventDefault();
 
-      let formData = {
-        open: true,
-        refer:true,
-        name: tenantName || '',
-        unitRent: newContractUnitRent || 0,
-        commission: newContractCommission || 0,
-        parkingRent: newContractRentParking || 0,
-        securityDeposit: newContractSecurityDeposit || 0,
+      let data = {
+        unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,
+        tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,
+        newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes,
+        path: 'NewContract'
       }
-      const query = new URLSearchParams(formData).toString();
-      router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
+
+      let res = await fetch(`/api/addEntry`, {
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      let response = await res.json()
+
+      if (response.success === true) {
+
+        let formData = {
+          open: true,
+          refer:true,
+          name: tenantName || '',
+          unitRent: newContractUnitRent || 0,
+          commission: newContractCommission || 0,
+          parkingRent: newContractRentParking || 0,
+          securityDeposit: newContractSecurityDeposit || 0,
+        }
+        const query = new URLSearchParams(formData).toString();
+        router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
+        
+      }
+      else {
+        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
     }
 
+    const issueInvoice = async (e) => {
+      e.preventDefault();
     
+      try {
+        const contractData = await newContract(e, false);
+        setOpenNewContract(false);
     
+        let formData = {
+          open: true,
+          refer: true,
+          name: tenantName || '',
+          unitRent: contractData.unitRent || 0,
+          commission: contractData.commission || 0,
+          parkingRent: contractData.parkingRent || 0,
+          securityDeposit: contractData.securityDeposit || 0,
+        }
+
+      const query = new URLSearchParams(formData).toString();
+      router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
+
+      } catch (error) {
+        // Handle the error here
+        console.error("Error in issueInvoice:", error);
+      }
+    }
+
 
   return (
     <>
@@ -1263,17 +1389,20 @@ import { MdAccountBox } from 'react-icons/md';
             </div>
 
             {isChecked === true ? <div className='flex justify-end my-2'>
-              <Link href={'/panel/salesModule/salesInvoice?open=true&refer=true'} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 no-underline flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Reserve Units
-              </Link>
               <button onClick={(e)=>newContract(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                New Contract
+                Renewal Contract
+              </button>
+              <button onClick={(e)=>issueInvoice(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Issue Invoice
               </button>
               <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Change Unit Status
+                Collect Payment
               </button>
               <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Archive Unit
+                Send Reminder
+              </button>
+              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Terminate Contract
               </button>
 
               <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-red-800 flex hover:text-white border-2 border-red-800 hover:bg-red-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
@@ -1320,7 +1449,7 @@ import { MdAccountBox } from 'react-icons/md';
                             Statement
                         </th>
                         <th scope="col" className="pr-3">
-                            View/Edit
+                            View
                         </th>
                       </tr>
                     </thead>
@@ -1332,10 +1461,10 @@ import { MdAccountBox } from 'react-icons/md';
                             <input id={`checkbox-table-search-${item._id}`} checked={selectedIds.includes(item._id)} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                           </div>
                         </td>
-                        <td className="p-1 w-[120px]">
+                        <td className="p-1 w-[140px]">
                           <div className=' text-black font-semibold'>{item.tenantName}</div>
                         </td>
-                        <td className="p-1 w-[120px]">
+                        <td className="p-1 w-[140px]">
                           <div className=' text-black font-semibold'>{item.buildingNameInEnglish}</div>
                         </td>
                         <td className="p-1 w-[80px]">
@@ -1356,7 +1485,7 @@ import { MdAccountBox } from 'react-icons/md';
                         <td className="p-1 w-[100px]">
                           <Link href={'/'} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
                         </td>
-                        <td className="flex items-center px-3 mr-5 py-4 space-x-4">
+                        <td className="flex items-center py-4 space-x-4">
                           <button type='button' onClick={()=>{getData(item._id), setOpenNewContract(true)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
@@ -1457,7 +1586,6 @@ import { MdAccountBox } from 'react-icons/md';
                                 pageStyle='print'
                               />
 
-                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
                               <button type="submit" onClick={(e)=>{submitNewContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Contract</button>
                             </div>
                           </div>

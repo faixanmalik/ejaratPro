@@ -425,12 +425,12 @@ import { useRouter } from 'next/router';
 
         const { attachment, name, phoneNo, email, nameInBill, idNumber, expID, building, passPortNumber, expPassPort, buildingNameInArabic, buildingNameInEnglish, parkings, roof, country, city, area, electricityMeterNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, unitNo, balcony, ac, unitType, unitUse, bathroom, unitStatus, plotNo, rent, rentParking, size, waterMeterNumber, sewageNumber, view, notes} = response.data;
         
-        let dbContractStartDate = moment(contractStartDate).utc().format('YYYY-MM-DD') || '' ;
-        let dbContractEndDate = moment(contractEndDate).utc().format('YYYY-MM-DD') || '' ;
-        let dbGracePeriodFromDate = moment(gracePeriodFrom).utc().format('YYYY-MM-DD') || '' ;
-        let dbGracePeriodToDate = moment(gracePeriodTo).utc().format('YYYY-MM-DD') || '' ;
-        let dbExpDate = moment(expID).utc().format('YYYY-MM-DD') || '' ;
-        let dbPassPortDate = moment(expPassPort).utc().format('YYYY-MM-DD') || '' ;
+        let dbContractStartDate = moment(contractStartDate, 'YYYY-MM-DD', true).isValid() ? moment(contractStartDate).utc().format('YYYY-MM-DD') : '';
+        let dbContractEndDate = moment(contractEndDate, 'YYYY-MM-DD', true).isValid() ? moment(contractEndDate).utc().format('YYYY-MM-DD') : '';
+        let dbGracePeriodFromDate = moment(gracePeriodFrom, 'YYYY-MM-DD', true).isValid() ? moment(gracePeriodFrom).utc().format('YYYY-MM-DD') : '';
+        let dbGracePeriodToDate = moment(gracePeriodTo, 'YYYY-MM-DD', true).isValid() ? moment(gracePeriodTo).utc().format('YYYY-MM-DD') : '';
+        let dbExpDate = moment(expID, 'YYYY-MM-DD', true).isValid() ? moment(expID).utc().format('YYYY-MM-DD') : '';
+        let dbPassPortDate = moment(expPassPort, 'YYYY-MM-DD', true).isValid() ? moment(expPassPort).utc().format('YYYY-MM-DD') : '';
 
         setId(response.data._id)
         setContractStartDate(dbContractStartDate);
