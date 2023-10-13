@@ -341,11 +341,16 @@ import Link from 'next/link';
         body: JSON.stringify(data),
       })
       let response = await res.json()
-      console.log(response)
 
       if (response.success === true){
-        const dbJournalDate = moment(response.data.journalDate).utc().format('YYYY-MM-DD')
-        const dbDueDate = moment(response.data.dueDate).utc().format('YYYY-MM-DD')
+
+        let dbJournalDate = moment(response.data.journalDate, 'YYYY-MM-DD', true).isValid()
+          ? moment(response.data.journalDate).utc().format('YYYY-MM-DD')
+          : '';
+
+        let dbDueDate = moment(response.data.dueDate, 'YYYY-MM-DD', true).isValid()
+          ? moment(response.data.dueDate).utc().format('YYYY-MM-DD')
+          : '';
         
         setId(response.data._id)
         setJournalDate(dbJournalDate)
