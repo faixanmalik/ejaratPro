@@ -1336,7 +1336,7 @@ import { MdAccountBox } from 'react-icons/md';
             </div>
 
             {isChecked === true ? <div className='flex justify-end my-2'>
-              <button onClick={(e)=>newContract(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button onClick={(e)=>newContract(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Renewal Contract
               </button>
               <button onClick={(e)=>issueInvoice(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
@@ -1433,7 +1433,7 @@ import { MdAccountBox } from 'react-icons/md';
                           <Link href={'/'} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
                         </td>
                         <td className="flex items-center py-4 space-x-4">
-                          <button type='button' onClick={()=>{getData(item._id), setOpenNewContract(true)}} 
+                          <button type='button' onClick={(e)=>{getData(item._id), setOpenNewContract(e, true)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
                           </button>
@@ -1492,7 +1492,7 @@ import { MdAccountBox } from 'react-icons/md';
                     </button>
 
                     <div className='w-full'>
-                      <form method="POST" onSubmit={(e)=>{submitNewContract(e)}}>
+                      <form method="POST" onSubmit={(e)=>{submitNewContract(e, false)}}>
                         <div className="overflow-hidden shadow sm:rounded-md">
                           <div ref={speceficComponentRef} className="bg-white py-5">
 
