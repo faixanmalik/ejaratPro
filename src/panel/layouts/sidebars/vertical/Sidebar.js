@@ -184,6 +184,9 @@ const Sidebar2 = ({ showMobilemenu }) => {
             <MenuItem href="/panel/realEstate/contractAndTenants" icon={<FaFileContract className='text-lg'/>} className={ location === '/panel/realEstate/contractAndTenants' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Contract And Tenants
             </MenuItem>
+            <MenuItem href="/panel/realEstate/cheques" icon={<FaFileContract className='text-lg'/>} className={ location === '/panel/realEstate/contractAndTenants' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+              Cheques
+            </MenuItem>
           </SubMenu>
 
           <SubMenu label="User Managment" icon={<AiOutlineUser className='text-lg'/>}>
