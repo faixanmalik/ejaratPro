@@ -5,6 +5,7 @@ const SalesInvoiceSchema = new mongoose.Schema({
     inputList:{ type: Array },
     fullAmount:{ type: Number },
     fullTax:{ type: Number },
+    chqNo:{ type: Number },
     discount:{ type: Number },
     totalAmount:{ type: Number },
     phoneNo:{ type: Number },

@@ -10,7 +10,6 @@ import { BiFingerprint, BiHomeAlt, BiLocationPlus, BiPurchaseTagAlt, BiUserCheck
 import {MdOutlineInventory2, MdOutlineRealEstateAgent, MdPayment, MdProductionQuantityLimits} from 'react-icons/md'
 import {IoPieChartSharp, IoBusinessOutline} from 'react-icons/io5'
 import {HiOutlineCash, HiOutlineDocumentReport, HiOutlineReceiptTax} from 'react-icons/hi'
-
 import {HiOutlineBanknotes} from 'react-icons/hi2'
 
 import {BsBank, BsChatQuote, BsShop} from 'react-icons/bs'
@@ -184,7 +183,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
             <MenuItem href="/panel/realEstate/contractAndTenants" icon={<FaFileContract className='text-lg'/>} className={ location === '/panel/realEstate/contractAndTenants' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Contract And Tenants
             </MenuItem>
-            <MenuItem href="/panel/realEstate/cheques" icon={<FaFileContract className='text-lg'/>} className={ location === '/panel/realEstate/contractAndTenants' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+            <MenuItem href="/panel/realEstate/cheques" icon={<HiOutlineBanknotes className='text-lg'/>} className={ location === '/panel/realEstate/contractAndTenants' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Cheques
             </MenuItem>
           </SubMenu>

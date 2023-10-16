@@ -405,8 +405,14 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 														Name
 												</th>
 												<th scope="col" className="p-1">
-														Amount Received
+														Chq No
 												</th>
+												<th scope="col" className="p-1">
+														Due Date
+												</th>
+												<th scope="col" className="p-1">
+														Amount
+												</th> 
 												<th scope="col" className="p-1">
 													View
 												</th>
@@ -414,8 +420,7 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
                     </thead>
                     <tbody>
                       {filteredData.map((item, index)=>{
-											
-
+                        console.log(item)
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
 												<td className="w-4 p-4">
 													<div className="flex items-center">
@@ -432,7 +437,15 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 													<div className='text-sm'>{item.name}</div>
 												</td>
 												<td className="p-1">
-													<div className='text-sm'>{item.totalPaid}</div>
+													<div className='text-sm'>#{item.chqNo || item.inputList[0].ref}</div>
+												</td>
+												<td className="p-1">
+													<div className='text-sm'>{item.type === 'ReceiptVoucher' 
+                          ? moment(item.inputList[0].chequeDueDate).utc().format('D MMM YYYY') 
+                          : moment(item.dueDate).utc().format('D MMM YYYY')}</div>
+												</td>
+												<td className="p-1">
+													<div className='text-sm font-semibold'>{item.totalPaid || item.totalAmount}</div>
 												</td>
                         <td className="flex items-center py-4 space-x-4">
                           <button type='button' onClick={(e)=>{getData(item._id), setOpenNewContract(e, true)}} 

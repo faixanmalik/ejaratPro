@@ -85,6 +85,8 @@ import Link from 'next/link';
     const [city, setCity] = useState('')
     const [receivedBy, setReceivedBy] = useState('')
     const [project, setProject] = useState('')
+    const [chqNo, setChqNo] = useState('')
+
     const [dueDate, setDueDate] = useState('')
     const [fullAmount, setFullAmount] = useState(0)
     const [fullTax, setFullTax] = useState(0)
@@ -116,6 +118,9 @@ import Link from 'next/link';
       }
       else if(e.target.name === 'email'){
         setEmail(e.target.value)
+      }
+      else if(e.target.name === 'chqNo'){
+        setChqNo(e.target.value)
       }
       else if(e.target.name === 'phoneNo'){
         setPhoneNo(e.target.value)
@@ -172,7 +177,7 @@ import Link from 'next/link';
       });
 
       // fetch the data from form to makes a file in local system
-      const data = { phoneNo, email, discount, city, fromAccount:receivedBy, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'SalesInvoice' };
+      const data = { phoneNo, email, chqNo, discount, city, fromAccount:receivedBy, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'SalesInvoice' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -251,7 +256,7 @@ import Link from 'next/link';
     const editEntry = async(id)=>{
       router.push('?open=true');
 
-      const data = { id, phoneNo, discount, email, city, fromAccount:receivedBy, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'SalesInvoice' };
+      const data = { id, phoneNo, discount, email, chqNo, city, fromAccount:receivedBy, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'SalesInvoice' };
       
       let res = await fetch(`/api/editEntry`, {
         method: 'POST',
@@ -319,6 +324,7 @@ import Link from 'next/link';
         setFullAmount(response.data.fullAmount)
         setFullTax(response.data.fullTax)
         setDiscount(response.data.discount)
+        setChqNo(response.data.chqNo)
         setTotalAmount(response.data.totalAmount)
         setPhoneNo(response.data.phoneNo)
         setName(response.data.name)
@@ -644,17 +650,31 @@ import Link from 'next/link';
                             </div>
 
                             <div className="w-1/2">
+                              <label htmlFor="chqNo" className="block text-sm font-medium text-gray-700">
+                                Cheque No:
+                              </label>
+                              <input
+                                type="number"
+                                onChange={handleChange}
+                                name="chqNo"
+                                value={chqNo}
+                                id="chqNo"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+
+                            <div className="w-1/2">
                               <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
                               Due Date:
                               </label>
                               <input 
-                              type="date"
-                              onChange={handleChange}
-                              name="dueDate"
-                              id="dueDate"
-                              value={dueDate}
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              required
+                                type="date"
+                                onChange={handleChange}
+                                name="dueDate"
+                                id="dueDate"
+                                value={dueDate}
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                required
                               />
                             </div>
 

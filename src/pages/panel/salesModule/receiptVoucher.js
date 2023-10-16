@@ -65,13 +65,12 @@ import Link from 'next/link';
           setFilteredData(filteredData)
           
           setInputList(Array.from({ length: filteredData.length }, () => (
-            { id: '', billNo:'' , journalNo, dueDate: '', desc: '', ref: '', date: journalDate, paidBy:'', balance: 0, paid: 0, netBalance: 0 }
+            { id: '', billNo:'' , journalNo, chequeDueDate: '', desc: '', ref: '', date: journalDate, paidBy:'', balance: 0, paid: 0, netBalance: 0 }
           )))
         }
         else{
           setFilteredData([])
         }
-
 
         setName(name)
 
@@ -154,7 +153,7 @@ import Link from 'next/link';
           setFilteredData(filteredData)
           
           setInputList(Array.from({ length: filteredData.length }, () => (
-            { id: '', billNo:'' , journalNo, dueDate: '', desc: '', ref: '', date: journalDate, paidBy:'', balance: 0, paid: 0, netBalance: 0 }
+            { id: '', billNo:'' , journalNo, chequeDueDate: '', desc: '', ref: '', date: journalDate, paidBy:'', balance: 0, paid: 0, netBalance: 0 }
           )))
         }
         else{
@@ -267,20 +266,22 @@ import Link from 'next/link';
     const change = (e, index, id, balance, prevPaid, billNo) => {
 
       const values = [...inputList];
+
       values[index][e.target.name] = e.target.value;
       const paidNow = parseInt(e.target.value);
-    
+      
       const netBalance = parseInt(balance - (prevPaid + paidNow));
-
+      
       if(balance){
         values[index].balance = balance;
         values[index].netBalance = netBalance;
         values[index].id = id;
         values[index].billNo = billNo;
       }
+      console.log(values);
       setInputList(values);
-
-
+      
+      
       var totalBal = 0;
       var totalPaid = 0;
       var totalNetBalance = 0;
@@ -315,9 +316,6 @@ import Link from 'next/link';
       setAmount('')
       setIsOpenSaveChange(true)
     }
-
-
-   
 
     // For print
     const componentRef = useRef();
@@ -560,7 +558,6 @@ import Link from 'next/link';
 
                           </div>
 
-
                           <div className='flex space-x-4 mb-14'>
 
 
@@ -593,8 +590,6 @@ import Link from 'next/link';
                             </div>
 
                           </div>
-
-
 
                           <div className='space-x-4 my-10 overflow-x-scroll'>
                             <table className="w-full text-sm text-left text-gray-500 ">
@@ -629,7 +624,6 @@ import Link from 'next/link';
                                   </th>
                                 </tr>
                               </thead>
-                            
                               <tbody>
                               {filteredData.map(( item , index)=>{
 
@@ -638,9 +632,8 @@ import Link from 'next/link';
                                     {item.billNo ? item.billNo : 'Undefined'}
                                   </td>
 
-
                                   <td className="p-2 max-w-[140px]">
-                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>paid By</option>
                                       {dbPaymentMethod.map((item, index)=>{
                                         return <option key={index} value={item.paymentType}>{item.paymentType}</option>
@@ -667,17 +660,17 @@ import Link from 'next/link';
                                   <td className="p-2">
                                     <input
                                       type="date"
-                                      value={ item.dueDate }
+                                      value={ item.chequeDueDate }
                                       onChange={e=> change(e, index)}
-                                      name="dueDate"
-                                      id="dueDate"
+                                      name="chequeDueDate"
+                                      id="chequeDueDate"
                                       className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       
                                     />
                                   </td>
 
                                   <td className="p-2">
-                                    <select id="bank" name="bank" onChange={ e=> change(e, index) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>select bank</option>
                                       {dbBankAccount.map((item, index)=>{
                                         return <option key={index} value={item.bankBranch}>{item.bankBranch}</option>
@@ -689,7 +682,7 @@ import Link from 'next/link';
                                     <input
                                       type="text"
                                       value={ item.ref }
-                                      onChange={e=> change(e, index)}
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo)}
                                       name="ref"
                                       id="ref"
                                       className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
