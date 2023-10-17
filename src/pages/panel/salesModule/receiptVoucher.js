@@ -238,6 +238,8 @@ import Link from 'next/link';
       })
       let response = await res.json()
 
+      console.log(response.data)
+
       if (response.success === true){
 
         let dbJournalDate = moment(response.data.journalDate, 'YYYY-MM-DD', true).isValid()
@@ -258,6 +260,7 @@ import Link from 'next/link';
         setEmail(response.data.email)
         setCity(response.data.city)
         setAmount(response.data.amount)
+        setTotalPaid(response.data.totalPaid)
       }
     }
 
@@ -278,7 +281,6 @@ import Link from 'next/link';
         values[index].id = id;
         values[index].billNo = billNo;
       }
-      console.log(values);
       setInputList(values);
       
       

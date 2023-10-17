@@ -19,6 +19,7 @@ import JournalVoucher from 'models/JournalVoucher';
 import Buildings from 'models/Buildings';
 import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
+import Cheque from 'models/Cheque';
 
 
 export default async function handler(req, res) {
@@ -179,6 +180,11 @@ export default async function handler(req, res) {
         else if( path === 'SalesInvoice'){
             const { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path, importEntries, row } = req.body;
 
+            if(fromAccount === 'Cheque'){
+                let newEntry = new Cheque( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
+                await newEntry.save();
+            }
+
             let newEntry = new SalesInvoice( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
             await newEntry.save();
             res.status(200).json({ success: true, message: "Entry Added !" }) 
@@ -232,6 +238,22 @@ export default async function handler(req, res) {
         // Receipt Voucher Invoice
         else if( path === 'ReceiptVoucher'){
             const { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, project, attachment, path, importEntries, row } = req.body;
+
+            if (Array.isArray(req.body.inputList)) {
+                const filteredInv = {
+                    ...req.body,
+                    inputList: req.body.inputList.filter((input) => input.paidBy === 'Cheque'),
+                    type: path
+                };
+
+                let newEntry = new Cheque( filteredInv );
+                await newEntry.save();
+
+            }
+            else {
+                console.log("The 'inputList' property is not an array or doesn't exist in req.body");
+            }
+
 
             for (const newItem of inputList) {
                 await CreditSalesInvoice.findOneAndUpdate({billNo:newItem.billNo}, { $inc: { amountPaid: newItem.paid } });

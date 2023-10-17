@@ -40,8 +40,8 @@ import Buildings from 'models/Buildings';
 import { useRouter } from 'next/router';
 import ContractAndTenant from 'models/ContractAndTenant';
 import { MdAccountBox } from 'react-icons/md';
-import SalesInvoice from 'models/SalesInvoice';
-import ReceiptVoucher from 'models/ReceiptVoucher';
+import Cheque from 'models/Cheque';
+import { useSearchParams } from 'next/navigation';
 
 
 
@@ -66,10 +66,14 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
     );
   }
 
-  const Cheques = ({ dbSalesInvoice, dbReceipts, dbContacts, dbBuildings, dbTenants }) => {
+  const Cheques = ({ dbCheques, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
-    const [open, setOpen] = useState(false)
+    const searchParams = useSearchParams()
+    const openReceiptVoucher = searchParams.get('openReceiptVoucher')
+    const openSalesInv = searchParams.get('openSalesInv')
+
+    
     const [openNewContract, setOpenNewContract] = useState(false)
 
     const [contacts, setContacts] = useState([])
@@ -88,6 +92,43 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
     const [isChecked, setIsChecked] = useState(false);
 		const [filteredData, setFilteredData] = useState([])
+
+
+
+
+
+    // Sales Invoice States to show the cheque
+    const [journalNo, setJournalNo] = useState('')
+
+    // Date
+    const today = new Date().toISOString().split('T')[0];
+    const [journalDate, setJournalDate] = useState(today)
+  
+    const [memo, setMemo] = useState('')
+    const [attachment, setAttachment] = useState('')
+    const [name, setName] = useState('')
+    const [phoneNo, setPhoneNo] = useState(0)
+    const [email, setEmail] = useState('')
+    const [city, setCity] = useState('')
+    const [receivedBy, setReceivedBy] = useState('')
+    const [project, setProject] = useState('')
+    const [chqNo, setChqNo] = useState('')
+
+    const [dueDate, setDueDate] = useState('')
+    const [fullAmount, setFullAmount] = useState(0)
+    const [fullTax, setFullTax] = useState(0)
+    const [totalAmount, setTotalAmount] = useState(0)
+    const [discount, setDiscount] = useState('')
+    
+    const [totalPaid, setTotalPaid] = useState(0)
+    const [amount, setAmount] = useState('')
+    const [reference, setReference] = useState('')
+
+    // JV
+    const [inputList, setInputList] = useState([
+      { journalNo, date: journalDate, products: '', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'', discount: discount},
+      { journalNo, date: journalDate, products: '', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'', discount: discount},
+    ]);
 
 
     function handleRowCheckboxChange(e, id) {
@@ -115,28 +156,12 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
     useEffect(() => {
       setContacts(dbContacts)
 
-      let filteredSalesInvoices = dbSalesInvoice.filter((item)=>{
-        return item.receivedBy === 'Cheque'
-      })
-
-			let filteredReceipts = dbReceipts.map((item) => {
-				let newItem = { ...item };
-				newItem.inputList = newItem.inputList.filter((input) => input.paidBy === 'Cheque');
-				return newItem;
-			});
-
-			let concatination = filteredSalesInvoices.concat(filteredReceipts)
-
-			if (concatination.length > 0) {
-				setFilteredData(concatination);
-			}
-
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
 
-    }, [dbSalesInvoice, dbReceipts])
+    }, [dbCheques])
 
     useEffect(() => {
       
@@ -174,95 +199,89 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
       }
     }
 
-    const getData = async (id) => {
-      setIsOpenSaveChange(false);
-    
-      const data = { id, path: 'Cheques' };
-      let res = await fetch(`/api/getDataEntry`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      let response = await res.json();
-    
-      if (response.success === true) {
-        const { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof, balcony, size, electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city, area, notes, tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber, newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes,} = response.data;
-    
-        let dbTenantExpIdNumber = moment(tenantExpIdNumber, 'YYYY-MM-DD', true).isValid()
-          ? moment(tenantExpIdNumber).utc().format('YYYY-MM-DD')
-          : '';
-        let dbTenantExpPassPort = moment(tenantExpPassPort, 'YYYY-MM-DD', true).isValid()
-          ? moment(tenantExpPassPort).utc().format('YYYY-MM-DD')
-          : '';
-        let dbNewContractStartDate = moment(newContractStartDate, 'YYYY-MM-DD', true).isValid()
-          ? moment(newContractStartDate).utc().format('YYYY-MM-DD')
-          : '';
-        let dbNewContractEndDate = moment(newContractEndDate, 'YYYY-MM-DD', true).isValid()
-          ? moment(newContractEndDate).utc().format('YYYY-MM-DD')
-          : '';
-    
-        setTenantExpPassPort(dbTenantExpPassPort);
-        setTenantExpIdNumber(dbTenantExpIdNumber);
-        setNewContractStartDate(dbNewContractStartDate);
-        setNewContractEndDate(dbNewContractEndDate);
-    
-        setId(response.data._id);
-        setUnitNo(unitNo || '');
-        setBuildingNameInArabic(buildingNameInArabic || '');
-        setBuildingNameInEnglish(buildingNameInEnglish || '');
-        setPlotNo(plotNo || '');
-        setRent(rent || '');
-        setBathroom(bathroom || '');
-        setParkings(parkings || '');
-        setRentParking(rentParking || '');
-        setRoof(roof || '');
-        setBalcony(balcony || '');
-        setSize(size || '');
-        setElectricityMeterNo(electricityMeterNo || '');
-        setWaterMeterNumber(waterMeterNumber || '');
-        setSewageNumber(sewageNumber || '');
-        setAc(ac || '');
-        setUnitType(unitType || '');
-        setUnitUse(unitUse || '');
-        setUnitStatus(unitStatus || '');
-        setView(view || '');
-        setCountry(country || '');
-        setCity(city || '');
-        setArea(area || '');
-        setNotes(notes || '');
-    
-        setTenant(tenantName || '');
-        setTenantName(tenantName || '');
-        setTenantEmail(tenantEmail || '');
-        setTenantPhoneNo(tenantPhoneNo || '');
-        setTenantOpeningBalance(tenantOpeningBalance || '');
-        setTenantPassPortNumber(tenantPassPortNumber || '');
-        setTenantVatRegistrationNo(tenantVatRegistrationNo || '');
-        setTenantIbanNo(tenantIbanNo || '');
-        setTenantBank(tenantBank || '');
-        setTenantBankAccountNumber(tenantBankAccountNumber || '');
-        setTenantIdNumber(tenantIdNumber || '');
-    
-        setNewContractUnitRent(newContractUnitRent || '');
-        setNewContractCommission(newContractCommission || '');
-        setNewContractRentParking(newContractRentParking || '');
-        setNewContractBouncedChequeFine(newContractBouncedChequeFine || '');
-        setNewContractStatus(newContractStatus || '');
-        setNewContractPaymentScheduling(newContractPaymentScheduling || '');
-        setNewContractSecurityDeposit(newContractSecurityDeposit || '');
-        setNewContractNotes(newContractNotes || '');
-    
-        // Now, return the data you want to use in the calling function
-        return {
-          tenantName: tenantName || '',
-          unitRent: newContractUnitRent || 0,
-          commission: newContractCommission || 0,
-          parkingRent: newContractRentParking || 0,
-          securityDeposit: newContractSecurityDeposit || 0,
-        };
+    const getData = async (id, type) => {
+
+      console.log(type)
+
+      if( type === 'ReceiptVoucher'){
+
+        router.push('?openReceiptVoucher=true');
+        setIsOpenSaveChange(false);
+
+        const data = { id, path: 'Cheques' };
+        let res = await fetch(`/api/getDataEntry`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        let response = await res.json();
+      
+        if (response.success === true) {
+          
+          let dbJournalDate = moment(response.data.journalDate).format("YYYY-MM-DD")
+
+          setId(response.data._id)
+          setJournalDate(dbJournalDate)
+          setJournalNo(response.data.journalNo)
+          setInputList(response.data.inputList)
+          setMemo(response.data.memo)
+          setName(response.data.name)
+          setReference(response.data.reference)
+          setAttachment(response.data.attachment.data)
+          setPhoneNo(response.data.phoneNo)
+          setName(response.data.name)
+          setEmail(response.data.email)
+          setCity(response.data.city)
+          setAmount(response.data.amount)
+          setTotalPaid(response.data.totalPaid)
+        }
+
       }
+      else{
+
+        router.push('?openSalesInv=true');
+        setIsOpenSaveChange(false);
+      
+        const data = { id, path: 'Cheques' };
+        let res = await fetch(`/api/getDataEntry`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        let response = await res.json();
+      
+        if (response.success === true) {
+      
+          let dbJournalDate = moment(response.data.journalDate).format("YYYY-MM-DD")
+          let dbDueDate = moment(response.data.dueDate).format("YYYY-MM-DD")
+        
+          setId(response.data._id)
+          setJournalDate(dbJournalDate)
+          setJournalNo(response.data.journalNo)
+          setInputList(response.data.inputList)
+          setMemo(response.data.memo)
+          setName(response.data.name)
+          setAttachment(response.data.attachment.data)
+          setFullAmount(response.data.fullAmount)
+          setFullTax(response.data.fullTax)
+          setDiscount(response.data.discount)
+          setChqNo(response.data.chqNo)
+          setTotalAmount(response.data.totalAmount)
+          setPhoneNo(response.data.phoneNo)
+          setName(response.data.name)
+          setEmail(response.data.email)
+          setCity(response.data.city)
+          setProject(response.data.project)
+          setReceivedBy(response.data.receivedBy)
+          setDueDate(dbDueDate)
+        }
+
+      }
+      
     }
 
 
@@ -419,8 +438,8 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 											</tr>
                     </thead>
                     <tbody>
-                      {filteredData.map((item, index)=>{
-                        console.log(item)
+                      {dbCheques.map((item, index)=>{
+
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
 												<td className="w-4 p-4">
 													<div className="flex items-center">
@@ -448,7 +467,7 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 													<div className='text-sm font-semibold'>{item.totalPaid || item.totalAmount}</div>
 												</td>
                         <td className="flex items-center py-4 space-x-4">
-                          <button type='button' onClick={(e)=>{getData(item._id), setOpenNewContract(e, true)}} 
+                          <button type='button' onClick={(e)=>{getData(item._id, item.type), setOpenNewContract(e, true)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
                           </button>
@@ -457,7 +476,7 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
                       
                     </tbody>
                   </table>
-                  { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                  { dbCheques.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                 </div>
 
               </div>
@@ -491,6 +510,697 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
         </div>
       </div>
 
+      {/* Sales invoice form open */}
+      <Transition.Root show={openSalesInv === 'true' ? true : false} as={Fragment}>
+        <Dialog as="div" className="relative z-20" onClose={()=>{router.push('?openSalesInv=false')}}>
+          <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+            <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
+          </Transition.Child>
+          <div className="fixed inset-0 z-10 overflow-y-auto">
+            <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+              <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
+                <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-5xl">
+                  <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+                    <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => router.push('?openSalesInv=false')}>
+                      <span className="sr-only">Close</span>
+                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+
+                    <div className='w-full'>
+                      <form method="POST">
+                        <div className="overflow-hidden shadow sm:rounded-md">
+                          <div ref={speceficComponentRef} className="bg-white px-4 py-5 sm:p-6">
+
+                            <div className='flex space-x-4 mb-14'>
+
+                              <div className="w-full">
+                                <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
+                                Journal Date:
+                                </label>
+                                <input 
+                                  type="date"
+                                  onChange={handleChange}
+                                  name="journalDate"
+                                  id="journalDate"
+                                  value={journalDate}
+                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                              </div>
+
+                              <div className="w-full">
+                                <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
+                                  Journal No:
+                                </label>
+                                <input
+                                  type="text"
+                                  name="journalNo"
+                                  value={journalNo}
+                                  id="journalNo"
+                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  readOnly
+                                />
+                              </div>
+                            </div>
+
+                            <div className='flex space-x-4 mb-14'>
+                              <div className="w-full">
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                                  Name:
+                                </label>
+                                <input
+                                  type="text"
+                                  name="name"
+                                  value={name}
+                                  id="name"
+                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  readOnly
+                                />
+                              </div>
+
+                              
+
+                              <div className="w-full">
+                                <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
+                                  Phone No:
+                                </label>
+                                <input
+                                  type="number"
+                                  onChange={handleChange}
+                                  name="phoneNo"
+                                  value={phoneNo}
+                                  id="phoneNo"
+                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                              </div>
+                              
+                              <div className="w-full">
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                  Email:
+                                </label>
+                                <input
+                                  type="text"
+                                  onChange={handleChange}
+                                  name="email"
+                                  value={email}
+                                  id="email"
+                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                              </div>
+
+                              <div className="w-full">
+                                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                                  City:
+                                </label>
+                                <input
+                                  type="text"
+                                  onChange={handleChange}
+                                  name="city"
+                                  value={city}
+                                  id="city"
+                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                              </div>
+
+                              <div className="w-full">
+                                <label htmlFor="project" className="block text-sm font-medium text-gray-700">
+                                  Project:
+                                </label>
+                                <input
+                                  type="text"
+                                  name="project"
+                                  value={project}
+                                  id="project"
+                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  readOnly
+                                />
+                              </div>
+
+                            </div>
+
+
+                            <div className='flex space-x-4 mb-14'>
+                          
+                              <div className="w-full">
+                                <label htmlFor="receivedBy" className="block text-sm font-medium text-gray-700">
+                                  Received By:
+                                </label>
+                                <input
+                                  type="text"
+                                  name="receivedBy"
+                                  value={receivedBy}
+                                  id="receivedBy"
+                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  readOnly
+                                />
+                              </div>
+
+                              <div className="w-1/2">
+                                <label htmlFor="chqNo" className="block text-sm font-medium text-gray-700">
+                                  Cheque No:
+                                </label>
+                                <input
+                                  type="number"
+                                  onChange={handleChange}
+                                  name="chqNo"
+                                  value={chqNo}
+                                  id="chqNo"
+                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                              </div>
+
+                              <div className="w-1/2">
+                                <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
+                                Due Date:
+                                </label>
+                                <input 
+                                  type="date"
+                                  onChange={handleChange}
+                                  name="dueDate"
+                                  id="dueDate"
+                                  value={dueDate}
+                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  required
+                                />
+                              </div>
+
+                            </div>
+
+
+
+                            <div className='flex space-x-4 my-10'>
+
+                                  <table className="w-full text-sm text-left text-gray-500 ">
+                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                      <tr>
+                                        <th scope="col" className="p-2">
+                                            Products / Services
+                                        </th>
+                                        <th scope="col" className="p-2">
+                                            Description 
+                                        </th>
+                                        <th scope="col" className="p-2">
+                                            Amount
+                                        </th>
+                                        <th scope="col" className="p-2">
+                                            Tax Rate
+                                        </th>
+                                        <th scope="col" className="p-2">
+                                            Tax Amount
+                                        </th>
+                                        <th scope="col" className="p-2">
+                                            Total
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                  
+                                    <tbody >
+                                    {inputList.map(( inputList , index)=>{
+                                      return <tr key={index} className="bg-white text-black border-b hover:bg-gray-50">
+                                      
+                                        <td className="p-2 w-1/5">
+                                          <input
+                                            type="text"
+                                            value={ inputList.products }
+                                            name="products"
+                                            id="products"
+                                            className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                          />
+                                        </td>
+                                        <td className="p-2">
+                                          <input
+                                            type="text"
+                                            value={ inputList.desc }
+                                            name="desc"
+                                            id="desc"
+                                            className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                          />
+                                        </td>
+
+                                        <td className="p-2">
+                                          <input
+                                            type="number"
+                                            value={ inputList.amount }
+                                            name="amount"
+                                            id="amount"
+                                            className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                          />
+                                        </td>
+
+                                        <td className="p-2 w-1/6">
+                                          <input
+                                            type="number"
+                                            value={ inputList.taxRate }
+                                            name="taxRate"
+                                            id="taxRate"
+                                            className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            readOnly
+                                          />
+                                        </td>
+
+                                        <td className="p-2">
+                                          <input
+                                            type="number"
+                                            value={ inputList.taxAmount }
+                                            name="taxAmount"
+                                            id="taxAmount"
+                                            className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            readOnly
+                                          />
+                                        </td>
+
+                                        <td className="p-2">
+                                          <input
+                                            type="number"
+                                            value = { inputList.totalAmountPerItem }
+                                            name="totalAmountPerItem"
+                                            id="totalAmountPerItem"
+                                            className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            readOnly
+                                            />
+                                        </td>
+
+                                      </tr>})}
+                                        
+                                    </tbody>
+                                  </table>
+                          
+                            </div>
+                          
+                            <div className='bg-gray-100'>
+                              <div className='flex flex-col ml-auto mr-10 space-y-2 w-1/3 py-3 mt-20'>
+                                <div className="flex items-center">
+                                  <label htmlFor="fullAmount" className="block w-full text-sm font-medium text-gray-700">
+                                    Total Amount:
+                                  </label>
+                                  <input
+                                    type="number"
+                                    value = { fullAmount }
+                                    name="fullAmount"
+                                    id="fullAmount"
+                                    className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    readOnly
+                                  />
+                                </div>
+                                <div className="flex items-center">
+                                  <label htmlFor="fullTax" className="block w-full text-sm font-medium text-gray-700">
+                                    VAT:
+                                  </label>
+                                  <input
+                                    type="number"
+                                    value = { fullTax }
+                                    name="fullTax"
+                                    id="fullTax"
+                                    className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    readOnly
+                                  />
+                                </div>
+                                <div className="flex items-center">
+                                  <label htmlFor="discount" className="block w-full text-sm font-medium text-gray-700">
+                                    Discount:
+                                  </label>
+                                  <input
+                                    type="number"
+                                    value = { discount }
+                                    onChange={handleChange}
+                                    name="discount"
+                                    id="discount"
+                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  />
+                                </div>
+                                <div className="flex items-center">
+                                  <label htmlFor="totalAmount" className="block w-full text-sm font-medium text-gray-700">
+                                    Total Amount:
+                                  </label>
+                                  <input
+                                    type="number"
+                                    value = { totalAmount }
+                                    name="totalAmount"
+                                    id="totalAmount"
+                                    className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    readOnly
+                                  />
+                                </div>
+                                
+                              </div>
+                            </div>
+
+                            <div className=" mt-14">
+                              <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
+                                Memo:
+                              </label>
+                              <textarea cols="30" rows="4" type="text"
+                                  name="memo"
+                                  onChange={handleChange}
+                                  id="memo"
+                                  value={memo}
+                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                              </textarea>
+                            </div>
+
+                          </div>
+                          <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+
+                          <ReactToPrint
+                              trigger={()=>{
+                                return <button 
+                                  type="button"
+                                  className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+                                  Print
+                                  <AiOutlinePrinter className='text-lg ml-2'/>
+                                </button>
+                              }}
+                              content={() => speceficComponentRef.current}
+                              documentTitle='Sales Invoice'
+                              pageStyle='print'
+                            />
+
+                            <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
+                            {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+
+
+      {/* Receipt Voucher form open */}
+      <Transition.Root show={openReceiptVoucher === 'true' ? true : false} as={Fragment}>
+      <Dialog as="div" className="relative z-20" onClose={()=>{router.push('?openReceiptVoucher=false')}}>
+        <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
+          <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
+        </Transition.Child>
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+            <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
+              <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-0 lg:max-w-full">
+                <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:py-8">
+                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => router.push('?openReceiptVoucher=false')}>
+                    <span className="sr-only">Close</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+
+                  <div className='w-full'>
+                    <form method="POST">
+                      <div className="overflow-hidden shadow sm:rounded-md">
+                        <div ref={speceficComponentRef} className="bg-white px-4 py-5 sm:p-6">
+
+                          <div className='flex space-x-4 mb-14'>
+
+                            <div className="w-full">
+                              <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
+                                Journal Date:
+                              </label>
+                              <input 
+                                type="date"
+                                onChange={handleChange}
+                                name="journalDate"
+                                id="journalDate"
+                                value={journalDate}
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+
+                            <div className="w-full">
+                              <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
+                                Journal No:
+                              </label>
+                              <input
+                                type="text"
+                                name="journalNo"
+                                value={journalNo}
+                                id="journalNo"
+                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                readOnly
+                              />
+                            </div>
+                          </div>
+
+                          <div className='flex space-x-4 mb-14'>
+                            
+                            <div className="w-full">
+                              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                                Name:
+                              </label>
+                              <input
+                                type="text"
+                                onChange={handleChange}
+                                name="name"
+                                value={name}
+                                id="name"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                              
+                            </div>
+
+                            
+
+                            <div className="w-full">
+                              <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
+                                Phone No:
+                              </label>
+                              <input
+                                type="number"
+                                onChange={handleChange}
+                                name="phoneNo"
+                                value={phoneNo}
+                                id="phoneNo"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            
+                            <div className="w-full">
+                              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                Email:
+                              </label>
+                              <input
+                                type="text"
+                                onChange={handleChange}
+                                name="email"
+                                value={email}
+                                id="email"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+
+                            <div className="w-full">
+                              <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                                City:
+                              </label>
+                              <input
+                                type="text"
+                                onChange={handleChange}
+                                name="city"
+                                value={city}
+                                id="city"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+
+                            
+
+                          </div>
+
+                          <div className='flex space-x-4 mb-14'>
+
+
+                            <div className="w-1/4">
+                              <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
+                                Amount:
+                              </label>
+                              <input
+                                type="number"
+                                name="amount"
+                                value={totalPaid}
+                                id="amount"
+                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                readOnly
+                              />
+                            </div>
+                        
+                            <div className="w-1/3">
+                              <label htmlFor="reference" className="block text-sm font-medium text-gray-700">
+                                Reference:
+                              </label>
+                              <input
+                                type="text"
+                                name="reference"
+                                value={reference}
+                                onChange={handleChange}
+                                id="reference"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+
+                          </div>
+
+                          <div className='space-x-4 my-10'>
+                            <table className="w-full text-sm text-left text-gray-500 ">
+                              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                  <th scope="col" className="p-2">
+                                      Bill No
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Paid By 
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Desc
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Due Date
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Bank
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Reference
+                                  </th>
+                                  <th scope="col" className="p-2 min-w-[10px]">
+                                      Paid
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {inputList.map(( item , index)=>{
+
+                                return <tr key={index} className="bg-white flex-col text-black border-b hover:bg-gray-50">
+                                  <td className="p-2">
+                                    {item.billNo ? item.billNo : 'Undefined'}
+                                  </td>
+
+                                  <td className="p-2 max-w-[140px]">
+                                    <input
+                                      type="text"
+                                      value={ item.paidBy }
+                                      name="desc"
+                                      id="desc"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+                                  <td className="p-2 max-w-[150px]">
+                                    <input
+                                      type="text"
+                                      value={ item.desc }
+                                      name="desc"
+                                      id="desc"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+                                  <td className="p-2">
+                                    <input
+                                      type="date"
+                                      value={ item.chequeDueDate }
+                                      name="chequeDueDate"
+                                      id="chequeDueDate"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
+                                  <td className="p-2">
+                                    <input
+                                      type="text"
+                                      value={ item.bank }
+                                      name="desc"
+                                      id="desc"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
+                                  <td className="p-2 max-w-[140px]">
+                                    <input
+                                      type="text"
+                                      value={ item.ref }
+                                      name="ref"
+                                      id="ref"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
+
+                                  <td className="p-2 max-w-[130px]">
+                                    <input
+                                      type="number"
+                                      value={ item.paid }
+                                      name="paid"
+                                      id="paid"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
+                                </tr>})}
+
+                              </tbody>
+                            </table>
+                            { inputList.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                          </div>
+
+
+                          <div className=" mt-14">
+                            <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
+                              Memo:
+                            </label>
+                            <textarea cols="30" rows="4" type="text"
+                                name="memo"
+                                onChange={handleChange}
+                                id="memo"
+                                value={memo}
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                            </textarea>
+                          </div>
+                            
+                          {/* <div className="mt-7">
+                            <label htmlFor="attachment" className="block text-sm font-medium text-gray-700">
+                                Attachment:
+                            </label>
+                            <input
+                                type="file"
+                                onChange={handleChange}
+                                name="attachment"
+                                value={attachment}
+                                id="attachment"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                multiple
+                            />
+                          </div> */}
+
+                        </div>
+                        <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+
+                        <ReactToPrint
+                            trigger={()=>{
+                              return <button 
+                                type="button"
+                                className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+                                Print
+                                <AiOutlinePrinter className='text-lg ml-2'/>
+                              </button>
+                            }}
+                            content={() => speceficComponentRef.current}
+                            documentTitle='Receipt Voucher'
+                            pageStyle='print'
+                          />
+
+                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+
     </FullLayout>
     </ProSidebarProvider>
 
@@ -505,8 +1215,7 @@ export async function getServerSideProps() {
     mongoose.set("strictQuery", false);
     await mongoose.connect(process.env.MONGO_URI)
   }
-  let dbSalesInvoice = await SalesInvoice.find()
-  let dbReceipts = await ReceiptVoucher.find()
+  let dbCheques = await Cheque.find()
 
   let dbBuildings = await Buildings.find()
   let dbContacts = await Contact.find()
@@ -517,12 +1226,10 @@ export async function getServerSideProps() {
   // Pass data to the page via props
   return {
     props: {
-        dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
-        dbReceipts: JSON.parse(JSON.stringify(dbReceipts)),
-
-        dbContacts: JSON.parse(JSON.stringify(dbContacts)),
-        dbTenants: JSON.parse(JSON.stringify(dbTenants)),
-        dbBuildings: JSON.parse(JSON.stringify(dbBuildings)),
+      dbCheques: JSON.parse(JSON.stringify(dbCheques)),
+      dbContacts: JSON.parse(JSON.stringify(dbContacts)),
+      dbTenants: JSON.parse(JSON.stringify(dbTenants)),
+      dbBuildings: JSON.parse(JSON.stringify(dbBuildings)),
     }
   }
 }   
