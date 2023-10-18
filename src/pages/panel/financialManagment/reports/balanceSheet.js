@@ -17,9 +17,10 @@ import PaymentVoucher from 'models/PaymentVoucher';
 import Expenses from 'models/Expenses';
 import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
+import ChequeTransaction from 'models/ChequeTransaction';
 
 
-const BalanceSheet = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts, name }) => {
+const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts, name }) => {
 
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
@@ -59,7 +60,7 @@ const BalanceSheet = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
             let allVouchers = [];
             let account = element.accountName;
             
-            allVouchers = allVouchers.concat(dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher);
+            allVouchers = allVouchers.concat(dbExpensesVoucher, dbChequeTransaction, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher);
 
             // Data filter
             const dbAll = allVouchers.filter((data) => {
@@ -581,9 +582,7 @@ const BalanceSheet = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
         else if (e.target.name === 'toDate') {
             setToDate(e.target.value)
         }
-    }
-
-    
+    } 
     
     const ProfitLossBalance = async()=>{
 
@@ -819,7 +818,6 @@ const BalanceSheet = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
     }}
 
 
-
     return (
     <>
     <ProSidebarProvider>
@@ -908,21 +906,10 @@ const BalanceSheet = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
                             
                             {/* All Vouchers */}
                             {sortedDbCharts.map((item,index) => {
-
                                 
-                                const equityIndex = sortedDbCharts.findIndex((obj) => obj.subAccount === 'Equity');
-                                const nonCurrentLiabilitiesIndex = sortedDbCharts.findIndex((obj) => obj.subAccount === 'Non-Current Liability');
-                                  
-
-                                let lastIndex = -1;
-
-                                for (let i = sortedDbCharts.length - 1; i >= 0; i--) {
-                                    if (sortedDbCharts[i].subAccount === 'Current Liability') {
-                                        lastIndex = i;
-                                        break;
-                                    }
-                                }
-
+                                const assetsIndex = sortedDbCharts.findIndex((obj) => obj.account === 'Equity');
+                                const nonCurrentLiabilitiesIndex = sortedDbCharts.findIndex((obj) => obj.account === 'Liabilities');
+                                let lastIndex = sortedDbCharts.length -1;
 
                             return <tbody key={index}>
                                 <tr className="bg-white border-b hover:bg-gray-50">
@@ -946,22 +933,22 @@ const BalanceSheet = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
                                 </tr>
 
                             
-                                {index === equityIndex - 1
-                                ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
+                                {index === assetsIndex - 1
+                                ? <tr className="flex float-right -mr-72 bg-slate-100 px-4 py-3 sm:px-6">
                                     <td className={`text-sm ${totalAssets > 0 ? 'text-green-700' : 'text-red-700' } -mr-32 font-bold`}>Total Assets:
                                         <span className='font-bold ml-1'>${ totalAssets.toLocaleString() }</span>
                                     </td>
                                 </tr>: ''}
 
                                 {index === nonCurrentLiabilitiesIndex - 1
-                                ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
+                                ? <tr className="flex float-right -mr-72 bg-slate-100 px-4 py-3 sm:px-6">
                                     <td className={`text-sm ${totalEquity > 0 ? 'text-green-700' : 'text-red-700' } -mr-32 font-bold`}>Total Equity:
                                         <span className='font-bold ml-1'>${ totalEquity.toLocaleString() }</span>
                                     </td>
                                 </tr>: ''}
 
                                 {index === lastIndex
-                                ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
+                                ? <tr className="flex float-right -mr-72 bg-slate-100 px-4 py-3 sm:px-6">
                                     <td className={`text-sm ${totalLiabilities > 0 ? 'text-red-700' : 'text-green-700' } -mr-32 font-bold`}>Total Liabilities:
                                         <span className='font-bold ml-1'>${ totalLiabilities.toLocaleString() }</span>
                                     </td>
@@ -974,11 +961,11 @@ const BalanceSheet = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
 
 
                             {sortedDbCharts.length != 0 ? <div className="flex justify-around border-t-2 border-slate-200 pt-5 bg-slate-100 p-4 text-right sm:px-6">
-                                <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} ml-auto mr-32`}>Total Assets: 
-                                    <span className={`font-bold ml-1 `}>${totalAssets.toLocaleString()}</span>
+                                <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} ml-auto mr-16`}>Total Assets: 
+                                    <span className={`font-bold tracking-wider ml-1 `}>${totalAssets.toLocaleString()}</span>
                                 </h1>
-                                <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} mr-10`}>Total Equity & Liabilities: 
-                                    <span className='font-bold ml-1'>${totalEquityAndLiabilities.toLocaleString()}</span>
+                                <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} mr-32`}>Total Equity & Liabilities: 
+                                    <span className='font-bold tracking-wider ml-1'>${totalEquityAndLiabilities.toLocaleString()}</span>
                                 </h1>
                             </div>: ''}
                         { sortedDbCharts.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
@@ -1005,6 +992,7 @@ export async function getServerSideProps() {
 
     let dbCreditSalesInvoice = await CreditSalesInvoice.find()
     let dbSalesInvoice = await SalesInvoice.find()
+    let dbChequeTransaction = await ChequeTransaction.find()
     let dbPurchaseInvoice = await PurchaseInvoice.find()
     let dbDebitNote = await DebitNote.find()
     let dbCreditNote = await CreditNote.find()
@@ -1024,6 +1012,7 @@ export async function getServerSideProps() {
 
             dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),
             dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
+            dbChequeTransaction: JSON.parse(JSON.stringify(dbChequeTransaction)),
             dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)),
             dbDebitNote: JSON.parse(JSON.stringify(dbDebitNote)),
             dbCreditNote: JSON.parse(JSON.stringify(dbCreditNote)),

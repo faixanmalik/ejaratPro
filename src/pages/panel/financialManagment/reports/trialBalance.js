@@ -17,9 +17,10 @@ import PaymentVoucher from 'models/PaymentVoucher';
 import Expenses from 'models/Expenses';
 import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
+import ChequeTransaction from 'models/ChequeTransaction';
 
 
-const TrialBalance = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) => {
+const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) => {
 
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
@@ -49,12 +50,10 @@ const TrialBalance = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
             let allVouchers = [];
 
             let account = element.accountName;
-            allVouchers = allVouchers.concat(dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher);
+            allVouchers = allVouchers.concat(dbExpensesVoucher, dbChequeTransaction, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher);
 
             // Data filter
             const dbAll = allVouchers.filter((data) => {
-
-                console.log(data);
 
                 if(data.type === 'PurchaseInvoice'){
                     let journal = data.inputList.filter((newData)=>{
@@ -796,6 +795,7 @@ export async function getServerSideProps() {
 
     let dbCreditSalesInvoice = await CreditSalesInvoice.find()
     let dbSalesInvoice = await SalesInvoice.find()
+    let dbChequeTransaction = await ChequeTransaction.find()
     let dbPurchaseInvoice = await PurchaseInvoice.find()
     let dbDebitNote = await DebitNote.find()
     let dbCreditNote = await CreditNote.find()
@@ -812,6 +812,7 @@ export async function getServerSideProps() {
             dbJournalVoucher: JSON.parse(JSON.stringify(dbJournalVoucher)),
             dbCharts: JSON.parse(JSON.stringify(dbCharts)),
             dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),
+            dbChequeTransaction: JSON.parse(JSON.stringify(dbChequeTransaction)),
             dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
             dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)),
             dbDebitNote: JSON.parse(JSON.stringify(dbDebitNote)),

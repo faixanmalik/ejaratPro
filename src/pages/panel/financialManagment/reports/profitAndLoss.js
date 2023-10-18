@@ -17,9 +17,10 @@ import PaymentVoucher from 'models/PaymentVoucher';
 import Expenses from 'models/Expenses';
 import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
+import ChequeTransaction from 'models/ChequeTransaction';
 
 
-const ProfitAndLoss = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts  }) => {
+const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts  }) => {
 
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
@@ -49,14 +50,13 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPayme
             setTDate(moment(toDate).format('D MMM YYYY'))
         }
 
-
         dbCharts.forEach(element => {
 
             let dbAllEntries = [];
             let allVouchers = [];
             let account = element.accountName;
             
-            allVouchers = allVouchers.concat(dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher);
+            allVouchers = allVouchers.concat(dbExpensesVoucher, dbChequeTransaction, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher);
 
             // Data filter
             const dbAll = allVouchers.filter((data) => {
@@ -550,8 +550,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPayme
             setNewBalance(balance)
         });
 
-        
-        
+      
         ProfitLossBalance()
         
         dbCharts.forEach((element, index) => {
@@ -795,25 +794,16 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPayme
                                     </th>
                                 </tr>
                             </thead>
-
-
                     
                             
                             {/* All Vouchers */}
                             {sortedDbCharts.map((item,index) => {
 
-                                const administrationIndex = sortedDbCharts.findIndex((obj) => obj.subAccount === 'Administration Expenses');
+                                const administrationIndex = sortedDbCharts.findIndex(item => item.subAccount === 'Administration Expenses');
                                 const financeIndex = sortedDbCharts.findIndex((obj) => obj.subAccount === 'Finance Cost');
-
-                                let lastIndex = -1;
-
-                                for (let i = sortedDbCharts.length - 1; i >= 0; i--) {
-                                    if (sortedDbCharts[i].subAccount === 'Finance Cost') {
-                                        lastIndex = i;
-                                        break;
-                                    }
-                                }
+                                let lastIndex = sortedDbCharts.length -1;
                                 
+
                             return <tbody key={index}>
                                 <tr className="bg-white border-b hover:bg-gray-50">
                                     <td className="px-6 py-3 font-semibold">
@@ -841,7 +831,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPayme
                                 </tr>: ''}
 
 
-                                {index === financeIndex - 1
+                                {index === financeIndex
                                 ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
                                     <td className={`text-sm font-bold ${profitFromOperations > 0 ? 'text-green-700' : 'text-red-700' } -mr-32`}>{profitFromOperations > 0 ? 'Profit' : 'loss'} From Operations:
                                         <span className='font-bold ml-1'>${ profitFromOperations.toLocaleString() }</span>
@@ -886,6 +876,7 @@ export async function getServerSideProps() {
 
     let dbCreditSalesInvoice = await CreditSalesInvoice.find()
     let dbSalesInvoice = await SalesInvoice.find()
+    let dbChequeTransaction = await ChequeTransaction.find()
     let dbPurchaseInvoice = await PurchaseInvoice.find()
     let dbDebitNote = await DebitNote.find()
     let dbCreditNote = await CreditNote.find()
@@ -905,6 +896,7 @@ export async function getServerSideProps() {
 
             dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),
             dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
+            dbChequeTransaction: JSON.parse(JSON.stringify(dbChequeTransaction)),
             dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)),
             dbDebitNote: JSON.parse(JSON.stringify(dbDebitNote)),
             dbCreditNote: JSON.parse(JSON.stringify(dbCreditNote)),
