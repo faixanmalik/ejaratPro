@@ -201,8 +201,6 @@ import { useSearchParams } from 'next/navigation';
 
     const getData = async (id, type) => {
 
-      console.log(type)
-
       if( type === 'ReceiptVoucher'){
 
         router.push('?openReceiptVoucher=true');
@@ -279,7 +277,6 @@ import { useSearchParams } from 'next/navigation';
           setReceivedBy(response.data.receivedBy)
           setDueDate(dbDueDate)
         }
-
       }
       
     }
@@ -464,7 +461,7 @@ import { useSearchParams } from 'next/navigation';
                           : moment(item.dueDate).utc().format('D MMM YYYY')}</div>
 												</td>
 												<td className="p-1">
-													<div className='text-sm font-semibold'>{item.totalPaid || item.totalAmount}</div>
+													<div className='text-sm font-semibold'>{item.inputList[0].paid || item.totalAmount}</div>
 												</td>
                         <td className="flex items-center py-4 space-x-4">
                           <button type='button' onClick={(e)=>{getData(item._id, item.type), setOpenNewContract(e, true)}} 
