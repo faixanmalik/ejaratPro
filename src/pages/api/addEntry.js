@@ -20,6 +20,7 @@ import Buildings from 'models/Buildings';
 import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
 import Cheque from 'models/Cheque';
+import ChequeTransaction from 'models/ChequeTransaction';
 
 
 export default async function handler(req, res) {
@@ -300,6 +301,23 @@ export default async function handler(req, res) {
             await newEntry.save();
 
             res.status(200).json({ success: true, message: "Entry Added !" }) 
+        }
+
+        else if( path === 'ChequeTransaction'){
+            const { totalDebit , totalCredit, inputList, name, dec, memo, journalDate, journalNo, attachment, path } = req.body;
+
+            let data = await ChequeTransaction.findOne({ journalNo })
+
+            if( data ){
+                res.status(400).json({ success: false, message: "Already Found!" }) 
+            }
+            else{
+                let newEntry = new ChequeTransaction( { totalDebit , totalCredit, inputList , name, dec , memo, journalDate, journalNo, attachment, path } );
+                await newEntry.save();
+                
+                res.status(200).json({ success: true, message: "Entry Added !" }) 
+            }
+            
         }
 
 

@@ -5,7 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Menu, MenuItem, SubMenu, Sidebar } from 'react-pro-sidebar';
 
-import {AiOutlineBank, AiOutlineCloseCircle, AiOutlineContacts, AiOutlineFundProjectionScreen, AiOutlineProject, AiOutlineSetting, AiOutlineShoppingCart, AiOutlineTeam, AiOutlineUser, AiOutlineUserSwitch } from 'react-icons/ai'
+import {AiOutlineBank, AiOutlineCloseCircle, AiOutlineContacts, AiOutlineFundProjectionScreen, AiOutlineProject, AiOutlineSetting, AiOutlineShoppingCart, AiOutlineTeam, AiOutlineTransaction, AiOutlineUser, AiOutlineUserSwitch } from 'react-icons/ai'
 import { BiFingerprint, BiHomeAlt, BiLocationPlus, BiPurchaseTagAlt, BiUserCheck, BiUserCircle } from 'react-icons/bi'
 import {MdOutlineInventory2, MdOutlineRealEstateAgent, MdPayment, MdProductionQuantityLimits} from 'react-icons/md'
 import {IoPieChartSharp, IoBusinessOutline} from 'react-icons/io5'
@@ -185,6 +185,9 @@ const Sidebar2 = ({ showMobilemenu }) => {
             </MenuItem>
             <MenuItem href="/panel/realEstate/cheques" icon={<HiOutlineBanknotes className='text-lg'/>} className={ location === '/panel/realEstate/contractAndTenants' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Cheques
+            </MenuItem>
+            <MenuItem href="/panel/realEstate/chequeTransactions" icon={<AiOutlineTransaction className='text-lg'/>} className={ location === '/panel/realEstate/chequeTransactions' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+              Cheque Trx
             </MenuItem>
           </SubMenu>
 

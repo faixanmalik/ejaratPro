@@ -20,6 +20,7 @@ import Buildings from 'models/Buildings';
 import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
 import Cheque from 'models/Cheque';
+import ChequeTransaction from 'models/ChequeTransaction';
 
 
 export default async function handler(req, res) {
@@ -115,8 +116,6 @@ export default async function handler(req, res) {
             res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
 
-
-
         else if (path === 'PaymentVoucher'){
             const { selectedIds } = req.body;
 
@@ -159,7 +158,6 @@ export default async function handler(req, res) {
             }
             
         }
-
         else if (path === 'ReceiptVoucher'){
             const { selectedIds } = req.body;
 
@@ -220,6 +218,11 @@ export default async function handler(req, res) {
         else if (path === 'ContractAndTenants'){
             const { selectedIds } = req.body;
             await ContractAndTenant.deleteMany( { _id: { $in: selectedIds } } )
+            res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
+        }
+        else if (path === 'ChequeTransaction'){
+            const { selectedIds } = req.body;
+            await ChequeTransaction.deleteMany( { _id: { $in: selectedIds } } )
             res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
 

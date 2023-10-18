@@ -20,6 +20,7 @@ import Buildings from 'models/Buildings';
 import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
 import Cheque from 'models/Cheque';
+import ChequeTransaction from 'models/ChequeTransaction';
 
 
 export default async function handler(req, res) {
@@ -250,6 +251,17 @@ export default async function handler(req, res) {
         else if( path === 'Cheques' ){
             const { id } = req.body;
             let data = await Cheque.findById(id)
+            if(data){
+                res.status(200).json({ success: true, data}) 
+            }
+            else{
+                res.status(400).json({ success: false, message: "Internal server error!" }) 
+            }
+        }
+        else if( path === 'ChequeTransaction' ){
+            const { id } = req.body;
+            let data = await ChequeTransaction.findById(id)
+
             if(data){
                 res.status(200).json({ success: true, data}) 
             }

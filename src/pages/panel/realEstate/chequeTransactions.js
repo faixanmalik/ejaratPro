@@ -7,7 +7,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { AiOutlineDelete, AiOutlineEdit, AiOutlinePlusCircle, AiOutlinePrinter } from 'react-icons/ai';
-import Voucher from 'models/JournalVoucher';
+import Voucher from 'models/ChequeTransaction';
 import Contact from 'models/Contact';
 import Charts from 'models/Charts';
 import { ProSidebarProvider } from 'react-pro-sidebar';
@@ -16,12 +16,13 @@ import Employees from 'models/Employees';
 import ReactToPrint from 'react-to-print';
 
 
-  const JournalVoucher = ({ dbVouchers, dbCharts, dbContacts, dbEmployees }) => {
-    
-    const [open, setOpen] = useState(false)
-    const [contacts, setContacts] = useState([])
-    const [id, setId] = useState('')
-    const [selectedIds, setSelectedIds] = useState([]);
+const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
+
+
+  const [open, setOpen] = useState(false)
+  const [contacts, setContacts] = useState([])
+  const [id, setId] = useState('')
+  const [selectedIds, setSelectedIds] = useState([]);
 
     // authentications
   const [isAdmin, setIsAdmin] = useState(false)
@@ -29,207 +30,209 @@ import ReactToPrint from 'react-to-print';
   const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
   
 
-    function handleRowCheckboxChange(e, id) {
-      if (e.target.checked) {
-        setSelectedIds([...selectedIds, id]);
-      } else {
-        setSelectedIds(selectedIds.filter(rowId => rowId !== id));
-      }
+  function handleRowCheckboxChange(e, id) {
+    if (e.target.checked) {
+      setSelectedIds([...selectedIds, id]);
+    } else {
+      setSelectedIds(selectedIds.filter(rowId => rowId !== id));
     }
+  }
 
 
-    useEffect(() => {
-      setContacts(dbContacts, dbEmployees)
-      const myUser = JSON.parse(localStorage.getItem('myUser'))
-      if(myUser.department === 'Admin'){
-        setIsAdmin(true)
-      }
-    }, [])
+  useEffect(() => {
+    setContacts(dbContacts, dbEmployees)
+    const myUser = JSON.parse(localStorage.getItem('myUser'))
+    if(myUser.department === 'Admin'){
+      setIsAdmin(true)
+    }
+  }, [])
     
 
-    // JV
-    const today = new Date().toISOString().split('T')[0];
-    const [journalDate, setJournalDate] = useState(today)
-    const [journalNo, setJournalNo] = useState('')
-    const [memo, setMemo] = useState('')
-    const [attachment, setAttachment] = useState('')
-    const [totalDebit, setTotalDebit] = useState(0)
-    const [totalCredit, setTotalCredit] = useState(0)
-    const [desc, setDesc] = useState('')
-    const [name, setName] = useState('')
+  // JV
+  const today = new Date().toISOString().split('T')[0];
+  const [journalDate, setJournalDate] = useState(today)
+  const [journalNo, setJournalNo] = useState('')
+  const [memo, setMemo] = useState('')
+  const [attachment, setAttachment] = useState('')
+  const [totalDebit, setTotalDebit] = useState(0)
+  const [totalCredit, setTotalCredit] = useState(0)
+  const [desc, setDesc] = useState('')
+  const [name, setName] = useState('')
 
 
-    // JV
-    const [inputList, setInputList] = useState([
-      { journalNo, journalDate, account: '', credit: 0, debit: 0},
-      { journalNo, journalDate, account: '', credit: 0, debit: 0},
-    ]);
+  // JV
+  const [inputList, setInputList] = useState([
+    { journalNo, journalDate, account: '', credit: 0, debit: 0},
+    { journalNo, journalDate, account: '', credit: 0, debit: 0},
+  ]);
 
-    // JV
-    const handleChange = (e) => {
-      if(e.target.name === 'journalDate'){
-        setJournalDate(e.target.value)
-      }
-      else if(e.target.name === 'journalNo'){
-        setJournalNo(e.target.value)
-      }
-      else if(e.target.name === 'memo'){
-        setMemo(e.target.value)
-      }
-      else if(e.target.name === 'attachment'){
-        setAttachment(e.target.value)
-      }
-      else if(e.target.name === 'type'){
-        setType(e.target.value)
-      }
-      else if(e.target.name === 'name'){
-        setName(e.target.value)
-      }
-      else if(e.target.name === 'desc'){
-        setDesc(e.target.value)
-      }
+  // JV
+  const handleChange = (e) => {
+    if(e.target.name === 'journalDate'){
+      setJournalDate(e.target.value)
     }
-
-    // JV
-    const submit = async(e)=>{
-      e.preventDefault()
-      
-      inputList.forEach(item => {
-        item.date = journalDate;
-      });
-
-      // fetch the data from form to makes a file in local system
-      const data = { totalDebit , totalCredit, inputList, name, desc,  memo, journalDate, journalNo, attachment, path:'journalVoucher' };
-
-      if( totalDebit != totalCredit ){
-        toast.error("Debit Credit values must be equal" , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
-      else{
-        let res = await fetch(`/api/addEntry`, {
-          method: 'POST',
-          headers:{
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-        let response = await res.json()
-
-        if (response.success === true) {
-          window.location.reload();
-        }
-        else {
-          toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-        }
-      }
+    else if(e.target.name === 'journalNo'){
+      setJournalNo(e.target.value)
     }
-
-    // JV
-    const addLines = () => {
-      setInputList([...inputList,
-        {account: '', desc: '', name: '' , credit: 0, debit: 0 },
-      ])
+    else if(e.target.name === 'memo'){
+      setMemo(e.target.value)
     }
-
-    const delLines = (indexToDelete) => {
-      const updatedInputList = [...inputList];
-      updatedInputList.splice(indexToDelete, 1);
-      setInputList(updatedInputList);
-    };
-
-    // JV
-    const change = (e, index) => {
-      const values = [...inputList];
-      values[index][e.target.name] = e.target.value;
-      setInputList(values);
-
-
-      // total Debit
-      var totalDebitValue = 0;
-      var totalCreditValue = 0;
-      for (let index = 0; index < inputList.length; index++) {
-        totalDebitValue += parseInt(inputList[index].debit);
-        totalCreditValue += parseInt(inputList[index].credit);
-      }
-      setTotalDebit(totalDebitValue);
-      setTotalCredit(totalCreditValue);
+    else if(e.target.name === 'attachment'){
+      setAttachment(e.target.value)
     }
+    else if(e.target.name === 'type'){
+      setType(e.target.value)
+    }
+    else if(e.target.name === 'name'){
+      setName(e.target.value)
+    }
+    else if(e.target.name === 'desc'){
+      setDesc(e.target.value)
+    }
+  }
 
-    const editEntry = async(id)=>{
-      setOpen(true)
+  // JV
+  const submit = async(e)=>{
+    e.preventDefault()
+    
+    inputList.forEach(item => {
+      item.date = journalDate;
+    });
 
-      const data = { id, totalDebit, totalCredit, inputList, name, desc, memo, journalDate, journalNo, attachment ,  path: 'journalVoucher'};
-      
-      let res = await fetch(`/api/editEntry`, {
+    // fetch the data from form to makes a file in local system
+    const data = { totalDebit , totalCredit, inputList, name, desc,  memo, journalDate, journalNo, attachment, path:'ChequeTransaction' };
+
+    if( totalDebit != totalCredit ){
+      toast.error("Debit Credit values must be equal" , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+    }
+    else{
+      let res = await fetch(`/api/addEntry`, {
         method: 'POST',
-        headers: {
+        headers:{
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       })
-        let response = await res.json()
+      let response = await res.json()
+
+      if (response.success === true) {
+        window.location.reload();
+      }
+      else {
+        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
+  }
+
+  // JV
+  const addLines = () => {
+    setInputList([...inputList,
+      {account: '', desc: '', name: '' , credit: 0, debit: 0 },
+    ])
+  }
+
+  const delLines = (indexToDelete) => {
+    const updatedInputList = [...inputList];
+    updatedInputList.splice(indexToDelete, 1);
+    setInputList(updatedInputList);
+  };
+
+  // JV
+  const change = (e, index) => {
+    const values = [...inputList];
+    values[index][e.target.name] = e.target.value;
+    setInputList(values);
+
+
+    // total Debit
+    var totalDebitValue = 0;
+    var totalCreditValue = 0;
+    for (let index = 0; index < inputList.length; index++) {
+      totalDebitValue += parseInt(inputList[index].debit);
+      totalCreditValue += parseInt(inputList[index].credit);
+    }
+    setTotalDebit(totalDebitValue);
+    setTotalCredit(totalCreditValue);
+  }
+
+  const editEntry = async(id)=>{
+    setOpen(true)
+
+    const data = { id, totalDebit, totalCredit, inputList, name, desc, memo, journalDate, journalNo, attachment ,  path: 'ChequeTransaction'};
+    
+    let res = await fetch(`/api/editEntry`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      let response = await res.json()
+      
+      if (response.success === true) {
+        window.location.reload();
+      }
+      else {
+        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+  }
+
+  const delEntry = async()=>{
+
+    const data = { selectedIds , path: 'ChequeTransaction' };
+    let res = await fetch(`/api/delEntry`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      let response = await res.json()
+
+      if (response.success === true) {
+        window.location.reload();
+      }
+      else {
+          toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    
+  }
+
+  const getData = async (id) =>{
+    setOpen(true)
+    setIsOpenSaveChange(false)
+
+    const data = { id, path: 'ChequeTransaction' };
+    let res = await fetch(`/api/getDataEntry`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      let response = await res.json()
+
+      if (response.success === true){
+        const dbJournalDate = moment(response.data.journalDate).utc().format('YYYY-MM-DD')
         
-        if (response.success === true) {
-          window.location.reload();
-        }
-        else {
-          toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-        }
-    }
-
-    const delEntry = async()=>{
-
-      const data = { selectedIds , path: 'journalVoucher' };
-      let res = await fetch(`/api/delEntry`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        let response = await res.json()
-
-        if (response.success === true) {
-          window.location.reload();
-        }
-        else {
-            toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-        }
-      
-    }
-
-    const getData = async (id) =>{
-      setOpen(true)
-      setIsOpenSaveChange(false)
-
-      const data = { id, path: 'journalVoucher' };
-      let res = await fetch(`/api/getDataEntry`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        let response = await res.json()
-
-        if (response.success === true){
-          const dbJournalDate = moment(response.data.journalDate).utc().format('YYYY-MM-DD')
-          
-          setId(response.data._id)
-          setJournalDate(dbJournalDate)
-          setJournalNo(response.data.journalNo)
-          setInputList(response.data.inputList)
-          setTotalDebit(response.data.totalDebit)
-          setTotalCredit(response.data.totalCredit)
-          setMemo(response.data.memo)
-          setName(response.data.name)
-          setDesc(response.data.desc)
-          setAttachment(response.data.attachment.data)
-        }
-    }
+        setId(response.data._id)
+        setJournalDate(dbJournalDate)
+        setJournalNo(response.data.journalNo)
+        setInputList(response.data.inputList)
+        setTotalDebit(response.data.totalDebit)
+        setTotalCredit(response.data.totalCredit)
+        setMemo(response.data.memo)
+        setName(response.data.name)
+        setDesc(response.data.desc)
+        setAttachment(response.data.attachment.data)
+      }
+  }
 
   // For print
   const componentRef = useRef();
   const speceficComponentRef = useRef();
+
+
 
   return (
     <>
@@ -251,15 +254,23 @@ import ReactToPrint from 'react-to-print';
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Journal Vouchers</h3>
+            <h3 className="text-lg font-medium leading-6 text-gray-900">Cheque Transactions</h3>
             <button onClick={()=>{
               setOpen(true)
               setId('')
               setJournalDate(today)
-              setJournalNo(`JV-${dbVouchers.length + 1}`)
+              // setJournalNo(`FUND-${dbVouchers.length + 1}`)
+
+              // this code do the numbering like that 
+              // FUND-0001 FUND-0002 FUND-0003
+              const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+              const formattedInvoice = `FUND-${invoiceNumber}`;
+              setJournalNo(formattedInvoice)
+              
+
               setInputList([
-                {journalNo : `JV-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
-                {journalNo : `JV-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
+                {journalNo : `FUND-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
+                {journalNo : `FUND-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
               ])
               setMemo('')
               setTotalDebit(0)
@@ -293,7 +304,7 @@ import ReactToPrint from 'react-to-print';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Journal Vouchers'
+              documentTitle='Cheque Transactions'
               pageStyle='print'
             />
           </div>
@@ -606,7 +617,7 @@ import ReactToPrint from 'react-to-print';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Journal Voucher'
+                            documentTitle='Cheque Transaction'
                             pageStyle='print'
                           />
 
@@ -631,8 +642,6 @@ import ReactToPrint from 'react-to-print';
   )
 }
 
-
-
 export async function getServerSideProps() {
   if (!mongoose.connections[0].readyState){
     mongoose.set("strictQuery", false);
@@ -652,5 +661,6 @@ export async function getServerSideProps() {
       dbEmployees: JSON.parse(JSON.stringify(dbEmployees)), 
     }
   }
-}   
-export default JournalVoucher
+}
+
+export default ChequeTransactions

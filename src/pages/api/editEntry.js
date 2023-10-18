@@ -18,6 +18,7 @@ import PaymentMethod from 'models/PaymentMethod';
 import Buildings from 'models/Buildings';
 import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
+import ChequeTransaction from 'models/ChequeTransaction';
 
 
 export default async function handler(req, res) {
@@ -184,6 +185,13 @@ export default async function handler(req, res) {
             // Attempt to update the document
             await ContractAndTenant.updateOne({ _id: id }, req.body);
             res.status(200).json({ success: true, message: 'Update Successfully!' });
+        }
+
+        else if (path === 'ChequeTransaction'){
+            const { id } = req.body;
+
+            await ChequeTransaction.updateOne({ _id: id }, req.body);
+            res.status(200).json({ success: true, message: "Update Successfully!" }) 
         }
 
 

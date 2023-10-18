@@ -49,11 +49,12 @@ const TrialBalance = ({ dbPaymentMethod, dbProducts, dbExpensesVoucher, dbPaymen
             let allVouchers = [];
 
             let account = element.accountName;
-
             allVouchers = allVouchers.concat(dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher);
 
             // Data filter
             const dbAll = allVouchers.filter((data) => {
+
+                console.log(data);
 
                 if(data.type === 'PurchaseInvoice'){
                     let journal = data.inputList.filter((newData)=>{
