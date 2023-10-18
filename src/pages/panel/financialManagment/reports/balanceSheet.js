@@ -960,14 +960,14 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                         </table>
 
 
-                            {sortedDbCharts.length != 0 ? <div className="flex justify-around border-t-2 border-slate-200 pt-5 bg-slate-100 p-4 text-right sm:px-6">
-                                <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} ml-auto mr-16`}>Total Assets: 
-                                    <span className={`font-bold tracking-wider ml-1 `}>${totalAssets.toLocaleString()}</span>
-                                </h1>
-                                <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} mr-32`}>Total Equity & Liabilities: 
-                                    <span className='font-bold tracking-wider ml-1'>${totalEquityAndLiabilities.toLocaleString()}</span>
-                                </h1>
-                            </div>: ''}
+                        {sortedDbCharts.length != 0 ? <div className="flex justify-around border-t-2 border-slate-200 pt-5 bg-slate-100 p-4 text-right sm:px-6">
+                            <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} ml-auto mr-16`}>Total Assets: 
+                                <span className={`font-bold tracking-wider ml-1 `}>${totalAssets.toLocaleString()}</span>
+                            </h1>
+                            <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} mr-32`}>Total Equity & Liabilities: 
+                                <span className='font-bold tracking-wider ml-1'>${totalEquityAndLiabilities.toLocaleString()}</span>
+                            </h1>
+                        </div>: ''}
                         { sortedDbCharts.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                     </div>
 
