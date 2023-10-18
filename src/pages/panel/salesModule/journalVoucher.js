@@ -256,10 +256,15 @@ import ReactToPrint from 'react-to-print';
               setOpen(true)
               setId('')
               setJournalDate(today)
-              setJournalNo(`JV-${dbVouchers.length + 1}`)
+
+              const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+              const formattedInvoice = `JV-${invoiceNumber}`;
+              setJournalNo(formattedInvoice)
+
+
               setInputList([
-                {journalNo : `JV-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
-                {journalNo : `JV-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
+                {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
+                {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
               ])
               setMemo('')
               setTotalDebit(0)

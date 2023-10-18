@@ -380,17 +380,12 @@ import Link from 'next/link';
       setId('')
       setJournalDate(today)
 
-      setBillNo(`Inv-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-        ? dbVouchers.length + 1
-        : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`)
+      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const formattedInvoice = `Inv-${invoiceNumber}`;
+      setBillNo(formattedInvoice)
 
       setInputList([
-        { billNo : `Inv-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-        ? dbVouchers.length + 1
-        : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`,
-      
-          date: journalDate, discount: discount, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' 
-        },
+        { billNo : formattedInvoice, date: journalDate, discount: discount, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
       ])
       setMemo('')
       setAttachment('')

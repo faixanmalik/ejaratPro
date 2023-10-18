@@ -335,17 +335,14 @@ import ReactToPrint from 'react-to-print';
                 setId('')
                 setJournalDate(today)
 
-                setJournalNo(`CN-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                  ? dbVouchers.length + 1
-                  : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(3)) + 1}`)
+
+                const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+                const formattedInvoice = `CN-${invoiceNumber}`;
+                setJournalNo(formattedInvoice)
 
 
                 setInputList([
-                  {journalNo : `CN-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                    ? dbVouchers.length + 1
-                    : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(3)) + 1}`, 
-                    
-                  date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
+                  {journalNo : formattedInvoice, date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
                 ])
                 setMemo('')
                 setAttachment('')

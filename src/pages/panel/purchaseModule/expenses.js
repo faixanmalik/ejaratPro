@@ -331,16 +331,12 @@ import PaymentType from 'models/PaymentMethod';
                 setId('')
                 setJournalDate(today)
 
-                setJournalNo(`Exp-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                  ? dbVouchers.length + 1
-                  : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`)
+                const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+                const formattedInvoice = `Exp-${invoiceNumber}`;
+                setJournalNo(formattedInvoice)
 
                 setInputList([
-                  {journalNo : `Exp-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-                    ? dbVouchers.length + 1
-                    : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(4)) + 1}`, 
-                    
-                  date: journalDate, accounts:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
+                  {journalNo : formattedInvoice, date: journalDate, accounts:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
                 ])
                 setMemo('')
                 setAttachment('')

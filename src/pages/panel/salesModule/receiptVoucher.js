@@ -303,9 +303,9 @@ import Link from 'next/link';
       setId('')
       setJournalDate(today)
 
-      setJournalNo(`RV-${dbVouchers.length === 0 || !dbVouchers[dbVouchers.length - 1].journalNo
-        ? dbVouchers.length + 1
-        : parseInt(dbVouchers[dbVouchers.length - 1].journalNo.slice(3)) + 1}`)
+      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const formattedInvoice = `RV-${invoiceNumber}`;
+      setJournalNo(formattedInvoice)
       
       setMemo('')
       setFilteredData([])

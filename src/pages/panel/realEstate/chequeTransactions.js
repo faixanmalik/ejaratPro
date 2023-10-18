@@ -259,7 +259,6 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
               setOpen(true)
               setId('')
               setJournalDate(today)
-              // setJournalNo(`FUND-${dbVouchers.length + 1}`)
 
               // this code do the numbering like that 
               // FUND-0001 FUND-0002 FUND-0003
@@ -269,8 +268,8 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
               
 
               setInputList([
-                {journalNo : `FUND-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
-                {journalNo : `FUND-${dbVouchers.length + 1}`, journalDate: journalDate, account: '', credit: 0, debit: 0},
+                {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
+                {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
               ])
               setMemo('')
               setTotalDebit(0)
