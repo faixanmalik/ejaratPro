@@ -97,6 +97,15 @@ export default async function handler(req, res) {
         }
         else if (path === 'SalesInvoice'){
             const { selectedIds } = req.body;
+
+            selectedIds.forEach( async(newItem) => {
+                let salesInvoices = await SalesInvoice.findById(newItem);
+                if(salesInvoices.fromAccount === 'Cheque'){
+                    let journalNumber = salesInvoices.journalNo;
+                    await Cheque.findOneAndDelete({ journalNo: journalNumber })
+                }
+            });
+
             await SalesInvoice.deleteMany( { _id: { $in: selectedIds } } )
             res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
@@ -155,14 +164,24 @@ export default async function handler(req, res) {
             const { selectedIds } = req.body;
 
             try {
-
                 selectedIds.forEach( async(newItem) => {
+
+                    let receiptInvoices = await ReceiptVoucher.findById(newItem);
+                    let inputList = receiptInvoices.inputList
+
+                    inputList.forEach( async(item) => {
+                        if(item.paidBy === 'Cheque'){
+                            let journalNumber = item.journalNo;
+                            await Cheque.findOneAndDelete({ journalNo: journalNumber })
+                        }
+                    })
+
+
                     let data = await ReceiptVoucher.findById(newItem);
 
                     if(data.inputList.length > 0){
 
                         let inputList = data.inputList;
-    
                         for (const newItem of inputList) {
                             await CreditSalesInvoice.findOneAndUpdate({billNo:newItem.billNo}, { $inc: { amountPaid: -newItem.paid } });
                         }
@@ -176,10 +195,8 @@ export default async function handler(req, res) {
                                 await CreditSalesInvoice.findByIdAndUpdate(item.id, { billStatus: 'unpaid' });
                             }
                         }
-
                         await ReceiptVoucher.deleteMany( { _id: { $in: selectedIds } } )
                         res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
-
                     }
                     else{
                         res.status(400).json({ success: false, message: "Internal Server Error !" }) 
@@ -205,15 +222,8 @@ export default async function handler(req, res) {
             await ContractAndTenant.deleteMany( { _id: { $in: selectedIds } } )
             res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
-        else if (path === 'Cheques'){
-            const { selectedIds } = req.body;
-            await Cheque.deleteMany( { _id: { $in: selectedIds } } )
-            res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
-        }
 
         
-        
-
 
 
 

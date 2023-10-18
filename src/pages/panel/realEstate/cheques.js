@@ -180,25 +180,6 @@ import { useSearchParams } from 'next/navigation';
       } 
     }
 
-    const delEntry = async()=>{
-
-      const data = { selectedIds , path: 'Cheques' };
-      let res = await fetch(`/api/delEntry`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      let response = await res.json()
-      if (response.success === true) {
-        window.location.reload();
-      }
-      else {
-        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
-    }
-
     const getData = async (id, type) => {
 
       if( type === 'ReceiptVoucher'){
@@ -390,11 +371,6 @@ import { useSearchParams } from 'next/navigation';
               </button>
               <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Terminate Contract
-              </button>
-
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-red-800 flex hover:text-white border-2 border-red-800 hover:bg-red-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Delete
-                <AiOutlineDelete className='text-lg ml-2'/>
               </button>
               
             </div>: ''}
