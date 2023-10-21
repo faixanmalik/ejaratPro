@@ -149,7 +149,6 @@ export default async function handler(req, res) {
             const { id, fromAccount, journalNo } = req.body;
 
             if(fromAccount === 'Cheque'){
-                const cheques = await Cheque.find()
                 await Cheque.updateOne({ journalNo: journalNo }, req.body);
             }
 

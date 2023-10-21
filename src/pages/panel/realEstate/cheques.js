@@ -73,9 +73,8 @@ import PaymentMethod from 'models/PaymentMethod';
     const searchParams = useSearchParams()
     const openReceiptVoucher = searchParams.get('openReceiptVoucher')
     const openSalesInv = searchParams.get('openSalesInv')
-    
-    const [openNewContract, setOpenNewContract] = useState(false)
 
+    
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
@@ -231,19 +230,22 @@ import PaymentMethod from 'models/PaymentMethod';
         let response = await res.json();
       
         if (response.success === true) {
+
+          const { journalDate, journalNo, inputList, memo, name, reference,
+            attachment, phoneNo, email, city, amount, totalPaid
+          } = response.data;
           
           let dbJournalDate = moment(journalDate).format("YYYY-MM-DD")
 
-          setId(_id)
+          setId(response.data._id)
           setJournalDate(dbJournalDate)
           setJournalNo(journalNo)
           setInputList(inputList)
           setMemo(memo)
           setName(name)
           setReference(reference)
-          setAttachment(attachment.data)
+          setAttachment(attachment)
           setPhoneNo(phoneNo)
-          setName(name)
           setEmail(email)
           setCity(city)
           setAmount(amount)
@@ -267,11 +269,16 @@ import PaymentMethod from 'models/PaymentMethod';
         let response = await res.json();
       
         if (response.success === true) {
+
+          const { journalDate, dueDate, journalNo, inputList, memo, name, 
+            attachment, fullAmount, fullTax, discount, chqNo, totalAmount,
+            phoneNo, email, city, project, receivedBy
+          } = response.data;
       
           let dbJournalDate = moment(journalDate).format("YYYY-MM-DD")
           let dbDueDate = moment(dueDate).format("YYYY-MM-DD")
         
-          setId(_id)
+          setId(response.data._id)
           setJournalDate(dbJournalDate)
           setJournalNo(journalNo)
           setInputList(inputList)
@@ -305,46 +312,22 @@ import PaymentMethod from 'models/PaymentMethod';
         });
         let response = await res.json();
 
-        const { journalDate, dueDate, journalNo, inputList, memo, name, 
-          attachment, fullAmount, fullTax, discount, chqNo, totalAmount,
-          phoneNo, email, city, project, receivedBy
-        } = response.data;
+        const { name, totalAmount, receivedBy, totalPaid } = response.data;
 
-
-        let dbJournalDate = moment(journalDate).format("YYYY-MM-DD")
-        let dbDueDate = moment(dueDate).format("YYYY-MM-DD")
-      
-        setId(response.data._id)
-        setJournalDate(dbJournalDate || '')
-        setJournalNo(journalNo || '')
-        setInputList(inputList || '')
-        setMemo(memo || '')
-        setName(name || '')
-        setAttachment(attachment.data || '')
-        setFullAmount(fullAmount || '')
-        setFullTax(fullTax || '')
-        setDiscount(discount || '')
-        setChqNo(chqNo || '')
-        setTotalAmount(totalAmount || '')
-        setPhoneNo(phoneNo || '')
-        setEmail(email || '')
-        setCity(city || '')
-        setProject(project || '')
-        setReceivedBy(receivedBy || '')
-        setDueDate(dbDueDate || '')
+        let paidBy = response.data.inputList[0].paidBy;
 
         // Now, return the data you want to use in the calling function
         return {
           name: name || '',
-          amount: totalAmount || 0,
-          receivedBy: receivedBy || '',
+          amount: totalAmount || totalPaid || 0,
+          receivedBy: receivedBy || paidBy || '',
         };
 
       }
     }
 
 
-    const newContract = async (e, openContractValue) => {
+    const newContract = async (e) => {
       e.preventDefault();
       if (selectedIds.length > 1) {
         toast.error('Select only 1 item', {
@@ -359,11 +342,11 @@ import PaymentMethod from 'models/PaymentMethod';
         });
         throw new Error("Select only 1 item");
       } else {
-        setOpenNewContract(openContractValue);
         let id = selectedIds[0];
     
         try {
           const data = await getData(id, 'Cheque');
+
           return data; // Return the data from getData
         } catch (error) {
           throw error;
@@ -381,8 +364,7 @@ import PaymentMethod from 'models/PaymentMethod';
         toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
       }
       else{
-        const contractData = await newContract(e, false);
-        setOpenNewContract(false);
+        const contractData = await newContract(e);
 
         let chartsOfAccount;
         const filteredData = dbPaymentMethod.filter(item => item.paymentType === contractData.receivedBy);
@@ -553,7 +535,7 @@ import PaymentMethod from 'models/PaymentMethod';
 													<div className='text-sm font-semibold'>{item.inputList[0].paid || item.totalAmount}</div>
 												</td>
                         <td className="flex items-center py-4 space-x-4">
-                          <button type='button' onClick={(e)=>{getData(item._id, item.type), setOpenNewContract(e, true)}} 
+                          <button type='button' onClick={(e)=>{getData(item._id, item.type)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
                           </button>

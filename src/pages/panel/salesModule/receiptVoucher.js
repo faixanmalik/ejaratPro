@@ -309,6 +309,7 @@ import Link from 'next/link';
       setFilteredData([])
       setAttachment('')
       setPhoneNo(0)
+      setTotalPaid(0)
       setName('')
       setEmail('')
       setReference('')
@@ -607,21 +608,22 @@ import Link from 'next/link';
                                   <th scope="col" className="p-2">
                                       Prev Paid
                                   </th>
+                                  <th scope="col" className="p-2 min-w-[10px]">
+                                      Paid
+                                  </th>
                                   <th scope="col" className="p-2">
-                                      Desc
+                                      Chq No
                                   </th>
                                   <th scope="col" className="p-2">
                                       Due Date
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Bank
+                                      Desc
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Reference
+                                      Bank
                                   </th>
-                                  <th scope="col" className="p-2 min-w-[10px]">
-                                      Paid
-                                  </th>
+                                  
                                 </tr>
                               </thead>
                               <tbody>
@@ -647,16 +649,29 @@ import Link from 'next/link';
                                   <td className="p-2 text-center ">
                                     {item.balance ? '' : item.amountPaid ? item.amountPaid.toLocaleString(): 0}
                                   </td>
-                                  <td className="p-2 max-w-[150px]">
+
+                                  <td className="p-2 max-w-[130px]">
                                     <input
-                                      type="text"
-                                      value={ item.desc }
-                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo)}
-                                      name="desc"
-                                      id="desc"
+                                      type="number"
+                                      value={ item.paid }
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo)}
+                                      name="paid"
+                                      id="paid"
                                       className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                   </td>
+
+                                  <td className="p-2 max-w-[140px]">
+                                    <input
+                                      type="number"
+                                      value={ item.ref }
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo)}
+                                      name="ref"
+                                      id="ref"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
                                   <td className="p-2">
                                     <input
                                       type="date"
@@ -669,6 +684,17 @@ import Link from 'next/link';
                                     />
                                   </td>
 
+                                  <td className="p-2 max-w-[150px]">
+                                    <input
+                                      type="text"
+                                      value={ item.desc }
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo)}
+                                      name="desc"
+                                      id="desc"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
                                   <td className="p-2">
                                     <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>select bank</option>
@@ -678,28 +704,10 @@ import Link from 'next/link';
                                     </select>
                                   </td>
 
-                                  <td className="p-2 max-w-[140px]">
-                                    <input
-                                      type="text"
-                                      value={ item.ref }
-                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo)}
-                                      name="ref"
-                                      id="ref"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                    />
-                                  </td>
+                                  
 
 
-                                  <td className="p-2 max-w-[130px]">
-                                    <input
-                                      type="number"
-                                      value={ item.paid }
-                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo)}
-                                      name="paid"
-                                      id="paid"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                    />
-                                  </td>
+                                  
 
                                 </tr>})}
 
