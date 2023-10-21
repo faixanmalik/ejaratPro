@@ -42,6 +42,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 import { MdAccountBox } from 'react-icons/md';
 import Cheque from 'models/Cheque';
 import { useSearchParams } from 'next/navigation';
+import PaymentMethod from 'models/PaymentMethod';
 
 
 
@@ -66,13 +67,12 @@ import { useSearchParams } from 'next/navigation';
     );
   }
 
-  const Cheques = ({ dbCheques, dbContacts, dbBuildings, dbTenants }) => {
+  const Cheques = ({ dbPaymentMethod, dbCheques, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
     const searchParams = useSearchParams()
     const openReceiptVoucher = searchParams.get('openReceiptVoucher')
     const openSalesInv = searchParams.get('openSalesInv')
-
     
     const [openNewContract, setOpenNewContract] = useState(false)
 
@@ -180,88 +180,6 @@ import { useSearchParams } from 'next/navigation';
       } 
     }
 
-    const getData = async (id, type) => {
-
-      if( type === 'ReceiptVoucher'){
-
-        router.push('?openReceiptVoucher=true');
-        setIsOpenSaveChange(false);
-
-        const data = { id, path: 'Cheques' };
-        let res = await fetch(`/api/getDataEntry`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-        let response = await res.json();
-      
-        if (response.success === true) {
-          
-          let dbJournalDate = moment(response.data.journalDate).format("YYYY-MM-DD")
-
-          setId(response.data._id)
-          setJournalDate(dbJournalDate)
-          setJournalNo(response.data.journalNo)
-          setInputList(response.data.inputList)
-          setMemo(response.data.memo)
-          setName(response.data.name)
-          setReference(response.data.reference)
-          setAttachment(response.data.attachment.data)
-          setPhoneNo(response.data.phoneNo)
-          setName(response.data.name)
-          setEmail(response.data.email)
-          setCity(response.data.city)
-          setAmount(response.data.amount)
-          setTotalPaid(response.data.totalPaid)
-        }
-
-      }
-      else{
-
-        router.push('?openSalesInv=true');
-        setIsOpenSaveChange(false);
-      
-        const data = { id, path: 'Cheques' };
-        let res = await fetch(`/api/getDataEntry`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-        let response = await res.json();
-      
-        if (response.success === true) {
-      
-          let dbJournalDate = moment(response.data.journalDate).format("YYYY-MM-DD")
-          let dbDueDate = moment(response.data.dueDate).format("YYYY-MM-DD")
-        
-          setId(response.data._id)
-          setJournalDate(dbJournalDate)
-          setJournalNo(response.data.journalNo)
-          setInputList(response.data.inputList)
-          setMemo(response.data.memo)
-          setName(response.data.name)
-          setAttachment(response.data.attachment.data)
-          setFullAmount(response.data.fullAmount)
-          setFullTax(response.data.fullTax)
-          setDiscount(response.data.discount)
-          setChqNo(response.data.chqNo)
-          setTotalAmount(response.data.totalAmount)
-          setPhoneNo(response.data.phoneNo)
-          setName(response.data.name)
-          setEmail(response.data.email)
-          setCity(response.data.city)
-          setProject(response.data.project)
-          setReceivedBy(response.data.receivedBy)
-          setDueDate(dbDueDate)
-        }
-      }
-      
-    }
-
 
     // For print
     const componentRef = useRef();
@@ -295,6 +213,202 @@ import { useSearchParams } from 'next/navigation';
 			}
 		}, [active]);
 
+    const getData = async (id, type) => {
+
+      if( type === 'ReceiptVoucher'){
+
+        router.push('?openReceiptVoucher=true');
+        setIsOpenSaveChange(false);
+
+        const data = { id, path: 'Cheques' };
+        let res = await fetch(`/api/getDataEntry`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        let response = await res.json();
+      
+        if (response.success === true) {
+          
+          let dbJournalDate = moment(journalDate).format("YYYY-MM-DD")
+
+          setId(_id)
+          setJournalDate(dbJournalDate)
+          setJournalNo(journalNo)
+          setInputList(inputList)
+          setMemo(memo)
+          setName(name)
+          setReference(reference)
+          setAttachment(attachment.data)
+          setPhoneNo(phoneNo)
+          setName(name)
+          setEmail(email)
+          setCity(city)
+          setAmount(amount)
+          setTotalPaid(totalPaid)
+        }
+
+      }
+      else if(type === 'SalesInvoice'){
+
+        router.push('?openSalesInv=true');
+        setIsOpenSaveChange(false);
+      
+        const data = { id, path: 'Cheques' };
+        let res = await fetch(`/api/getDataEntry`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        let response = await res.json();
+      
+        if (response.success === true) {
+      
+          let dbJournalDate = moment(journalDate).format("YYYY-MM-DD")
+          let dbDueDate = moment(dueDate).format("YYYY-MM-DD")
+        
+          setId(_id)
+          setJournalDate(dbJournalDate)
+          setJournalNo(journalNo)
+          setInputList(inputList)
+          setMemo(memo)
+          setName(name)
+          setAttachment(attachment.data)
+          setFullAmount(fullAmount)
+          setFullTax(fullTax)
+          setDiscount(discount)
+          setChqNo(chqNo)
+          setTotalAmount(totalAmount)
+          setPhoneNo(phoneNo)
+          setName(name)
+          setEmail(email)
+          setCity(city)
+          setProject(project)
+          setReceivedBy(receivedBy)
+          setDueDate(dbDueDate)
+        }
+      }
+
+      else if( type === 'Cheque'){
+
+        const data = { id, path: 'Cheques' };
+        let res = await fetch(`/api/getDataEntry`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        let response = await res.json();
+
+        const { journalDate, dueDate, journalNo, inputList, memo, name, 
+          attachment, fullAmount, fullTax, discount, chqNo, totalAmount,
+          phoneNo, email, city, project, receivedBy
+        } = response.data;
+
+
+        let dbJournalDate = moment(journalDate).format("YYYY-MM-DD")
+        let dbDueDate = moment(dueDate).format("YYYY-MM-DD")
+      
+        setId(response.data._id)
+        setJournalDate(dbJournalDate || '')
+        setJournalNo(journalNo || '')
+        setInputList(inputList || '')
+        setMemo(memo || '')
+        setName(name || '')
+        setAttachment(attachment.data || '')
+        setFullAmount(fullAmount || '')
+        setFullTax(fullTax || '')
+        setDiscount(discount || '')
+        setChqNo(chqNo || '')
+        setTotalAmount(totalAmount || '')
+        setPhoneNo(phoneNo || '')
+        setEmail(email || '')
+        setCity(city || '')
+        setProject(project || '')
+        setReceivedBy(receivedBy || '')
+        setDueDate(dbDueDate || '')
+
+        // Now, return the data you want to use in the calling function
+        return {
+          name: name || '',
+          amount: totalAmount || 0,
+          receivedBy: receivedBy || '',
+        };
+
+      }
+    }
+
+
+    const newContract = async (e, openContractValue) => {
+      e.preventDefault();
+      if (selectedIds.length > 1) {
+        toast.error('Select only 1 item', {
+          position: "bottom-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        throw new Error("Select only 1 item");
+      } else {
+        setOpenNewContract(openContractValue);
+        let id = selectedIds[0];
+    
+        try {
+          const data = await getData(id, 'Cheque');
+          return data; // Return the data from getData
+        } catch (error) {
+          throw error;
+        }
+      }
+    }
+
+
+    const depositCheck = async (e)=>{
+      e.preventDefault();
+
+      try {
+
+      if(selectedIds.length > 1){
+        toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+      else{
+        const contractData = await newContract(e, false);
+        setOpenNewContract(false);
+
+        let chartsOfAccount;
+        const filteredData = dbPaymentMethod.filter(item => item.paymentType === contractData.receivedBy);
+        if (filteredData.length > 0) {
+          chartsOfAccount = filteredData[0]?.chartsOfAccount;
+        }
+    
+        let formData = {
+          open: true,
+          depositCheque: true,
+          name: contractData.name || '',
+          amount: contractData.amount || 0,
+          creditAccount: chartsOfAccount || '',
+          debitAccount: 'Bank',
+        }
+
+        const query = new URLSearchParams(formData).toString();
+        router.push(`/panel/realEstate/chequeTransactions?${query}`);
+  
+      }
+      } catch (error) {
+        // Handle the error here
+        console.error("Error in Cheque Trx:", error);
+      }
+
+    }
 
     
   return (
@@ -325,7 +439,6 @@ import { useSearchParams } from 'next/navigation';
             <div className='flex justify-between'>
 
               <div className='w-1/4'>
-
                 <div className="relative rounded-lg bg-gray-50 border-2 border-blue-800">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg className="w-4 h-4 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -357,20 +470,20 @@ import { useSearchParams } from 'next/navigation';
             </div>
 
             {isChecked === true ? <div className='flex justify-end my-2'>
-              <button onClick={(e)=>newContract(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Renewal Contract
+              <button onClick={(e)=>depositCheck(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Deposit
               </button>
-              <button onClick={(e)=>issueInvoice(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Issue Invoice
+              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Clearing
               </button>
-              <button onClick={(e)=>collectPayment(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Collect Payment
+              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Returned from Bank
               </button>
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Send Reminder
+              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Refund to Customer
               </button>
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Terminate Contract
+              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Deliver to Supplier
               </button>
               
             </div>: ''}
@@ -1193,6 +1306,7 @@ export async function getServerSideProps() {
   let dbBuildings = await Buildings.find()
   let dbContacts = await Contact.find()
   let dbTenants = await Contact.find({'type': 'Tenant'})
+  let dbPaymentMethod = await PaymentMethod.find()
 
 
 
@@ -1203,6 +1317,7 @@ export async function getServerSideProps() {
       dbContacts: JSON.parse(JSON.stringify(dbContacts)),
       dbTenants: JSON.parse(JSON.stringify(dbTenants)),
       dbBuildings: JSON.parse(JSON.stringify(dbBuildings)),
+      dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)),
     }
   }
 }   

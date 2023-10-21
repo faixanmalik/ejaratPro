@@ -238,8 +238,6 @@ import Link from 'next/link';
       })
       let response = await res.json()
 
-      console.log(response.data)
-
       if (response.success === true){
 
         let dbJournalDate = moment(response.data.journalDate, 'YYYY-MM-DD', true).isValid()

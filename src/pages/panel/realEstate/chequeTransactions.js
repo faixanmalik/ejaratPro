@@ -14,12 +14,19 @@ import { ProSidebarProvider } from 'react-pro-sidebar';
 import FullLayout from '@/panel/layouts/FullLayout';
 import Employees from 'models/Employees';
 import ReactToPrint from 'react-to-print';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link';
+import PaymentMethod from 'models/PaymentMethod';
 
 
-const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
+const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
 
+  const router = useRouter();
+  const searchParams = useSearchParams()
+  const open = searchParams.get('open')
+  const depositCheque = searchParams.get('depositCheque')
 
-  const [open, setOpen] = useState(false)
   const [contacts, setContacts] = useState([])
   const [id, setId] = useState('')
   const [selectedIds, setSelectedIds] = useState([]);
@@ -40,12 +47,29 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
 
 
   useEffect(() => {
+
+    if(router.query.depositCheque){
+      let { name, amount, creditAccount, debitAccount } = router.query;
+
+      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const formattedInvoice = `FUND-${invoiceNumber}`;
+      setJournalNo(formattedInvoice)
+
+      setName(name)
+      setInputList([
+        { journalNo:formattedInvoice, journalDate, account: creditAccount || '', credit: amount || 0, debit: 0},
+        { journalNo:formattedInvoice, journalDate, account: debitAccount || '', credit: 0, debit: amount || 0},
+      ])
+    }
+
+
     setContacts(dbContacts, dbEmployees)
     const myUser = JSON.parse(localStorage.getItem('myUser'))
     if(myUser.department === 'Admin'){
       setIsAdmin(true)
     }
-  }, [])
+  }, [router])
+  
     
 
   // JV
@@ -59,12 +83,27 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
   const [desc, setDesc] = useState('')
   const [name, setName] = useState('')
 
-
   // JV
   const [inputList, setInputList] = useState([
     { journalNo, journalDate, account: '', credit: 0, debit: 0},
     { journalNo, journalDate, account: '', credit: 0, debit: 0},
   ]);
+
+
+  useEffect(() => {
+    let totalDebitValue = 0;
+    let totalCreditValue = 0;
+    for (let index = 0; index < inputList.length; index++) {
+      totalDebitValue += parseInt(inputList[index].debit);
+      totalCreditValue += parseInt(inputList[index].credit);
+    }
+    setTotalDebit(totalDebitValue);
+    setTotalCredit(totalCreditValue);
+
+  }, [inputList])
+  
+
+  
 
   // JV
   const handleChange = (e) => {
@@ -116,7 +155,7 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
       let response = await res.json()
 
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -142,21 +181,10 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
     const values = [...inputList];
     values[index][e.target.name] = e.target.value;
     setInputList(values);
-
-
-    // total Debit
-    var totalDebitValue = 0;
-    var totalCreditValue = 0;
-    for (let index = 0; index < inputList.length; index++) {
-      totalDebitValue += parseInt(inputList[index].debit);
-      totalCreditValue += parseInt(inputList[index].credit);
-    }
-    setTotalDebit(totalDebitValue);
-    setTotalCredit(totalCreditValue);
   }
 
   const editEntry = async(id)=>{
-    setOpen(true)
+    router.push('?open=true');
 
     const data = { id, totalDebit, totalCredit, inputList, name, desc, memo, journalDate, journalNo, attachment ,  path: 'ChequeTransaction'};
     
@@ -170,7 +198,7 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
       let response = await res.json()
       
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -199,7 +227,7 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
   }
 
   const getData = async (id) =>{
-    setOpen(true)
+    router.push('?open=true');
     setIsOpenSaveChange(false)
 
     const data = { id, path: 'ChequeTransaction' };
@@ -232,6 +260,31 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
   const componentRef = useRef();
   const speceficComponentRef = useRef();
 
+  
+
+
+  const openSettings = async ()=>{
+
+    setId('')
+    setJournalDate(today)
+
+    // this code do the numbering like that 
+    // FUND-0001 FUND-0002 FUND-0003
+    const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+    const formattedInvoice = `FUND-${invoiceNumber}`;
+    setJournalNo(formattedInvoice)
+
+    setInputList([
+      {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
+      {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
+    ])
+    setMemo('')
+    setTotalDebit(0)
+    setTotalCredit(0)
+    setAttachment('')
+    setIsOpenSaveChange(true)
+  }
+
 
 
   return (
@@ -255,32 +308,12 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
             <h3 className="text-lg font-medium leading-6 text-gray-900">Cheque Transactions</h3>
-            <button onClick={()=>{
-              setOpen(true)
-              setId('')
-              setJournalDate(today)
-
-              // this code do the numbering like that 
-              // FUND-0001 FUND-0002 FUND-0003
-              const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
-              const formattedInvoice = `FUND-${invoiceNumber}`;
-              setJournalNo(formattedInvoice)
-              
-
-              setInputList([
-                {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
-                {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
-              ])
-              setMemo('')
-              setTotalDebit(0)
-              setTotalCredit(0)
-              setAttachment('')
-              setIsOpenSaveChange(true)
-
-              }} 
-              className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
+            <Link
+              onClick={()=>openSettings()}
+              href={'?open=true'}
+              className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
               New
-            </button>
+            </Link>
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
@@ -389,8 +422,8 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
       </div>
     </div>
 
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-20" onClose={()=>{setOpen(false)}}>
+    <Transition.Root show={open === 'true' ? true : false} as={Fragment}>
+      <Dialog as="div" className="relative z-20" onClose={()=>{router.push('?open=false')}}>
         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
         </Transition.Child>
@@ -399,7 +432,7 @@ const ChequeTransactions = ({dbVouchers, dbCharts, dbContacts, dbEmployees}) => 
             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-5xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                  <button type="button" className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
+                  <button type="button" className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => router.push('?open=false')}>
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
@@ -650,6 +683,7 @@ export async function getServerSideProps() {
   let dbContacts = await Contact.find()
   let dbEmployees = await Employees.find()
   let dbCharts = await Charts.find()
+  let dbPaymentMethod = await PaymentMethod.find()
 
   // Pass data to the page via props
   return {
@@ -658,6 +692,7 @@ export async function getServerSideProps() {
       dbContacts: JSON.parse(JSON.stringify(dbContacts)), 
       dbCharts: JSON.parse(JSON.stringify(dbCharts)), 
       dbEmployees: JSON.parse(JSON.stringify(dbEmployees)), 
+      dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)), 
     }
   }
 }

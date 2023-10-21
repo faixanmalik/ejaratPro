@@ -19,6 +19,7 @@ import Buildings from 'models/Buildings';
 import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
 import ChequeTransaction from 'models/ChequeTransaction';
+import Cheque from 'models/Cheque';
 
 
 export default async function handler(req, res) {
@@ -145,7 +146,12 @@ export default async function handler(req, res) {
         // Sales Invoice
         else if (path === 'SalesInvoice'){
 
-            const { id } = req.body;
+            const { id, fromAccount, journalNo } = req.body;
+
+            if(fromAccount === 'Cheque'){
+                const cheques = await Cheque.find()
+                await Cheque.updateOne({ journalNo: journalNo }, req.body);
+            }
 
             await SalesInvoice.updateOne({ _id: id }, req.body);
             res.status(200).json({ success: true, message: "Update Successfully!" }) 
