@@ -19,6 +19,9 @@ const handler = async (req,res)=>{
                 res.status(400).json({ success: false, message: "Invalid Credentials!" })
             }
         }
+        else{
+            res.status(400).json({ success: false, message: "User not Found!" }) 
+        }
     }
     // if (req.method == 'POST'){
     //     let user = await User.findOne({"email": req.body.email})
