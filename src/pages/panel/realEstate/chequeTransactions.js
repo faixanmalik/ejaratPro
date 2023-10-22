@@ -25,7 +25,9 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
   const router = useRouter();
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
-  const depositCheque = searchParams.get('depositCheque')
+  const referCheque = searchParams.get('referCheque')
+  const chequeStatus = searchParams.get('chequeStatus')
+  const chequeId = searchParams.get('chequeId')
 
   const [contacts, setContacts] = useState([])
   const [id, setId] = useState('')
@@ -33,7 +35,6 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
     // authentications
   const [isAdmin, setIsAdmin] = useState(false)
-
   const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
   
 
@@ -48,7 +49,8 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
   useEffect(() => {
 
-    if(router.query.depositCheque){
+    if(referCheque){
+
       let { name, amount, creditAccount, debitAccount } = router.query;
 
       const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
@@ -91,6 +93,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
 
   useEffect(() => {
+
     let totalDebitValue = 0;
     let totalCreditValue = 0;
     for (let index = 0; index < inputList.length; index++) {
@@ -139,7 +142,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
     });
 
     // fetch the data from form to makes a file in local system
-    const data = { totalDebit , totalCredit, inputList, name, desc,  memo, journalDate, journalNo, attachment, path:'ChequeTransaction' };
+    const data = { totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, desc,  memo, journalDate, journalNo, attachment, path:'ChequeTransaction' };
 
     if( totalDebit != totalCredit ){
       toast.error("Debit Credit values must be equal" , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -195,14 +198,13 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
       },
       body: JSON.stringify(data),
     })
-      let response = await res.json()
-      
-      if (response.success === true) {
-        router.push('?open=false');
-      }
-      else {
-        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
+    let response = await res.json()
+    if (response.success === true) {
+      router.push('?open=false');
+    }
+    else {
+      toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+    }
   }
 
   const delEntry = async()=>{
@@ -215,14 +217,14 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
       },
       body: JSON.stringify(data),
     })
-      let response = await res.json()
+    let response = await res.json()
 
-      if (response.success === true) {
-        window.location.reload();
-      }
-      else {
-          toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
+    if (response.success === true) {
+      window.location.reload();
+    }
+    else {
+      toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+    }
     
   }
 
@@ -260,9 +262,6 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
   const componentRef = useRef();
   const speceficComponentRef = useRef();
 
-  
-
-
   const openSettings = async ()=>{
 
     setId('')
@@ -284,8 +283,6 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
     setAttachment('')
     setIsOpenSaveChange(true)
   }
-
-
 
   return (
     <>

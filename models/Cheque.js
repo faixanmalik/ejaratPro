@@ -24,6 +24,7 @@ const ChequeSchema = new mongoose.Schema({
     desc: {type: String},
     attachment: {type: Buffer},
     type:{type: String, required: true},
+    chequeStatus:{type: String, default: 'Issued'},
 
 },{timestamps:true});
 

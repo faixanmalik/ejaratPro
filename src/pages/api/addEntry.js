@@ -304,17 +304,16 @@ export default async function handler(req, res) {
         }
 
         else if( path === 'ChequeTransaction'){
-            const { totalDebit , totalCredit, inputList, name, dec, memo, journalDate, journalNo, attachment, path } = req.body;
+            const { totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, dec, memo, journalDate, journalNo, attachment, path } = req.body;
 
             let data = await ChequeTransaction.findOne({ journalNo })
-
             if( data ){
                 res.status(400).json({ success: false, message: "Already Found!" }) 
             }
             else{
-                let newEntry = new ChequeTransaction( { totalDebit , totalCredit, inputList , name, dec , memo, journalDate, journalNo, attachment, path } );
+                let newEntry = new ChequeTransaction( { totalDebit , totalCredit, inputList, name, dec , memo, journalDate, journalNo, attachment, path } );
+                await Cheque.findByIdAndUpdate(chequeId, {chequeStatus: chequeStatus})
                 await newEntry.save();
-                
                 res.status(200).json({ success: true, message: "Entry Added !" }) 
             }
             

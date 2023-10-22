@@ -199,6 +199,15 @@ export default async function handler(req, res) {
             res.status(200).json({ success: true, message: "Update Successfully!" }) 
         }
 
+        else if (path === 'clearCheque'){
+            const { selectedIds, changeStatus } = req.body;
+            
+            selectedIds.forEach( async(newItem) => {
+                await Cheque.findByIdAndUpdate(newItem, {chequeStatus: changeStatus});
+            })
+            res.status(200).json({ success: true, message: "Edit Successfully !" }) 
+        }
+
 
 
         

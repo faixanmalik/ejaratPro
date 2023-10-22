@@ -212,6 +212,8 @@ import PaymentMethod from 'models/PaymentMethod';
 			}
 		}, [active]);
 
+
+
     const getData = async (id, type) => {
 
       if( type === 'ReceiptVoucher'){
@@ -299,7 +301,6 @@ import PaymentMethod from 'models/PaymentMethod';
           setDueDate(dbDueDate)
         }
       }
-
       else if( type === 'Cheque'){
 
         const data = { id, path: 'Cheques' };
@@ -311,8 +312,8 @@ import PaymentMethod from 'models/PaymentMethod';
           body: JSON.stringify(data),
         });
         let response = await res.json();
-
-        const { name, totalAmount, receivedBy, totalPaid } = response.data;
+        
+        const { name, totalAmount, receivedBy, totalPaid, id:_id } = response.data;
 
         let paidBy = response.data.inputList[0].paidBy;
 
@@ -321,11 +322,11 @@ import PaymentMethod from 'models/PaymentMethod';
           name: name || '',
           amount: totalAmount || totalPaid || 0,
           receivedBy: receivedBy || paidBy || '',
+          chequeId: id || '',
         };
 
       }
     }
-
 
     const newContract = async (e) => {
       e.preventDefault();
@@ -346,7 +347,6 @@ import PaymentMethod from 'models/PaymentMethod';
     
         try {
           const data = await getData(id, 'Cheque');
-
           return data; // Return the data from getData
         } catch (error) {
           throw error;
@@ -354,37 +354,38 @@ import PaymentMethod from 'models/PaymentMethod';
       }
     }
 
-
     const depositCheck = async (e)=>{
       e.preventDefault();
 
       try {
 
-      if(selectedIds.length > 1){
-        toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
-      else{
-        const contractData = await newContract(e);
-
-        let chartsOfAccount;
-        const filteredData = dbPaymentMethod.filter(item => item.paymentType === contractData.receivedBy);
-        if (filteredData.length > 0) {
-          chartsOfAccount = filteredData[0]?.chartsOfAccount;
+        if(selectedIds.length > 1){
+          toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
         }
-    
-        let formData = {
-          open: true,
-          depositCheque: true,
-          name: contractData.name || '',
-          amount: contractData.amount || 0,
-          creditAccount: chartsOfAccount || '',
-          debitAccount: 'Bank',
-        }
+        else{
+          const contractData = await newContract(e);
 
-        const query = new URLSearchParams(formData).toString();
-        router.push(`/panel/realEstate/chequeTransactions?${query}`);
-  
-      }
+          let chartsOfAccount;
+          const filteredData = dbPaymentMethod.filter(item => item.paymentType === contractData.receivedBy);
+          if (filteredData.length > 0) {
+            chartsOfAccount = filteredData[0]?.chartsOfAccount;
+          }
+      
+          let formData = {
+            open: true,
+            referCheque: true,
+            name: contractData.name || '',
+            amount: contractData.amount || 0,
+            chequeId: contractData.chequeId || 0,
+            creditAccount: chartsOfAccount || '',
+            debitAccount: 'Bank',
+            chequeStatus: 'Deposited',
+          }
+
+          const query = new URLSearchParams(formData).toString();
+          router.push(`/panel/realEstate/chequeTransactions?${query}`);
+
+        }
       } catch (error) {
         // Handle the error here
         console.error("Error in Cheque Trx:", error);
@@ -392,18 +393,77 @@ import PaymentMethod from 'models/PaymentMethod';
 
     }
 
-    
+    const clearCheck = async(e)=>{
+      e.preventDefault();
+
+      const data = { selectedIds, changeStatus: 'Cleared', path: 'clearCheque' };
+
+      let res = await fetch(`/api/editEntry`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      let response = await res.json()
+      if (response.success === true) {
+        window.location.reload();
+      }
+      else {
+        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
+
+    const returnCheque = async(e)=>{
+      e.preventDefault();
+
+      try {
+
+        if(selectedIds.length > 1){
+          toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+        }
+        else{
+          const contractData = await newContract(e);
+
+          let chartsOfAccount;
+          const filteredData = dbPaymentMethod.filter(item => item.paymentType === contractData.receivedBy);
+          if (filteredData.length > 0) {
+            chartsOfAccount = filteredData[0]?.chartsOfAccount;
+          }
+      
+          let formData = {
+            open: true,
+            referCheque: true,
+            name: contractData.name || '',
+            amount: contractData.amount || 0,
+            chequeId: contractData.chequeId || 0,
+            debitAccount: chartsOfAccount || '',
+            creditAccount: 'Bank',
+            chequeStatus: 'Returned',
+          }
+
+          const query = new URLSearchParams(formData).toString();
+          router.push(`/panel/realEstate/chequeTransactions?${query}`);
+
+        }
+      } catch (error) {
+        // Handle the error here
+        console.error("Error in Cheque Trx:", error);
+      }
+    }
+
+
   return (
     <>
     <ProSidebarProvider>
     <style jsx global>{`
-        footer {
-          display: none;
-        }
-        header {
-          display: none;
-        }
-      `}</style>
+      footer {
+        display: none;
+      }
+      header {
+        display: none;
+      }
+    `}</style>
     <FullLayout>
 
       {/* React tostify */}
@@ -453,13 +513,13 @@ import PaymentMethod from 'models/PaymentMethod';
 
             {isChecked === true ? <div className='flex justify-end my-2'>
               <button onClick={(e)=>depositCheck(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Deposit
+                Deposit Cheque
               </button>
-              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Clearing
+              <button onClick={(e)=>returnCheque(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Return Cheque
               </button>
-              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Returned from Bank
+              <button onClick={(e)=>clearCheck(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Clear Cheque
               </button>
               <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Refund to Customer
@@ -501,6 +561,9 @@ import PaymentMethod from 'models/PaymentMethod';
 														Amount
 												</th> 
 												<th scope="col" className="p-1">
+														Cheque Status
+												</th> 
+												<th scope="col" className="p-1">
 													View
 												</th>
 											</tr>
@@ -533,6 +596,9 @@ import PaymentMethod from 'models/PaymentMethod';
 												</td>
 												<td className="p-1">
 													<div className='text-sm font-semibold'>{item.inputList[0].paid || item.totalAmount}</div>
+												</td>
+												<td className="p-1">
+													<div className='text-sm tracking-wider text-green-700 font-extrabold'>{item.chequeStatus || ''}</div>
 												</td>
                         <td className="flex items-center py-4 space-x-4">
                           <button type='button' onClick={(e)=>{getData(item._id, item.type)}} 
@@ -957,7 +1023,6 @@ import PaymentMethod from 'models/PaymentMethod';
         </Dialog>
       </Transition.Root>
 
-
       {/* Receipt Voucher form open */}
       <Transition.Root show={openReceiptVoucher === 'true' ? true : false} as={Fragment}>
       <Dialog as="div" className="relative z-20" onClose={()=>{router.push('?openReceiptVoucher=false')}}>
@@ -1267,15 +1332,13 @@ import PaymentMethod from 'models/PaymentMethod';
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+      </Transition.Root>
 
     </FullLayout>
     </ProSidebarProvider>
-
     </>
   )
 }
-
 
 
 export async function getServerSideProps() {
