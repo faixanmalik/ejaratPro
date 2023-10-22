@@ -13,7 +13,7 @@ const handler = async (req,res)=>{
         if (user){
             // Decryptpassword
             if (req.body.email === user.email && user.password === req.body.password){
-                res.status(200).json({ success: true, message: "Succesfully Log In!", token, email:user.email, businessName: user.businessName, department: 'Admin' })
+                res.status(200).json({ success: true, message: "Succesfully Log In!", email:user.email, businessName: user.businessName, department: 'Admin' })
             }
             else{
                 res.status(400).json({ success: false, message: "Invalid Credentials!" })
