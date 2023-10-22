@@ -342,7 +342,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
               
               <div className="overflow-x-auto shadow-sm">
                 <table ref={componentRef} className="w-full text-sm text-left text-gray-500 ">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                  <thead className="text-xs text-gray-700 uppercase bg-[#e9ecf7]">
                     <tr>
                       <th scope="col" className="p-4">
                         <div className="flex items-center">
