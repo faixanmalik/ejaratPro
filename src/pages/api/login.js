@@ -13,7 +13,6 @@ const handler = async (req,res)=>{
         if (user){
             // Decryptpassword
             if (req.body.email === user.email && user.password === req.body.password){
-                let token = jwt.sign({ email:user.email, name:user.name}, process.env.JWT_SECRET);
                 res.status(200).json({ success: true, message: "Succesfully Log In!", token, email:user.email, businessName: user.businessName, department: 'Admin' })
             }
             else{
