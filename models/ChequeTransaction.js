@@ -4,6 +4,8 @@ const ChequeTransactionSchema = new mongoose.Schema({
     inputList:{ type: Array },
     totalDebit:{ type: Number },
     totalCredit:{ type: Number },
+    chequeId:{ type: String },
+    chequeStatus:{type: String},
     memo:{type: String},
     journalDate: {type: Date},
     journalNo: {type: String, unique: true},

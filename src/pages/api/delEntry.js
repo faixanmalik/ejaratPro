@@ -222,6 +222,13 @@ export default async function handler(req, res) {
         }
         else if (path === 'ChequeTransaction'){
             const { selectedIds } = req.body;
+            
+            selectedIds.forEach( async(newItem) => {
+                let transaction = await ChequeTransaction.findById(newItem);
+                let chqId = transaction.chequeId;
+                await Cheque.findByIdAndUpdate(chqId, {chequeStatus: 'Issued'})
+            });
+
             await ChequeTransaction.deleteMany( { _id: { $in: selectedIds } } )
             res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }

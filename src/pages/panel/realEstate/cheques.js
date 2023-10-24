@@ -452,6 +452,47 @@ import PaymentMethod from 'models/PaymentMethod';
       }
     }
 
+    const refundToCustomer = async(e)=>{
+      e.preventDefault();
+
+      try {
+
+        if(selectedIds.length > 1){
+          toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+        }
+        else{
+          const contractData = await newContract(e);
+
+          let chartsOfAccount;
+          const filteredData = dbPaymentMethod.filter(item => item.paymentType === contractData.receivedBy);
+          if (filteredData.length > 0) {
+            chartsOfAccount = filteredData[0]?.chartsOfAccount;
+          }
+      
+          let formData = {
+            open: true,
+            referCheque: true,
+            name: contractData.name || '',
+            amount: contractData.amount || 0,
+            chequeId: contractData.chequeId || 0,
+            debitAccount: 'Accounts Receivable',
+            creditAccount: chartsOfAccount || '',
+            chequeStatus: 'Refund to Customer',
+          }
+
+          const query = new URLSearchParams(formData).toString();
+          router.push(`/panel/realEstate/chequeTransactions?${query}`);
+
+        }
+      } catch (error) {
+        // Handle the error here
+        console.error("Error in Cheque Trx:", error);
+      }
+
+
+
+    }
+
 
   return (
     <>
@@ -518,14 +559,14 @@ import PaymentMethod from 'models/PaymentMethod';
               <button onClick={(e)=>returnCheque(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Return Cheque
               </button>
-              <button onClick={(e)=>clearCheck(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Clear Cheque
-              </button>
-              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button onClick={(e)=>refundToCustomer(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Refund to Customer
               </button>
               <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Deliver to Supplier
+              </button>
+              <button onClick={(e)=>clearCheck(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Clear Cheque
               </button>
               
             </div>: ''}
