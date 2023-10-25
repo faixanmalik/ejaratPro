@@ -313,7 +313,7 @@ import PaymentMethod from 'models/PaymentMethod';
         });
         let response = await res.json();
         
-        const { name, totalAmount, receivedBy, totalPaid, id:_id } = response.data;
+        const { name, email, totalAmount, receivedBy, totalPaid, id:_id } = response.data;
 
         let paidBy = response.data.inputList[0].paidBy;
 
@@ -323,6 +323,7 @@ import PaymentMethod from 'models/PaymentMethod';
           amount: totalAmount || totalPaid || 0,
           receivedBy: receivedBy || paidBy || '',
           chequeId: id || '',
+          email: email || '',
         };
 
       }
@@ -468,6 +469,13 @@ import PaymentMethod from 'models/PaymentMethod';
           if (filteredData.length > 0) {
             chartsOfAccount = filteredData[0]?.chartsOfAccount;
           }
+
+          let debitAccount;
+          const filteredContacts = dbContacts.filter(item => item.email === contractData.email);
+          if (filteredContacts.length > 0) {
+            debitAccount = filteredContacts[0]?.accounts;
+          }
+          
       
           let formData = {
             open: true,
@@ -475,7 +483,7 @@ import PaymentMethod from 'models/PaymentMethod';
             name: contractData.name || '',
             amount: contractData.amount || 0,
             chequeId: contractData.chequeId || 0,
-            debitAccount: 'Accounts Receivable',
+            debitAccount: debitAccount,
             creditAccount: chartsOfAccount || '',
             chequeStatus: 'Refund to Customer',
           }
@@ -488,8 +496,26 @@ import PaymentMethod from 'models/PaymentMethod';
         // Handle the error here
         console.error("Error in Cheque Trx:", error);
       }
+    }
 
 
+    const deliverToSupplier = async(e)=>{
+      e.preventDefault();
+
+      try {
+
+        if(selectedIds.length > 1){
+          toast.error('select only 1 item' , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+        }
+        else{
+
+          
+
+        }
+      } catch (error) {
+        // Handle the error here
+        console.error("Error in Cheque Trx:", error);
+      }
 
     }
 
@@ -562,7 +588,7 @@ import PaymentMethod from 'models/PaymentMethod';
               <button onClick={(e)=>refundToCustomer(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Refund to Customer
               </button>
-              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button onClick={(e)=>deliverToSupplier(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Deliver to Supplier
               </button>
               <button onClick={(e)=>clearCheck(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>

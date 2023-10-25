@@ -1433,7 +1433,7 @@ import { MdAccountBox } from 'react-icons/md';
                           <Link href={'/'} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
                         </td>
                         <td className="flex items-center py-4 space-x-4">
-                          <button type='button' onClick={(e)=>{getData(item._id), setOpenNewContract(e, true)}} 
+                          <button type='button' onClick={(e)=>{getData(item._id), setOpenNewContract(true)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
                           </button>

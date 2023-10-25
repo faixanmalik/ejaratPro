@@ -76,9 +76,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
   }, [filterCharts]);
 
   useEffect(() => {
-    console.log(openTenant)
     setType('Tenant')
-
   }, [openTenant])
   
 
@@ -206,7 +204,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
   }
 
   const editEntry = async(id)=>{
-    setOpen(true)
+    
 
     const data = { id, name, type, accounts, email, phoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date ,  path: 'contactList'};
     
@@ -220,7 +218,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
       let response = await res.json()
       
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
 
     else {
@@ -250,7 +248,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
   }
 
   const getData = async (id) =>{
-    setOpen(true)
+    router.push('?open=true');
     setIsOpenSaveChange(false)
 
     const data = { id, path: 'contactList' };
