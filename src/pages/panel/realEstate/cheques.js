@@ -499,7 +499,7 @@ import PaymentMethod from 'models/PaymentMethod';
     }
 
 
-    const deliverToSupplier = async(e)=>{
+    const refundToSupplier = async(e)=>{
       e.preventDefault();
 
       try {
@@ -614,8 +614,8 @@ import PaymentMethod from 'models/PaymentMethod';
               <button onClick={(e)=>refundToCustomer(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Refund to Customer
               </button>
-              <button onClick={(e)=>deliverToSupplier(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Deliver to Supplier
+              <button onClick={(e)=>refundToSupplier(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                Refund to Supplier
               </button>
               <button onClick={(e)=>clearCheck(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Clear Cheque
