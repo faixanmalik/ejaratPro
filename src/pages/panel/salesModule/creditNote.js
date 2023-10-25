@@ -328,7 +328,7 @@ import ReactToPrint from 'react-to-print';
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-medium leading-6 text-gray-900">Credit Note Invoices</h3>
+            <h3 className="text-lg font-semibold leading-6 text-gray-900">Credit Note Invoices</h3>
             <button 
               onClick={()=>{
                 setOpen(true)

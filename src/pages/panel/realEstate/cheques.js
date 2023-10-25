@@ -566,7 +566,7 @@ import PaymentMethod from 'models/PaymentMethod';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Cheques</h3>
+              <h3 className="text-lg font-semibold leading-6 text-gray-900">Cheques</h3>
             </div>
           </div>
           <div className="mt-2 md:col-span-2 md:mt-0">
