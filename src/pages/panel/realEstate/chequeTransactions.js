@@ -158,7 +158,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
       let response = await res.json()
 
       if (response.success === true) {
-        router.push('?open=false');
+        router.push('/panel/realEstate/cheques');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });

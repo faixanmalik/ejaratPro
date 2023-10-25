@@ -509,8 +509,34 @@ import PaymentMethod from 'models/PaymentMethod';
         }
         else{
 
-          
+          const contractData = await newContract(e);
 
+          let chartsOfAccount;
+          const filteredData = dbPaymentMethod.filter(item => item.paymentType === contractData.receivedBy);
+          if (filteredData.length > 0) {
+            chartsOfAccount = filteredData[0]?.chartsOfAccount;
+          }
+
+          let debitAccount;
+          const filteredContacts = dbContacts.filter(item => item.email === contractData.email);
+          if (filteredContacts.length > 0) {
+            debitAccount = filteredContacts[0]?.accounts;
+          }
+          
+      
+          let formData = {
+            open: true,
+            referCheque: true,
+            name: contractData.name || '',
+            amount: contractData.amount || 0,
+            chequeId: contractData.chequeId || 0,
+            debitAccount: debitAccount,
+            creditAccount: chartsOfAccount || '',
+            chequeStatus: 'Refund to Supplier',
+          }
+
+          const query = new URLSearchParams(formData).toString();
+          router.push(`/panel/realEstate/chequeTransactions?${query}`);
         }
       } catch (error) {
         // Handle the error here
@@ -555,7 +581,7 @@ import PaymentMethod from 'models/PaymentMethod';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Contract..." required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Cheque..." required/>
                   </div>
                 </div>
               </div>
