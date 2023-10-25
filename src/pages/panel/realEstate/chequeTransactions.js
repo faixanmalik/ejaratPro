@@ -472,7 +472,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                           </div>
 
                           <div className='flex space-x-4 mb-14'>
-                          <div className="w-1/3">
+                            <div className="w-1/3">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                                   Name
                               </label>
