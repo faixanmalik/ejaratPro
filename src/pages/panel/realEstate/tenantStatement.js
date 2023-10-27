@@ -9,6 +9,8 @@ import { Card, CardBody, Accordion, AccordionHeader, AccordionBody, Tabs, TabsHe
 import mongoose from "mongoose";
 import ContractAndTenant from 'models/ContractAndTenant';
 import moment from 'moment/moment';
+import ChequeTransaction from 'models/ChequeTransaction';
+import Cheque from 'models/Cheque';
 
 
 function Icon({ id, open }) {
@@ -26,7 +28,7 @@ function Icon({ id, open }) {
   );
 }
 
-const TenantStatement = ({dbContracts}) => {
+const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques }) => {
 
   const router = useRouter();
   const searchParams = useSearchParams()
@@ -35,14 +37,16 @@ const TenantStatement = ({dbContracts}) => {
   const [openTenantExtraForm, setOpenTenantExtraForm] = React.useState(1);
   const handleOpenTenantExtraForm = (value) => setOpenTenantExtraForm(openTenantExtraForm === value ? 0 : value);
 
+  const [selectedIds, setSelectedIds] = useState([]);
+
   const [tenantName, setTenantName] = useState('')
   const [tenantEmail, setTenantEmail] = useState('')
   const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
   const [unitNo, setUnitNo] = useState('')
   const [tenantPhoneNo, setTenantPhoneNo] = useState('')
 
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [filteredData, setFilteredData] = useState([])
+  const [filteredContracts, setFilteredContracts] = useState([])
+  const [filteredTrx, setFilteredTrx] = useState([])
 
 
   function handleRowCheckboxChange(e, id) {
@@ -68,8 +72,40 @@ const TenantStatement = ({dbContracts}) => {
       setTenantName(headingData[0].tenantName)
     }
 
-    let filteredData = dbContracts.filter((item)=> item.tenantEmail === headingData[0].tenantEmail)
-    setFilteredData(filteredData)
+    let filteredContracts = dbContracts.filter((item)=> item.tenantEmail === headingData[0].tenantEmail)
+    setFilteredContracts(filteredContracts)
+    
+    // let filteredTrx = dbChequeTrx.filter((item)=> {
+    //   if(item.email === headingData[0].tenantEmail){
+
+    //     let chqId = item.chequeId;
+        
+    //     let chqData = dbCheques.filter((newItem)=>{
+    //       if(newItem._id === chqId){
+    //         return newItem;
+    //       }
+    //     })
+
+    //   }
+    // })
+
+
+    let filteredTrx = dbChequeTrx
+    .filter((item) => item.email === headingData[0].tenantEmail)
+      .map((item) => {
+      let chqId = item.chequeId;
+
+      // Use find instead of filter to get a single matching chqData
+      let chqData = dbCheques.find((newItem) => newItem._id === chqId);
+
+      // Combine item and chqData into a single object
+      return {
+        ...item, // Include all properties from item
+        chqData: chqData, // Add chqData as a new property
+      };
+    });
+
+    setFilteredTrx(filteredTrx)
 
   }, [tenantId])
 
@@ -112,7 +148,7 @@ const TenantStatement = ({dbContracts}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.map((item, index)=>{
+                  {filteredContracts.map((item, index)=>{
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
@@ -126,10 +162,10 @@ const TenantStatement = ({dbContracts}) => {
                       {moment(item.newContractEndDate).utc().format('D MMM YYYY')}
                     </td>
                     <td className="p-1 w-[100px]">
-                      {item.newContractUnitRent}
+                      {(item.newContractUnitRent).toLocaleString()}
                     </td>
                     <td className="p-1 w-[100px]">
-                      {item.newContractRentParking}
+                      {(item.newContractRentParking).toLocaleString()}
                     </td>
                     <td className="p-1 w-[100px]">
                       {item.newContractStatus}
@@ -138,7 +174,7 @@ const TenantStatement = ({dbContracts}) => {
                   
                 </tbody>
               </table>
-              { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+              { filteredContracts.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
             </div>
 
           </div>
@@ -156,56 +192,67 @@ const TenantStatement = ({dbContracts}) => {
               <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-[11px] text-gray-700 uppercase bg-[#f2f4f5]">
                   <tr className=''>
-                    <th scope="col" className="p-4">
-                      <div className="flex items-center">
-                        <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                      </div>
+                    <th scope="col" className="p-4"></th>
+                    <th scope="col" className="p-1">
+                      Trx Type
                     </th>
                     <th scope="col" className="p-1">
-                        Contract Start Date
+                      Trx No
                     </th>
                     <th scope="col" className="p-1">
-                        Contract End Date
+                      Description
                     </th>
                     <th scope="col" className="p-1">
-                        Unit Rent
+                      Date
+                    </th>
+                    <th scope="col" className="p-1 w-32">
+                      Financial Dues
                     </th>
                     <th scope="col" className="p-1">
-                        Rent Parking
+                      Payments
+                    </th>
+                    <th scope="col" className="p-1">
+                      Balance
                     </th>
                     <th scope="col" className="pr-3">
-                        Contract Status
+                      Status
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredData.map((item, index)=>{
+                  {filteredTrx.map((item, index)=>{
+                    console.log(item)
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
-                    <td className="w-4 p-4">
-                      <div className="flex items-center">
-                        <input id={`checkbox-table-search-${item._id}`} checked={selectedIds.includes(item._id)} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                      </div>
-                    </td>
+                    <td className="w-4 p-4"></td>
                     <td className="p-1 w-[100px]">
-                      {moment(item.newContractStartDate).utc().format('D MMM YYYY')}
+                      {item.path}
                     </td>
                     <td className="p-1 w-[90px]">
-                      {moment(item.newContractEndDate).utc().format('D MMM YYYY')}
+                      {item.journalNo}
                     </td>
                     <td className="p-1 w-[100px]">
-                      {item.newContractUnitRent}
+                      {item.desc}
                     </td>
                     <td className="p-1 w-[100px]">
-                      {item.newContractRentParking}
+                      {moment(item.journalDate).utc().format('D MMM YYYY')}
                     </td>
                     <td className="p-1 w-[100px]">
-                      {item.newContractStatus}
+                      {item.financialDues || ''}
+                    </td>
+                    <td className="p-1 w-[100px]">
+                      {item.type === 'JV' ? (item.totalDebit).toLocaleString() : ''}
+                    </td>
+                    <td className="p-1 w-[100px]">
+                      {item.balance || ''}
+                    </td>
+                    <td className="p-1 w-[100px]">
+                      {item.chqData.chequeStatus}
                     </td>
                   </tr>})}
                   
                 </tbody>
               </table>
-              { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+              { filteredTrx.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
             </div>
           </div>
 
@@ -517,11 +564,15 @@ export async function getServerSideProps() {
     await mongoose.connect(process.env.MONGO_URI)
   }
   let dbContracts = await ContractAndTenant.find()
+  let dbChequeTrx = await ChequeTransaction.find()
+  let dbCheques = await Cheque.find()
 
   // Pass data to the page via props
   return {
     props: {
       dbContracts: JSON.parse(JSON.stringify(dbContracts)),
+      dbChequeTrx: JSON.parse(JSON.stringify(dbChequeTrx)),
+      dbCheques: JSON.parse(JSON.stringify(dbCheques)),
     }
   }
 }   

@@ -26,6 +26,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
   const referCheque = searchParams.get('referCheque')
+  const email = searchParams.get('email')
   const chequeStatus = searchParams.get('chequeStatus')
   const chequeId = searchParams.get('chequeId')
 
@@ -142,7 +143,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
     });
 
     // fetch the data from form to makes a file in local system
-    const data = { totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, desc,  memo, journalDate, journalNo, attachment, path:'ChequeTransaction' };
+    const data = { totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc,  memo, journalDate, journalNo, attachment, path:'ChequeTransaction' };
 
     if( totalDebit != totalCredit ){
       toast.error("Debit Credit values must be equal" , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });

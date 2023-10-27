@@ -376,6 +376,7 @@ import PaymentMethod from 'models/PaymentMethod';
             open: true,
             referCheque: true,
             name: contractData.name || '',
+            email: contractData.email || '',
             amount: contractData.amount || 0,
             chequeId: contractData.chequeId || 0,
             creditAccount: chartsOfAccount || '',
@@ -436,6 +437,7 @@ import PaymentMethod from 'models/PaymentMethod';
             open: true,
             referCheque: true,
             name: contractData.name || '',
+            email: contractData.email || '',
             amount: contractData.amount || 0,
             chequeId: contractData.chequeId || 0,
             debitAccount: chartsOfAccount || '',
@@ -481,6 +483,7 @@ import PaymentMethod from 'models/PaymentMethod';
             open: true,
             referCheque: true,
             name: contractData.name || '',
+            email: contractData.email || '',
             amount: contractData.amount || 0,
             chequeId: contractData.chequeId || 0,
             debitAccount: debitAccount,
@@ -497,7 +500,6 @@ import PaymentMethod from 'models/PaymentMethod';
         console.error("Error in Cheque Trx:", error);
       }
     }
-
 
     const refundToSupplier = async(e)=>{
       e.preventDefault();
@@ -528,6 +530,7 @@ import PaymentMethod from 'models/PaymentMethod';
             open: true,
             referCheque: true,
             name: contractData.name || '',
+            email: contractData.email || '',
             amount: contractData.amount || 0,
             chequeId: contractData.chequeId || 0,
             debitAccount: debitAccount,

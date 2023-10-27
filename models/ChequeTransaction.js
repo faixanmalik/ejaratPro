@@ -10,6 +10,7 @@ const ChequeTransactionSchema = new mongoose.Schema({
     journalDate: {type: Date},
     journalNo: {type: String, unique: true},
     name: {type: String},
+    email: {type: String},
     desc: {type: String},
     attachment: {type: Buffer},
     path:{type: String},
