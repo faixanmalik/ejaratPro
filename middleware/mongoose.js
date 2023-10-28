@@ -5,7 +5,7 @@ const connectDb = handler => async (req,res)=>{
         return handler(req,res)
     }
     mongoose.set("strictQuery", false);
-    await mongoose.connect("mongodb://127.0.0.1:27017/Hashem"),{
+    await mongoose.connect(process.env.MONGO_URI),{
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
@@ -14,5 +14,3 @@ const connectDb = handler => async (req,res)=>{
 }
 
 export default connectDb;
-
-

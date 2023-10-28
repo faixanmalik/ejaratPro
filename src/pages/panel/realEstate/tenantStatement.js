@@ -11,6 +11,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 import moment from 'moment/moment';
 import ChequeTransaction from 'models/ChequeTransaction';
 import Cheque from 'models/Cheque';
+import ReceiptVoucher from 'models/ReceiptVoucher';
 
 
 function Icon({ id, open }) {
@@ -28,7 +29,7 @@ function Icon({ id, open }) {
   );
 }
 
-const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques }) => {
+const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) => {
 
   const router = useRouter();
   const searchParams = useSearchParams()
@@ -74,21 +75,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques }) => {
 
     let filteredContracts = dbContracts.filter((item)=> item.tenantEmail === headingData[0].tenantEmail)
     setFilteredContracts(filteredContracts)
-    
-    // let filteredTrx = dbChequeTrx.filter((item)=> {
-    //   if(item.email === headingData[0].tenantEmail){
-
-    //     let chqId = item.chequeId;
-        
-    //     let chqData = dbCheques.filter((newItem)=>{
-    //       if(newItem._id === chqId){
-    //         return newItem;
-    //       }
-    //     })
-
-    //   }
-    // })
-
+  
 
     let filteredTrx = dbChequeTrx
     .filter((item) => item.email === headingData[0].tenantEmail)
@@ -106,6 +93,10 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques }) => {
     });
 
     setFilteredTrx(filteredTrx)
+
+
+    let filteredReceipts = dbReceipts.filter((item)=> item.email === headingData[0].tenantEmail)
+    console.log(filteredReceipts)
 
   }, [tenantId])
 
@@ -221,7 +212,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques }) => {
                 </thead>
                 <tbody>
                   {filteredTrx.map((item, index)=>{
-                    console.log(item)
+                    // console.log(item)
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4"></td>
                     <td className="p-1 w-[100px]">
@@ -565,6 +556,7 @@ export async function getServerSideProps() {
   }
   let dbContracts = await ContractAndTenant.find()
   let dbChequeTrx = await ChequeTransaction.find()
+  let dbReceipts = await ReceiptVoucher.find()
   let dbCheques = await Cheque.find()
 
   // Pass data to the page via props
@@ -572,6 +564,7 @@ export async function getServerSideProps() {
     props: {
       dbContracts: JSON.parse(JSON.stringify(dbContracts)),
       dbChequeTrx: JSON.parse(JSON.stringify(dbChequeTrx)),
+      dbReceipts: JSON.parse(JSON.stringify(dbReceipts)),
       dbCheques: JSON.parse(JSON.stringify(dbCheques)),
     }
   }
