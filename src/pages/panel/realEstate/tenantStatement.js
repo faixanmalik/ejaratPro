@@ -48,6 +48,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
 
   const [filteredContracts, setFilteredContracts] = useState([])
   const [filteredTrx, setFilteredTrx] = useState([])
+  const [totalRVPaid, setTotalRVPaid] = useState(0)
 
 
   function handleRowCheckboxChange(e, id) {
@@ -95,10 +96,29 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
     setFilteredTrx(filteredTrx)
 
 
-    let filteredReceipts = dbReceipts.filter((item)=> item.email === headingData[0].tenantEmail)
-    console.log(filteredReceipts)
+    let filteredReceipts = dbReceipts.map((item) => {
+      if (item.email === headingData[0].tenantEmail) {
+        return {
+          ...item,
+          inputList: item.inputList.filter((input) => input.paidBy !== 'cheque'),
+        };
+      }
+      return item;
+    });
+    
+    filteredTrx = filteredTrx.concat(filteredReceipts);
+    setFilteredTrx(filteredTrx)
+
+    const totalSum = filteredReceipts.reduce((sum, item) => {
+      return sum + item.inputList.reduce((itemSum, inputItem) => {
+        return itemSum + parseInt(inputItem.paid, 10);
+      }, 0);
+    }, 0);
+    setTotalRVPaid(totalSum);
+    
 
   }, [tenantId])
+  
 
 
   const newContractData = [
@@ -196,14 +216,8 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                     <th scope="col" className="p-1">
                       Date
                     </th>
-                    <th scope="col" className="p-1 w-32">
-                      Financial Dues
-                    </th>
                     <th scope="col" className="p-1">
                       Payments
-                    </th>
-                    <th scope="col" className="p-1">
-                      Balance
                     </th>
                     <th scope="col" className="pr-3">
                       Status
@@ -212,11 +226,11 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                 </thead>
                 <tbody>
                   {filteredTrx.map((item, index)=>{
-                    // console.log(item)
+                    console.log(item)
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4"></td>
                     <td className="p-1 w-[100px]">
-                      {item.path}
+                      {item.type === 'JV' ? item.path : item.type}
                     </td>
                     <td className="p-1 w-[90px]">
                       {item.journalNo}
@@ -228,16 +242,10 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                       {moment(item.journalDate).utc().format('D MMM YYYY')}
                     </td>
                     <td className="p-1 w-[100px]">
-                      {item.financialDues || ''}
+                      {item.type === 'JV' ? (item.totalDebit).toLocaleString() : totalRVPaid}
                     </td>
                     <td className="p-1 w-[100px]">
-                      {item.type === 'JV' ? (item.totalDebit).toLocaleString() : ''}
-                    </td>
-                    <td className="p-1 w-[100px]">
-                      {item.balance || ''}
-                    </td>
-                    <td className="p-1 w-[100px]">
-                      {item.chqData.chequeStatus}
+                      {item.type === 'JV' ? item.chqData.chequeStatus : 'Deposited'}
                     </td>
                   </tr>})}
                   

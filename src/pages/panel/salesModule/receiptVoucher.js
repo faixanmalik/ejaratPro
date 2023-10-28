@@ -288,7 +288,9 @@ import Link from 'next/link';
       for (let index = 0; index < inputList.length; index++) {
         totalBal += parseInt(inputList[index].balance ? inputList[index].balance : 0);
         totalPaid += parseInt(inputList[index].paid ? inputList[index].paid : 0);
+
         totalNetBalance += parseInt(inputList[index].netBalance ? inputList[index].netBalance : 0);
+        
       }
       setTotalBalance(totalBal)
       setTotalPaid(totalPaid)
@@ -635,7 +637,7 @@ import Link from 'next/link';
                                   </td>
 
                                   <td className="p-2 max-w-[140px]">
-                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>paid By</option>
                                       {dbPaymentMethod.map((item, index)=>{
                                         return <option key={index} value={item.paymentType}>{item.paymentType}</option>
@@ -654,7 +656,7 @@ import Link from 'next/link';
                                     <input
                                       type="number"
                                       value={ item.paid }
-                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo)}
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo)}
                                       name="paid"
                                       id="paid"
                                       className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -665,7 +667,7 @@ import Link from 'next/link';
                                     <input
                                       type="number"
                                       value={ item.ref }
-                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo)}
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo)}
                                       name="ref"
                                       id="ref"
                                       className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -696,7 +698,7 @@ import Link from 'next/link';
                                   </td>
 
                                   <td className="p-2">
-                                    <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountReceived, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>select bank</option>
                                       {dbBankAccount.map((item, index)=>{
                                         return <option key={index} value={item.bankBranch}>{item.bankBranch}</option>
@@ -705,10 +707,6 @@ import Link from 'next/link';
                                   </td>
 
                                   
-
-
-                                  
-
                                 </tr>})}
 
                               </tbody>

@@ -247,8 +247,12 @@ export default async function handler(req, res) {
                     type: path
                 };
 
-                let newEntry = new Cheque( filteredInv );
-                await newEntry.save();
+                if (filteredInv.inputList.length > 0) {
+                    let newEntry = new Cheque(filteredInv);
+                    await newEntry.save();
+                } else {
+                    console.log("inputList is empty, not saving to the database");
+                }
 
             }
             else {
