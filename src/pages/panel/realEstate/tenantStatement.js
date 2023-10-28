@@ -48,7 +48,6 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
 
   const [filteredContracts, setFilteredContracts] = useState([])
   const [filteredTrx, setFilteredTrx] = useState([])
-  const [totalRVPaid, setTotalRVPaid] = useState(0)
 
 
   function handleRowCheckboxChange(e, id) {
@@ -96,29 +95,45 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
     setFilteredTrx(filteredTrx)
 
 
-    let filteredReceipts = dbReceipts.map((item) => {
-      if (item.email === headingData[0].tenantEmail) {
-        return {
-          ...item,
-          inputList: item.inputList.filter((input) => input.paidBy !== 'cheque'),
-        };
-      }
-      return item;
-    });
-    
-    filteredTrx = filteredTrx.concat(filteredReceipts);
-    setFilteredTrx(filteredTrx)
 
-    const totalSum = filteredReceipts.reduce((sum, item) => {
-      return sum + item.inputList.reduce((itemSum, inputItem) => {
-        return itemSum + parseInt(inputItem.paid, 10);
-      }, 0);
-    }, 0);
-    setTotalRVPaid(totalSum);
+
+
+    // let filteredReceipts = dbReceipts.map((item) => {
+    //   if (item.email === headingData[0].tenantEmail) {
+    //     return {
+    //       ...item,
+    //       inputList: item.inputList.filter((input) => input.paidBy !== 'cheque'),
+    //     };
+    //   }
+    //   return item;
+    // });
+
+
+    // const totalSum = filteredReceipts.reduce((sum, item) => {
+    //   return sum + item.inputList.reduce((itemSum, inputItem) => {
+    //     return itemSum + parseInt(inputItem.paid, 10);
+    //   }, 0);
+    // }, 0);
+
+
+
+    dbReceipts = dbReceipts.map((receipt) => {
+      const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
+      const totalAmount = filteredInputList.reduce((total, item) => total + item.paid, 0);
+      
+      return {
+        ...receipt,
+        inputList: filteredInputList,
+        totalDebit: parseInt(totalAmount, 10),
+      };
+    });
+    dbReceipts = dbReceipts.filter((receipt) => receipt.inputList.length > 0);
+    
+    filteredTrx = filteredTrx.concat(dbReceipts);
+    setFilteredTrx(filteredTrx)
     
 
   }, [tenantId])
-  
 
 
   const newContractData = [
@@ -172,13 +187,13 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                     <td className="p-1 w-[90px]">
                       {moment(item.newContractEndDate).utc().format('D MMM YYYY')}
                     </td>
-                    <td className="p-1 w-[100px]">
+                    <td className="p-1 w-[100px] text-black font-semibold">
                       {(item.newContractUnitRent).toLocaleString()}
                     </td>
-                    <td className="p-1 w-[100px]">
+                    <td className="p-1 w-[100px] text-black font-semibold">
                       {(item.newContractRentParking).toLocaleString()}
                     </td>
-                    <td className="p-1 w-[100px]">
+                    <td className="p-1 w-[100px] text-green-800 font-semibold">
                       {item.newContractStatus}
                     </td>
                   </tr>})}
@@ -226,7 +241,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                 </thead>
                 <tbody>
                   {filteredTrx.map((item, index)=>{
-                    console.log(item)
+
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4"></td>
                     <td className="p-1 w-[100px]">
@@ -241,10 +256,10 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                     <td className="p-1 w-[100px]">
                       {moment(item.journalDate).utc().format('D MMM YYYY')}
                     </td>
-                    <td className="p-1 w-[100px]">
-                      {item.type === 'JV' ? (item.totalDebit).toLocaleString() : totalRVPaid}
+                    <td className="p-1 w-[100px] text-black font-semibold">
+                      {(item.totalDebit).toLocaleString() || ''}
                     </td>
-                    <td className="p-1 w-[100px]">
+                    <td className="p-1 w-[100px] text-green-800 font-semibold">
                       {item.type === 'JV' ? item.chqData.chequeStatus : 'Deposited'}
                     </td>
                   </tr>})}
@@ -566,6 +581,7 @@ export async function getServerSideProps() {
   let dbChequeTrx = await ChequeTransaction.find()
   let dbReceipts = await ReceiptVoucher.find()
   let dbCheques = await Cheque.find()
+
 
   // Pass data to the page via props
   return {
