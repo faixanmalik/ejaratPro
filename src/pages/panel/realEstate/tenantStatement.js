@@ -12,6 +12,7 @@ import moment from 'moment/moment';
 import ChequeTransaction from 'models/ChequeTransaction';
 import Cheque from 'models/Cheque';
 import ReceiptVoucher from 'models/ReceiptVoucher';
+import CreditSalesInvoice from 'models/CreditSalesInvoice';
 
 
 function Icon({ id, open }) {
@@ -29,7 +30,7 @@ function Icon({ id, open }) {
   );
 }
 
-const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) => {
+const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCreditSalesInvoices }) => {
 
   const router = useRouter();
   const searchParams = useSearchParams()
@@ -77,60 +78,56 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
     setFilteredContracts(filteredContracts)
   
 
+
+    // Make the trx Array
     let filteredTrx = dbChequeTrx
     .filter((item) => item.email === headingData[0].tenantEmail)
       .map((item) => {
       let chqId = item.chequeId;
-
-      // Use find instead of filter to get a single matching chqData
       let chqData = dbCheques.find((newItem) => newItem._id === chqId);
-
-      // Combine item and chqData into a single object
+      item.totalDebit = 0;
       return {
         ...item, // Include all properties from item
         chqData: chqData, // Add chqData as a new property
+        balance:0
       };
     });
 
-    setFilteredTrx(filteredTrx)
 
-
-
-
-
-    // let filteredReceipts = dbReceipts.map((item) => {
-    //   if (item.email === headingData[0].tenantEmail) {
-    //     return {
-    //       ...item,
-    //       inputList: item.inputList.filter((input) => input.paidBy !== 'cheque'),
-    //     };
-    //   }
-    //   return item;
-    // });
-
-
-    // const totalSum = filteredReceipts.reduce((sum, item) => {
-    //   return sum + item.inputList.reduce((itemSum, inputItem) => {
-    //     return itemSum + parseInt(inputItem.paid, 10);
-    //   }, 0);
-    // }, 0);
-
-
-
+    // Receipts Voucher
     dbReceipts = dbReceipts.map((receipt) => {
       const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
       const totalAmount = filteredInputList.reduce((total, item) => total + item.paid, 0);
       
-      return {
-        ...receipt,
-        inputList: filteredInputList,
-        totalDebit: parseInt(totalAmount, 10),
-      };
+      if (filteredInputList.length > 0) {
+        receipt.inputList = filteredInputList;
+        return {
+          ...receipt,
+          chequeStatus: 'Deposited',
+          totalDebit: 0,
+          totalCredit: parseInt(totalAmount, 10),
+          balance:0
+        };
+      }
     });
-    dbReceipts = dbReceipts.filter((receipt) => receipt.inputList.length > 0);
-    
-    filteredTrx = filteredTrx.concat(dbReceipts);
-    setFilteredTrx(filteredTrx)
+
+
+    // Credit Sales Invoice
+    dbCreditSalesInvoices = dbCreditSalesInvoices.map((item)=>{
+      if(item.email === headingData[0].tenantEmail){
+        return {
+          ...item,
+          journalNo: item.billNo,
+          chequeStatus: 'Issued',
+          totalDebit: parseInt(item.totalAmount, 10),
+          totalCredit: 0,
+          balance:0
+        };
+      }
+    })
+
+    filteredTrx = filteredTrx.concat(dbReceipts, dbCreditSalesInvoices);
+    setFilteredTrx(filteredTrx);
     
 
   }, [tenantId])
@@ -232,7 +229,13 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                       Date
                     </th>
                     <th scope="col" className="p-1">
-                      Payments
+                      Debit
+                    </th>
+                    <th scope="col" className="p-1">
+                      Credit
+                    </th>
+                    <th scope="col" className="p-1">
+                      Balance
                     </th>
                     <th scope="col" className="pr-3">
                       Status
@@ -241,6 +244,13 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                 </thead>
                 <tbody>
                   {filteredTrx.map((item, index)=>{
+
+                    let previousBalance = 0;
+                    filteredTrx.forEach((item) => {
+                      item.balance = previousBalance + item.totalDebit - item.totalCredit;
+                      previousBalance = item.balance;
+                    });
+
 
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4"></td>
@@ -259,8 +269,14 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts }) =>
                     <td className="p-1 w-[100px] text-black font-semibold">
                       {(item.totalDebit).toLocaleString() || ''}
                     </td>
+                    <td className="p-1 w-[100px] text-black font-semibold">
+                      {(item.totalCredit).toLocaleString() || ''}
+                    </td>
+                    <td className="p-1 w-[100px] text-black font-semibold">
+                      {(item.balance).toLocaleString() || ''}
+                    </td>
                     <td className="p-1 w-[100px] text-green-800 font-semibold">
-                      {item.type === 'JV' ? item.chqData.chequeStatus : 'Deposited'}
+                      {item.type === 'JV' ? item.chqData.chequeStatus : item.chequeStatus}
                     </td>
                   </tr>})}
                   
@@ -581,6 +597,7 @@ export async function getServerSideProps() {
   let dbChequeTrx = await ChequeTransaction.find()
   let dbReceipts = await ReceiptVoucher.find()
   let dbCheques = await Cheque.find()
+  let dbCreditSalesInvoices = await CreditSalesInvoice.find()
 
 
   // Pass data to the page via props
@@ -590,6 +607,7 @@ export async function getServerSideProps() {
       dbChequeTrx: JSON.parse(JSON.stringify(dbChequeTrx)),
       dbReceipts: JSON.parse(JSON.stringify(dbReceipts)),
       dbCheques: JSON.parse(JSON.stringify(dbCheques)),
+      dbCreditSalesInvoices: JSON.parse(JSON.stringify(dbCreditSalesInvoices)),
     }
   }
 }   

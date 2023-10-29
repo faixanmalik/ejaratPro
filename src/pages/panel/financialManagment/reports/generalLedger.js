@@ -29,7 +29,6 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
     const [account, setAccount] = useState('')
     const [dbAccount, setDbAccount] = useState(false)
     const [isCash, setIsCash] = useState(false)
-    const [balance, setBalance] = useState([])
 
     const [newEntry, setNewEntry] = useState([])
 
@@ -99,6 +98,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             debitAccount: account === debitAccount ? debitAccount : '',
                             credit: account === creditAccount ? parseInt(creditAmount) : 0,
                             creditAccount: account === creditAccount ? creditAccount : '',
+                            balance: 0
                         });
 
                         if(fromDate && toDate){
@@ -143,6 +143,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             debitAccount: account === debitAccount ? debitAccount : '',
                             credit: account === creditAccount ? parseInt(creditAmount) : 0,
                             creditAccount: account === creditAccount ? creditAccount : '',
+                            balance: 0
                         });
 
                         if(fromDate && toDate){
@@ -185,6 +186,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                         debitAccount: account === debitAccount ? debitAccount : '',
                         credit: account === creditAccount ? parseInt(creditAmount) : 0,
                         creditAccount: account === creditAccount ? creditAccount : '',
+                        balance: 0
                     });
 
                     if(fromDate && toDate){
@@ -216,6 +218,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             debitAccount: account === debitAccount ? debitAccount : '',
                             credit: account === creditAccount ? parseInt(creditAmount) : 0,
                             creditAccount: account === creditAccount ? creditAccount : '',
+                            balance: 0
                         });
 
                         if(fromDate && toDate){
@@ -247,6 +250,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                         debitAccount: account === debitAccount ? debitAccount : '',
                         credit: account === creditAccount ? parseInt(creditAmount) : 0,
                         creditAccount: account === creditAccount ? creditAccount : '',
+                        balance: 0
                     });
 
                     if(fromDate && toDate){
@@ -271,12 +275,9 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                     });
 
                     let linkedAccountCOA;
-
                     if (dbFromAccount.length > 0) {
                         linkedAccountCOA = dbFromAccount[0].chartsOfAccount;
                     }
-
-
 
                     let debitAmount = newData.totalAmountPerItem;
                     let debitAccount = newData.accounts;
@@ -291,6 +292,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             debitAccount: account === debitAccount ? debitAccount : '',
                             credit: account === creditAccount ? parseInt(creditAmount) : 0,
                             creditAccount: account === creditAccount ? creditAccount : '',
+                            balance: 0
                         });
 
                         if(fromDate && toDate){
@@ -324,11 +326,9 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                     });
 
                     let linkedAccountCOA;
-
                     if (dbFromAccount.length > 0) {
                         linkedAccountCOA = dbFromAccount[0].chartsOfAccount;
                     }
-                    
                     
                     let debitAmount = newData.totalAmountPerItem;
                     let debitAccount = linkedAccountCOA;
@@ -345,6 +345,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             debitAccount: account === debitAccount ? debitAccount : '',
                             credit: account === creditAccount ? parseInt(creditAmount) : 0,
                             creditAccount: account === creditAccount ? creditAccount : '',
+                            balance: 0
                         });
 
                         
@@ -385,6 +386,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             debitAccount: account === debitAccount ? debitAccount : '',
                             credit: account === creditAccount ? parseInt(creditAmount) : 0,
                             creditAccount: account === creditAccount ? creditAccount : '',
+                            balance: 0
                         });
 
                         if(fromDate && toDate){
@@ -421,6 +423,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             debitAccount: account === debitAccount ? debitAccount : '',
                             credit: account === creditAccount ? parseInt(creditAmount) : 0,
                             creditAccount: account === creditAccount ? creditAccount : '',
+                            balance: 0
                         });
 
                         if(fromDate && toDate){
@@ -536,56 +539,8 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
         // Date filter
         dbAllEntries.sort((a, b) => new Date(a.journalDate) - new Date(b.journalDate));
         
-        balanceAmount()
         setNewEntry(dbAllEntries)
     }
-
-
-    const balanceAmount = async()=>{
-
-        let result = [];
-        if(dbAllEntries.length > 0){
-            const initalCreditEntry = parseInt(dbAllEntries[0].credit);
-            let initialBalance = initalCreditEntry;
-            
-            for (let index = 0; index < dbAllEntries.length; index++) {
-
-                const currentCreditEntry = parseInt(dbAllEntries[index].credit);
-                const currentDebitEntry = parseInt(dbAllEntries[index].debit);
-                
-                if(index <= 0){
-                    let totalBalance;
-                    if(dbAccount === true){
-                        totalBalance = currentCreditEntry - currentDebitEntry;
-                    }
-                    else if(dbAccount === false){ 
-                        totalBalance = currentDebitEntry - currentCreditEntry;
-                    }
-                    initialBalance = totalBalance;
-                    result.push(totalBalance)
-                }
-                else{
-                    let totalBalance;
-                    if(dbAccount === true){
-                        totalBalance = initialBalance + currentCreditEntry - currentDebitEntry;
-                    }
-                    else if(dbAccount === false){
-                        totalBalance = initialBalance + currentDebitEntry - currentCreditEntry;
-                    }
-                    
-                    initialBalance = totalBalance;
-                    result.push(totalBalance);
-                }
-            }
-            setBalance(result)
-        }
-    }
-
-
-
-
-
-
 
     const handleChange = (e) => {
         if (e.target.name === 'account') {
@@ -599,9 +554,6 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
         }
     }
     
-
-
-
     return (
     <>
     <ProSidebarProvider>
@@ -703,7 +655,18 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             <tbody>
 
                                 {/* All Vouchers */}
-                                { newEntry.map((item,index) => {
+                                { newEntry.map((item, index) => {
+
+                                    let previousBalance = 0;
+                                    newEntry.forEach((item) => {
+                                      if(dbAccount === true){
+                                        item.balance = previousBalance + item.credit - item.debit;
+                                      }
+                                      else if(dbAccount === false){
+                                        item.balance = previousBalance + item.debit - item.credit;
+                                      }
+                                      previousBalance = item.balance;
+                                    });
 
                                     return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                                         <td className="px-6 py-3">
@@ -714,8 +677,8 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                                         </td>
                                         <td className="px-6 py-3">
                                             {item.date 
-                                                ? moment(item.date).format('DD-MM-YYYY')
-                                                : moment(item.journalDate).format('DD-MM-YYYY')
+                                              ? moment(item.date).format('DD-MM-YYYY')
+                                              : moment(item.journalDate).format('DD-MM-YYYY')
                                             }
                                         </td>
                                         <td className="px-6 py-3">
@@ -725,10 +688,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                                             {parseInt(item.credit).toLocaleString()}
                                         </td>
                                         <td className="px-6 py-3 bg-gray-50 text-blue-700 font-bold">
-                                            {isCash == true 
-                                                ? balance[index] && balance[index].toLocaleString()
-                                                : balance[index] && Math.abs(balance[index]).toLocaleString()
-                                            }
+                                            {parseInt(item.balance).toLocaleString()}
                                         </td>
                                     </tr>
                                 })}

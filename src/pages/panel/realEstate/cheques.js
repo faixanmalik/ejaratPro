@@ -315,12 +315,14 @@ import PaymentMethod from 'models/PaymentMethod';
         
         const { name, email, totalAmount, receivedBy, totalPaid, id:_id } = response.data;
 
+
         let paidBy = response.data.inputList[0].paidBy;
+        let paidAmount = response.data.inputList[0].paid;
 
         // Now, return the data you want to use in the calling function
         return {
           name: name || '',
-          amount: totalAmount || totalPaid || 0,
+          amount: totalAmount || paidAmount || 0,
           receivedBy: receivedBy || paidBy || '',
           chequeId: id || '',
           email: email || '',
