@@ -148,7 +148,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
               <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-[11px] text-gray-700 uppercase bg-[#f2f4f5]">
                   <tr className=''>
-                    <th scope="col" className="p-4">
+                    <th scope="col" className="px-4 py-[16px]">
                       <div className="flex items-center">
                         <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                       </div>
@@ -173,7 +173,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                 <tbody>
                   {filteredContracts.map((item, index)=>{
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
-                    <td className="w-4 p-4">
+                    <td className="w-4 px-4 py-[15px]">
                       <div className="flex items-center">
                         <input id={`checkbox-table-search-${item._id}`} checked={selectedIds.includes(item._id)} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                       </div>
