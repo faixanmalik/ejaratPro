@@ -215,8 +215,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
               <table className="w-full text-sm text-left text-gray-500 ">
                 <thead className="text-[11px] text-gray-700 uppercase bg-[#f2f4f5]">
                   <tr className=''>
-                    <th scope="col" className="p-4"></th>
-                    <th scope="col" className="p-1">
+                    <th scope="col" className="px-4 py-[16px]">
                       Trx Type
                     </th>
                     <th scope="col" className="p-1">
@@ -251,10 +250,8 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                       previousBalance = item.balance;
                     });
 
-
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
-                    <td className="w-4 p-4"></td>
-                    <td className="p-1 w-[100px]">
+                    <td className="px-4 py-[15px] w-[150px] text-black font-medium">
                       {item.type === 'JV' ? item.path : item.type}
                     </td>
                     <td className="p-1 w-[90px]">
@@ -266,10 +263,10 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                     <td className="p-1 w-[100px]">
                       {moment(item.journalDate).utc().format('D MMM YYYY')}
                     </td>
-                    <td className="p-1 w-[100px] text-black font-semibold">
+                    <td className="p-1 w-[100px] text-black font-medium">
                       {(item.totalDebit).toLocaleString() || ''}
                     </td>
-                    <td className="p-1 w-[100px] text-black font-semibold">
+                    <td className="p-1 w-[100px] text-black font-medium">
                       {(item.totalCredit).toLocaleString() || ''}
                     </td>
                     <td className="p-1 w-[100px] text-black font-semibold">
