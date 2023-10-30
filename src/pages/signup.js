@@ -53,6 +53,7 @@ function Signup() {
 
     // fetch the data from form to makes a file in local system
     const data = { firstname, lastname, email, password, confirmpassword, businessName, country, industry, day,  month };
+
     if( password !== confirmpassword ){
       document.getElementById('checkPassword').innerHTML = "Your Password is not Match!"
     }
@@ -66,25 +67,15 @@ function Signup() {
         body: JSON.stringify(data),
       })
       let response = await res.json();
-        if (response.success === true) {
-          toast.success(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-          setTimeout(() => {
-            router.push(`/login`);
-          }, 1500);
-        }
-        else{
-          toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-          setTimeout(() => {
-            router.push(`/login`);
-          }, 1500);
-        }
-
-        setFirstname('')
-        setLastname('')
-        setEmail('')
-        setPassword('')
-        setConfirmpassword('')
-
+      if (response.success === true) {
+        toast.success(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+        setTimeout(() => {
+          router.push(`/login`);
+        }, 1500);
+      }
+      else{
+        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
     }
   }
 
