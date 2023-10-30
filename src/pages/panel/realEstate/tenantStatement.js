@@ -120,7 +120,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
         return {
           ...item,
           journalNo: item.billNo,
-          chequeStatus: 'Issued',
+          chequeStatus: 'Received',
           totalDebit: parseInt(item.totalAmount, 10),
           totalCredit: 0,
           balance:0
@@ -134,7 +134,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
       if(item.email === headingData[0].tenantEmail){
         return {
           ...item,
-          chequeStatus: 'Issued',
+          chequeStatus: 'Received',
           totalDebit: 0,
           totalCredit: parseInt(item.totalAmount, 10),
           balance:0
@@ -148,7 +148,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
       if(item.email === headingData[0].tenantEmail){
         return {
           ...item,
-          chequeStatus: 'Issued',
+          chequeStatus: 'Received',
           totalDebit: parseInt(item.totalPaid, 10),
           totalCredit: 0,
           balance:0

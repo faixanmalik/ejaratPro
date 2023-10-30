@@ -101,10 +101,8 @@ export default async function handler(req, res) {
 
             selectedIds.forEach( async(newItem) => {
                 let salesInvoices = await SalesInvoice.findById(newItem);
-                if(salesInvoices.fromAccount === 'Cheque'){
-                    let journalNumber = salesInvoices.journalNo;
-                    await Cheque.findOneAndDelete({ journalNo: journalNumber })
-                }
+                let journalNumber = salesInvoices.journalNo;
+                await Cheque.findOneAndDelete({ journalNo: journalNumber })
             });
 
             await SalesInvoice.deleteMany( { _id: { $in: selectedIds } } )
@@ -168,15 +166,11 @@ export default async function handler(req, res) {
                     let inputList = receiptInvoices.inputList
 
                     inputList.forEach( async(item) => {
-                        if(item.paidBy === 'Cheque'){
-                            let journalNumber = item.journalNo;
-                            await Cheque.findOneAndDelete({ journalNo: journalNumber })
-                        }
+                        let journalNumber = item.journalNo;
+                        await Cheque.findOneAndDelete({ journalNo: journalNumber })
                     })
 
-
                     let data = await ReceiptVoucher.findById(newItem);
-
                     if(data.inputList.length > 0){
 
                         let inputList = data.inputList;
