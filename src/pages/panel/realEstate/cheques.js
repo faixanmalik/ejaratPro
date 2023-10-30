@@ -93,9 +93,6 @@ import PaymentMethod from 'models/PaymentMethod';
 		const [filteredData, setFilteredData] = useState([])
 
 
-
-
-
     // Sales Invoice States to show the cheque
     const [journalNo, setJournalNo] = useState('')
 
@@ -571,7 +568,7 @@ import PaymentMethod from 'models/PaymentMethod';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-semibold leading-6 text-gray-900">Cheques</h3>
+              <h3 className="text-lg font-bold leading-6 text-gray-900">Funds Management</h3>
             </div>
           </div>
           <div className="mt-2 md:col-span-2 md:mt-0">
@@ -586,7 +583,7 @@ import PaymentMethod from 'models/PaymentMethod';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Cheque..." required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Funds..." required/>
                   </div>
                 </div>
               </div>
@@ -611,10 +608,10 @@ import PaymentMethod from 'models/PaymentMethod';
 
             {isChecked === true ? <div className='flex justify-end my-2'>
               <button onClick={(e)=>depositCheck(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Deposit Cheque
+                Deposit Funds
               </button>
               <button onClick={(e)=>returnCheque(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Return Cheque
+                Return Funds
               </button>
               <button onClick={(e)=>refundToCustomer(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Refund to Customer
@@ -623,7 +620,7 @@ import PaymentMethod from 'models/PaymentMethod';
                 Refund to Supplier
               </button>
               <button onClick={(e)=>clearCheck(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Clear Cheque
+                Clear Funds
               </button>
               
             </div>: ''}
@@ -693,7 +690,7 @@ import PaymentMethod from 'models/PaymentMethod';
                           : moment(item.dueDate).utc().format('D MMM YYYY')}</div>
 												</td>
 												<td className="p-1">
-													<div className='text-sm font-semibold'>{item.inputList[0].paid || item.totalAmount}</div>
+													<div className='text-sm text-black font-semibold'>{item.inputList[0].paid || item.totalAmount}</div>
 												</td>
 												<td className="p-1">
 													<div className='text-sm tracking-wider text-green-700 font-extrabold'>{item.chequeStatus || ''}</div>

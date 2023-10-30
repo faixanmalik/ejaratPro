@@ -13,6 +13,8 @@ import ChequeTransaction from 'models/ChequeTransaction';
 import Cheque from 'models/Cheque';
 import ReceiptVoucher from 'models/ReceiptVoucher';
 import CreditSalesInvoice from 'models/CreditSalesInvoice';
+import CreditNote from 'models/CreditNote';
+import PaymentVoucher from 'models/PaymentVoucher';
 
 
 function Icon({ id, open }) {
@@ -30,7 +32,7 @@ function Icon({ id, open }) {
   );
 }
 
-const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCreditSalesInvoices }) => {
+const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCreditSalesInvoices, dbCreditNotes, dbPaymentVoucher }) => {
 
   const router = useRouter();
   const searchParams = useSearchParams()
@@ -126,7 +128,35 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
       }
     })
 
-    filteredTrx = filteredTrx.concat(dbReceipts, dbCreditSalesInvoices);
+
+    // Credit Note Invoice
+    dbCreditNotes = dbCreditNotes.map((item)=>{
+      if(item.email === headingData[0].tenantEmail){
+        return {
+          ...item,
+          chequeStatus: 'Issued',
+          totalDebit: 0,
+          totalCredit: parseInt(item.totalAmount, 10),
+          balance:0
+        };
+      }
+    })
+
+
+    // Payment Voucher
+    dbPaymentVoucher = dbPaymentVoucher.map((item)=>{
+      if(item.email === headingData[0].tenantEmail){
+        return {
+          ...item,
+          chequeStatus: 'Issued',
+          totalDebit: parseInt(item.totalPaid, 10),
+          totalCredit: 0,
+          balance:0
+        };
+      }
+    })
+
+    filteredTrx = filteredTrx.concat( dbCreditSalesInvoices, dbReceipts, dbCreditNotes, dbPaymentVoucher);
     setFilteredTrx(filteredTrx);
     
 
@@ -140,7 +170,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
       value: "contracts",
       icon: FiUsers,
       desc: (
-        <div className=''>
+        <div>
 
           <div className="overflow-hidden shadow sm:rounded-md">
             
@@ -273,7 +303,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                       {(item.balance).toLocaleString() || ''}
                     </td>
                     <td className="p-1 w-[100px] text-green-800 font-semibold">
-                      {item.type === 'JV' ? item.chqData.chequeStatus : item.chequeStatus}
+                      {item.type === 'JV' ? item.chqData?.chequeStatus : item.chequeStatus}
                     </td>
                   </tr>})}
                   
@@ -441,7 +471,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
     <div className="md:grid md:grid-cols-1 md:gap-6">
       <div className="md:col-span-1">
         <div className="px-4 sm:px-0 flex">
-          <h3 className="text-lg font-semibold leading-6 text-gray-900">Tenant Account Statement</h3>
+          <h3 className="text-lg font-bold leading-6 text-gray-900">Tenant Account Statement</h3>
         </div>
       </div>
       <div className="mt-2 md:col-span-2 md:mt-0">
@@ -595,6 +625,8 @@ export async function getServerSideProps() {
   let dbReceipts = await ReceiptVoucher.find()
   let dbCheques = await Cheque.find()
   let dbCreditSalesInvoices = await CreditSalesInvoice.find()
+  let dbCreditNotes = await CreditNote.find()
+  let dbPaymentVoucher = await PaymentVoucher.find()
 
 
   // Pass data to the page via props
@@ -605,6 +637,8 @@ export async function getServerSideProps() {
       dbReceipts: JSON.parse(JSON.stringify(dbReceipts)),
       dbCheques: JSON.parse(JSON.stringify(dbCheques)),
       dbCreditSalesInvoices: JSON.parse(JSON.stringify(dbCreditSalesInvoices)),
+      dbCreditNotes: JSON.parse(JSON.stringify(dbCreditNotes)),
+      dbPaymentVoucher: JSON.parse(JSON.stringify(dbPaymentVoucher)),
     }
   }
 }   

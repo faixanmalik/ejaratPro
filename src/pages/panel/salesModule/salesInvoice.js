@@ -392,7 +392,7 @@ import Link from 'next/link';
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-semibold leading-6 text-gray-900">Sales Invoices</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">Sales Invoices</h3>
             <Link
               onClick={()=>openSettings()}
               href={'?open=true'}

@@ -184,7 +184,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
               Contract And Tenants
             </MenuItem>
             <MenuItem href="/panel/realEstate/cheques" icon={<HiOutlineBanknotes className='text-lg'/>} className={ location === '/panel/realEstate/cheques' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
-              Cheques
+              Funds Management
             </MenuItem>
             <MenuItem href="/panel/realEstate/chequeTransactions" icon={<AiOutlineTransaction className='text-lg'/>} className={ location === '/panel/realEstate/chequeTransactions' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
               Cheque Trx

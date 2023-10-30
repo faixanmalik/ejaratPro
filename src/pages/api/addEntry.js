@@ -178,17 +178,34 @@ export default async function handler(req, res) {
         }
 
         // Sales Invoice
+        // else if( path === 'SalesInvoice'){
+        //     const { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path, importEntries, row } = req.body;
+
+        //     if(fromAccount === 'Cheque'){
+        //         let newEntry = new Cheque( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
+        //         await newEntry.save();
+        //     }
+
+        //     let newEntry = new SalesInvoice( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
+        //     await newEntry.save();
+        //     res.status(200).json({ success: true, message: "Entry Added !" }) 
+        // }
         else if( path === 'SalesInvoice'){
             const { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path, importEntries, row } = req.body;
 
-            if(fromAccount === 'Cheque'){
-                let newEntry = new Cheque( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
+            try {
+
+                let newChequeEntry = new Cheque( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
+                await newChequeEntry.save();
+    
+                let newEntry = new SalesInvoice( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
                 await newEntry.save();
+                res.status(200).json({ success: true, message: "Entry Added !" }) 
+
+            } catch (error) {
+                console.log(error);
             }
 
-            let newEntry = new SalesInvoice( { phoneNo, email, chqNo, discount, city, fromAccount, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, type:path } );
-            await newEntry.save();
-            res.status(200).json({ success: true, message: "Entry Added !" }) 
         }
 
         // Expenses Invoice
@@ -243,7 +260,7 @@ export default async function handler(req, res) {
             if (Array.isArray(req.body.inputList)) {
                 const filteredInv = {
                     ...req.body,
-                    inputList: req.body.inputList.filter((input) => input.paidBy === 'Cheque'),
+                    // inputList: req.body.inputList.filter((input) => input.paidBy === 'Cheque'),
                     type: path
                 };
 
