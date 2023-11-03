@@ -22,11 +22,7 @@ import {
   Typography,
   Select, 
   Option,
-  IconButton
-} from "@material-tailwind/react";
-
-
-import {
+  IconButton,
   Accordion,
   AccordionHeader,
   AccordionBody,
@@ -36,10 +32,11 @@ import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
 import { FiUsers } from 'react-icons/fi';
+import { MdAccountBox } from 'react-icons/md';
+
 import Buildings from 'models/Buildings';
 import { useRouter } from 'next/router';
 import ContractAndTenant from 'models/ContractAndTenant';
-import { MdAccountBox } from 'react-icons/md';
 
 
 
@@ -121,15 +118,12 @@ import { MdAccountBox } from 'react-icons/md';
     const [name, setName] = useState('')
     const [phoneNo, setPhoneNo] = useState(0)
     const [email, setEmail] = useState('')
-
-
     const [nameInBill, setNameInBill] = useState('')
     const [idNumber, setIdNumber] = useState('')
     const [expID, setExpID] = useState('')
     const [building, setBuilding] = useState('')
     const [passPortNumber, setPassPortNumber] = useState('')
     const [expPassPort, setExpPassPort] = useState('')
-    
     const [buildingNameInArabic, setBuildingNameInArabic] = useState('')
     const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
     const [parkings, setParkings] = useState('')
@@ -375,20 +369,13 @@ import { MdAccountBox } from 'react-icons/md';
       let response = await res.json();
     
       if (response.success === true) {
+
         const { unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof, balcony, size, electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city, area, notes, tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber, newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes,} = response.data;
     
-        let dbTenantExpIdNumber = moment(tenantExpIdNumber, 'YYYY-MM-DD', true).isValid()
-          ? moment(tenantExpIdNumber).utc().format('YYYY-MM-DD')
-          : '';
-        let dbTenantExpPassPort = moment(tenantExpPassPort, 'YYYY-MM-DD', true).isValid()
-          ? moment(tenantExpPassPort).utc().format('YYYY-MM-DD')
-          : '';
-        let dbNewContractStartDate = moment(newContractStartDate, 'YYYY-MM-DD', true).isValid()
-          ? moment(newContractStartDate).utc().format('YYYY-MM-DD')
-          : '';
-        let dbNewContractEndDate = moment(newContractEndDate, 'YYYY-MM-DD', true).isValid()
-          ? moment(newContractEndDate).utc().format('YYYY-MM-DD')
-          : '';
+        let dbTenantExpIdNumber = moment(tenantExpIdNumber).utc().format('YYYY-MM-DD')
+        let dbTenantExpPassPort = moment(tenantExpPassPort).utc().format('YYYY-MM-DD')
+        let dbNewContractStartDate = moment(newContractStartDate).utc().format('YYYY-MM-DD')
+        let dbNewContractEndDate = moment(newContractEndDate).utc().format('YYYY-MM-DD')
     
         setTenantExpPassPort(dbTenantExpPassPort);
         setTenantExpIdNumber(dbTenantExpIdNumber);
@@ -443,6 +430,7 @@ import { MdAccountBox } from 'react-icons/md';
     
         // Now, return the data you want to use in the calling function
         return {
+          contractId: response.data._id,
           tenantName: tenantName || '',
           unitRent: newContractUnitRent || 0,
           commission: newContractCommission || 0,
@@ -1276,6 +1264,26 @@ import { MdAccountBox } from 'react-icons/md';
       }
     }
 
+    const terminateContract = async(e)=>{
+      e.preventDefault();
+
+      try {
+        const contractData = await newContract(e, false)
+
+        let formData = {
+          open: true,
+          refer: true,
+          contractId: contractData.contractId
+        }
+
+        const query = new URLSearchParams(formData).toString();
+        router.push(`/panel/realEstate/contractTermination?${query}`)
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
   return (
     <>
     <ProSidebarProvider>
@@ -1345,10 +1353,10 @@ import { MdAccountBox } from 'react-icons/md';
               <button onClick={(e)=>collectPayment(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Collect Payment
               </button>
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Send Reminder
               </button>
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button onClick={(e)=>terminateContract(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Terminate Contract
               </button>
 

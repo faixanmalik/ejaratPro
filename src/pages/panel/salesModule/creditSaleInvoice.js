@@ -344,13 +344,8 @@ import Link from 'next/link';
 
       if (response.success === true){
 
-        let dbJournalDate = moment(response.data.journalDate, 'YYYY-MM-DD', true).isValid()
-          ? moment(response.data.journalDate).utc().format('YYYY-MM-DD')
-          : '';
-
-        let dbDueDate = moment(response.data.dueDate, 'YYYY-MM-DD', true).isValid()
-          ? moment(response.data.dueDate).utc().format('YYYY-MM-DD')
-          : '';
+        let dbJournalDate = moment(response.data.journalDate).utc().format('YYYY-MM-DD')
+        let dbDueDate = moment(response.data.dueDate).utc().format('YYYY-MM-DD')
         
         setId(response.data._id)
         setJournalDate(dbJournalDate)
@@ -705,109 +700,109 @@ import Link from 'next/link';
                             </div>
                           </div>
 
-                            <div className='flex space-x-4 my-10'>
+                          <div className='flex space-x-4 my-10'>
 
-                                <table className="w-full text-sm text-left text-gray-500 ">
-                                  <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                                    <tr>
-                                      <th scope="col" className="p-2">
-                                          Products / Services
-                                      </th>
-                                      <th scope="col" className="p-2">
-                                          Description 
-                                      </th>
-                                      <th scope="col" className="p-2">
-                                          Amount
-                                      </th>
-                                      <th scope="col" className="p-2">
-                                          Tax Rate
-                                      </th>
-                                      <th scope="col" className="p-2">
-                                          Tax Amount
-                                      </th>
-                                      <th scope="col" className="p-2">
-                                          Total
-                                      </th>
-                                      <th scope="col" className="p-2">
-                                          Add/Del
-                                      </th>
-                                    </tr>
-                                  </thead>
+                            <table className="w-full text-sm text-left text-gray-500 ">
+                              <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                                <tr>
+                                  <th scope="col" className="p-2">
+                                      Products / Services
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Description 
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Amount
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Tax Rate
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Tax Amount
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Total
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Add/Del
+                                  </th>
+                                </tr>
+                              </thead>
+                            
+                              <tbody >
+                              {inputList.map(( inputList , index)=>{
+                                return <tr key={index} className="bg-white text-black border-b hover:bg-gray-50">
                                 
-                                  <tbody >
-                                  {inputList.map(( inputList , index)=>{
-                                    return <tr key={index} className="bg-white text-black border-b hover:bg-gray-50">
-                                    
-                                      <td className="p-2 w-1/5">
-                                        <select id="products" name="products" onChange={ e => change(e, index) } value={inputList.products} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                          <option value=''>select products</option>
-                                          {dbProducts.map((item, index)=>{
-                                            return <option key={index} value={item.name}>{item.name}</option>
-                                          })}
-                                        </select>
-                                      </td>
-                                      <td className="p-2">
-                                        <input
-                                          type="text"
-                                          onChange={ e=> change(e, index) }
-                                          value={ inputList.desc }
-                                          name="desc"
-                                          id="desc"
-                                          className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                      </td>
+                                  <td className="p-2 w-1/5">
+                                    <select id="products" name="products" onChange={ e => change(e, index) } value={inputList.products} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                      <option value=''>select products</option>
+                                      {dbProducts.map((item, index)=>{
+                                        return <option key={index} value={item.name}>{item.name}</option>
+                                      })}
+                                    </select>
+                                  </td>
+                                  <td className="p-2">
+                                    <input
+                                      type="text"
+                                      onChange={ e=> change(e, index) }
+                                      value={ inputList.desc }
+                                      name="desc"
+                                      id="desc"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
 
-                                      <td className="p-2">
-                                        <input
-                                            type="number"
-                                            onChange={ e=> change(e, index) }
-                                            value={ inputList.amount }
-                                            name="amount"
-                                            id="amount"
-                                            className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        />
-                                      </td>
-                                      
-                                      <td className="p-2 w-1/6">
-                                        <select id="taxRate" name="taxRate" onChange={ e => change(e, index) } value={inputList.taxRate} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                          <option>select tax</option>
-                                          {dbTaxRate.map((item, index)=>{
-                                            return <option key={index} value={item.taxRate}>{item.name}({item.taxRate}%) </option>
-                                          })}
-                                        </select>
-                                      </td>
+                                  <td className="p-2">
+                                    <input
+                                        type="number"
+                                        onChange={ e=> change(e, index) }
+                                        value={ inputList.amount }
+                                        name="amount"
+                                        id="amount"
+                                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+                                  
+                                  <td className="p-2 w-1/6">
+                                    <select id="taxRate" name="taxRate" onChange={ e => change(e, index) } value={inputList.taxRate} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                      <option>select tax</option>
+                                      {dbTaxRate.map((item, index)=>{
+                                        return <option key={index} value={item.taxRate}>{item.name}({item.taxRate}%) </option>
+                                      })}
+                                    </select>
+                                  </td>
 
-                                      <td className="p-2">
-                                        <input
-                                          type="number"
-                                          value={ inputList.taxAmount }
-                                          name="taxAmount"
-                                          id="taxAmount"
-                                          className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                          readOnly
-                                        />
-                                      </td>
+                                  <td className="p-2">
+                                    <input
+                                      type="number"
+                                      value={ inputList.taxAmount }
+                                      name="taxAmount"
+                                      id="taxAmount"
+                                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      readOnly
+                                    />
+                                  </td>
 
-                                      <td className="p-2">
-                                        <input
-                                          type="number"
-                                          value = { inputList.totalAmountPerItem }
-                                          name="totalAmountPerItem"
-                                          id="totalAmountPerItem"
-                                          className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                          readOnly
-                                          />
-                                      </td>
-                                      <td className="p-1 flex items-center mt-[18px]">
-                                        <button type='button' className='mx-auto' onClick={addLines}><AiOutlinePlusCircle className='text-xl text-green-600'/></button>
-                                        <button type='button' className='mx-auto'><AiOutlineDelete onClick={()=>index != 0 && delLines(index)} className='text-xl text-red-700'/></button>
-                                      </td>
+                                  <td className="p-2">
+                                    <input
+                                      type="number"
+                                      value = { inputList.totalAmountPerItem }
+                                      name="totalAmountPerItem"
+                                      id="totalAmountPerItem"
+                                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      readOnly
+                                      />
+                                  </td>
+                                  <td className="p-1 flex items-center mt-[18px]">
+                                    <button type='button' className='mx-auto' onClick={addLines}><AiOutlinePlusCircle className='text-xl text-green-600'/></button>
+                                    <button type='button' className='mx-auto'><AiOutlineDelete onClick={()=>index != 0 && delLines(index)} className='text-xl text-red-700'/></button>
+                                  </td>
 
-                                    </tr>})}
-                                      
-                                  </tbody>
-                                </table>
-                        
+                                </tr>})}
+                                  
+                              </tbody>
+                            </table>
+                      
                           </div>
                         
                           <div className='bg-gray-100'>
