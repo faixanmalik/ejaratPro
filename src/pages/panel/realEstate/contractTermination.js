@@ -63,6 +63,18 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
   const contractId = searchParams.get('contractId')
+
+
+  const [inputList, setInputList] = useState([
+    { products:'', amount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
+    { products:'', amount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
+    { products:'', amount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
+  ]);
+
+  const [totalDays, setTotalDays] = useState(0)
+
+  const [contractStartDate, setContractStartDate] = useState('')
+  const [contractEndDate, setContractEndDate] = useState('')
   
 
   useEffect(() => {
@@ -73,11 +85,19 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
         return item._id === contractId;
       })
       
-      
+    
       const { tenantName, buildingNameInEnglish, newContractUnitRent, newContractRentParking, newContractSecurityDeposit, unitNo, newContractStartDate, newContractEndDate } = filterContractData[0]
       
       let contractStartDate = moment(newContractStartDate).utc().format('YYYY-MM-DD')
-      let contractEndDate = moment(newContractEndDate).utc().format('YYYY-MM-DD')
+      // let newContractEndDate = moment(newContractEndDate).utc().format('YYYY-MM-DD')
+
+      if(contractEndDate){
+        setContractEndDate(contractEndDate)
+      }
+      else{
+        let momentContractEndDate = moment(newContractEndDate).utc().format('YYYY-MM-DD')
+        setContractEndDate(momentContractEndDate)
+      }
       
       let startDate = new Date(contractStartDate);
       let endDate = new Date(contractEndDate);
@@ -85,8 +105,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       let daysDifference = timeDifference / (1000 * 60 * 60 * 24) + 1;
       setTotalDays(daysDifference)
 
-      setNewContractStartDate(contractStartDate)
-      setNewContractEndDate(contractEndDate)
+      setContractStartDate(contractStartDate)
 
       setTenant(tenantName)
       setBuildingNameInEnglish(buildingNameInEnglish)
@@ -102,31 +121,30 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       let updatedInputList = inputList.map((item, index) => {
         const matchingItem = referData.find((referItem) => referItem.index === index);
 
-        let tax = 0
         if (matchingItem) {
           return {
             ...item,
             amount: matchingItem.amount,
             products: matchingItem.name,
-            taxAmount: tax,
-            totalAmountPerItem: matchingItem.amount + tax,
-            accruedRent: ( matchingItem.amount / 365 ) * daysDifference,
-            refund: matchingItem.amount - (( matchingItem.amount / 365 ) * daysDifference),
+            totalAmountPerItem: matchingItem.amount,
+            accruedRent: ( matchingItem.amount / 365 ) * totalDays,
+            refund: matchingItem.amount - (( matchingItem.amount / 365 ) * totalDays),
           };
         }
         return item;
       });
       setInputList(updatedInputList);
     }
-  }, [router])
+  }, [router, totalDays, contractEndDate])
+
+
+  
   
     
 
   const [search, setSearch] = useState('')
 
   const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
-  const [contractStartDate, setContractStartDate] = useState('')
-  const [contractEndDate, setContractEndDate] = useState('')
   const [unitNo, setUnitNo] = useState(100)
   
   const [notes, setNotes] = useState('')  
@@ -152,8 +170,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
   const [tenantIdNumber, setTenantIdNumber] = useState('')
   const [tenantExpIdNumber, setTenantExpIdNumber] = useState('')
 
-  const [newContractStartDate, setNewContractStartDate] = useState('')
-  const [newContractEndDate, setNewContractEndDate] = useState('')
+  
   const [newContractUnitRent, setNewContractUnitRent] = useState('')
   const [newContractCommission, setNewContractCommission] = useState('')
   const [newContractRentParking, setNewContractRentParking] = useState('')
@@ -162,15 +179,8 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
   const [newContractPaymentScheduling, setNewContractPaymentScheduling] = useState('')
   const [newContractSecurityDeposit, setNewContractSecurityDeposit] = useState('')
   const [newContractNotes, setNewContractNotes] = useState('')
+  
 
-
-  const [inputList, setInputList] = useState([
-    { products:'', amount:'', taxAmount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
-    { products:'', amount:'', taxAmount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
-    { products:'', amount:'', taxAmount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
-  ]);
-
-  const [totalDays, setTotalDays] = useState(0)
 
   // For print
   const componentRef = useRef();
@@ -179,138 +189,13 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
   const handleChange = (e) => {
     const { name, value } = e.target;
       
-    if (name === 'tenantIdNumber') {
-      setTenantIdNumber(value);
-    } else if (name === 'tenantExpIdNumber') {
-      setTenantExpIdNumber(value);
-    } else if (name === 'newContractStartDate') {
-      setNewContractStartDate(value);
-    } else if (name === 'newContractEndDate') {
-      setNewContractEndDate(value);
-    } else if (name === 'newContractUnitRent') {
-      setNewContractUnitRent(value);
-    } else if (name === 'newContractCommission') {
-      setNewContractCommission(value);
-    } else if (name === 'newContractRentParking') {
-      setNewContractRentParking(value);
-    } else if (name === 'newContractBouncedChequeFine') {
-      setNewContractBouncedChequeFine(value);
-    } else if (name === 'newContractStatus') {
-      setNewContractStatus(value);
-    } else if (name === 'newContractPaymentScheduling') {
-      setNewContractPaymentScheduling(value);
-    } else if (name === 'newContractSecurityDeposit') {
-      setNewContractSecurityDeposit(value);
-    } else if (name === 'newContractNotes') {
-      setNewContractNotes(value);
-    } else if (name === 'tenantPassPortNumber') {
-      setTenantPassPortNumber(value);
-    } else if (name === 'tenantExpPassPort') {
-      setTenantExpPassPort(value);
-    } else if (name === 'tenantVatRegistrationNo') {
-      setTenantVatRegistrationNo(value);
-    } else if (name === 'tenantIbanNo') {
-      setTenantIbanNo(value);
-    } else if (name === 'tenantBank') {
-      setTenantBank(value);
-    } else if (name === 'tenantBankAccountNumber') {
-      setTenantBankAccountNumber(value);
-    } else if (name === 'attachment') {
-      setAttachment(value);
-    } else if (name === 'search') {
-      setSearch(value);
-    } else if (name === 'phoneNo') {
-        setPhoneNo(value);
-    } else if (name === 'email') {
-        setEmail(value);
-    } else if (name === 'nameInBill') {
-        setNameInBill(value);
-    } else if (name === 'idNumber') {
-        setIdNumber(value);
-    } else if (name === 'expID') {
-        setExpID(value);
-    } else if (name === 'building') {
-        setBuilding(value);
-    } else if (name === 'passPortNumber') {
-        setPassPortNumber(value);
-    } else if (name === 'expPassPort') {
-        setExpPassPort(value);
-    } else if (name === 'buildingNameInArabic') {
-        setBuildingNameInArabic(value);
-    } else if (name === 'buildingNameInEnglish') {
-        setBuildingNameInEnglish(value);
-    } else if (name === 'parkings') {
-        setParkings(value);
-    } else if (name === 'roof') {
-        setRoof(value);
-    } else if (name === 'country') {
-        setCountry(value);
-    } else if (name === 'city') {
-        setCity(value);
-    } else if (name === 'area') {
-        setArea(value);
-    } else if (name === 'electricityMeterNo') {
-        setElectricityMeterNo(value);
-    } else if (name === 'contractStartDate') {
-        setContractStartDate(value);
-    } else if (name === 'investmentStructure') {
-        setInvestmentStructure(value);
-    } else if (name === 'gracePeriodFrom') {
-        setGracePeriodFrom(value);
-    } else if (name === 'contractEndDate') {
-        setContractEndDate(value);
-    } else if (name === 'amount') {
-        setAmount(value);
-    } else if (name === 'gracePeriodTo') {
-        setGracePeriodTo(value);
-    } else if (name === 'paymentScheduling') {
-        setPaymentScheduling(value);
-    } else if (name === 'unitNo') {
-        setUnitNo(value);
-    } else if (name === 'balcony') {
-        setBalcony(value);
-    } else if (name === 'ac') {
-        setAc(value);
-    } else if (name === 'unitType') {
-        setUnitType(value);
-    } else if (name === 'unitUse') {
-        setUnitUse(value);
-    } else if (name === 'bathroom') {
-        setBathroom(value);
-    } else if (name === 'unitStatus') {
-        setUnitStatus(value);
-    } else if (name === 'plotNo') {
-        setPlotNo(value);
-    } else if (name === 'rent') {
-        setRent(value);
-    } else if (name === 'rentParking') {
-        setRentParking(value);
-    } else if (name === 'size') {
-        setSize(value);
-    } else if (name === 'waterMeterNumber') {
-        setWaterMeterNumber(value);
-    } else if (name === 'sewageNumber') {
-        setSewageNumber(value);
-    } else if (name === 'view') {
-        setView(value);
-    } else if (name === 'notes') {
-        setNotes(value);
-    }
-    else if(name === 'name'){
-      setName(value)
-      const newData = dbContacts.filter(item => item.name === value);
-      if(newData.length > 0){
-        setEmail(newData[0].email)
-        setPhoneNo(newData[0].phoneNo)
-        setCity(newData[0].city)
-      }
-      else{
-        setEmail('')
-        setPhoneNo('')
-        setCity('')
-      }
+    if (name === 'contractEndDate') {
+      setContractEndDate(value);
     }
   }
+
+  
+  
 
 
   let paymentSchedulings = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -377,22 +262,22 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
               <input
                 type="date"
                 onChange={handleChange}
-                name="newContractStartDate"
-                value={newContractStartDate}
-                id="newContractStartDate"
+                name="contractStartDate"
+                value={contractStartDate}
+                id="contractStartDate"
                 className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
             <div className="w-full">
-              <label htmlFor="newContractEndDate" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="contractEndDate" className="block text-sm font-medium text-gray-700">
                Contract End Date
               </label>
               <input
                 type="date"
                 onChange={handleChange}
-                name="newContractEndDate"
-                value={newContractEndDate}
-                id="newContractEndDate"
+                name="contractEndDate"
+                value={contractEndDate}
+                id="contractEndDate"
                 className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
@@ -421,9 +306,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                   </th>
                   <th scope="col" className="p-2">
                       Amount
-                  </th>
-                  <th scope="col" className="p-2">
-                      Tax Amount
                   </th>
                   <th scope="col" className="p-2">
                       Accrued Rent
@@ -458,17 +340,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                       id="amount"
                       className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       readOnly
-                    />
-                  </td>
-                  
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      value={ inputList.taxAmount }
-                      onChange={ e=> change(e, index) }
-                      name="taxAmount"
-                      id="taxAmount"
-                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </td>
 
@@ -698,7 +569,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       desc: (
         <div>
 
-          <div className='flex space-x-4 mb-14'>
+          {/* <div className='flex space-x-4 mb-14'>
             <div className="w-full">
               <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
                Contract Start Date
@@ -780,7 +651,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                 className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
             </div>
-          </div>
+          </div> */}
           <div className='flex space-x-4 mb-14'>
 
             <div className="w-full">
