@@ -66,9 +66,9 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
 
   const [inputList, setInputList] = useState([
-    { products:'', amount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
-    { products:'', amount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
-    { products:'', amount:'', accruedRent:'', refund: '', totalAmountPerItem:'' },
+    { products:'', amount:'', accruedRent:'', refund: '', },
+    { products:'', amount:'', accruedRent:'', refund: '', },
+    { products:'', amount:'', accruedRent:'', refund: '', },
   ]);
 
   const [totalDays, setTotalDays] = useState(0)
@@ -119,71 +119,48 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       ]
 
       let updatedInputList = inputList.map((item, index) => {
-        const matchingItem = referData.find((referItem) => referItem.index === index);
 
-        if (matchingItem) {
-          return {
-            ...item,
-            amount: matchingItem.amount,
-            products: matchingItem.name,
-            totalAmountPerItem: matchingItem.amount,
-            accruedRent: ( matchingItem.amount / 365 ) * totalDays,
-            refund: matchingItem.amount - (( matchingItem.amount / 365 ) * totalDays),
-          };
+        if(item.products === 'Security Deposit'){
+          const matchingItem = referData.find((referItem) => referItem.index === index);
+
+          if (matchingItem) {
+            return {
+              ...item,
+              amount: matchingItem.amount,
+              products: matchingItem.name,
+              accruedRent: 0,
+              refund: matchingItem.amount,
+            };
+          }
+          return item;
         }
-        return item;
+        else{
+          const matchingItem = referData.find((referItem) => referItem.index === index);
+
+          if (matchingItem) {
+            return {
+              ...item,
+              amount: matchingItem.amount,
+              products: matchingItem.name,
+              accruedRent: ( matchingItem.amount / 365 ) * totalDays,
+              refund: matchingItem.amount - (( matchingItem.amount / 365 ) * totalDays),
+            };
+          }
+          return item;
+        }
       });
       setInputList(updatedInputList);
     }
   }, [router, totalDays, contractEndDate])
 
 
-  
-  
-    
-
-  const [search, setSearch] = useState('')
-
   const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
   const [unitNo, setUnitNo] = useState(100)
-  
   const [notes, setNotes] = useState('')  
-
-  const [totalNoOfPages, setTotalNoOfPages] = useState(1)
-  const [filteredData, setFilteredData] = useState([])
-
-  const [openTenantExtraForm, setOpenTenantExtraForm] = React.useState(1);
-  const handleOpenTenantExtraForm = (value) => setOpenTenantExtraForm(openTenantExtraForm === value ? 0 : value);
-  
   const [tenant, setTenant] = useState('')
-  const [tenantName, setTenantName] = useState('')
-  const [tenantEmail, setTenantEmail] = useState('')
-  const [tenantPhoneNo, setTenantPhoneNo] = useState('')
-  const [tenantOpeningBalance, setTenantOpeningBalance] = useState('')
-
-  const [tenantPassPortNumber, setTenantPassPortNumber] = useState('')
-  const [tenantExpPassPort, setTenantExpPassPort] = useState('')
-  const [tenantVatRegistrationNo, setTenantVatRegistrationNo] = useState('')
-  const [tenantIbanNo, setTenantIbanNo] = useState('')
-  const [tenantBank, setTenantBank] = useState('')
-  const [tenantBankAccountNumber, setTenantBankAccountNumber] = useState('')
-  const [tenantIdNumber, setTenantIdNumber] = useState('')
-  const [tenantExpIdNumber, setTenantExpIdNumber] = useState('')
-
-  
-  const [newContractUnitRent, setNewContractUnitRent] = useState('')
-  const [newContractCommission, setNewContractCommission] = useState('')
-  const [newContractRentParking, setNewContractRentParking] = useState('')
-  const [newContractBouncedChequeFine, setNewContractBouncedChequeFine] = useState('')
-  const [newContractStatus, setNewContractStatus] = useState('')
-  const [newContractPaymentScheduling, setNewContractPaymentScheduling] = useState('')
-  const [newContractSecurityDeposit, setNewContractSecurityDeposit] = useState('')
-  const [newContractNotes, setNewContractNotes] = useState('')
-  
 
 
   // For print
-  const componentRef = useRef();
   const speceficComponentRef = useRef();
 
   const handleChange = (e) => {
@@ -192,15 +169,45 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
     if (name === 'contractEndDate') {
       setContractEndDate(value);
     }
+    else if (name === 'notes') {
+      setNotes(value);
+    }
   }
 
-  
-  
+  const submitContractTermination = (e)=>{
+    e.preventDefault();
+    
+    let formData = {
+      open: true,
+      refer: true,
+      unitRent: 0,
+      parkingRent: 0,
+      securityDeposit: 0
+    }
 
+    inputList.forEach(item => {
+      if (item.products === 'Unit Rent') {
+        formData.unitRent = Math.floor(item.refund);
+      } else if (item.products === 'Parking Rent') {
+        formData.parkingRent = Math.floor(item.refund);
+      } else if (item.products === 'Security Deposit') {
+        formData.securityDeposit = Math.floor(item.refund);
+      }
+    });
 
-  let paymentSchedulings = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  let newContractStatusArray = ['Active','Expired','Close']
+    console.log(formData);
 
+    const data = JSON.stringify(inputList);
+    const query = new URLSearchParams(data).toString();
+    
+    // totalDays > 365 then cr sales invoice, otherwise credit note
+    if(totalDays > 365){
+      router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
+    }
+    else{
+      // router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
+    }
+  }
   
   const newContractData = [
       
@@ -313,9 +320,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                   <th scope="col" className="p-2">
                       Refund
                   </th>
-                  <th scope="col" className="p-2">
-                      Total
-                  </th>
                 </tr>
               </thead>
 
@@ -364,17 +368,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                     />
                   </td>
 
-                  <td className="p-2">
-                    <input
-                      type="number"
-                      value = { inputList.totalAmountPerItem }
-                      name="totalAmountPerItem"
-                      id="totalAmountPerItem"
-                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      readOnly
-                      />
-                  </td>
-
                 </tr>})}
                   
               </tbody>
@@ -402,163 +395,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       icon: FiUsers,
       desc: (
         <div>
-          <div>
-            <Select size="md" label="Tenant Profile" name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
-              {dbTenants.map((item, index) => {
-                return <Option key={index} value={item.name}>{item.name}</Option>;
-              })}
-            </Select>
-          </div>
-          <div className="bg-white py-5">
-            <div className="grid grid-cols-6 gap-6">
-
-              <div className="col-span-6 sm:col-span-1">
-                <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">Name:</label>
-                <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-              </div>
-
-
-              <div className="col-span-6 sm:col-span-1">
-                <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">Email address</label>
-                <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-              </div>
-
-              <div className="col-span-6 sm:col-span-1">
-                <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-              </div>
-
-              <div className="col-span-6 sm:col-span-1">
-                <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">Opening Balance</label>
-                <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-              </div>
-
-              <div className="col-span-6 sm:col-span-1">
-                <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">Id Personal Number</label>
-                <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-              </div>
-
-              <div className="col-span-6 sm:col-span-1">
-                <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">Expiry Date Id Number</label>
-                <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-              </div>
-
-            </div>
-
-
-          </div>
-          <Accordion open={openTenantExtraForm === 0} icon={<Icon id={1} open={openTenantExtraForm} />}>
-            <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>Add More? Then click!</AccordionHeader>
-            <AccordionBody>
-              <div>
-                <div className='flex space-x-4 mb-14'>
-
-                  <div className="w-full">
-                    <label htmlFor="tenantPassPortNumber" className="block text-sm font-medium text-gray-700">
-                      Passport Number
-                    </label>
-                    <input
-                      type="number"
-                      onChange={handleChange}
-                      name="tenantPassPortNumber"
-                      value={tenantPassPortNumber}
-                      id="tenantPassPortNumber"
-                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="w-full">
-                    <label htmlFor="tenantExpPassPort" className="block text-sm font-medium text-gray-700">
-                      Expiry Date Passport
-                    </label>
-                    <input 
-                      type="date"
-                      onChange={handleChange}
-                      name="tenantExpPassPort"
-                      id="tenantExpPassPort"
-                      value={tenantExpPassPort}
-                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="w-full">
-                    <label htmlFor="tenantVatRegistrationNo" className="block text-sm font-medium text-gray-700">
-                      Vat Registration No
-                    </label>
-                    <input 
-                      type="number"
-                      onChange={handleChange}
-                      name="tenantVatRegistrationNo"
-                      id="tenantVatRegistrationNo"
-                      value={tenantVatRegistrationNo}
-                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div> 
-                </div>
-
-                <div className='flex space-x-4 mb-14'>
-                  <div className="w-full">
-                    <label htmlFor="tenantIbanNo" className="block text-sm font-medium text-gray-700">
-                      IBAN Number
-                    </label>
-                    <input
-                      type="number"
-                      onChange={handleChange}
-                      name="tenantIbanNo"
-                      value={tenantIbanNo}
-                      id="tenantIbanNo"
-                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="w-full">
-                    <label htmlFor="tenantBank" className="block text-sm font-medium text-gray-700">
-                      The Bank
-                    </label>
-                    <input 
-                      type="text"
-                      onChange={handleChange}
-                      name="tenantBank"
-                      id="tenantBank"
-                      value={tenantBank}
-                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="w-full">
-                    <label htmlFor="tenantBankAccountNumber" className="block text-sm font-medium text-gray-700">
-                      Bank Account Number
-                    </label>
-                    <input 
-                      type="number"
-                      onChange={handleChange}
-                      name="tenantBankAccountNumber"
-                      id="tenantBankAccountNumber"
-                      value={tenantBankAccountNumber}
-                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                  
-                </div>
-              </div>
-              
-            </AccordionBody>
-          </Accordion>
-
-          <div className="flex items-center justify-center w-full mt-10">
-            <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                </svg>
-                <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-              </div>
-              <input id="dropzone-file" type="file" className="hidden" />
-            </label>
-          </div>
-
-
+        
         </div>
       ),
     },
@@ -569,156 +406,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       desc: (
         <div>
 
-          {/* <div className='flex space-x-4 mb-14'>
-            <div className="w-full">
-              <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
-               Contract Start Date
-              </label>
-              <input
-                type="date"
-                onChange={handleChange}
-                name="newContractStartDate"
-                value={newContractStartDate}
-                id="newContractStartDate"
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="w-full">
-              <label htmlFor="newContractEndDate" className="block text-sm font-medium text-gray-700">
-               Contract End Date
-              </label>
-              <input
-                type="date"
-                onChange={handleChange}
-                name="newContractEndDate"
-                value={newContractEndDate}
-                id="newContractEndDate"
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="w-full">
-              <label htmlFor="newContractUnitRent" className="block text-sm font-medium text-gray-700">
-                Unit Rent
-              </label>
-              <input
-                type="number"
-                onChange={handleChange}
-                name="newContractUnitRent"
-                value={newContractUnitRent}
-                id="newContractUnitRent"
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div>
-          <div className='flex space-x-4 mb-14'>
-            
-            <div className="w-full">
-              <label htmlFor="newContractCommission" className="block text-sm font-medium text-gray-700">
-                Commision
-              </label>
-              <input
-                type="number"
-                onChange={handleChange}
-                name="newContractCommission"
-                value={newContractCommission}
-                id="newContractCommission"
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="w-full">
-              <label htmlFor="newContractRentParking" className="block text-sm font-medium text-gray-700">
-                Rent Parking
-              </label>
-              <input
-                type="number"
-                onChange={handleChange}
-                name="newContractRentParking"
-                value={newContractRentParking}
-                id="newContractRentParking"
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="w-full">
-              <label htmlFor="newContractBouncedChequeFine" className="block text-sm font-medium text-gray-700">
-                Bounced Cheque Fine
-              </label>
-              <input
-                type="number"
-                onChange={handleChange}
-                name="newContractBouncedChequeFine"
-                value={newContractBouncedChequeFine}
-                id="newContractBouncedChequeFine"
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-          </div> */}
-          <div className='flex space-x-4 mb-14'>
-
-            <div className="w-full">
-              <label htmlFor="newContractSecurityDeposit" className="block text-sm font-medium text-gray-700">
-                Security Deposit
-              </label>
-              <input
-                type="number"
-                onChange={handleChange}
-                name="newContractSecurityDeposit"
-                value={newContractSecurityDeposit}
-                id="newContractSecurityDeposit"
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              />
-            </div>
-            <div className="w-full">
-              <label htmlFor="newContractStatus" className="block text-sm font-medium text-gray-700">
-                Contract Status
-              </label>
-              <select id="newContractStatus" name="newContractStatus" onChange={ handleChange } value={newContractStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                <option value=''>select contract status</option>
-                {newContractStatusArray.map((item, index)=>{
-                  return <option key={index} value={item}>{item}</option>
-                })}
-              </select>
-            </div>
-            <div className="w-full">
-              <label htmlFor="newContractPaymentScheduling" className="block text-sm font-medium text-gray-700">
-                Payment Scheduling
-              </label>
-              <select id="newContractPaymentScheduling" name="newContractPaymentScheduling" onChange={ handleChange } value={newContractPaymentScheduling} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                <option value=''>select payment scheduling</option>
-                {paymentSchedulings.map((item, index)=>{
-                  return <option key={index} value={item}>{item}</option>
-                })}
-              </select>
-            </div>
-            
-          </div>
-          <div className='flex space-x-4'>
-
-            <div className="w-full">
-              <textarea cols="30" rows="5" type="text"
-                onChange={handleChange}
-                value={newContractNotes}
-                name="newContractNotes"
-                id="newContractNotes"
-                placeholder='add your notes here...'
-                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-              </textarea>
-              
-            </div>
-            
-          </div>
-
-          <div className="flex items-center justify-center w-full mt-10">
-            <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                </svg>
-                <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-              </div>
-              <input id="dropzone-file" type="file" className="hidden" />
-            </label>
-          </div>
         </div>
       ),
     },
@@ -797,7 +484,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                               pageStyle='print'
                             />
 
-                            <button type="submit" onClick={(e)=>{submitNewContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Contract</button>
+                            <button type="submit" onClick={(e)=>{submitContractTermination(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Contract</button>
                           </div>
                         </div>
                       </div>
