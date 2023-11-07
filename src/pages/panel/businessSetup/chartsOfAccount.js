@@ -41,6 +41,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
         }
       }
     })
+    all.sort((a, b) => a.accountCode - b.accountCode);
     setallCharts(all)
 
 

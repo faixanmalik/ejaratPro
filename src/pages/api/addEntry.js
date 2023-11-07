@@ -54,9 +54,10 @@ export default async function handler(req, res) {
                     res.status(200).json({ success: true, message: "Entry Added!" }) 
                 }
                 else{
-                    let newCharts = new Charts( { account, accountCode, accountName, balance , asof, desc, subAccount } );
-                    await newCharts.save();
-                    res.status(200).json({ success: true, message: "Entry Added!" }) 
+
+                  let newCharts = new Charts( { account, accountCode, accountName, balance , asof, desc, subAccount } );
+                  await newCharts.save();
+                  res.status(200).json({ success: true, message: "Entry Added!" }) 
                 }
             }
         }

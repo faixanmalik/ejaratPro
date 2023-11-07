@@ -389,26 +389,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
         </div>
       ),
     },
-    {
-      label: "Refund Cheques",
-      value: "refundCheques",
-      icon: FiUsers,
-      desc: (
-        <div>
-        
-        </div>
-      ),
-    },
-    {
-      label: "Show Statement",
-      value: "showStatement",
-      icon: BsCashCoin,
-      desc: (
-        <div>
-
-        </div>
-      ),
-    },
   ];
 
   return (

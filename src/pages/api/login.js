@@ -23,6 +23,9 @@ const handler = async (req,res)=>{
                 res.status(400).json({ success: false, message: "Invalid Credentials!" })
             }
         }
+        else{
+            res.status(400).json({ success: false, message: "User not found!" })
+        }
     }
     else{
         res.status(400).json({ success: false, message: "Internal Server Error!" }) 

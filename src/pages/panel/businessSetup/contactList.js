@@ -297,7 +297,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
       let response = await res.json()
 
       if(response.success === true){
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
           toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -569,7 +569,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">Prefered Payment Method</label>
-                                      <select id="paymentMethod" name="paymentMethod" onChange={handleChange} value={paymentMethod} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
+                                      <select id="paymentMethod" name="paymentMethod" onChange={handleChange} value={paymentMethod} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={''}>Select Payment Method</option>
                                         {dbPaymentType.map((item, index)=>{
                                           return <option key={index} value={item.paymentType}>{item.paymentType}</option>

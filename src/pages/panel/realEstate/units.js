@@ -2077,35 +2077,6 @@ import { useRouter } from 'next/router';
           </IconButton>
         </div>
 
-
-        {/* <div className="flex items-center gap-4 mt-10 justify-end">
-            <Button
-                variant="text"
-                className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300"
-                onClick={prev}
-                disabled={active === 1}
-            >
-                <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-            </Button>
-            <div className="flex items-center gap-2 text-center">
-                <IconButton className={` pb-3 pr-2 ${active === 1 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(1)}>1</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 2 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(2)}>2</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 3 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(3)}>3</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 4 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(4)}>4</IconButton>
-                <IconButton className={` pb-3 pr-2 ${active === 5 ? 'text-white bg-gray-800': 'bg-gray-50 hover:bg-gray-300 text-black'}`} {...getItemProps(5)}>5</IconButton>
-            </div>
-            <Button
-                variant="text"
-                className="flex items-center gap-2 bg-gray-200 hover:bg-gray-300"
-                onClick={next}
-                disabled={active === 5}
-            >
-                Next
-                <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-            </Button>
-        </div> */}
-
-
       </div>
 
       <Transition.Root show={open} as={Fragment}>
