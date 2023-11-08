@@ -451,19 +451,25 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                             </TabsBody>
                           </Tabs>
 
-                          <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+                          <div className="flex justify-between bg-gray-50 px-4 py-3 text-right sm:px-6">
 
-                            <button type="submit" onClick={(e)=>{endContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                              End Contract
-                            </button>
+                            <div>
+                              <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${contractId}`} className='no-underline inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+                                Preview Statement
+                              </Link>
+                            </div>
+                            <div className='flex space-x-3'>
+                              <button type="submit" onClick={(e)=>{endContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                End Contract
+                              </button>
 
-                            <button type="submit" onClick={(e)=>{ reverseSecurityDeposit(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                              Reverse Security Deposit
-                            </button>
+                              <button type="submit" onClick={(e)=>{ reverseSecurityDeposit(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Reverse Security Deposit
+                              </button>
+                            </div>
 
-                            <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${contractId}`} className='no-underline inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                              Preview Statement
-                            </Link>
+                            
+
 
                           </div>
                         </div>
