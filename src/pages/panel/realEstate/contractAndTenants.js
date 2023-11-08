@@ -1438,7 +1438,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                           <div className=''>{item.newContractStatus}</div>
                         </td>
                         <td className="p-1 w-[100px]">
-                          <Link href={`/panel/realEstate/tenantStatement?id=${item._id}`} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
+                          <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${item._id}`} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
                         </td>
                         <td className="flex items-center py-4 space-x-4">
                           <button type='button' onClick={(e)=>{getData(item._id), setOpenNewContract(true)}} 

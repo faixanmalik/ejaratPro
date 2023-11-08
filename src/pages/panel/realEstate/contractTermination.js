@@ -341,7 +341,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
     },
   ];
 
-  const submitContractTermination = (e)=>{
+  const endContract = (e)=>{
     e.preventDefault();
     
     let formData = {
@@ -393,11 +393,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
   }
 
-  const previewStatement = async(e)=>{
-    e.preventDefault();
-    router.push(`/panel/realEstate/tenantStatement?id=${contractId}`)
-  }
-  
   
   return (
     <>
@@ -458,17 +453,17 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
                           <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
 
-                            <button type="submit" onClick={(e)=>{submitContractTermination(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                              Save Contract
+                            <button type="submit" onClick={(e)=>{endContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              End Contract
                             </button>
 
                             <button type="submit" onClick={(e)=>{ reverseSecurityDeposit(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                               Reverse Security Deposit
                             </button>
 
-                            <button type="submit" onClick={(e)=>{ previewStatement(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${contractId}`} className='no-underline inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
                               Preview Statement
-                            </button>
+                            </Link>
 
                           </div>
                         </div>
