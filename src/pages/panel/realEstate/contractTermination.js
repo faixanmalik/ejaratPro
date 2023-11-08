@@ -156,7 +156,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
   const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
   const [unitNo, setUnitNo] = useState(100)
-  const [notes, setNotes] = useState('')  
   const [tenant, setTenant] = useState('')
 
 
@@ -169,48 +168,10 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
     if (name === 'contractEndDate') {
       setContractEndDate(value);
     }
-    else if (name === 'notes') {
-      setNotes(value);
-    }
   }
 
-  const submitContractTermination = (e)=>{
-    e.preventDefault();
-    
-    let formData = {
-      open: true,
-      refer: true,
-      unitRent: 0,
-      parkingRent: 0,
-      securityDeposit: 0
-    }
 
-    inputList.forEach(item => {
-      if (item.products === 'Unit Rent') {
-        formData.unitRent = Math.floor(item.refund);
-      } else if (item.products === 'Parking Rent') {
-        formData.parkingRent = Math.floor(item.refund);
-      } else if (item.products === 'Security Deposit') {
-        formData.securityDeposit = Math.floor(item.refund);
-      }
-    });
-
-    console.log(formData);
-
-    const data = JSON.stringify(inputList);
-    const query = new URLSearchParams(data).toString();
-    
-    // totalDays > 365 then cr sales invoice, otherwise credit note
-    if(totalDays > 365){
-      router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
-    }
-    else{
-      // router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
-    }
-  }
-  
-  const newContractData = [
-      
+  const newContractData = [ 
     {
       label: "End Contract",
       value: "endContract",
@@ -375,22 +336,69 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
           </div>
 
-          <div className='flex space-x-4 mb-14'>
-            <textarea cols="30" rows="5" type="text"
-              onChange={ handleChange }
-              name="notes"
-              placeholder='add your notes here...'
-              value={notes}
-              id="notes"
-              className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-            </textarea>
-          </div>
-
         </div>
       ),
     },
   ];
 
+  const submitContractTermination = (e)=>{
+    e.preventDefault();
+    
+    let formData = {
+      open: true,
+      refer: true,
+      name: tenant,
+      unitRent: 0,
+      parkingRent: 0,
+    }
+
+    inputList.forEach(item => {
+      if (item.products === 'Unit Rent') {
+        formData.unitRent = Math.abs(Math.floor(item.refund));
+      } else if (item.products === 'Parking Rent') {
+        formData.parkingRent = Math.abs(Math.floor(item.refund));
+      }
+    });
+
+    
+    const query = new URLSearchParams(formData).toString();
+    
+    // totalDays > 365 then cr sales invoice, otherwise credit note
+    if(totalDays > 365){
+      router.push(`/panel/salesModule/creditSaleInvoice?${query}`);
+    }
+    else{
+      router.push(`/panel/salesModule/creditNote?${query}`);
+    }
+  }
+
+  const reverseSecurityDeposit = (e)=>{
+    e.preventDefault();
+
+    let formData = {
+      open: true,
+      refer: true,
+      name: tenant,
+      securityDeposit: 0,
+    }
+
+    inputList.forEach(item => {
+      if (item.products === 'Security Deposit') {
+        formData.securityDeposit = Math.abs(Math.floor(item.refund));
+      }
+    });
+
+    const query = new URLSearchParams(formData).toString();
+    router.push(`/panel/salesModule/creditNote?${query}`);
+
+  }
+
+  const previewStatement = async(e)=>{
+    e.preventDefault();
+    router.push(`/panel/realEstate/tenantStatement?id=${contractId}`)
+  }
+  
+  
   return (
     <>
     <ProSidebarProvider>
@@ -450,21 +458,18 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
                           <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
 
-                            <ReactToPrint
-                              trigger={()=>{
-                                return <button 
-                                  type="button"
-                                  className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                  Print
-                                  <AiOutlinePrinter className='text-lg ml-2'/>
-                                </button>
-                              }}
-                              content={() => speceficComponentRef.current}
-                              documentTitle='Building and Owner'
-                              pageStyle='print'
-                            />
+                            <button type="submit" onClick={(e)=>{submitContractTermination(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              Save Contract
+                            </button>
 
-                            <button type="submit" onClick={(e)=>{submitContractTermination(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Contract</button>
+                            <button type="submit" onClick={(e)=>{ reverseSecurityDeposit(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              Reverse Security Deposit
+                            </button>
+
+                            <button type="submit" onClick={(e)=>{ previewStatement(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              Preview Statement
+                            </button>
+
                           </div>
                         </div>
                       </div>

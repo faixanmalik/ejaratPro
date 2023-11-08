@@ -17,6 +17,9 @@ import Product from 'models/Product';
 import TaxRate from 'models/TaxRate';
 import Project from 'models/Project';
 import ReactToPrint from 'react-to-print';
+import { useRouter } from 'next/router';
+import { useSearchParams } from 'next/navigation'
+import Link from 'next/link';
 
 
   function classNames(...classes) {
@@ -25,7 +28,16 @@ import ReactToPrint from 'react-to-print';
 
   const CreditNote = ({ dbVouchers, dbProducts, dbContacts, dbEmployees, dbTaxRate, dbProject }) => {
     
-    const [open, setOpen] = useState(false)
+    const router = useRouter();
+    const searchParams = useSearchParams()
+    const open = searchParams.get('open')
+    const refer = searchParams.get('refer')
+
+    useEffect(() => {
+      openSettings();
+    }, [refer])
+
+
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
@@ -45,6 +57,43 @@ import ReactToPrint from 'react-to-print';
 
     useEffect(() => {
       setContacts(dbContacts, dbEmployees)
+
+      if(router.query.refer){
+        
+        let { name, unitRent, commission, parkingRent, securityDeposit } = router.query;
+
+        setName(name)
+        const newData = dbContacts.filter(item => item.name === name);
+        if(newData.length > 0){
+          setEmail(newData[0].email)
+          setPhoneNo(newData[0].phoneNo)
+          setCity(newData[0].city)
+          setAddress(newData[0].streetAddress)
+        }
+        else{
+          setEmail('')
+          setPhoneNo('')
+          setCity('')
+          setAddress('')
+        }
+
+
+        let referData = [];
+        const variables = [
+          { name: 'Unit Rent', variable: unitRent },
+          { name: 'Commission', variable: commission },
+          { name: 'Parking Rent', variable: parkingRent },
+          { name: 'Security Deposit', variable: securityDeposit },
+        ];
+
+        variables.forEach((item) => {
+          if (item.variable !== undefined) {
+            referData.push({ products: item.name, amount: item.variable });
+          }
+        });
+        
+        setInputList(referData)
+      }
 
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
@@ -160,7 +209,7 @@ import ReactToPrint from 'react-to-print';
       let response = await res.json()
 
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -225,7 +274,7 @@ import ReactToPrint from 'react-to-print';
     }
 
     const editEntry = async(id)=>{
-      setOpen(true)
+      router.push('?open=true');
 
       const data = { id, phoneNo, email, city, address, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'CreditNote' };
       
@@ -239,7 +288,7 @@ import ReactToPrint from 'react-to-print';
       let response = await res.json()
       
       if (response.success === true) {
-        window.location.reload();
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -267,7 +316,7 @@ import ReactToPrint from 'react-to-print';
     }
 
     const getData = async (id) =>{
-      setOpen(true)
+      router.push('?open=true');
       setIsOpenSaveChange(false)
 
       const data = { id, path: 'CreditNote' };
@@ -304,6 +353,32 @@ import ReactToPrint from 'react-to-print';
       }
     }
 
+    const openSettings = async ()=>{
+      setId('')
+      setJournalDate(today)
+
+      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const formattedInvoice = `CN-${invoiceNumber}`;
+      setJournalNo(formattedInvoice)
+
+      setInputList([
+        {journalNo : formattedInvoice, date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
+      ])
+      setMemo('')
+      setAttachment('')
+      setFullAmount(0)
+      setFullTax(0)
+      setTotalAmount(0)
+      setPhoneNo(0)
+      setName('')
+      setEmail('')
+      setCity('')
+      setProject('')
+      setAddress('')
+      setDueDate('')
+      setIsOpenSaveChange(true)
+    }
+
     // For print
     const componentRef = useRef();
     const speceficComponentRef = useRef();
@@ -329,39 +404,12 @@ import ReactToPrint from 'react-to-print';
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
             <h3 className="text-lg font-bold leading-6 text-gray-900">Credit Note Invoices</h3>
-            <button 
-              onClick={()=>{
-                setOpen(true)
-                setId('')
-                setJournalDate(today)
-
-
-                const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
-                const formattedInvoice = `CN-${invoiceNumber}`;
-                setJournalNo(formattedInvoice)
-
-
-                setInputList([
-                  {journalNo : formattedInvoice, date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
-                ])
-                setMemo('')
-                setAttachment('')
-                setFullAmount(0)
-                setFullTax(0)
-                setTotalAmount(0)
-                setPhoneNo(0)
-                setName('')
-                setEmail('')
-                setCity('')
-                setProject('')
-                setAddress('')
-                setDueDate('')
-                setIsOpenSaveChange(true)
-
-              }} 
-              className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
+            <Link
+              onClick={()=>openSettings()}
+              href={'?open=true'}
+              className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
               New
-            </button>
+            </Link>
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
@@ -469,8 +517,8 @@ import ReactToPrint from 'react-to-print';
       </div>
     </div>
 
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-20" onClose={()=>{setOpen(false)}}>
+    <Transition.Root show={open === 'true' ? true : false} as={Fragment}>
+      <Dialog as="div" className="relative z-20" onClose={()=>{router.push('?open=false')}}>
         <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-200" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block" />
         </Transition.Child>
@@ -479,7 +527,7 @@ import ReactToPrint from 'react-to-print';
             <Transition.Child as={Fragment} enter="ease-out duration-300" enterFrom="opacity-0 translate-y-4 md:translate-y-0 md:scale-95" enterTo="opacity-100 translate-y-0 md:scale-100" leave="ease-in duration-200" leaveFrom="opacity-100 translate-y-0 md:scale-100" leaveTo="opacity-0 translate-y-4 md:translate-y-0 md:scale-95">
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-5xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pt-14 pb-8 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => setOpen(false)}>
+                  <button type='button' className="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-6 lg:right-8" onClick={() => router.push('?open=false')}>
                     <span className="sr-only">Close</span>
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>

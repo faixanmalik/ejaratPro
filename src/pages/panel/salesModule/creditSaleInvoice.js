@@ -109,30 +109,23 @@ import Link from 'next/link';
           setAddress('')
         }
 
-        let referData = [
-          { name: 'Unit Rent', index: 0, amount: unitRent},
-          { name: 'Commission', index: 1, amount: commission},
-          { name: 'Parking Rent', index: 2, amount: parkingRent},
-          { name: 'Security Deposit', index: 3, amount: securityDeposit},
-        ]
 
-        let updatedInputList = inputList.map((item, index) => {
-          const matchingItem = referData.find((referItem) => referItem.index === index);
-          if (matchingItem) {
-            return {
-              ...item,
-              amount: matchingItem.amount,
-              products: matchingItem.name,
-            };
+        let referData = [];
+        const variables = [
+          { name: 'Unit Rent', variable: unitRent },
+          { name: 'Commission', variable: commission },
+          { name: 'Parking Rent', variable: parkingRent },
+          { name: 'Security Deposit', variable: securityDeposit },
+        ];
+
+        variables.forEach((item) => {
+          if (item.variable !== undefined) {
+            referData.push({ products: item.name, amount: item.variable });
           }
-          return item;
         });
-
-        setInputList(updatedInputList);
-
+        
+        setInputList(referData)
       }
-
-      
 
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
