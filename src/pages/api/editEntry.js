@@ -124,8 +124,6 @@ export default async function handler(req, res) {
 
         
 
-
-
         // Debit Note Invoice
         else if (path === 'DebitNote'){
             const { id } = req.body;
@@ -146,12 +144,9 @@ export default async function handler(req, res) {
         // Sales Invoice
         else if (path === 'SalesInvoice'){
 
-            const { id, fromAccount, journalNo } = req.body;
+            const { id, journalNo } = req.body;
 
-            if(fromAccount === 'Cheque'){
-                await Cheque.updateOne({ journalNo: journalNo }, req.body);
-            }
-
+            await Cheque.updateOne({ journalNo: journalNo }, req.body);
             await SalesInvoice.updateOne({ _id: id }, req.body);
             res.status(200).json({ success: true, message: "Update Successfully!" }) 
         }

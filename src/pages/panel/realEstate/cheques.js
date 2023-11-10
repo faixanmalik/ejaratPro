@@ -73,6 +73,7 @@ import PaymentMethod from 'models/PaymentMethod';
     const searchParams = useSearchParams()
     const openReceiptVoucher = searchParams.get('openReceiptVoucher')
     const openSalesInv = searchParams.get('openSalesInv')
+    const urlName = searchParams.get('name')
 
     
     const [contacts, setContacts] = useState([])
@@ -160,13 +161,25 @@ import PaymentMethod from 'models/PaymentMethod';
     }, [dbCheques])
 
     useEffect(() => {
+
+      if(urlName){
+        const newFilteredData = dbCheques.filter((item)=>{
+          return item.name === urlName;
+        });
+        console.log(newFilteredData)
+        setFilteredData(newFilteredData)
+      }
+      else{
+        setFilteredData(dbCheques)
+      }
+
       
     //   const newFilteredData = dbVouchers.filter((item)=>{
     //     return item.buildingNameInEnglish.toLowerCase().includes(search.toLowerCase());
     //   });
     //   setFilteredData(newFilteredData)
 
-    }, [search])
+    }, [search, urlName])
     
 
     const handleChange = (e) => {
@@ -664,7 +677,7 @@ import PaymentMethod from 'models/PaymentMethod';
 											</tr>
                     </thead>
                     <tbody>
-                      {dbCheques.map((item, index)=>{
+                      {filteredData.map((item, index)=>{
 
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
 												<td className="w-4 p-4">
