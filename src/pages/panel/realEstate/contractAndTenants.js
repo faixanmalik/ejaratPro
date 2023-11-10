@@ -1434,8 +1434,8 @@ import ContractAndTenant from 'models/ContractAndTenant';
                         <td className="p-1 w-[90px]">
                           <div className=''>{moment(item.newContractEndDate).utc().format('D MMM YYYY')}</div>
                         </td>
-                        <td className="p-1 w-[100px]">
-                          <div className=''>{item.newContractStatus}</div>
+                        <td className="p-1 w-[130px]">
+                          <div className={`${item.newContractStatus === 'Close' ? 'text-red-800' : 'text-green-800'} font-bold text-center uppercase`}>{item.newContractStatus}</div>
                         </td>
                         <td className="p-1 w-[100px]">
                           <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${item._id}`} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>

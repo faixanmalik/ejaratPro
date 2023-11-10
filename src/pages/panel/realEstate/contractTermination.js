@@ -347,6 +347,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
     let formData = {
       open: true,
       refer: true,
+      contractId: contractId,
       name: tenant,
       unitRent: 0,
       parkingRent: 0,
@@ -359,7 +360,6 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
         formData.parkingRent = Math.abs(Math.floor(item.refund));
       }
     });
-
     
     const query = new URLSearchParams(formData).toString();
     
@@ -459,13 +459,15 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                               </Link>
                             </div>
                             <div className='flex space-x-3'>
+                              <button type="submit" onClick={(e)=>{ reverseSecurityDeposit(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                Reverse Security Deposit
+                              </button>
+
+
                               <button type="submit" onClick={(e)=>{endContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                 End Contract
                               </button>
 
-                              <button type="submit" onClick={(e)=>{ reverseSecurityDeposit(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                Reverse Security Deposit
-                              </button>
                             </div>
 
                             
