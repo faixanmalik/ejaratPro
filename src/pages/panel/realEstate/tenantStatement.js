@@ -87,13 +87,13 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
       .map((item) => {
       let chqId = item.chequeId;
       let chqData = dbCheques.find((newItem) => newItem._id === chqId);
+      item.totalDebit = 0;
       return {
         ...item, // Include all properties from item
         chqData: chqData, // Add chqData as a new property
         balance:0
       };
     });
-
 
     // Receipts Voucher
     dbReceipts = dbReceipts.map((receipt) => {
