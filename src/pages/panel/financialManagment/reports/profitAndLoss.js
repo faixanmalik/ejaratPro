@@ -801,7 +801,15 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
 
                                 const administrationIndex = sortedDbCharts.findIndex(item => item.subAccount === 'Administration Expenses');
                                 const financeIndex = sortedDbCharts.findIndex((obj) => obj.subAccount === 'Finance Cost');
-                                let lastIndex = sortedDbCharts.length -1;
+
+                                let lastIndex = -1;
+
+                                for (let i = sortedDbCharts.length - 1; i >= 0; i--) {
+                                    if (sortedDbCharts[i].subAccount === 'Finance Cost') {
+                                        lastIndex = i;
+                                        break;
+                                    }
+                                }
                                 
 
                             return <tbody key={index}>
@@ -831,7 +839,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                                 </tr>: ''}
 
 
-                                {index === financeIndex
+                                {index === financeIndex - 1
                                 ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
                                     <td className={`text-sm font-bold ${profitFromOperations > 0 ? 'text-green-700' : 'text-red-700' } -mr-32`}>{profitFromOperations > 0 ? 'Profit' : 'loss'} From Operations:
                                         <span className='font-bold ml-1'>${ profitFromOperations.toLocaleString() }</span>
