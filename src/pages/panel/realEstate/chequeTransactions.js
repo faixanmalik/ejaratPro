@@ -26,7 +26,6 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
   const referCheque = searchParams.get('referCheque')
-  const email = searchParams.get('email')
   const chequeStatus = searchParams.get('chequeStatus')
   const chequeId = searchParams.get('chequeId')
 
@@ -52,11 +51,12 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
     if(referCheque){
 
-      let { name, amount, creditAccount, debitAccount } = router.query;
+      let { name, email, amount, creditAccount, debitAccount } = router.query;
 
       const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
       const formattedInvoice = `FUND-${invoiceNumber}`;
       setJournalNo(formattedInvoice)
+      setEmail(email)
 
       setName(name)
       setInputList([
@@ -84,6 +84,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
   const [totalDebit, setTotalDebit] = useState(0)
   const [totalCredit, setTotalCredit] = useState(0)
   const [desc, setDesc] = useState('')
+  const [email, setEmail] = useState('')
   const [name, setName] = useState('')
 
   // JV
@@ -105,8 +106,12 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
     setTotalCredit(totalCreditValue);
 
   }, [inputList])
-  
 
+
+  useEffect(() => {
+    openSettings();
+  }, [])
+  
   
 
   // JV
@@ -128,6 +133,13 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
     }
     else if(e.target.name === 'name'){
       setName(e.target.value)
+      const newData = dbContacts.filter(item => item.name === e.target.value);
+      if(newData.length > 0){
+        setEmail(newData[0].email)
+      }
+      else{
+        setEmail('')
+      }
     }
     else if(e.target.name === 'desc'){
       setDesc(e.target.value)
@@ -159,7 +171,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
       let response = await res.json()
 
       if (response.success === true) {
-        router.push('/panel/realEstate/cheques');
+        router.push('?open=false');
       }
       else {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -279,6 +291,8 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
       {journalNo : formattedInvoice, journalDate: journalDate, account: '', credit: 0, debit: 0},
     ])
     setMemo('')
+    setEmail('')
+    setName('')
     setTotalDebit(0)
     setTotalCredit(0)
     setAttachment('')
@@ -316,7 +330,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
 
-        <div className='flex'>
+          <div className='flex'>
             <button onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
@@ -350,22 +364,22 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                           <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </div>
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-2 py-3">
                           Voucher No
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-2 py-3">
                           Date
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-2 py-3">
                           Name
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-2 py-3">
                           Account
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-2 py-3">
                           Total Debit
                       </th>
-                      <th scope="col" className="px-6 py-3">
+                      <th scope="col" className="px-2 py-3">
                           Total Credit
                       </th>
                       
@@ -382,22 +396,22 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                           <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </div>
                       </td>
-                      <td className="px-6 py-3">
+                      <td className="px-2 py-3">
                         <div className='text-sm text-black font-semibold'>{item.journalNo}</div>
                       </td>
-                      <td className="px-6 py-3">
+                      <td className="px-2 py-3">
                         <div className='text-sm'>{moment(item.journalDate).utc().format('DD-MM-YYYY')}</div>
                       </td>
-                      <td className="px-6 py-3">
+                      <td className="px-2 py-3">
                         <div className='text-sm'>{item.name}</div>
                       </td>
-                      <td className="px-6 py-3">
+                      <td className="px-2 py-3">
                         <div className='text-sm'>{item.inputList[0].account}</div>
                       </td>
-                      <td className="px-6 py-3">
+                      <td className="px-2 py-3">
                         <div className='text-sm text-black font-semibold'>{parseInt(item.totalDebit).toLocaleString()}</div>
                       </td>
-                      <td className="px-6 py-3">
+                      <td className="px-2 py-3">
                         <div className='text-sm text-black font-semibold'>{parseInt(item.totalCredit).toLocaleString()}</div>
                       </td>
                       <td className="flex items-center px-6 mr-5 py-4 space-x-4">
@@ -484,7 +498,21 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                   </option>
                                 })}
                               </select>
-                            </div> 
+                            </div>
+
+                            <div className="w-1/3">
+                              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                Email:
+                              </label>
+                              <input
+                                type="text"
+                                onChange={handleChange}
+                                name="email"
+                                value={email}
+                                id="email"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
                             
                             <div className="w-2/3">
                               <label htmlFor="desc" className="block text-sm font-medium text-gray-700">

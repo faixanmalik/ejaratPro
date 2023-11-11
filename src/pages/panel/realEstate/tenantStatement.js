@@ -83,17 +83,38 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
 
     // Make the trx Array
     let filteredTrx = dbChequeTrx
-    .filter((item) => item.email === headingData[0].tenantEmail)
+    .filter((item) => {
+      if(item.email === headingData[0].tenantEmail){
+        
+        let inputList = item.inputList;
+        
+        if(!item.chequeStatus){
+          item.chequeStatus = 'Deposited';
+        }
+        let hasAccountsReceivable = inputList.some((element) => {
+          return element.account === 'Accounts Receivable';
+        });
+
+        if (hasAccountsReceivable) {
+          return item; // Include the item in the filtered result
+        }
+      }
+      else{
+        return false;
+      }
+    })
       .map((item) => {
-      let chqId = item.chequeId;
-      let chqData = dbCheques.find((newItem) => newItem._id === chqId);
-      item.totalDebit = 0;
-      return {
-        ...item, // Include all properties from item
-        chqData: chqData, // Add chqData as a new property
-        balance:0
-      };
+
+        let chqId = item.chequeId;
+        let chqData = dbCheques.find((newItem) => newItem._id === chqId);
+        item.totalCredit = 0;
+        return {
+          ...item, // Include all properties from item
+          chqData: chqData, // Add chqData as a new property
+          balance:0
+        };
     });
+
 
     // Receipts Voucher
     dbReceipts = dbReceipts.map((receipt) => {
@@ -302,7 +323,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                       {(item.balance).toLocaleString() || ''}
                     </td>
                     <td className="p-1 w-[100px] text-green-800 font-semibold">
-                      {item.type === 'JV' ? item.chqData?.chequeStatus : item.chequeStatus}
+                      {item.chequeStatus || ''}
                     </td>
                   </tr>})}
                   
