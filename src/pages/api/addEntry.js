@@ -292,7 +292,20 @@ export default async function handler(req, res) {
 
         // Receipt Voucher Invoice
         else if( path === 'Buildings'){
-            const { receiveUnitsArray, chartsOfAccount, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email, path, importEntries, row } = req.body;
+          const { receiveUnitsArray, chartsOfAccount, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email, path, importEntries, row } = req.body;
+
+            for (const unit of receiveUnitsArray) {
+
+              let rent = unit.unitRent;
+              const unitDocument = {
+                nameInBill:nameInInvoice, name, phoneNo, email, buildingNameInEnglish, expID, idNumber, expPassPort, passPortNumber, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment,
+                parkings, roof, rent, country, city, area, electricityMeterNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling,
+                ...unit
+              };
+        
+              await Units.create(unitDocument);
+              console.log('Unit inserted:', unitDocument);
+            }
 
             let newEntry = new Buildings( { receiveUnitsArray, chartsOfAccount, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email, type:path } );
             await newEntry.save();

@@ -138,7 +138,7 @@ import { useRouter } from 'next/router';
     const [paymentScheduling, setPaymentScheduling] = useState('')
     
     
-    const [unitNo, setUnitNo] = useState(100)
+    const [unitNo, setUnitNo] = useState('')
     const [buildingNameInArabic, setBuildingNameInArabic] = useState('')
     const [buildingNameInEnglish, setBuildingNameInEnglish] = useState('')
     const [plotNo, setPlotNo] = useState('')
@@ -1871,7 +1871,7 @@ import { useRouter } from 'next/router';
                     setAmount('');
                     setGracePeriodTo('');
                     setPaymentScheduling('');
-                    setUnitNo(100); // You mentioned setting unitNo to 100 initially
+                    setUnitNo(''); // You mentioned setting unitNo to 100 initially
                     setBalcony('');
                     setAc('');
                     setUnitType('');
@@ -1939,10 +1939,10 @@ import { useRouter } from 'next/router';
               <button onClick={(e)=>newContract(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 New Contract
               </button>
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Change Unit Status
               </button>
-              <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Archive Unit
               </button>
 

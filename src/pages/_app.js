@@ -4,9 +4,9 @@ import "../styles/style.scss";
 
 // React top loading bar
 import LoadingBar from 'react-top-loading-bar'
-import { useRouter } from 'next/router';
 import Footer from '../../components/Footer'
 import Navbar from '../../components/Navbar'
+import { useRouter } from 'next/router';
 
 
 export default function App({ Component, pageProps }) {
