@@ -343,6 +343,8 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
             <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('allContacts')}}>All Accounts</button>
             <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Customer')}}>Customer</button>
             <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Supplier')}}>Supplier</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Tenant')}}>Tenant</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Owner')}}>Owner</button>
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
