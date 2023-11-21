@@ -118,14 +118,37 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
         }
 
 
-        let referData = [];
-        const variables = [
-          { name: 'Unit Rent', variable: unitRent },
-          { name: 'Commission', variable: commission },
-          { name: 'Parking Rent', variable: parkingRent },
-          { name: 'Security Deposit', variable: securityDeposit },
-        ];
+        let variables = [];
+        if (unitRent) {
+          let filteredProducts = filterProducts('unitRent');
+          if (filteredProducts.length > 0) {
+            variables.push({ name: filteredProducts[0].name, variable: unitRent });
+          }
+        }
 
+        if (commission) {
+          let filteredProducts = filterProducts('commission');
+          if (filteredProducts.length > 0) {
+            variables.push({ name: filteredProducts[0].name, variable: commission });
+          }
+        }
+
+        if (parkingRent) {
+          let filteredProducts = filterProducts('parkingRent');
+          if (filteredProducts.length > 0) {
+            variables.push({ name: filteredProducts[0].name, variable: parkingRent });
+          }
+        }
+
+        if (securityDeposit) {
+          let filteredProducts = filterProducts('securityDeposit');
+          if (filteredProducts.length > 0) {
+            variables.push({ name: filteredProducts[0].name, variable: securityDeposit });
+          }
+        }
+
+
+        let referData = [];
         variables.forEach((item) => {
           if (item.variable !== undefined) {
             referData.push({ products: item.name, amount: item.variable });
@@ -140,6 +163,10 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
         setIsAdmin(true)
       }
     }, [router])
+
+    function filterProducts(variableName) {
+      return dbProducts.filter(item => item.linkContract === variableName);
+    }
 
 
     // JV

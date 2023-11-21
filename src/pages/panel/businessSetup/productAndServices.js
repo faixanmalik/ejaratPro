@@ -15,6 +15,7 @@ import { BiExport, BiImport } from 'react-icons/bi';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import {XLSX, read, utils} from 'xlsx';
 import TaxRate from 'models/TaxRate';
+import { Switch } from "@material-tailwind/react";
 
 
 
@@ -102,6 +103,14 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
       }
   }
 
+  function handleLinkedCheque(e) {
+    if (e.target.checked) {
+      setLinkedCheque(true);
+    } else {
+      setLinkedCheque(false);
+    }
+  }
+
 
 
 
@@ -111,9 +120,11 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
   const [purchaseStatus, setPurchaseStatus] = useState('')
   
   const [costPrice, setCostPrice] = useState('')
-  const [linkAccount, setlinkAccount] = useState('')
+  const [linkAccount, setLinkAccount] = useState('')
+  const [linkContract, setLinkContract] = useState('')
   const [purchaseTaxRate, setPurchaseTaxRate] = useState('')
   const [desc, setdesc] = useState('')
+  const [linkedCheque, setLinkedCheque] = useState('')
   
   
   const [salesStatus, setSalesStatus] = useState('')
@@ -138,7 +149,10 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
       setCostPrice(e.target.value)
     }
     else if(e.target.name === 'linkAccount'){
-      setlinkAccount(e.target.value)
+      setLinkAccount(e.target.value)
+    }
+    else if(e.target.name === 'linkContract'){
+      setLinkContract(e.target.value)
     }
     else if(e.target.name === 'purchaseTaxRate'){
       setPurchaseTaxRate(e.target.value)
@@ -170,9 +184,9 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
     e.preventDefault()
 
     // fetch the data from form to makes a file in local system
-    const data = { code, name, linkAccount, desc, path: 'productAndServices'  };
+    const data = { code, name, linkAccount, linkContract, desc, path: 'productAndServices'  };
 
-      let res = await fetch(`/api/addEntry`, {
+    let res = await fetch(`/api/addEntry`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -207,7 +221,8 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
         setCode(response.product.code)
         setName(response.product.name)
-        setlinkAccount(response.product.linkAccount)
+        setLinkAccount(response.product.linkAccount)
+        setLinkContract(response.product.linkContract)
         setdesc(response.product.desc)
       }
       else{
@@ -239,7 +254,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
   const editEntry = async(id)=>{
 
-    const data = { id, code, name, linkAccount, desc , path: 'productAndServices' };
+    const data = { id, code, name, linkAccount, linkContract, desc , path: 'productAndServices' };
     let res = await fetch(`/api/editEntry`, {
       method: 'POST',
       headers: {
@@ -284,7 +299,8 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
               setOpen(true);
               setCode('');
               setName('');
-              setlinkAccount('');
+              setLinkAccount('');
+              setLinkContract('');
               setdesc('');
               setIsOpenSaveChange(true)
             }} 
@@ -336,31 +352,34 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
             <table className="w-full text-sm text-left text-gray-500" ref={tableRef}>
                 <thead className="text-xs text-gray-700 uppercase bg-[#e9ecf7]">
                     <tr>
-                        <th scope="col" className="p-4">
-                          <div className="flex items-center">
-                            <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                          </div>
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            SR
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Code
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Name
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            Linked Account
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            View / Edit
-                        </th>
+                      <th scope="col" className="p-4">
+                        <div className="flex items-center">
+                          <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                        </div>
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          SR
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Code
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Name
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Linked Account
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          Linked Contract
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                          View / Edit
+                      </th>
                     </tr>
                 </thead>
                 <tbody>
                     
-                    {product.map((item, index)=>{
+                  {product.map((item, index)=>{
                     return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
@@ -378,6 +397,9 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                     </td>
                     <td className="px-6 py-3">
                       {item.linkAccount}
+                    </td>
+                    <td className="px-6 py-3">
+                      {item.linkContract}
                     </td>
                     <td className="flex items-center px-6 mr-5 py-4 space-x-4">
                       <button type='button' onClick={()=>{getData(item._id)}} 
@@ -414,7 +436,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                     <div className="overflow-hidden shadow sm:rounded-md">
                       <div className="bg-white px-4 py-5 sm:p-6">
                         <div className="grid grid-cols-6 gap-6">
-                          <div className="col-span-6 sm:col-span-3">
+                          <div className="col-span-2">
                             <label htmlFor="code" className="block text-sm font-medium text-gray-700">
                               Code (required)
                             </label>
@@ -429,7 +451,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                               required
                             />
                           </div>
-                          <div className="col-span-6 sm:col-span-3">
+                          <div className="col-span-2">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                               Name
                             </label>
@@ -445,7 +467,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                             />
                           </div>
                           
-                          <div className="col-span-6 sm:col-span-2">
+                          <div className="col-span-2">
                             <label htmlFor="linkAccount" className="block text-sm font-medium text-gray-700">
                               Link Account
                             </label>
@@ -457,18 +479,53 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                               className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             >
                                 <option>Select account</option>
-                              {charts.map((item)=>{
-                                return <option key={item.accountCode} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
+                              {charts.map((item, index)=>{
+                                return <option key={index} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
                               })}
 
                             </select>
                           </div>
+
+
+                          <div className="col-span-2">
+                            {linkedCheque ? <div>
+                              <label htmlFor="linkContract" className="block text-sm font-medium text-gray-700">
+                                Link Contract
+                              </label>
+                              <select
+                                onChange={handleChange}
+                                value={linkContract}
+                                id="linkContract"
+                                name="linkContract"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white px-1 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                              >
+                                <option>Select account</option>
+                                <option value='unitRent'>Unit Rent</option>
+                                <option value='commission'>Commission</option>
+                                <option value='parkingRent'>Parking Rent</option>
+                                <option value='securityDeposit'>Security Deposit</option>
+                              </select>
+                            </div>: <div className='h-[61px]'>
+
+                              </div>}
+                          </div>
+
+                          <div className="col-span-3 flex space-x-5 my-auto"></div>
                           
-                          <div className="col-span-6 sm:col-span-3 lg:col-span-4">
+                          <div className="col-span-1 w-64 flex space-x-5 my-auto">
+                            <label htmlFor="linkContract" className="block text-sm font-medium text-gray-700">
+                              Link Contract
+                            </label>
+                            <div>
+                              <Switch color="blue" value={linkedCheque} onChange={handleLinkedCheque} />
+                            </div>
+                          </div>
+                          
+                          <div className="col-span-6">
                             <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
                               Description
                             </label>
-                            <textarea cols="30" rows="1" type="text"
+                            <textarea cols="30" rows="4" type="text"
                               onChange={handleChange}
                               value={desc}
                               name="desc"

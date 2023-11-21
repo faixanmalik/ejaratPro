@@ -4,6 +4,7 @@ const ProductSchema = new mongoose.Schema({
     code:{type: String, required: true},
     name:{type: String},
     linkAccount: {type: String},
+    linkContract: {type: String},
     desc: {type: String},
   },{timestamps:true});
 

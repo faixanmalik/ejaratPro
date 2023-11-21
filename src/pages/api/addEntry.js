@@ -88,14 +88,14 @@ export default async function handler(req, res) {
           }
         }
         else if( path === 'productAndServices'){
-          const { code, name, linkAccount, desc, row, importEntries  } = req.body;
+          const { code, name, linkAccount, linkContract, desc, row, importEntries  } = req.body;
 
           if(importEntries){
             Product.insertMany(row);
             res.status(200).json({ success: true, message: "Entry Added !" }) 
           }
           else{
-            let newProduct = new Product( { code, name, linkAccount, desc  } );
+            let newProduct = new Product( { code, name, linkAccount, linkContract, desc  } );
             await newProduct.save();
             res.status(200).json({ success: true, message: "Entry Added !"}) 
           }
