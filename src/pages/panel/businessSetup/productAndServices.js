@@ -571,12 +571,12 @@ export async function getServerSideProps() {
    
   // Pass data to the page via props
   return {
-    props: { 
-      product: JSON.parse(JSON.stringify(product)),
-      charts: JSON.parse(JSON.stringify(chartsOfAccount)),
-      dbTaxRate: JSON.parse(JSON.stringify(dbTaxRate)),
+     props: { 
+        product: JSON.parse(JSON.stringify(product)),
+        charts: JSON.parse(JSON.stringify(chartsOfAccount)),
+        dbTaxRate: JSON.parse(JSON.stringify(dbTaxRate)),
     } 
-  }
+    }
 }
 
 export default ProductAndServices
