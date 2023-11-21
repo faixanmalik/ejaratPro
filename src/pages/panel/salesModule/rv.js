@@ -63,6 +63,10 @@ import Link from 'next/link';
         const filteredData = dbCreditSalesInvoice.filter(item => item.name === name);
         if(filteredData.length > 0){
           setFilteredData(filteredData)
+          
+          setInputList(Array.from({ length: filteredData.length }, () => (
+            { id: '', billNo:'' , journalNo, chequeDueDate: '', desc: '', ref: '', date: journalDate, paidBy:'', balance: 0, paid: 0, netBalance: 0 }
+          )))
         }
         else{
           setFilteredData([])
@@ -111,10 +115,7 @@ import Link from 'next/link';
 
 
     // JV
-    const [inputList, setInputList] = useState([
-      { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
-      { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
-    ]);
+    const [inputList, setInputList] = useState('');
     const [reference, setReference] = useState('')
 
     // JV
@@ -173,18 +174,6 @@ import Link from 'next/link';
         }
       }
     }
-
-    // JV
-    const addLines = () => {
-      setInputList([...inputList,
-        { billNo:'', products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
-      ])
-    }
-    const delLines = (indexToDelete) => {
-      const updatedInputList = [...inputList];
-      updatedInputList.splice(indexToDelete, 1);
-      setInputList(updatedInputList);
-    };
 
     // JV
     const submit = async(e)=>{
@@ -282,7 +271,7 @@ import Link from 'next/link';
       values[index][e.target.name] = e.target.value;
       const paidNow = parseInt(e.target.value);
       
-      const netBalance = parseInt(balance -  paidNow );
+      const netBalance = parseInt(balance - (prevPaid + paidNow));
       
       if(balance){
         values[index].balance = balance;
@@ -320,9 +309,6 @@ import Link from 'next/link';
       
       setMemo('')
       setFilteredData([])
-      setInputList([
-        { billNo : '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
-      ])
       setAttachment('')
       setPhoneNo(0)
       setTotalPaid(0)
@@ -608,7 +594,7 @@ import Link from 'next/link';
 
                           </div>
 
-                          <div className='space-x-4 my-10'>
+                          <div className='space-x-4 my-10 overflow-x-scroll'>
                             <table className="w-full text-sm text-left text-gray-500 ">
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
@@ -619,61 +605,69 @@ import Link from 'next/link';
                                       Paid By 
                                   </th>
                                   <th scope="col" className="p-2">
+                                      Balance
+                                  </th>
+                                  <th scope="col" className="p-2">
+                                      Prev Paid
+                                  </th>
+                                  <th scope="col" className="p-2 min-w-[10px]">
+                                      Paid
+                                  </th>
+                                  <th scope="col" className="p-2">
                                       Chq No
                                   </th>
                                   <th scope="col" className="p-2">
                                       Due Date
                                   </th>
                                   <th scope="col" className="p-2">
+                                      Desc
+                                  </th>
+                                  <th scope="col" className="p-2">
                                       Bank
                                   </th>
-                                  <th scope="col" className="p-2">
-                                      Balance
-                                  </th>
-                                  <th scope="col" className="p-2 min-w-[10px]">
-                                      Paid
-                                  </th>
-                                  <th scope="col" className="p-2">
-                                      Add/Del
-                                  </th>
+                                  
                                 </tr>
                               </thead>
                               <tbody>
-                              {inputList.map(( item , index)=>{
-                                let billNumber = item.billNo
-                                let getInvoiceBalance = dbCreditSalesInvoice.filter(element => element.billNo === billNumber)
-
-                                let invoiceBalance;
-                                let actualBalance;
-                                if(getInvoiceBalance.length > 0) {
-                                  invoiceBalance = getInvoiceBalance[0]?.totalAmount
-                                  actualBalance = invoiceBalance-getInvoiceBalance[0].amountPaid
-                                }
+                              {filteredData.map(( item , index)=>{
 
                                 return <tr key={index} className="bg-white flex-col text-black border-b hover:bg-gray-50">
                                   <td className="p-2">
-                                    <select id="billNo" name="billNo" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.billNo} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                      <option value=''>Bill No</option>
-                                      {filteredData.map((item, index)=>{
-                                        return <option key={index} value={item.billNo}>{item.billNo}</option>
-                                      })}
-                                    </select>
+                                    {item.billNo ? item.billNo : 'Undefined'}
                                   </td>
 
                                   <td className="p-2 max-w-[140px]">
-                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>paid By</option>
                                       {dbPaymentMethod.map((item, index)=>{
                                         return <option key={index} value={item.paymentType}>{item.paymentType}</option>
                                       })}
                                     </select>
                                   </td>
+                                  
+                                  <td className="p-2 ">
+                                    {item.balance ? item.balance.toLocaleString(): item.totalAmount.toLocaleString()}
+                                  </td>
+                                  <td className="p-2 text-center ">
+                                    {item.balance ? '' : item.amountPaid ? item.amountPaid.toLocaleString(): 0}
+                                  </td>
+
+                                  <td className="p-2 max-w-[130px]">
+                                    <input
+                                      type="number"
+                                      value={ item.paid }
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo)}
+                                      name="paid"
+                                      id="paid"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
 
                                   <td className="p-2 max-w-[140px]">
                                     <input
                                       type="number"
                                       value={ item.ref }
-                                      onChange={e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo)}
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo)}
                                       name="ref"
                                       id="ref"
                                       className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -692,8 +686,19 @@ import Link from 'next/link';
                                     />
                                   </td>
 
+                                  <td className="p-2 max-w-[150px]">
+                                    <input
+                                      type="text"
+                                      value={ item.desc }
+                                      onChange={e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo)}
+                                      name="desc"
+                                      id="desc"
+                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </td>
+
                                   <td className="p-2">
-                                    <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, item.totalAmount, item.amountPaid, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>select bank</option>
                                       {dbBankAccount.map((item, index)=>{
                                         return <option key={index} value={item.bankBranch}>{item.bankBranch}</option>
@@ -701,32 +706,12 @@ import Link from 'next/link';
                                     </select>
                                   </td>
 
-                                  <td className="p-2 text-center ">
-                                    {actualBalance ? actualBalance?.toLocaleString() : ''}
-                                  </td>
-
-                                  <td className="p-2 max-w-[130px]">
-                                    <input
-                                      type="number"
-                                      value={ item.paid }
-                                      onChange={e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo)}
-                                      name="paid"
-                                      id="paid"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                    />
-                                  </td>
-
-                                  <td className="p-1 flex items-center mt-[18px]">
-                                    <button type='button' className='mx-auto' onClick={addLines}><AiOutlinePlusCircle className='text-xl text-green-600'/></button>
-                                    <button type='button' className='mx-auto'><AiOutlineDelete onClick={()=>index != 0 && delLines(index)} className='text-xl text-red-700'/></button>
-                                  </td>
-
                                   
                                 </tr>})}
 
                               </tbody>
                             </table>
-                            { inputList.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                            { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                           </div>
 
 
