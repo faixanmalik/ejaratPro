@@ -134,7 +134,7 @@ import Charts from 'models/Charts';
     const [gracePeriodTo, setGracePeriodTo] = useState('')
     const [paymentScheduling, setPaymentScheduling] = useState('')
 
-    const [unitNo, setUnitNo] = useState(100)
+    const [unitNo, setUnitNo] = useState('')
     const [unitName, setUnitName] = useState('')
     const [unitRent, setUnitRent] = useState('')
     const [unitType, setUnitType] = useState('')
@@ -157,7 +157,7 @@ import Charts from 'models/Charts';
       
       let highestValue = receiveUnitsArray.reduce((max, item) => Math.max(max, item.unitNo), -Infinity);
       if(receiveUnitsArray.length === 0){
-        setUnitNo(100)
+        setUnitNo('')
       }
       else{
         setUnitNo(highestValue + 100)
@@ -284,6 +284,9 @@ import Charts from 'models/Charts';
       else if (name === 'paymentScheduling') {
         setPaymentScheduling(value);
       }
+      else if (name === 'unitNo') {
+        setUnitNo(value);
+      } 
       else if (name === 'unitName') {
         setUnitName(value);
       } 
@@ -1172,9 +1175,9 @@ import Charts from 'models/Charts';
                   type="number"
                   name="unitNo"
                   value={unitNo}
+                  onChange={handleChange}
                   id="unitNo"
-                  className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  disabled
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
