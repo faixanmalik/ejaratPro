@@ -286,6 +286,7 @@ import Charts from 'models/Charts';
       }
       else if (name === 'unitNo') {
         setUnitNo(value);
+        setUnitName(value);
       } 
       else if (name === 'unitName') {
         setUnitName(value);
