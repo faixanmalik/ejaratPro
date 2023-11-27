@@ -12,14 +12,13 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Checkbox,
 } from "@material-tailwind/react";
-import { BsGithub, BsGoogle } from 'react-icons/bs';
-import { FaFacebookF } from 'react-icons/fa';
+import useTranslation from 'next-translate/useTranslation'
 
 
 function Signup() {
   const router = useRouter()
+  const { t } = useTranslation('signup')
 
   useEffect(() => {
     if(localStorage.getItem("token")){
@@ -129,7 +128,7 @@ return (
           <div className='flex'>
 
             <div className='w-full pt-10'>
-              <h1 className='text-black text-center font-bold'>Sign Up</h1>          
+              <h1 className='text-black text-center font-bold'>{t('title')}</h1>          
               
               <CardBody className="flex flex-col gap-3 py-7">
 
@@ -139,74 +138,25 @@ return (
                 </div>
 
                 <input type="text" onChange={handleChange} value={businessName} className="bg-gray-100 bg-opacity-50 w-full rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-2 resize-none leading-6 transition-colors duration-200 ease-in-out" name="businessName" placeholder="Business Name"/>
-                {/* <input type="text" onChange={handleChange} value={industry} className="bg-gray-100 bg-opacity-50 w-full rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-2 resize-none leading-6 transition-colors duration-200 ease-in-out" name="industry" placeholder="Industry"/> */}
-
-                {/* <select
-                  onChange={handleChange}
-                  value={country}
-                  id="country"
-                  name="country"
-                  className="bg-gray-100 bg-opacity-50 w-full rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-400 p-2 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                >
-                  <option>select country</option>
-                    {countries.map((item,index)=>{
-                      return <option key={index} value={item}>{item}</option>
-                    })}
-                </select> */}
-
-                {/* <div className='flex space-x-4'>
-                  <select
-                    onChange={handleChange}
-                    value={day}
-                    id="day"
-                    name="day"
-                    placeholder='Last day of your financial year:'
-                    className="bg-gray-100 bg-opacity-50 w-10/12 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-400 p-2 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                  >
-                    <option>Last day of financial year</option>
-                      {days.map((item,index)=>{
-                        return <option key={index} value={item}>{item}</option>
-                      })}
-                  </select>
-
-                  <select
-                    onChange={handleChange}
-                    value={month}
-                    id="month"
-                    name="month"
-                    className="bg-gray-100 bg-opacity-50 w-1/2 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-400 p-2 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                  >
-                    <option>month</option>
-                      {months.map((item, index)=>{
-                        return <option key={index} value={item}>{item}</option>
-                      })}
-                  </select>
-
-                </div> */}
-              
                 <input onChange={handleChange} value={email} name="email" id='email' type="email" placeholder='abc@example.com' className="bg-gray-100 bg-opacity-50 resize-none text-gray-700 outline-none border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 rounded-lg px-3 py-2 text-sm w-full transition-colors duration-200 ease-in-out" />
                 <input onChange={handleChange} value={password} name="password" id='password' type="password" placeholder='############' className=" bg-gray-100 bg-opacity-50 resize-none text-gray-700 outline-none border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 rounded-lg px-3 py-2 text-sm w-full transition-colors duration-200 ease-in-out" />
                 <input onChange={handleChange} value={confirmpassword} name="confirmpassword" id='confirmpassword' type="password" placeholder='############' className="bg-gray-100 bg-opacity-50 resize-none text-gray-700 outline-none border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 rounded-lg px-3 py-2 text-sm w-full transition-colors duration-200 ease-in-out" />
                 <h1 id="checkPassword" className='text-sm text-red-600 '></h1>
 
                 
-                <button onClick={(e)=>submit(e)} className='bg-blue-800 hover:bg-blue-900 mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>SIGN UP</button>
+                <button onClick={(e)=>submit(e)} className='bg-blue-800 hover:bg-blue-900 mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('title')}</button>
 
               </CardBody>
-
-              {/* <CardFooter className="pt-0 pb-10 flex flex-col justify-center">
-                <button onClick={(e)=>submit(e)} className='bg-blue-800 hover:bg-blue-900 mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>SIGN UP</button>
-              </CardFooter> */}
             </div>
 
             <div className='rounded-r-xl w-full bg-gradient-to-r from-blue-500 to-blue-900 flex justify-center text-white rounded-l-[8rem]'>
               <div className='my-auto'>
                 <CardBody className="flex flex-col gap-2 items-center">
-                  <h1 className='text-center font-bold'>Hello, Friend!</h1>          
-                  <h1 className='w-10/12 text-center text-sm text-gray-50 font-semibold'>Welcome to our community! Join us by creating your account on this signup page. It's quick and easy. Just provide your name, email, a unique username, and a secure password to get started. We can't wait to have you on board!</h1>          
+                  <h1 className='text-center font-bold'>{t('headingTitle')}</h1>          
+                  <h1 className='w-10/12 text-center text-sm text-gray-50 font-semibold'>{t('headingDescription')}</h1>          
                 </CardBody>
                 <CardFooter className="pt-0 flex justify-center">
-                  <Link href={'/login'} className='no-underline bg-transparent border border-white mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>SIGN IN</Link>
+                  <Link href={'/login'} className='no-underline bg-transparent border border-white mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('loginText')}</Link>
                 </CardFooter>
               </div>
             </div>

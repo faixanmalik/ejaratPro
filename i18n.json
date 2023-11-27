@@ -1,0 +1,13 @@
+{
+  "locales": ["en", "ar"],
+  "defaultLocale": "en",
+  "pages": {
+    "*": ["common"],
+    "/": ["login"],
+    "/login": ["login"],
+    "/signup": ["signup"],
+    "/panel": ["panel","sidebar"],
+    "/panel/realEstate/buildings": ["panel", "sidebar", "buildings"]
+
+  }
+}

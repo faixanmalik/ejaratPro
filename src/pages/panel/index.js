@@ -20,6 +20,7 @@ import CreditNote from 'models/CreditNote';
 import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentVoucher from 'models/PaymentVoucher';
 import Expenses from 'models/Expenses';
+import useTranslation from "next-translate/useTranslation";
 
 
 export default function Home({customer, dbProducts, supplier, employees, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) {
@@ -28,6 +29,8 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
   const noOfProducts = dbProducts.length;
   const noOfSuppliers = supplier.length;
   const noOfEmployees = employees.length;
+
+  const { t } = useTranslation('panel')
 
   return (
     <>
@@ -56,7 +59,7 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
               bg="bg-light-danger text-danger"
               href='/panel/businessSetup/productAndServices'
               title="Products"
-              subtitle="Total Products"
+              subtitle={t('totalProducts')}
               amount={noOfProducts}
               icon="bi bi-bag"
             />
@@ -66,7 +69,7 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
               bg="bg-light-success text-success"
               href='/panel/businessSetup/contactList'
               title="Customer"
-              subtitle="Total Customer"
+              subtitle={t('totalCustomers')}
               amount={noOfCustomers}
               icon="bi bi-people"
             />
@@ -76,7 +79,7 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
               bg="bg-light-warning text-warning"
               href='/panel/businessSetup/contactList'
               title="Supplier"
-              subtitle="Total Supplier"
+              subtitle={t('totalSuppliers')}
               amount={noOfSuppliers}
               icon="bi bi-basket3"
             />
@@ -86,7 +89,7 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
               bg="bg-light-info text-into"
               href='/panel/payroll/employees'
               title="Employees"
-              subtitle="Total Employee"
+              subtitle={t('totalEmployees')}
               amount={noOfEmployees}
               icon="bi bi-people"
             />

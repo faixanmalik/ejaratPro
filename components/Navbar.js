@@ -1,8 +1,10 @@
 import { Fragment, useState } from 'react'
 import Link from 'next/link'
-import { Dialog, Popover, Tab, Transition, Menu } from '@headlessui/react'
+import { Dialog, Popover, Tab, Transition, Menu, Listbox } from '@headlessui/react'
 import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { BiUserCircle } from 'react-icons/bi';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { useRouter } from 'next/router';
 
 
 
@@ -12,10 +14,20 @@ const products = {
     { name: 'About Us', href: '/about' },
     { name: 'Contact Us', href: '/contact' },
   ],
-
-  
-  
 }
+
+const locales = [
+  {
+    id: 1,
+    name: 'en',
+    avatar: 'https://plus.unsplash.com/premium_photo-1674591172747-2c1d461d7b68?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fHVzJTIwZmxhZ3xlbnwwfHwwfHx8MA%3D%3D',
+  },
+  {
+    id: 2,
+    name: 'ar',
+    avatar: 'https://plus.unsplash.com/premium_photo-1675865395931-20d6782b28f9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fHVhZSUyMGZsYWd8ZW58MHx8MHx8fDA%3D',
+  },
+]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -23,6 +35,13 @@ function classNames(...classes) {
 
 export default function Example({ logout , user }) {
   const [open, setOpen] = useState(false)
+  const router = useRouter();
+  
+  let getLocale = locales.filter((item)=>{
+    return item.name === router.locale;
+  })
+  const [selected, setSelected] = useState(getLocale[0])
+
 
 
   return (
@@ -101,19 +120,86 @@ export default function Example({ logout , user }) {
               {/* Flyout menus */}
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
-          
-
                   {products.pages.map((page) => (
                     <Link key={page.name} href={page.href} className="flex no-underline items-center text-sm font-medium text-gray-700 hover:text-gray-800">{page.name}</Link>
                   ))}
-
                 </div>
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
 
+                <Listbox value={selected} onChange={setSelected} >
+                  {({ open }) => (
+                    <>
+                      <div className="relative">
+                        <Listbox.Button className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                          <span className="flex items-center">
+                            <img src={selected.avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
+                            <span className="ml-3 block truncate">{selected.name.toUpperCase()}</span>
+                          </span>
+                          <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                            <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                          </span>
+                        </Listbox.Button>
 
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                        <Transition
+                          show={open}
+                          as={Fragment}
+                          leave="transition ease-in duration-100"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <Listbox.Options className="absolute pl-0 z-10 mt-1 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                            {locales.map((person) => (
+                              <Link href={router.asPath} locale={person.name} className='no-underline'>
+                                <Listbox.Option
+                                  key={person.id}
+                                  className={({ active }) =>
+                                    classNames(
+                                      active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                                      'relative cursor-default select-none py-2 pl-3'
+                                    )
+                                  }
+                                  value={person}
+                                >
+                                  {({ selected, active }) => (
+                                    <>
+                                      <div className="flex items-center">
+                                        <img src={person.avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
+                                        <span
+                                          className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                        >
+                                          {person.name.toUpperCase()}
+                                        </span>
+                                      </div>
+
+                                      {selected ? (
+                                        <span
+                                          className={classNames(
+                                            active ? 'text-white' : 'text-indigo-600',
+                                            'absolute inset-y-0 right-0 flex items-center pr-4'
+                                          )}
+                                        >
+                                          <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                        </span>
+                                      ) : null}
+                                    </>
+                                  )}
+                                </Listbox.Option>
+                              </Link>
+                            ))}
+                            {/* {router.locales.map((item, index)=>{
+                              return <Link key={index} href={router.asPath} locale={item} className='text-2xl font-sans'>{item}</Link>
+                            })} */}
+                          </Listbox.Options>
+                        </Transition>
+                      </div>
+                    </>
+                  )}
+                </Listbox>
+
+
+                <div className="ml-4 hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <Link href={'/login'} className="text-sm font-bold text-black no-underline hover:text-gray-800">
                     Sign in
                   </Link>

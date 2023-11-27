@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardBody, CardSubtitle, CardTitle } from "reactstrap";
 import dynamic from "next/dynamic";
 import moment from 'moment/moment';
+import useTranslation from 'next-translate/useTranslation';
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -10,8 +11,7 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
 
     const [monthlyGrossProfit, setMonthlyGrossProfit] = useState([])
     const [monthlySales, setMonthlySales] = useState([])
-    const [isCash, setIsCash] = useState(false)
-
+    const { t } = useTranslation('panel')
 
 
     const monthData = [
@@ -589,11 +589,11 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
   const chartoptions = {
     series: [
       {
-        name: "Sale",
+        name: t('sales'),
         data: monthlySales,
       },
       {
-        name: "Gross Profit",
+        name: t('grossProfit'),
         data: monthlyGrossProfit,
       },
     ],
@@ -634,9 +634,9 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5" className='font-medium'>Sales Summary</CardTitle>
+        <CardTitle tag="h5" className='font-medium'>{t('salesSummary')}</CardTitle>
         <CardSubtitle className="text-muted font-normal" tag="h6">
-          Yearly Sales Report
+          {t('yearlySalesReport')}
         </CardSubtitle>
         <Chart
           type="area"

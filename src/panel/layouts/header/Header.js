@@ -2,22 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import {
-  Navbar,
-  Collapse,
-  Nav,
-  NavItem,
-  NavbarBrand,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
-  Button,
-} from "reactstrap";
+import { Navbar, Collapse, Nav, NavItem, NavbarBrand, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Dropdown, Button,} from "reactstrap";
 import LogoWhite from "../../assets/images/logos/amplelogowhite.svg";
 import { useRouter } from "next/router";
 import { Avatar } from "@material-tailwind/react";
+import useTranslation from "next-translate/useTranslation";
 
 
 const Header = ({ showMobmenu }) => {
@@ -26,6 +15,7 @@ const Header = ({ showMobmenu }) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [user, setUser] = useState({value: null})
+  const { t } = useTranslation('panel');
   
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
@@ -36,9 +26,7 @@ const Header = ({ showMobmenu }) => {
 
 
   const [businessName, setBusinessName] = useState('')
-
   const router = useRouter()
-
 
   useEffect(() => {
     const myUser = JSON.parse(localStorage.getItem('myUser'))
@@ -57,7 +45,6 @@ const Header = ({ showMobmenu }) => {
     setUser({value:null});
     router.push(`/login`);
   }
-
   let headerColor = 'bg-gray-800';
 
   return (
@@ -67,7 +54,7 @@ const Header = ({ showMobmenu }) => {
       <div className="flex justify-between items-center">
 
         <div>
-          <h1 className="font-normal text-lg">Hey! 
+          <h1 className="font-normal text-lg">{t('hey')} 
             <span className="font-semibold ml-1">
               {businessName}
             </span>
@@ -87,10 +74,10 @@ const Header = ({ showMobmenu }) => {
                </div>
              </DropdownToggle>
              <DropdownMenu>
-               <DropdownItem header>Info</DropdownItem>
-               <DropdownItem href="/myaccount">Edit Profile</DropdownItem>
+               <DropdownItem header>{t('info')}</DropdownItem>
+               <DropdownItem href="/myaccount">{t('editProfile')}</DropdownItem>
                <DropdownItem divider />
-               <DropdownItem onClick={logout}>Logout</DropdownItem>
+               <DropdownItem onClick={logout}>{t('logout')}</DropdownItem>
              </DropdownMenu>
            </Dropdown>
         </div>

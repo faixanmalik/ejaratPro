@@ -1,0 +1,18 @@
+{
+  "totalProducts": "Total Products",
+  "totalCustomers": "Total Customers",
+  "totalSuppliers": "Total Suppliers",
+  "totalEmployees": "Total Employees",
+  "salesSummary": "Sales Summary",
+  "yearlySalesReport":"Yearly Sales Report",
+  "assetsSummary":"Assets Summary",
+  "yearlyAssetsReport":"Yearly Assets Report",
+  "sales":"Sales",
+  "grossProfit": "Gross Profit",
+  "currentAssets":"Current-Assets",
+  "currentLiabilities":"Current-Liabilities",
+  "hey":"Hey!",
+  "info": "Info",
+  "editProfile": "Edit Profile",
+  "logout": "Logout"
+}

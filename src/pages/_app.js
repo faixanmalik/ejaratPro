@@ -48,9 +48,11 @@ export default function App({ Component, pageProps }) {
 
 
   return <>
-    <Navbar key={key} user={user} logout={logout}/>
-    <LoadingBar color='#0800FF' height={3} progress={progress} waitingTime={300} onLoaderFinished={() => setProgress(0)}/>  
-    <Component {...pageProps}/>
-    <Footer/>
+    <div dir='ltr'>
+      <Navbar key={key} user={user} logout={logout}/>
+      <LoadingBar color='#0800FF' height={3} progress={progress} waitingTime={300} onLoaderFinished={() => setProgress(0)}/>  
+      <Component {...pageProps}/>
+      <Footer/>
+    </div>
   </>
 }

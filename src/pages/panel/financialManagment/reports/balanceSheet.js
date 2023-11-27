@@ -216,14 +216,14 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                 else if(data.type === 'CreditNote'){
 
                     let journal = data.inputList.filter((newData)=>{
-    
+
                         
                         let product = newData.products;
                         let checkProductLinking = dbProducts.filter((item)=>{
                             return item.name === product;
                         });
                         let linkedCOA = checkProductLinking[0].linkAccount;
-    
+
                         let debitAmount = data.fullAmount;
                         let creditAmount = data.totalAmount;
                         let debitAccount = linkedCOA;
@@ -253,7 +253,7 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
     
                     });
                     dbAllEntries = dbAllEntries.concat(journal);
-    
+
                 }
                 else if(data.type === 'Expenses'){
                     let journal = data.inputList.filter((newData)=>{

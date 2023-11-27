@@ -114,24 +114,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
           balance:0
         };
     });
-
-
-    // Receipts Voucher
-    dbReceipts = dbReceipts.map((receipt) => {
-      const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
-      const totalAmount = filteredInputList.reduce((total, item) => total + item.paid, 0);
-      
-      if (filteredInputList.length > 0) {
-        receipt.inputList = filteredInputList;
-        return {
-          ...receipt,
-          chequeStatus: 'Deposited',
-          totalDebit: 0,
-          totalCredit: parseInt(totalAmount, 10),
-          balance:0
-        };
-      }
-    });
+    
 
 
     // Credit Sales Invoice
@@ -175,6 +158,23 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
         };
       }
     })
+
+    // Receipts Voucher
+    dbReceipts = dbReceipts.map((receipt) => {
+      const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
+      const totalAmount = filteredInputList.reduce((total, item) => total + item.paid, 0);
+      
+      if (filteredInputList.length > 0) {
+        receipt.inputList = filteredInputList;
+        return {
+          ...receipt,
+          chequeStatus: 'Deposited',
+          totalDebit: 0,
+          totalCredit: parseInt(totalAmount, 10),
+          balance:0
+        };
+      }
+    });
 
     filteredTrx = filteredTrx.concat( dbCreditSalesInvoices, dbReceipts, dbCreditNotes, dbPaymentVoucher);
     setFilteredTrx(filteredTrx);

@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const nextTranslate = require('next-translate-plugin')
 const nextConfig = {
   reactStrictMode: false,
   serverComponentsExternalPackage: ["mongoose"],
@@ -7,4 +8,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+module.exports = nextTranslate(nextConfig)
