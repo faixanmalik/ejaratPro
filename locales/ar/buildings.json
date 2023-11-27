@@ -16,5 +16,73 @@
   "edit":"يحرر",
 
   "management": "تفاصيل الإدارة/الاستثمار",
-  "receiveUnits": "وحدات الاستقبال"
+  "receiveUnits": "وحدات الاستقبال",
+
+
+  "name": "اسم",
+  "nameInInvoice":"الاسم في الفاتورة",
+  "phoneNo":"رقم الهاتف",
+  "email":"بريد إلكتروني",
+  "lessorName":"اسم المؤجر",
+  "adjective":"صفة",
+  "idNumber":"رقم الهوية",
+  "expID":"رقم معرف تاريخ انتهاء الصلاحية",
+  "bank":"بنك",
+  "passPortNumber":"رقم جواز السفر",
+  "expPassPort":"تاريخ انتهاء جواز السفر",
+  "nationality":"جنسية",
+  "add":"يضيف",
+  "addNationality":"أضف الجنسية",
+  "save":"يحفظ",
+  "cancel":"يلغي",
+  "ibanNo":"رقم الآيبان",
+  "vatRegistrationNo":"رقم تسجيل ضريبة القيمة المضافة",
+  "bankAccountNumber":"رقم الحساب المصرفي",
+  "tradeLicenseNo":"رقم الرخصة التجارية",
+
+  "accordationLabel":"!أضف المزيد؟ ثم اضغط",
+
+  "buildingNameInArabic":"اسم المبنى باللغة العربية",
+  "buildingNameInEnglish":"اسم المبنى بالانجليزي",
+  "totalUnits":"إجمالي الوحدات",
+  "unitsPerFloor":"وحدات لكل طابق",
+  "parkings":"مواقف السيارات",
+  "roof":"سَطح",
+  "titleDeedNo":"رقم سند الملكية",
+  "country":"دولة",
+  "city":"مدينة",
+  "mizan":"ميزان",
+  "plotArea":"منطقة قطعة الأرض",
+  "floor":"أرضية",
+  "buildingArea":"منطقة بناء",
+  "electricityMeterNo":"رقم عداد الكهرباء",
+
+
+  "contractStartDate":"تاريخ بدء العقد",
+  "gracePeriodFrom":"فترة السماح من",
+  "contractEndDate":"تاريخ انتهاء العقد",
+  "amount":"كمية",
+  "gracePeriodTo":"فترة السماح ل",
+  "paymentScheduling":"جدولة الدفع",
+
+  "unitNo":"رقم الوحدة",
+  "unitName":"إسم الوحدة",
+  "unitRent":"إيجار الوحدة",
+  "unitType":"نوع الوحدة",
+
+  "addUnitType":"أضف نوع الوحدة",
+
+
+  "unitUse":"استخدام الوحدة",
+  "addUnitUse":"إضافة استخدام الوحدة",
+  "unitSize":"حجم الوحدة",
+  "bathroom":"حمام",
+  "parking":"موقف سيارات",
+  "balcony":"شرفة",
+  "ac":"تكييف",
+  "unitStatus":"حالة الوحدة",
+  "noToSave":"لا للحفظ",
+  "saveUnit":"وحدة الحفظ",
+  "editAndDel":"تحرير/ديل"
+
 }

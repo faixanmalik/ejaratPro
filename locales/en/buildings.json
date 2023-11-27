@@ -16,5 +16,71 @@
   "edit":"Edit",
 
   "management": "Management/Investment Details",
-  "receiveUnits": "Receive Units"
+  "receiveUnits": "Receive Units",
+
+  "name": "name",
+  "nameInInvoice":"Name In Invoice",
+  "phoneNo":"Phone No",
+  "email":"Email",
+  "lessorName":"Lessor Name",
+  "adjective":"Adjective",
+  "idNumber":"ID Number",
+  "expID":"Expiry Date ID Number",
+  "bank":"Bank",
+  "passPortNumber":"Pass Port Number",
+  "expPassPort":"Expiry Date Passport",
+  "nationality":"Nationality",
+  "add":"add",
+  "addNationality":"Add Nationality",
+  "save":"Save",
+  "cancel":"Cancel",
+  "ibanNo":"IBAN Number",
+  "vatRegistrationNo":"Vat Registration No",
+  "bankAccountNumber":"Bank Account Number",
+  "tradeLicenseNo":"Trade License Number",
+
+  "accordationLabel":"Add More? Then click!",
+
+
+  "buildingNameInArabic":"Building Name In Arabic",
+  "buildingNameInEnglish":"Building Name In English",
+  "totalUnits":"Total Units",
+  "unitsPerFloor":"Units Per Floor",
+  "parkings":"Parkings",
+  "roof":"Roof",
+  "titleDeedNo":"Title Deed No",
+  "country":"Country",
+  "city":"City",
+  "mizan":"Mizan",
+  "plotArea":"Plot Area",
+  "floor":"Floor",
+  "buildingArea":"Building Area",
+  "electricityMeterNo":"Electricity Meter No",
+
+  "contractStartDate":"Contract Start Date",
+  "gracePeriodFrom":"Grace Period From",
+  "contractEndDate":"Contract End Date",
+  "amount":"amount",
+  "gracePeriodTo":"Grace Period To",
+  "paymentScheduling":"Payment Scheduling",
+
+  "unitNo":"Unit No",
+  "unitName":"Unit Name",
+  "unitRent":"Unit Rent",
+  "unitType":"Unit Type",
+
+  "addUnitType":"Add Unit Type",
+
+  "unitUse":"Unit Use",
+  "addUnitUse":"Add Unit Use",
+  "unitSize":"Unit Size",
+  "bathroom":"Bathroom",
+  "parking":"Parking",
+  "balcony":"Balcony",
+  "ac":"AC",
+  "unitStatus":"Unit Status",
+  "noToSave":"No's to save",
+  "saveUnit":"Save Unit",
+  "editAndDel":"Edit/Del"
+
 }
