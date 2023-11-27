@@ -12,6 +12,8 @@ import FullLayout from '@/panel/layouts/FullLayout';
 import ReactToPrint from 'react-to-print';
 import dbBuildings from 'models/Buildings'; 
 
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+
 import {
   Tabs,
   TabsHeader,
@@ -62,7 +64,6 @@ import Charts from 'models/Charts';
 
     // authentications
     const [isAdmin, setIsAdmin] = useState(false)
-
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
 
 
@@ -87,13 +88,10 @@ import Charts from 'models/Charts';
     const [name, setName] = useState('')
     const [phoneNo, setPhoneNo] = useState(0)
     const [email, setEmail] = useState('')
-
     const [search, setSearch] = useState('')
 
-
     const [openExtraForm, setOpenExtraForm] = React.useState(1);
-    const handleOpenExtraForm = (value) => setOpenExtraForm(openExtraForm === value ? 0 : value);
-    
+    const handleOpenExtraForm = (value) => setOpenExtraForm(openExtraForm === value ? 0 : value); 
 
     const [nameInInvoice, setNameInInvoice] = useState('')
     const [lessorName, setLessorName] = useState('')
@@ -151,6 +149,50 @@ import Charts from 'models/Charts';
     const [increment, setIncrement] = useState(100)
 
     const [filteredData, setFilteredData] = useState([])
+
+
+
+    // Modals
+    const [openUnitTypeModal, setOpenUnitTypeModal] = useState(false)
+    const [openUnitUseModal, setOpenUnitUseModal] = useState(false)
+    const [openNationalityModal, setOpenNationalityModal] = useState(false)
+    const cancelButtonRef = useRef(null)
+
+    
+    const [unitTypesArray, setUnitTypesArray] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const storedUnitTypes = localStorage.getItem('unitTypes');
+        return storedUnitTypes ? JSON.parse(storedUnitTypes) : ['Studio', '1 BHK', '2 BHK', 'SHOP'];
+      } else {
+        return ['Studio', '1 BHK', '2 BHK', 'SHOP'];
+      }
+    });
+
+    const [unitUsesArray, setUnitUsesArray] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const storedUnitUses = localStorage.getItem('unitUses');
+        return storedUnitUses ? JSON.parse(storedUnitUses) : ['Residencial', 'Commercial'];
+      } else {
+        return ['Residencial', 'Commercial'];
+      }
+    })
+
+
+    const [nationalitiesArray, setNationalitiesArray] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const storedNationalities = localStorage.getItem('nationalities');
+        return storedNationalities ? JSON.parse(storedNationalities) : ['Jordian', 'UAE', 'Indian', 'Pakistani', 'Morco', 'Egypt'];
+      } else {
+        return ['Jordian', 'UAE', 'Indian', 'Pakistani', 'Morco', 'Egypt'];
+      }
+    })
+
+
+    useEffect(() => {
+      localStorage.setItem('unitTypes', JSON.stringify(unitTypesArray));
+      localStorage.setItem('unitUses', JSON.stringify(unitUsesArray));
+      localStorage.setItem('nationalities', JSON.stringify(nationalitiesArray));
+    }, [unitTypesArray, unitUsesArray, nationalitiesArray]);
 
 
     useEffect(() => {
@@ -491,23 +533,60 @@ import Charts from 'models/Charts';
     const componentRef = useRef();
     const speceficComponentRef = useRef();
 
-
     let adjectives = ['Agent', 'Owner' ];
     let buildingTypes = ['Management', 'Owned', 'Investment']
     let bankAccounts = ['Dubai Islamic Bank', 'Meezan Bank', 'Ajman Bank', 'FAB']
-    let nationalities = ['Jordian', 'UAE', 'Indian', 'Pakistani', 'Morco', 'Egypt']
+    // let nationalities = ['Jordian', 'UAE', 'Indian', 'Pakistani', 'Morco', 'Egypt']
     let countries = [ "United States", "China", "India", "Brazil", "Russia", "Japan", "United Kingdom", "Germany", "France", "Canada", "Australia", "South Korea", "Mexico", "Spain", "Italy", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark", "Finland", "Argentina", "Chile", "South Africa", "Egypt", "Nigeria", "Kenya", "Saudi Arabia", "United Arab Emirates"];
     let cities = [ "New York City, USA", "Tokyo, Japan", "Mumbai, India", "Beijing, China", "London, United Kingdom", "Paris, France", "Moscow, Russia", "Cairo, Egypt", "Rio de Janeiro, Brazil", "Sydney, Australia", "Cape Town, South Africa", "Mexico City, Mexico", "Toronto, Canada", "Dubai, United Arab Emirates", "Seoul, South Korea", "Buenos Aires, Argentina", "Nairobi, Kenya"];
     let areas = [ "North America", "South America", "Europe", "Asia", "Africa", "Oceania", "Middle East", "Central America", "Caribbean", "Mediterranean", "Scandinavia", "Balkans", "Southeast Asia", "Pacific Islands", "Arctic"];
     let investmentStructures = [ 'Fixed', 'of Rent %', 'of Collection %' ]
     let paymentSchedulings = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    let unitTypes = ['Studio', '1 BHK', '2 BHK', 'SHOP']
-    let unitUses = ['Residencial', 'Commercial']
     let aces = ['Window', 'Split', 'Central']
     let unitStatuses = ['Available', 'Occupied', 'Booked', 'Hold', 'Rent Dispute']
 
+    const addUnitType = (e)=>{
+      e.preventDefault();
+
+      if (unitType.trim() !== '') {
+        setUnitTypesArray((prev) => [...prev, unitType]);
+        setOpenUnitTypeModal(false);
+        setUnitType('')
+      }
+      else{
+        toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
+
+    const addUnitUse = (e)=>{
+      e.preventDefault();
+
+      if (unitUse.trim() !== '') {
+        setUnitUsesArray((prev) => [...prev, unitUse]);
+        setOpenUnitUseModal(false);
+        setUnitUse('')
+      }
+      else{
+        toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
 
 
+
+    const addNationality = (e)=>{
+      e.preventDefault();
+
+      if (nationality.trim() !== '') {
+        setNationalitiesArray((prev) => [...prev, nationality]);
+        setOpenNationalityModal(false);
+        setNationality('')
+      }
+      else{
+        toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
+
+    
     const saveUnit = async(e) => {
       e.preventDefault();
 
@@ -743,15 +822,88 @@ import Charts from 'models/Charts';
                       />
                     </div>
                     <div className="w-full">
-                      <label htmlFor="nationality" className="block text-sm font-medium text-gray-700">
-                        Nationality
-                      </label>
+                      <div className='flex justify-between'>
+                        <label htmlFor="nationality" className="block text-sm font-medium text-gray-700">
+                          Nationality
+                        </label>
+                        <label onClick={()=>{setOpenNationalityModal(true), setUnitType('')}} htmlFor="unitType" className="block cursor-pointer text-sm font-medium text-green-700">
+                          add?
+                        </label>
+                      </div>
                       <select id="nationality" name="nationality" onChange={ handleChange } value={nationality} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select nationality</option>
-                        {nationalities.map((item, index)=>{
+                        {nationalitiesArray.map((item, index)=>{
                           return <option key={index} value={item}>{item}</option>
                         })}
                       </select>
+                      <Transition.Root show={openNationalityModal} as={Fragment}>
+                        <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpenNationalityModal}>
+                          <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                          >
+                            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                          </Transition.Child>
+
+                          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                              <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                              >
+                                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                  <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                    <div className="sm:items-start w-full">
+                                      <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                                        <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                          Add Nationality
+                                        </Dialog.Title>
+                                        <div className="mt-2">
+                                          <input
+                                            type="text"
+                                            onChange={handleChange}
+                                            name="nationality"
+                                            value={nationality}
+                                            id="nationality"
+                                            className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                    <button
+                                      type="button"
+                                      className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                      onClick={(e) => addNationality(e)}
+                                    >
+                                      Save
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                      onClick={() => setOpenNationalityModal(false)}
+                                      ref={cancelButtonRef}
+                                    >
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </Dialog.Panel>
+                              </Transition.Child>
+                            </div>
+                          </div>
+                        </Dialog>
+                      </Transition.Root>
                     </div>
                   </div>
 
@@ -809,9 +961,7 @@ import Charts from 'models/Charts';
                       />
                     </div>
                   </div>
-
                 </div>
-                
               </AccordionBody>
             </Accordion>
 
@@ -1208,26 +1358,172 @@ import Charts from 'models/Charts';
                 />
               </div>
               <div className="w-full">
-                <label htmlFor="unitType" className="block text-sm font-medium text-gray-700">
-                  Unit Type
-                </label>
+                <div className='flex justify-between'>
+                  <label htmlFor="unitType" className="block text-sm font-medium text-gray-700">
+                    Unit Type
+                  </label>
+                  <label onClick={()=>{setOpenUnitTypeModal(true), setUnitType('')}} htmlFor="unitType" className="block cursor-pointer text-sm font-medium text-green-700">
+                    add?
+                  </label>
+                </div>
                 <select id="unitType" name="unitType" onChange={ handleChange } value={unitType} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select unit type</option>
-                  {unitTypes.map((item, index)=>{
+                  {unitTypesArray.map((item, index)=>{
                     return <option key={index} value={item}>{item}</option>
                   })}
                 </select>
+                <Transition.Root show={openUnitTypeModal} as={Fragment}>
+                  <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpenUnitTypeModal}>
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                          enterTo="opacity-100 translate-y-0 sm:scale-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                              <div className="sm:items-start w-full">
+                                <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                                  <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                    Add Unit Type
+                                  </Dialog.Title>
+                                  <div className="mt-2">
+                                    <input
+                                      type="text"
+                                      onChange={handleChange}
+                                      name="unitType"
+                                      value={unitType}
+                                      id="unitType"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                onClick={(e) => addUnitType(e)}
+                              >
+                                Save
+                              </button>
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                onClick={() => setOpenUnitTypeModal(false)}
+                                ref={cancelButtonRef}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </Dialog.Panel>
+                        </Transition.Child>
+                      </div>
+                    </div>
+                  </Dialog>
+                </Transition.Root>
               </div>
               <div className="w-full">
-                <label htmlFor="unitUse" className="block text-sm font-medium text-gray-700">
-                  Unit Use
-                </label>
+                <div className='flex justify-between'>
+                  <label htmlFor="unitUse" className="block text-sm font-medium text-gray-700">
+                    Unit Use
+                  </label>
+                  <label onClick={()=>{setOpenUnitUseModal(true), setUnitUse('')}} htmlFor="unitType" className="block cursor-pointer text-sm font-medium text-green-700">
+                    add?
+                  </label>
+                </div>
                 <select id="unitUse" name="unitUse" onChange={ handleChange } value={unitUse} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select unit use</option>
-                  {unitUses.map((item, index)=>{
+                  {unitUsesArray.map((item, index)=>{
                     return <option key={index} value={item}>{item}</option>
                   })}
                 </select>
+                <Transition.Root show={openUnitUseModal} as={Fragment}>
+                  <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpenUnitUseModal}>
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                          enterTo="opacity-100 translate-y-0 sm:scale-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                              <div className="sm:items-start w-full">
+                                <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                                  <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                    Add Unit Use
+                                  </Dialog.Title>
+                                  <div className="mt-2">
+                                    <input
+                                      type="text"
+                                      onChange={handleChange}
+                                      name="unitUse"
+                                      value={unitUse}
+                                      id="unitUse"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                onClick={(e) => addUnitUse(e)}
+                              >
+                                Save
+                              </button>
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                onClick={() => setOpenUnitUseModal(false)}
+                                ref={cancelButtonRef}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </Dialog.Panel>
+                        </Transition.Child>
+                      </div>
+                    </div>
+                  </Dialog>
+                </Transition.Root>
               </div>
 
               <div className="w-full">
