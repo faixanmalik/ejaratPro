@@ -2020,7 +2020,6 @@ import Charts from 'models/Charts';
 
     </FullLayout>
     </ProSidebarProvider>
-
     </>
   )
 }

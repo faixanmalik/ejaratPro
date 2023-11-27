@@ -105,9 +105,7 @@ import Link from 'next/link';
     const [city, setCity] = useState('')
     const [amount, setAmount] = useState('')
 
-    const [totalBalance, setTotalBalance] = useState(0)
     const [totalPaid, setTotalPaid] = useState(0)
-    const [totalNetBalance, setTotalNetBalance] = useState(0)
 
 
     // JV
@@ -195,7 +193,7 @@ import Link from 'next/link';
       });
 
       // fetch the data from form to makes a file in local system
-      const data = { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, totalBalance, attachment, path:'ReceiptVoucher' };
+      const data = { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, attachment, path:'ReceiptVoucher' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -293,19 +291,11 @@ import Link from 'next/link';
       setInputList(values);
       
       
-      var totalBal = 0;
       var totalPaid = 0;
-      var totalNetBalance = 0;
       for (let index = 0; index < inputList.length; index++) {
-        totalBal += parseInt(inputList[index].balance ? inputList[index].balance : 0);
         totalPaid += parseInt(inputList[index].paid ? inputList[index].paid : 0);
-
-        totalNetBalance += parseInt(inputList[index].netBalance ? inputList[index].netBalance : 0);
-        
       }
-      setTotalBalance(totalBal)
       setTotalPaid(totalPaid)
-      setTotalNetBalance(totalNetBalance)
     }
 
 
@@ -739,22 +729,9 @@ import Link from 'next/link';
 
                         
                           <div className='bg-gray-100'>
-                            <div className='flex ml-auto mr-10 space-y-2 space-x-5 items-center w-3/5 py-3 mt-20'>
-                              <div className="flex flex-col items-center">
-                                <label htmlFor="totalBalance" className="block w-full text-sm font-medium text-gray-700">
-                                  Total Balance:
-                                </label>
-                                <input
-                                  type="number"
-                                  value = { totalBalance }
-                                  name="totalBalance"
-                                  id="totalBalance"
-                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  readOnly
-                                />
-                              </div>
-                              <div className="flex flex-col items-center">
-                                <label htmlFor="totalPaid" className="block w-full text-sm font-medium text-gray-700">
+                            <div className='flex justify-end space-y-2 space-x-5 items-center w-full py-3 mt-20'>
+                              <div className="flex flex-col items-center mr-20">
+                                <label htmlFor="totalPaid" className="block w-10/12 text-sm font-medium text-gray-700">
                                   Total Paid:
                                 </label>
                                 <input
@@ -762,20 +739,7 @@ import Link from 'next/link';
                                   value = { totalPaid }
                                   name="totalPaid"
                                   id="totalPaid"
-                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                  readOnly
-                                />
-                              </div>
-                              <div className="flex flex-col items-center">
-                                <label htmlFor="totalNetBalance" className="block w-full text-sm font-medium text-gray-700">
-                                  Total Net Balance:
-                                </label>
-                                <input
-                                  type="number"
-                                  value = { totalNetBalance }
-                                  name="totalNetBalance"
-                                  id="totalNetBalance"
-                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="w-10/12 mt-1 p-2 cursor-not-allowed block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                 />
                               </div>
