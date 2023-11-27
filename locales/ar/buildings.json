@@ -1,0 +1,20 @@
+{
+  "title": "المباني وأصحابها",
+  "new":"جديد",
+  "searchLabel": "...بحث في المباني",
+  "delete": "يمسح",
+  "printAll": "طباعة الكل",
+  "buildingName": "اسم المبنى",
+  "buildingType": "نوع البناية",
+  "owner": "مالك",
+  "area": "منطقة",
+  "startDate": "تاريخ البدء",
+  "endDate": "تاريخ الانتهاء",
+  "investment": "استثمار",
+  "investmentStructure": "هيكل الاستثمار",
+  "view":"منظر",
+  "edit":"يحرر",
+
+  "management": "تفاصيل الإدارة/الاستثمار",
+  "receiveUnits": "وحدات الاستقبال"
+}

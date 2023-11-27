@@ -1,0 +1,20 @@
+{
+  "title": "Buildings and Owners",
+  "new": "New",
+  "searchLabel": "Search Buildings...",
+  "delete": "Delete",
+  "printAll": "Print All",
+  "buildingName": "Building Name",
+  "buildingType": "Building Type",
+  "owner": "Owner",
+  "area": "Area",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "investment": "Investment",
+  "investmentStructure": "Investment Structure",
+  "view":"View",
+  "edit":"Edit",
+
+  "management": "Management/Investment Details",
+  "receiveUnits": "Receive Units"
+}

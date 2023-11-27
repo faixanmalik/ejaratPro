@@ -33,6 +33,7 @@ import { BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
 import { MdAdUnits } from 'react-icons/md';
 import Charts from 'models/Charts';
+import useTranslation from 'next-translate/useTranslation';
 
 
   function classNames(...classes) {
@@ -58,6 +59,9 @@ import Charts from 'models/Charts';
   const Buildings = ({ dbVouchers, dbContacts, dbCharts }) => {
     
     const [open, setOpen] = useState(false)
+
+    const { t } = useTranslation('buildings')
+
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
@@ -536,7 +540,6 @@ import Charts from 'models/Charts';
     let adjectives = ['Agent', 'Owner' ];
     let buildingTypes = ['Management', 'Owned', 'Investment']
     let bankAccounts = ['Dubai Islamic Bank', 'Meezan Bank', 'Ajman Bank', 'FAB']
-    // let nationalities = ['Jordian', 'UAE', 'Indian', 'Pakistani', 'Morco', 'Egypt']
     let countries = [ "United States", "China", "India", "Brazil", "Russia", "Japan", "United Kingdom", "Germany", "France", "Canada", "Australia", "South Korea", "Mexico", "Spain", "Italy", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark", "Finland", "Argentina", "Chile", "South Africa", "Egypt", "Nigeria", "Kenya", "Saudi Arabia", "United Arab Emirates"];
     let cities = [ "New York City, USA", "Tokyo, Japan", "Mumbai, India", "Beijing, China", "London, United Kingdom", "Paris, France", "Moscow, Russia", "Cairo, Egypt", "Rio de Janeiro, Brazil", "Sydney, Australia", "Cape Town, South Africa", "Mexico City, Mexico", "Toronto, Canada", "Dubai, United Arab Emirates", "Seoul, South Korea", "Buenos Aires, Argentina", "Nairobi, Kenya"];
     let areas = [ "North America", "South America", "Europe", "Asia", "Africa", "Oceania", "Middle East", "Central America", "Caribbean", "Mediterranean", "Scandinavia", "Balkans", "Southeast Asia", "Pacific Islands", "Arctic"];
@@ -570,8 +573,6 @@ import Charts from 'models/Charts';
         toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
       }
     }
-
-
 
     const addNationality = (e)=>{
       e.preventDefault();
@@ -649,7 +650,7 @@ import Charts from 'models/Charts';
 
     const data = [
       {
-        label: "Owner",
+        label: t('owner'),
         value: "owner",
         icon: BiUserCircle,
         desc: (
@@ -982,7 +983,7 @@ import Charts from 'models/Charts';
         ),
       },
       {
-        label: "Building Details",
+        label: t('buildingName'),
         value: "buildingDetails",
         icon: HiOutlineBuildingOffice2,
         desc: (
@@ -1205,7 +1206,7 @@ import Charts from 'models/Charts';
         ),
       },
       {
-        label: "Management/Investment Details",
+        label: t('management'),
         value: "management",
         icon: BsCashCoin,
         desc: (
@@ -1312,7 +1313,7 @@ import Charts from 'models/Charts';
         ),
       },
       {
-        label: "Receive Units",
+        label: t('receiveUnits'),
         value: "receiveUnits",
         icon: MdAdUnits,
         desc: (
@@ -1756,7 +1757,7 @@ import Charts from 'models/Charts';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-bold leading-6 text-gray-900">Buildings and Owners</h3>
+              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
               <button 
                 onClick={()=>{
                   setOpen(true)
@@ -1805,7 +1806,7 @@ import Charts from 'models/Charts';
                   setEmail('');
                 }} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-                New
+                {t('new')}
               </button>
             </div>
           </div>
@@ -1821,7 +1822,7 @@ import Charts from 'models/Charts';
                     </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Buildings..." required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchLabel')} required/>
                   </div>
                 </div>
               </div>
@@ -1831,7 +1832,7 @@ import Charts from 'models/Charts';
                 <button onClick={delEntry}
                   className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
                   >
-                    Delete
+                    {t('delete')}
                   <AiOutlineDelete className='text-lg ml-2'/>
                 </button>
 
@@ -1840,7 +1841,7 @@ import Charts from 'models/Charts';
                     return <button 
                       type='button'
                       className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                      Print All
+                      {t('printAll')}
                       <AiOutlinePrinter className='text-lg ml-2'/>
                     </button>
                   }}
@@ -1865,31 +1866,31 @@ import Charts from 'models/Charts';
                           </div>
                         </th>
                         <th scope="col" className="p-1">
-                            Building Name
+                            {t('buildingName')}
                         </th>
                         <th scope="col" className="p-1">
-                            Building Type
+                            {t('buildingType')}
                         </th>
                         <th scope="col" className="p-1">
-                            Owner
+                            {t('owner')}
                         </th>
                         <th scope="col" className="p-1">
-                            Area
+                            {t('area')}
                         </th>
                         <th scope="col" className="p-1">
-                            Start Date
+                            {t('startDate')}
                         </th>
                         <th scope="col" className="p-1">
-                            End Date
+                            {t('endDate')}
                         </th>
                         <th scope="col" className="p-1">
-                            Investment
+                            {t('investment')}
                         </th>
                         <th scope="col" className="w-[80px]">
-                            Investment Structure
+                            {t('investmentStructure')}
                         </th>
                         <th scope="col" className="p-1">
-                          View/Edit
+                            {t('view')}/{t('edit')}
                         </th>
                       </tr>
                     </thead>
