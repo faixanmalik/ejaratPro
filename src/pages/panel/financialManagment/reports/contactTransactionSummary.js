@@ -79,7 +79,7 @@ const ContactTransactionSummary = (
         .filter((receipt) => receipt.name === `${contact}`)
         .map((receipt) => {
           const filteredInputList = receipt.inputList;
-          const totalAmount = filteredInputList.reduce((total, item) => total + item.paid, 0);
+          const totalAmount = filteredInputList.reduce((total, item) => total + parseInt(item.paid), 0);
 
           if (filteredInputList.length > 0) {
             return {
@@ -93,17 +93,9 @@ const ContactTransactionSummary = (
         });
 
       filteredTrx = filteredTrx.concat( dbCreditSalesInvoices, dbReceipts, dbCreditNotes, dbPaymentVoucher);
-      console.log(filteredTrx)
       setFilteredTrx(filteredTrx);
-
     }
   }
-
-
-
-
-
-
 
   const handleChange = (e) => {
     if (e.target.name === 'contact') {
@@ -117,20 +109,17 @@ const ContactTransactionSummary = (
     }
   }
     
-
-
-
   return (
   <>
   <ProSidebarProvider>
   <style jsx global>{`
-      footer {
-        display: none;
-      }
-      header {
-        display: none;
-      }
-    `}</style>
+    footer {
+      display: none;
+    }
+    header {
+      display: none;
+    }
+  `}</style>
   <FullLayout>
 
   
