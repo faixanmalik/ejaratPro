@@ -1386,31 +1386,31 @@ import useTranslation from 'next-translate/useTranslation';
                             <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                           </div>
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('tenant')}
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('building')}
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('unitNo')}
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('type')}
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('contractStartDate')}
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('contractEndDate')}
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('contractStatus')}
                         </th>
-                        <th scope="col" className="p-1">
+                        <th scope="col" className="p-1 text-center">
                             {t('statement')}
                         </th>
-                        <th scope="col" className="pr-3">
+                        <th scope="col" className="pr-3 text-center">
                             {t('view')}
                         </th>
                       </tr>
@@ -1423,28 +1423,28 @@ import useTranslation from 'next-translate/useTranslation';
                             <input id={`checkbox-table-search-${item._id}`} checked={selectedIds.includes(item._id)} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                           </div>
                         </td>
-                        <td className="p-1 w-[140px]">
+                        <td className="p-1 w-[140px] text-center">
                           <div className=' text-black font-semibold'>{item.tenantName}</div>
                         </td>
-                        <td className="p-1 w-[140px]">
+                        <td className="p-1 w-[140px] text-center">
                           <div className=' text-black font-semibold'>{item.buildingNameInEnglish}</div>
                         </td>
-                        <td className="p-1 w-[80px]">
+                        <td className="p-1 w-[80px] text-center">
                           <div className='text-black font-semibold'>{item.unitNo}</div>
                         </td>
-                        <td className="p-1 w-[90px]">
+                        <td className="p-1 w-[90px] text-center">
                           <div className=''>{item.unitType}</div>
                         </td>
-                        <td className="p-1 w-[100px]">
+                        <td className="p-1 w-[100px] text-center">
                           <div className=''>{moment(item.newContractStartDate).utc().format('D MMM YYYY')}</div>
                         </td>
-                        <td className="p-1 w-[90px]">
+                        <td className="p-1 w-[90px] text-center">
                           <div className=''>{moment(item.newContractEndDate).utc().format('D MMM YYYY')}</div>
                         </td>
-                        <td className="p-1 w-[130px]">
+                        <td className="p-1 text-center">
                           <div className={`${item.newContractStatus === 'Close' ? 'text-red-800' : 'text-green-800'} font-bold text-center uppercase`}>{item.newContractStatus}</div>
                         </td>
-                        <td className="p-1 w-[100px]">
+                        <td className="p-1 w-[100px] text-center">
                           <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${item._id}`} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
                         </td>
                         <td className="flex items-center py-4 space-x-4">

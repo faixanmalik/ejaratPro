@@ -36,6 +36,17 @@
   "trxType":"Trx Type",
   "trxNo":"Trx No",
   "balance":"Balance",
-  "status":"Status"
+  "status":"Status",
+
+  "endContract":"End Contract",
+  "tenant": "Tenant",
+  "totalDays": "Total Days",
+  "products":"Products / Services",
+  "amount":"Amount",
+  "accuredRent":"Accured Rent",
+  "refund":"Refund",
+  "reverseSecurityDeposit":"Reverse Security Deposit",
+  "returnCheques":"Return Cheques",
+  "previewStatement":"Preview Statement"
   
 }

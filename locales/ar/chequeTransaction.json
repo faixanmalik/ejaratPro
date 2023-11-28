@@ -36,5 +36,16 @@
   "trxType":"نوع المعاملة",
   "trxNo":"رقم التحويلة",
   "balance":"توازن",
-  "status":"حالة"
+  "status":"حالة",
+
+  "endContract":"إنهاء العقد",
+  "tenant": "مستأجر",
+  "totalDays": "مجموع الأيام",
+  "products":"المنتجات والخدمات",
+  "amount":"كمية",
+  "accuredRent":"الإيجار المستحق",
+  "refund":"استرداد",
+  "reverseSecurityDeposit":"عكس إيداع الضمان",
+  "returnCheques":"الشيكات المرتجعة",
+  "previewStatement":"بيان المعاينة"
 }

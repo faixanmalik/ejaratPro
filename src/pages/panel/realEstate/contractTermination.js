@@ -16,7 +16,6 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link';
 import ContractAndTenant from 'models/ContractAndTenant';
 
-
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
 import { BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
@@ -40,6 +39,7 @@ import {
 } from "@material-tailwind/react";
 import Contact from 'models/Contact';
 import Product from 'models/Product';
+import useTranslation from 'next-translate/useTranslation';
 
 function Icon({ id, open }) {
   return (
@@ -60,6 +60,7 @@ function Icon({ id, open }) {
 const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) => {
 
   const router = useRouter();
+  const { t } = useTranslation('chequeTransaction');
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
   const contractId = searchParams.get('contractId')
@@ -173,7 +174,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
   const newContractData = [ 
     {
-      label: "End Contract",
+      label: t('endContract'),
       value: "endContract",
       icon: HiOutlineBuildingOffice2,
       desc: (
@@ -183,7 +184,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
             <div className="w-8/12">
               <label htmlFor="tenant" className="block text-sm font-medium text-gray-700">
-                Tenant
+                {t('tenant')}
               </label>
               <input
                 type="text"
@@ -196,7 +197,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
             </div>
             <div className="w-full">
               <label htmlFor="buildingNameInEnglish" className="block text-sm font-medium text-gray-700">
-                Building
+                {t('building')}
               </label>
               <input
                 type="text"
@@ -209,7 +210,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
             </div>
             <div className="w-8/12">
               <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
-                Unit Number
+                {t('unitNo')}
               </label>
               <input
                 type="number"
@@ -225,7 +226,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
             <div className="w-full">
               <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
-               Contract Start Date
+               {t('contractStartDate')}
               </label>
               <input
                 type="date"
@@ -238,7 +239,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
             </div>
             <div className="w-full">
               <label htmlFor="contractEndDate" className="block text-sm font-medium text-gray-700">
-               Contract End Date
+               {t('contractEndDate')}
               </label>
               <input
                 type="date"
@@ -251,7 +252,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
             </div>
             <div className="w-8/12">
               <label htmlFor="totalDays" className="block text-sm font-medium text-gray-700">
-                Total Days
+                {t('totalDays')}
               </label>
               <input
                 type="number"
@@ -270,16 +271,16 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                   <th scope="col" className="p-2">
-                      Products / Services
+                      {t('products')}
                   </th>
                   <th scope="col" className="p-2">
-                      Amount
+                      {t('amount')}
                   </th>
                   <th scope="col" className="p-2">
-                      Accrued Rent
+                      {t('accuredRent')}
                   </th>
                   <th scope="col" className="p-2">
-                      Refund
+                      {t('refund')}
                   </th>
                 </tr>
               </thead>
@@ -484,19 +485,19 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                             <div className='flex space-x-3'>
 
                               <button type="submit" onClick={(e)=>{endContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                End Contract
+                                {t('endContract')}
                               </button>
 
                               <button type="submit" onClick={(e)=>{ reverseSecurityDeposit(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                Reverse Security Deposit
+                                {t('reverseSecurityDeposit')}
                               </button>
 
                               <button type="submit" onClick={(e)=>{ returnCheques(e) }} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                Return Cheques
+                                {t('returnCheques')}
                               </button>
 
                               <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${contractId}`} className='no-underline inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                Preview Statement
+                                {t('previewStatement')}
                               </Link>
 
                             </div>
