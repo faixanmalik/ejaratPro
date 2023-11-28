@@ -39,6 +39,7 @@ import { BsCashCoin } from 'react-icons/bs';
 import { FiUsers } from 'react-icons/fi';
 import Buildings from 'models/Buildings';
 import { useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation';
 
 
 
@@ -66,6 +67,7 @@ import { useRouter } from 'next/router';
   const Units = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
+    const { t } = useTranslation('buildings')
     const [open, setOpen] = useState(false)
     const [openNewContract, setOpenNewContract] = useState(false)
 
@@ -505,7 +507,7 @@ import { useRouter } from 'next/router';
             <div className='flex space-x-4 mb-14'>
               <div className="w-full">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                  Name
+                  {t('name')}
                 </label>
                 <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select contacts</option>
@@ -517,7 +519,7 @@ import { useRouter } from 'next/router';
               </div>
               <div className="w-full">
                 <label htmlFor="nameInBill" className="block text-sm font-medium text-gray-700">
-                  Name In Bill
+                  {t('nameInInvoice')}
                 </label>
                 <input
                   type="text"
@@ -531,7 +533,7 @@ import { useRouter } from 'next/router';
 
               <div className="w-full">
                 <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                  Phone No:
+                  {t('phoneNo')}
                 </label>
                 <input
                   type="number"
@@ -545,7 +547,7 @@ import { useRouter } from 'next/router';
 
               <div className="w-full">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email:
+                  {t('email')}
                 </label>
                 <input
                   type="text"
@@ -560,70 +562,70 @@ import { useRouter } from 'next/router';
 
             <div className='flex space-x-4 mb-14'>
               <div className="w-full">
-                  <label htmlFor="idNumber" className="block text-sm font-medium text-gray-700">
-                  ID Number
-                  </label>
-                  <input
-                      type="number"
-                      onChange={handleChange}
-                      name="idNumber"
-                      value={idNumber}
-                      id="idNumber"
-                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
+                <label htmlFor="idNumber" className="block text-sm font-medium text-gray-700">
+                  {t('idNumber')}
+                </label>
+                <input
+                  type="number"
+                  onChange={handleChange}
+                  name="idNumber"
+                  value={idNumber}
+                  id="idNumber"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
               </div>
               <div className="w-full">
-                  <label htmlFor="expID" className="block text-sm font-medium text-gray-700">
-                  Expiry Date ID Number
-                  </label>
-                  <input 
-                      type="date"
-                      onChange={handleChange}
-                      name="expID"
-                      id="expID"
-                      value={expID}
-                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
+                <label htmlFor="expID" className="block text-sm font-medium text-gray-700">
+                  {t('expID')}
+                </label>
+                <input 
+                  type="date"
+                  onChange={handleChange}
+                  name="expID"
+                  id="expID"
+                  value={expID}
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
               </div>
               <div className="w-full">
-                  <label htmlFor="building" className="block text-sm font-medium text-gray-700">
-                  building
-                  </label>
-                  <select id="building" name="building" onChange={ handleChange } value={building} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                      <option value=''>select building</option>
-                      {dbBuildings.map((item, index)=>{
-                          return <option key={index} value={item.buildingNameInEnglish}>{item.buildingNameInEnglish}</option>
-                      })}
-                  </select>
+                <label htmlFor="building" className="block text-sm font-medium text-gray-700">
+                  {t('building')}
+                </label>
+                <select id="building" name="building" onChange={ handleChange } value={building} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                  <option value=''>select building</option>
+                  {dbBuildings.map((item, index)=>{
+                      return <option key={index} value={item.buildingNameInEnglish}>{item.buildingNameInEnglish}</option>
+                  })}
+                </select>
               </div>
             </div>
 
             <div className='flex space-x-4 mb-14'>
               <div className="w-1/3">
-                  <label htmlFor="passPortNumber" className="block text-sm font-medium text-gray-700">
-                  Passport Number
-                  </label>
-                  <input
+                <label htmlFor="passPortNumber" className="block text-sm font-medium text-gray-700">
+                  {t('passPortNumber')}
+                </label>
+                <input
                   type="number"
                   onChange={handleChange}
                   name="passPortNumber"
                   value={passPortNumber}
                   id="passPortNumber"
                   className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
+                />
               </div>
               <div className="w-1/3">
-                  <label htmlFor="expPassPort" className="block text-sm font-medium text-gray-700">
-                  Expiry Date Passport
-                  </label>
-                  <input 
+                <label htmlFor="expPassPort" className="block text-sm font-medium text-gray-700">
+                {t('expPassPort')}
+                </label>
+                <input 
                   type="date"
                   onChange={handleChange}
                   name="expPassPort"
                   id="expPassPort"
                   value={expPassPort}
                   className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
+                />
               </div>
             </div>
 
@@ -654,7 +656,7 @@ import { useRouter } from 'next/router';
 
                 <div className="w-8/12">
                     <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
-                        Unit Number
+                      {t('unitNo')}
                     </label>
                     <input
                         type="number"
@@ -667,7 +669,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-full">
                     <label htmlFor="buildingNameInArabic" className="block text-sm font-medium text-gray-700">
-                        Building Name In Arabic
+                        {t('buildingNameInArabic')}
                     </label>
                     <input
                         type="text"
@@ -680,7 +682,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-full">
                     <label htmlFor="buildingNameInEnglish" className="block text-sm font-medium text-gray-700">
-                        Building Name In English
+                        {t('buildingNameInEnglish')}
                     </label>
                     <input
                         type="text"
@@ -693,7 +695,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="plotNo" className="block text-sm font-medium text-gray-700">
-                        Plot Number
+                        {t('plotNo')}
                     </label>
                     <input
                         type="number"
@@ -706,7 +708,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="rent" className="block text-sm font-medium text-gray-700">
-                        Rent
+                        {t('rent')}
                     </label>
                     <input
                         type="number"
@@ -723,7 +725,7 @@ import { useRouter } from 'next/router';
 
                 <div className="w-8/12">
                     <label htmlFor="bathroom" className="block text-sm font-medium text-gray-700">
-                        Bathroom
+                        {t('bathroom')}
                     </label>
                     <input
                         type="number"
@@ -736,7 +738,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="parkings" className="block text-sm font-medium text-gray-700">
-                        Parkings
+                        {t('parkings')}
                     </label>
                     <input
                         type="number"
@@ -749,7 +751,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="rentParking" className="block text-sm font-medium text-gray-700">
-                        Rent Parking
+                        {t('rentParking')}
                     </label>
                     <input
                         type="number"
@@ -762,7 +764,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="roof" className="block text-sm font-medium text-gray-700">
-                        Roof
+                      {t('roof')}
                     </label>
                     <input
                         type="number"
@@ -775,7 +777,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="balcony" className="block text-sm font-medium text-gray-700">
-                        Balcony
+                        {t('balcony')}
                     </label>
                     <input
                         type="number"
@@ -788,7 +790,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="size" className="block text-sm font-medium text-gray-700">
-                        Size
+                        {t('size')}
                     </label>
                     <input
                         type="number"
@@ -804,7 +806,7 @@ import { useRouter } from 'next/router';
             <div className='flex space-x-4 mb-14'>
                 <div className="w-full">
                     <label htmlFor="electricityMeterNo" className="block text-sm font-medium text-gray-700">
-                        Electricity Meter No
+                        {t('electricityMeterNo')}
                     </label>
                     <input
                         type="number"
@@ -818,7 +820,7 @@ import { useRouter } from 'next/router';
 
                 <div className="w-full">
                     <label htmlFor="waterMeterNumber" className="block text-sm font-medium text-gray-700">
-                        Water Meter Number
+                        {t('waterMeterNumber')}
                     </label>
                     <input
                         type="number"
@@ -831,7 +833,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-full">
                     <label htmlFor="sewageNumber" className="block text-sm font-medium text-gray-700">
-                        Sewage Number
+                        {t('sewageNumber')}
                     </label>
                     <input
                         type="number"
@@ -848,7 +850,7 @@ import { useRouter } from 'next/router';
             <div className='flex space-x-4 mb-14'>
                 <div className="w-full">
                     <label htmlFor="ac" className="block text-sm font-medium text-gray-700">
-                        AC
+                      {t('ac')}
                     </label>
                     <select id="ac" name="ac" onChange={ handleChange } value={ac} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select ac</option>
@@ -859,7 +861,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-full">
                     <label htmlFor="unitType" className="block text-sm font-medium text-gray-700">
-                        Unit Type
+                        {t('unitType')}
                     </label>
                     <select id="unitType" name="unitType" onChange={ handleChange } value={unitType} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit type</option>
@@ -870,7 +872,7 @@ import { useRouter } from 'next/router';
                 </div>
                 <div className="w-full">
                     <label htmlFor="unitUse" className="block text-sm font-medium text-gray-700">
-                        Unit Use
+                        {t('unitUse')}
                     </label>
                     <select id="unitUse" name="unitUse" onChange={ handleChange } value={unitUse} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit use</option>
@@ -885,7 +887,7 @@ import { useRouter } from 'next/router';
 
                 <div className="w-full">
                     <label htmlFor="unitStatus" className="block text-sm font-medium text-gray-700">
-                        Unit Status
+                        {t('unitStatus')}
                     </label>
                     <select id="unitStatus" name="unitStatus" onChange={ handleChange } value={unitStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit status</option>
@@ -897,7 +899,7 @@ import { useRouter } from 'next/router';
 
                 <div className="w-full">
                     <label htmlFor="view" className="block text-sm font-medium text-gray-700">
-                        View
+                        {t('view')}
                     </label>
                     <input
                         type="text"
@@ -914,7 +916,7 @@ import { useRouter } from 'next/router';
 
                 <div className="w-full">
                     <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                        Country
+                        {t('country')}
                     </label>
                     <select id="country" name="country" onChange={ handleChange } value={country} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select country</option>
@@ -924,19 +926,19 @@ import { useRouter } from 'next/router';
                     </select>
                 </div>
                 <div className="w-full">
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                        City
-                    </label>
-                    <select id="city" name="city" onChange={ handleChange } value={city} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                        <option value=''>select city</option>
-                        {cities.map((item, index)=>{
-                            return <option key={index} value={item}>{item}</option>
-                        })}
-                    </select>
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                    {t('city')}
+                  </label>
+                  <select id="city" name="city" onChange={ handleChange } value={city} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                      <option value=''>select city</option>
+                      {cities.map((item, index)=>{
+                          return <option key={index} value={item}>{item}</option>
+                      })}
+                  </select>
                 </div>
                 <div className="w-full">
                     <label htmlFor="area" className="block text-sm font-medium text-gray-700">
-                        Area
+                        {t('area')}
                     </label>
                     <select id="area" name="area" onChange={ handleChange } value={area} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select area</option>
@@ -952,7 +954,7 @@ import { useRouter } from 'next/router';
                 <textarea cols="30" rows="5" type="text"
                     onChange={ handleChange }
                     name="notes"
-                    placeholder='add your notes here...'
+                    placeholder={t('addNotesHere')}
                     value={notes}
                     id="notes"
                     className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -972,7 +974,7 @@ import { useRouter } from 'next/router';
             <div className='flex space-x-4 mb-14'>
               <div className="w-full">
                 <label htmlFor="contractStartDate" className="block text-sm font-medium text-gray-700">
-                 Contract Start Date
+                 {t('contractStartDate')}
                 </label>
                 <input
                   type="date"
@@ -985,7 +987,7 @@ import { useRouter } from 'next/router';
               </div>
               <div className="w-full">
                 <label htmlFor="investmentStructure" className="block text-sm font-medium text-gray-700">
-                  Investment Structure
+                {t('investmentStructure')}
                 </label>
                 <select id="investmentStructure" name="investmentStructure" onChange={ handleChange } value={investmentStructure} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select investment structure</option>
@@ -996,7 +998,7 @@ import { useRouter } from 'next/router';
               </div>
               <div className="w-full">
                 <label htmlFor="gracePeriodFrom" className="block text-sm font-medium text-gray-700">
-                  Grace Period From
+                  {t('gracePeriodFrom')}
                 </label>
                 <input
                   type="date"
@@ -1011,7 +1013,7 @@ import { useRouter } from 'next/router';
             <div className='flex space-x-4 mb-14'>
               <div className="w-full">
                 <label htmlFor="contractEndDate" className="block text-sm font-medium text-gray-700">
-                 Contract End Date
+                {t('contractEndDate')}
                 </label>
                 <input
                   type="date"
@@ -1024,7 +1026,7 @@ import { useRouter } from 'next/router';
               </div>
               <div className="w-full">
                 <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                  Amount
+                  {t('amount')}
                 </label>
                 <input
                   type="number"
@@ -1037,7 +1039,7 @@ import { useRouter } from 'next/router';
               </div>
               <div className="w-full">
                 <label htmlFor="gracePeriodTo" className="block text-sm font-medium text-gray-700">
-                  Grace Period To
+                  {t('gracePeriodTo')}
                 </label>
                 <input
                   type="date"
@@ -1054,7 +1056,7 @@ import { useRouter } from 'next/router';
 
               <div className="w-1/4">
                 <label htmlFor="paymentScheduling" className="block text-sm font-medium text-gray-700">
-                  Payment Scheduling
+                  {t('paymentScheduling')}
                 </label>
                 <select id="paymentScheduling" name="paymentScheduling" onChange={ handleChange } value={paymentScheduling} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select payment scheduling</option>
@@ -1840,7 +1842,7 @@ import { useRouter } from 'next/router';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-bold leading-6 text-gray-900">Units</h3>
+              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('unitTitle')}</h3>
               <button 
                 onClick={()=>{
                     setOpen(true)
@@ -1889,7 +1891,7 @@ import { useRouter } from 'next/router';
                     setName('');
                 }} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-                New
+                {t('new')}
               </button>
             </div>
           </div>
@@ -1906,7 +1908,7 @@ import { useRouter } from 'next/router';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Units..." required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchUnit')} required/>
                   </div>
                 </div>
               </div>
@@ -1917,7 +1919,7 @@ import { useRouter } from 'next/router';
                     return <button 
                       type='button'
                       className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                      Print All
+                      {t('printAll')}
                       <AiOutlinePrinter className='text-lg ml-2'/>
                     </button>
                   }}
@@ -1934,20 +1936,20 @@ import { useRouter } from 'next/router';
             {isChecked === true ? <div className='flex justify-end my-2'>
 
               <Link href={'/panel/salesModule/salesInvoice?open=true&refer=true'} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 no-underline flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Reserve Units
+                {t('reserveUnits')}
               </Link>
               <button onClick={(e)=>newContract(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                New Contract
+                {t('newContract')}
               </button>
-              <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+              {/* <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Change Unit Status
               </button>
               <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
                 Archive Unit
-              </button>
+              </button> */}
 
               <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-red-800 flex hover:text-white border-2 border-red-800 hover:bg-red-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
               
@@ -1966,34 +1968,34 @@ import { useRouter } from 'next/router';
                           </div>
                         </th>
                         <th scope="col" className="p-1">
-                            Building Name
+                          {t('buildingName')}
                         </th>
                         <th scope="col" className="p-1">
-                            Unit No
+                          {t('unitNo')}
                         </th>
                         <th scope="col" className="p-1">
-                            Unit Status
+                            {t('unitStatus')}
                         </th>
                         <th scope="col" className="p-1">
-                            Type
+                            {t('unitType')}
                         </th>
                         <th scope="col" className="p-1">
-                            Rent
+                            {t('unitRent')}
                         </th>
                         <th scope="col" className="p-1">
-                            The Use
+                            {t('unitUse')}
                         </th>
                         <th scope="col" className="p-1">
-                            Space
+                            {t('space')}
                         </th>
                         <th scope="col" className="p-1">
-                            City
+                            {t('city')}
                         </th>
                         <th scope="col" className="p-1">
-                            Area
+                            {t('area')}
                         </th>
                         <th scope="col" className="pr-3">
-                          View/Edit
+                          {t('editAndDel')}
                         </th>
                       </tr>
                     </thead>
@@ -2127,7 +2129,7 @@ import { useRouter } from 'next/router';
                                   return <button 
                                     type="button"
                                     className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                    Print
+                                    {t('print')}
                                     <AiOutlinePrinter className='text-lg ml-2'/>
                                   </button>
                                 }}
@@ -2136,8 +2138,8 @@ import { useRouter } from 'next/router';
                                 pageStyle='print'
                               />
 
-                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                           </div>
                         </div>

@@ -81,6 +81,22 @@
   "unitStatus":"Unit Status",
   "noToSave":"No's to save",
   "saveUnit":"Save Unit",
-  "editAndDel":"Edit/Del"
+  "editAndDel":"Edit/Del",
+
+  "unitTitle":"Unit",
+  "searchUnit":"Search Units...",
+  "space":"Space",
+  "reserveUnits":"Reserve Units",
+  "newContract":"New Contract",
+  "building":"Building",
+  "plotNo":"Plot No",
+  "rent":"Rent",
+  "rentParking":"Rent Parking",
+  "size":"Size",
+  "sewageNumber":"Sewage Number",
+  "addNotesHere":"add your notes here...",
+  "waterMeterNumber":"Water meter No",
+  "print":"Print",
+  "saveChanges":"Save Changes"
 
 }

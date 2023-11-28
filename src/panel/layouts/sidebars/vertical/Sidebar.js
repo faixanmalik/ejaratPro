@@ -173,7 +173,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
           </div>
           
           <Menu>
-            <MenuItem icon={<BiHomeAlt className='text-lg'/>} className={ location === '/panel' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'} href={`/${router.locale}/panel`}>
+            <MenuItem icon={<BiHomeAlt className='text-lg'/>} className={ location === '/panel' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium' } href={`/${router.locale}/panel`}>
               {t('dasboard')}
             </MenuItem>
       

@@ -8,7 +8,7 @@
     "/signup": ["signup"],
     "/panel": ["panel","sidebar"],
     "/panel/realEstate/buildings": ["panel", "sidebar", "buildings"],
-    "/panel/realEstate/units": ["panel", "sidebar", "units"]
+    "/panel/realEstate/units": ["panel", "sidebar", "buildings"]
 
   }
 }

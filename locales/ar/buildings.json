@@ -83,6 +83,21 @@
   "unitStatus":"حالة الوحدة",
   "noToSave":"لا للحفظ",
   "saveUnit":"وحدة الحفظ",
-  "editAndDel":"تحرير/ديل"
+  "editAndDel":"تحرير/ديل",
 
+  "unitTitle":"وحدة",
+  "searchUnit":"...وحدات البحث",
+  "space":"فضاء",
+  "reserveUnits":"الوحدات الاحتياطية",
+  "newContract":"عقد جديد",
+  "building":"مبنى",
+  "plotNo":"عدد مؤامرة",
+  "rent":"إيجار",
+  "rentParking":"إيجار مواقف السيارات",
+  "size":"مقاس",
+  "sewageNumber":"رقم الصرف الصحي",
+  "addNotesHere":"...أضف ملاحظاتك هنا",
+  "waterMeterNumber":"رقم عداد المياه",
+  "print":"مطبعة",
+  "saveChanges":"حفظ التغييرات"
 }
