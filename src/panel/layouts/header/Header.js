@@ -73,7 +73,7 @@ const Header = ({ showMobmenu }) => {
                   />
                </div>
              </DropdownToggle>
-             <DropdownMenu>
+             <DropdownMenu className="bg-white">
                <DropdownItem header>{t('info')}</DropdownItem>
                <DropdownItem href="/myaccount">{t('editProfile')}</DropdownItem>
                <DropdownItem divider />
