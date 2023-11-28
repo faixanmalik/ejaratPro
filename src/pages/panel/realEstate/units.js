@@ -499,7 +499,7 @@ import useTranslation from 'next-translate/useTranslation';
 
     const data = [
       {
-        label: "Owner",
+        label: t('owner'),
         value: "owner",
         icon: BiUserCircle,
         desc: (
@@ -646,7 +646,7 @@ import useTranslation from 'next-translate/useTranslation';
         ),
       },
       {
-        label: "Unit Details",
+        label: t('unitDetails'),
         value: "unitDetails",
         icon: HiOutlineBuildingOffice2,
         desc: (
@@ -965,7 +965,7 @@ import useTranslation from 'next-translate/useTranslation';
         ),
       },
       {
-        label: "Management/Investment Details",
+        label: t('management'),
         value: "management",
         icon: BsCashCoin,
         desc: (
@@ -1117,7 +1117,7 @@ import useTranslation from 'next-translate/useTranslation';
     const newContractData = [
       
       {
-        label: "Unit Details",
+        label: t('unitDetails'),
         value: "unitDetails",
         icon: HiOutlineBuildingOffice2,
         desc: (
@@ -1127,7 +1127,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="w-8/12">
                     <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
-                        Unit Number
+                        {t('unitNo')}
                     </label>
                     <input
                         type="number"
@@ -1140,7 +1140,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-full">
                     <label htmlFor="buildingNameInArabic" className="block text-sm font-medium text-gray-700">
-                        Building Name In Arabic
+                        {t('buildingNameInArabic')}
                     </label>
                     <input
                         type="text"
@@ -1153,7 +1153,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-full">
                     <label htmlFor="buildingNameInEnglish" className="block text-sm font-medium text-gray-700">
-                        Building Name In English
+                        {t('buildingNameInEnglish')}
                     </label>
                     <input
                         type="text"
@@ -1166,7 +1166,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="plotNo" className="block text-sm font-medium text-gray-700">
-                        Plot Number
+                        {t('plotNo')}
                     </label>
                     <input
                         type="number"
@@ -1179,7 +1179,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="rent" className="block text-sm font-medium text-gray-700">
-                        Rent
+                        {t('rent')}
                     </label>
                     <input
                         type="number"
@@ -1196,7 +1196,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="w-8/12">
                     <label htmlFor="bathroom" className="block text-sm font-medium text-gray-700">
-                        Bathroom
+                        {t('bathroom')}
                     </label>
                     <input
                         type="number"
@@ -1209,7 +1209,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="parkings" className="block text-sm font-medium text-gray-700">
-                        Parkings
+                        {t('parkings')}
                     </label>
                     <input
                         type="number"
@@ -1222,7 +1222,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="rentParking" className="block text-sm font-medium text-gray-700">
-                        Rent Parking
+                        {t('rentParking')}
                     </label>
                     <input
                         type="number"
@@ -1235,7 +1235,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="roof" className="block text-sm font-medium text-gray-700">
-                        Roof
+                        {t('roof')}
                     </label>
                     <input
                         type="number"
@@ -1248,7 +1248,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="balcony" className="block text-sm font-medium text-gray-700">
-                        Balcony
+                        {t('balcony')}
                     </label>
                     <input
                         type="number"
@@ -1261,7 +1261,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="size" className="block text-sm font-medium text-gray-700">
-                        Size
+                        {t('size')}
                     </label>
                     <input
                         type="number"
@@ -1277,7 +1277,7 @@ import useTranslation from 'next-translate/useTranslation';
             <div className='flex space-x-4 mb-14'>
                 <div className="w-full">
                     <label htmlFor="electricityMeterNo" className="block text-sm font-medium text-gray-700">
-                        Electricity Meter No
+                        {t('electricityMeterNo')}
                     </label>
                     <input
                         type="number"
@@ -1291,7 +1291,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="w-full">
                     <label htmlFor="waterMeterNumber" className="block text-sm font-medium text-gray-700">
-                        Water Meter Number
+                        {t('waterMeterNumber')}
                     </label>
                     <input
                         type="number"
@@ -1304,7 +1304,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-full">
                     <label htmlFor="sewageNumber" className="block text-sm font-medium text-gray-700">
-                        Sewage Number
+                        {t('sewageNumber')}
                     </label>
                     <input
                         type="number"
@@ -1321,7 +1321,7 @@ import useTranslation from 'next-translate/useTranslation';
             <div className='flex space-x-4 mb-14'>
                 <div className="w-full">
                     <label htmlFor="ac" className="block text-sm font-medium text-gray-700">
-                        AC
+                        {t('ac')}
                     </label>
                     <select id="ac" name="ac" onChange={ handleChange } value={ac} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select ac</option>
@@ -1332,7 +1332,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-full">
                     <label htmlFor="unitType" className="block text-sm font-medium text-gray-700">
-                        Unit Type
+                        {t('unitType')}
                     </label>
                     <select id="unitType" name="unitType" onChange={ handleChange } value={unitType} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit type</option>
@@ -1343,7 +1343,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-full">
                     <label htmlFor="unitUse" className="block text-sm font-medium text-gray-700">
-                        Unit Use
+                        {t('unitUse')}
                     </label>
                     <select id="unitUse" name="unitUse" onChange={ handleChange } value={unitUse} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit use</option>
@@ -1358,7 +1358,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="w-full">
                     <label htmlFor="unitStatus" className="block text-sm font-medium text-gray-700">
-                        Unit Status
+                        {t('unitStatus')}
                     </label>
                     <select id="unitStatus" name="unitStatus" onChange={ handleChange } value={unitStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit status</option>
@@ -1370,7 +1370,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="w-full">
                     <label htmlFor="view" className="block text-sm font-medium text-gray-700">
-                        View
+                        {t('view')}
                     </label>
                     <input
                         type="text"
@@ -1387,7 +1387,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="w-full">
                     <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                        Country
+                        {t('country')}
                     </label>
                     <select id="country" name="country" onChange={ handleChange } value={country} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select country</option>
@@ -1398,7 +1398,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-full">
                     <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                        City
+                        {t('city')}
                     </label>
                     <select id="city" name="city" onChange={ handleChange } value={city} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select city</option>
@@ -1409,7 +1409,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
                 <div className="w-full">
                     <label htmlFor="area" className="block text-sm font-medium text-gray-700">
-                        Area
+                        {t('area')}
                     </label>
                     <select id="area" name="area" onChange={ handleChange } value={area} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select area</option>
@@ -1425,7 +1425,7 @@ import useTranslation from 'next-translate/useTranslation';
                 <textarea cols="30" rows="5" type="text"
                     onChange={ handleChange }
                     name="notes"
-                    placeholder='add your notes here...'
+                    placeholder={t('addNotesHere')}
                     value={notes}
                     id="notes"
                     className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -1436,21 +1436,21 @@ import useTranslation from 'next-translate/useTranslation';
         ),
       },
       {
-        label: "Customer Details",
+        label: t('customerDetails'),
         value: "customerDetails",
         icon: FiUsers,
         desc: (
           <div>
             <div className='flex justify-between'>
               <div className=''>
-                <Select size="md" label="Tenant Profile" name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
+                <Select size="md" label={t('tenantProfile')} name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
                   {dbTenants.map((item, index) => {
                     return <Option key={index} value={item.name}>{item.name}</Option>
                   })}
                 </Select>
               </div>
               <div>
-                <Link href={'/panel/businessSetup/contactList?open=true&openTenant=true'} className='text-sm font-medium text-blue-600 no-underline'>Add New Tenant ?</Link>
+                <Link href={'/panel/businessSetup/contactList?open=true&openTenant=true'} className='text-sm font-medium text-blue-600 no-underline'>{t('addNewTenant')}</Link>
               </div>
             </div>
 
@@ -1459,33 +1459,33 @@ import useTranslation from 'next-translate/useTranslation';
               <div className="grid grid-cols-6 gap-6">
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">Name:</label>
+                  <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">{t('name')}</label>
                   <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">Email address</label>
+                  <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">{t('email')}</label>
                   <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                  <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
                   <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">Opening Balance</label>
+                  <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
                   <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">Id Personal Number</label>
+                  <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">{t('idNumber')}</label>
                   <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">Expiry Date Id Number</label>
+                  <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">{t('expID')}</label>
                   <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
@@ -1494,14 +1494,14 @@ import useTranslation from 'next-translate/useTranslation';
 
             </div>
             <Accordion open={openTenantExtraForm === 0} icon={<Icon id={1} open={openTenantExtraForm} />}>
-              <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>Add More? Then click!</AccordionHeader>
+              <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>{t('accordationLabel')}</AccordionHeader>
               <AccordionBody>
                 <div>
                   <div className='flex space-x-4 mb-14'>
 
                     <div className="w-full">
                       <label htmlFor="tenantPassPortNumber" className="block text-sm font-medium text-gray-700">
-                        Passport Number
+                        {t('passPortNumber')}
                       </label>
                       <input
                         type="number"
@@ -1515,7 +1515,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                     <div className="w-full">
                       <label htmlFor="tenantExpPassPort" className="block text-sm font-medium text-gray-700">
-                        Expiry Date Passport
+                        {t('expPassPort')}
                       </label>
                       <input 
                         type="date"
@@ -1529,7 +1529,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                     <div className="w-full">
                       <label htmlFor="tenantVatRegistrationNo" className="block text-sm font-medium text-gray-700">
-                        Vat Registration No
+                        {t('vatRegistrationNo')}
                       </label>
                       <input 
                         type="number"
@@ -1545,7 +1545,7 @@ import useTranslation from 'next-translate/useTranslation';
                   <div className='flex space-x-4 mb-14'>
                     <div className="w-full">
                       <label htmlFor="tenantIbanNo" className="block text-sm font-medium text-gray-700">
-                        IBAN Number
+                        {t('ibanNo')}
                       </label>
                       <input
                         type="number"
@@ -1559,7 +1559,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                     <div className="w-full">
                       <label htmlFor="tenantBank" className="block text-sm font-medium text-gray-700">
-                        The Bank
+                        {t('bank')}
                       </label>
                       <input 
                         type="text"
@@ -1573,7 +1573,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                     <div className="w-full">
                       <label htmlFor="tenantBankAccountNumber" className="block text-sm font-medium text-gray-700">
-                        Bank Account Number
+                        {t('bankAccountNumber')}
                       </label>
                       <input 
                         type="number"
@@ -1609,7 +1609,7 @@ import useTranslation from 'next-translate/useTranslation';
         ),
       },
       {
-        label: "Rent",
+        label: t('rent'),
         value: "rent",
         icon: BsCashCoin,
         desc: (
@@ -1618,7 +1618,7 @@ import useTranslation from 'next-translate/useTranslation';
             <div className='flex space-x-4 mb-14'>
               <div className="w-full">
                 <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
-                 Contract Start Date
+                 {t('contractStartDate')}
                 </label>
                 <input
                   type="date"
@@ -1631,7 +1631,7 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractEndDate" className="block text-sm font-medium text-gray-700">
-                 Contract End Date
+                 {t('contractEndDate')}
                 </label>
                 <input
                   type="date"
@@ -1644,7 +1644,7 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractUnitRent" className="block text-sm font-medium text-gray-700">
-                  Unit Rent
+                 {t('unitRent')}
                 </label>
                 <input
                   type="number"
@@ -1660,7 +1660,7 @@ import useTranslation from 'next-translate/useTranslation';
               
               <div className="w-full">
                 <label htmlFor="newContractCommission" className="block text-sm font-medium text-gray-700">
-                  Commision
+                  {t('commision')}
                 </label>
                 <input
                   type="number"
@@ -1673,7 +1673,7 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractRentParking" className="block text-sm font-medium text-gray-700">
-                  Rent Parking
+                  {t('rentParking')}
                 </label>
                 <input
                   type="number"
@@ -1686,7 +1686,7 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractBouncedChequeFine" className="block text-sm font-medium text-gray-700">
-                  Bounced Cheque Fine
+                  {t('bouncedChequeFine')}
                 </label>
                 <input
                   type="number"
@@ -1702,7 +1702,7 @@ import useTranslation from 'next-translate/useTranslation';
 
               <div className="w-full">
                 <label htmlFor="newContractSecurityDeposit" className="block text-sm font-medium text-gray-700">
-                  Security Deposit
+                  {t('securityDeposit')}
                 </label>
                 <input
                   type="number"
@@ -1715,7 +1715,7 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractStatus" className="block text-sm font-medium text-gray-700">
-                  Contract Status
+                  {t('contractStatus')}
                 </label>
                 <select id="newContractStatus" name="newContractStatus" onChange={ handleChange } value={newContractStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select contract status</option>
@@ -1726,7 +1726,7 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractPaymentScheduling" className="block text-sm font-medium text-gray-700">
-                  Payment Scheduling
+                  {t('paymentScheduling')}
                 </label>
                 <select id="newContractPaymentScheduling" name="newContractPaymentScheduling" onChange={ handleChange } value={newContractPaymentScheduling} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select payment scheduling</option>
@@ -1745,7 +1745,7 @@ import useTranslation from 'next-translate/useTranslation';
                   value={newContractNotes}
                   name="newContractNotes"
                   id="newContractNotes"
-                  placeholder='add your notes here...'
+                  placeholder={t('addNotesHere')}
                   className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </textarea>
                 

@@ -99,5 +99,15 @@
   "addNotesHere":"...أضف ملاحظاتك هنا",
   "waterMeterNumber":"رقم عداد المياه",
   "print":"مطبعة",
-  "saveChanges":"حفظ التغييرات"
+  "saveChanges":"حفظ التغييرات",
+  "unitDetails":"تفاصيل الوحدة",
+  "customerDetails":"تفاصيل العميل",
+
+  "tenantProfile":"الملف الشخصي للمستأجر",
+  "addNewTenant":"إضافة مستأجر جديد؟",
+  "openingBalance":"الرصيد الافتتاحي",
+  "commision":"عمولة",
+  "bouncedChequeFine":"غرامة شيك مرتجع",
+  "securityDeposit":"مبلغ التأمين",
+  "contractStatus":"حالة التعاقد"
 }

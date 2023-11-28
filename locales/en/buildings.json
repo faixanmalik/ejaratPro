@@ -18,7 +18,7 @@
   "management": "Management/Investment Details",
   "receiveUnits": "Receive Units",
 
-  "name": "name",
+  "name": "Name",
   "nameInInvoice":"Name In Invoice",
   "phoneNo":"Phone No",
   "email":"Email",
@@ -97,6 +97,16 @@
   "addNotesHere":"add your notes here...",
   "waterMeterNumber":"Water meter No",
   "print":"Print",
-  "saveChanges":"Save Changes"
+  "saveChanges":"Save Changes",
+  "unitDetails":"Unit Details",
+  "customerDetails":"Customer Details",
+
+  "tenantProfile":"Tenant Profile",
+  "addNewTenant":"Add New Tenant ?",
+  "openingBalance":"Opening Balance",
+  "commision":"Commision",
+  "bouncedChequeFine":"Bounced Cheque Fine",
+  "securityDeposit":"Security Deposit",
+  "contractStatus":"Contract Status"
 
 }
