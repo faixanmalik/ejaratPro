@@ -619,7 +619,7 @@ const AssetsChart = ({ dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceip
   return (
     <>
     <Card>
-      <CardBody>
+      <CardBody className='bg-white'>
         <CardTitle tag="h5" className='font-medium'>{t('assetsSummary')}</CardTitle>
         <CardSubtitle className="text-muted font-normal" tag="h6">
           {t('yearlyAssetsReport')}

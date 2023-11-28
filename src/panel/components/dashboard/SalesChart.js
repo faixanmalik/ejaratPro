@@ -633,7 +633,7 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
   };
   return (
     <Card>
-      <CardBody>
+      <CardBody className='bg-white'>
         <CardTitle tag="h5" className='font-medium'>{t('salesSummary')}</CardTitle>
         <CardSubtitle className="text-muted font-normal" tag="h6">
           {t('yearlySalesReport')}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 const TopCards = ({ bg, href, icon,  amount, subtitle }) => {
   return (
     <Card>
-      <CardBody>
+      <CardBody className='bg-white'>
         <Link href={href} className='no-underline'>
         <div className="d-flex">
           <div className={`circle-box lg-box d-inline-block ${bg}`}>
