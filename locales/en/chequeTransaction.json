@@ -20,5 +20,22 @@
   "memo":"Memo",
   "print":"Print",
   "saveChanges":"Save Changes",
-  "save":"Save"
+  "save":"Save",
+
+
+  "contracts":"Contracts",
+  "statementLabel":"Tenant Account Statement",
+  "building":"Building",
+  "unitNo":"Unit No",
+  "phoneNo":"Phone No",
+  "contractStartDate":"Contract Start Date",
+  "contractEndDate":"Contract End Date",
+  "unitRent":"Unit Rent",
+  "rentParking":"Rent Parking",
+  "contractStatus":"Contract Status",
+  "trxType":"Trx Type",
+  "trxNo":"Trx No",
+  "balance":"Balance",
+  "status":"Status"
+  
 }

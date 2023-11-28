@@ -11,7 +11,8 @@
     "/panel/realEstate/units": ["panel", "sidebar", "buildings"],
     "/panel/realEstate/contractAndTenants": ["panel", "sidebar", "buildings"],
     "/panel/realEstate/cheques": ["panel", "sidebar", "cheques"],
-    "/panel/realEstate/chequeTransactions": ["panel", "sidebar", "chequeTransaction"]
+    "/panel/realEstate/chequeTransactions": ["panel", "sidebar", "chequeTransaction"],
+    "/panel/realEstate/tenantStatement": ["panel", "sidebar", "chequeTransaction"]
 
 
   }

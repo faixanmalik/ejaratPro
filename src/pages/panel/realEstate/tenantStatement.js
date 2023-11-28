@@ -15,6 +15,7 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 import CreditSalesInvoice from 'models/CreditSalesInvoice';
 import CreditNote from 'models/CreditNote';
 import PaymentVoucher from 'models/PaymentVoucher';
+import useTranslation from 'next-translate/useTranslation';
 
 
 function Icon({ id, open }) {
@@ -35,6 +36,7 @@ function Icon({ id, open }) {
 const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCreditSalesInvoices, dbCreditNotes, dbPaymentVoucher }) => {
 
   const router = useRouter();
+  const { t } = useTranslation('chequeTransaction')
   const searchParams = useSearchParams()
   const tenantId = searchParams.get('id')
 
@@ -162,7 +164,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
     // Receipts Voucher
     dbReceipts = dbReceipts.map((receipt) => {
       const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
-      const totalAmount = filteredInputList.reduce((total, item) => total + item.paid, 0);
+      const totalAmount = filteredInputList.reduce((total, item) => total + parseInt(item.paid), 0);
       
       if (filteredInputList.length > 0) {
         receipt.inputList = filteredInputList;
@@ -186,7 +188,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
   const newContractData = [
       
     {
-      label: "Contracts",
+      label: t('contracts'),
       value: "contracts",
       icon: FiUsers,
       desc: (
@@ -199,36 +201,26 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                 <thead className="text-[11px] text-gray-700 uppercase bg-[#f2f4f5]">
                   <tr className=''>
                     <th scope="col" className="px-4 py-[16px]">
-                      <div className="flex items-center">
-                        <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                      </div>
+                        {t('contractStartDate')}
                     </th>
                     <th scope="col" className="p-1">
-                        Contract Start Date
+                        {t('contractEndDate')}
                     </th>
                     <th scope="col" className="p-1">
-                        Contract End Date
+                        {t('unitRent')}
                     </th>
                     <th scope="col" className="p-1">
-                        Unit Rent
-                    </th>
-                    <th scope="col" className="p-1">
-                        Rent Parking
+                        {t('rentParking')}
                     </th>
                     <th scope="col" className="pr-3">
-                        Contract Status
+                        {t('contractStatus')}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredContracts.map((item, index)=>{
                   return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
-                    <td className="w-4 px-4 py-[15px]">
-                      <div className="flex items-center">
-                        <input id={`checkbox-table-search-${item._id}`} checked={selectedIds.includes(item._id)} type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                      </div>
-                    </td>
-                    <td className="p-1 w-[100px]">
+                    <td className="px-4 py-[15px] w-[150px]">
                       {moment(item.newContractStartDate).utc().format('D MMM YYYY')}
                     </td>
                     <td className="p-1 w-[90px]">
@@ -255,7 +247,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
       ),
     },
     {
-      label: "Account",
+      label: t('account'),
       value: "account",
       icon: FiUsers,
       desc: (
@@ -266,28 +258,28 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                 <thead className="text-[11px] text-gray-700 uppercase bg-[#f2f4f5]">
                   <tr className=''>
                     <th scope="col" className="px-4 py-[16px]">
-                      Trx Type
+                      {t('trxType')}
                     </th>
                     <th scope="col" className="p-1">
-                      Trx No
+                      {t('trxNo')}
                     </th>
                     <th scope="col" className="p-1">
-                      Description
+                      {t('desc')}
                     </th>
                     <th scope="col" className="p-1">
-                      Date
+                      {t('date')}
                     </th>
                     <th scope="col" className="p-1">
-                      Debit
+                      {t('debit')}
                     </th>
                     <th scope="col" className="p-1">
-                      Credit
+                      {t('credit')}
                     </th>
                     <th scope="col" className="p-1">
-                      Balance
+                      {t('balance')}
                     </th>
                     <th scope="col" className="pr-3">
-                      Status
+                      {t('status')}
                     </th>
                   </tr>
                 </thead>
@@ -359,7 +351,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
     <div className="md:grid md:grid-cols-1 md:gap-6">
       <div className="md:col-span-1">
         <div className="px-4 sm:px-0 flex">
-          <h3 className="text-lg font-bold leading-6 text-gray-900">Tenant Account Statement</h3>
+          <h3 className="text-lg font-bold leading-6 text-gray-900">{t('statementLabel')}</h3>
         </div>
       </div>
       <div className="mt-2 md:col-span-2 md:mt-0">
@@ -386,7 +378,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                 <div className='w-full flex space-x-4'>
                   <div className="w-full">
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                      Name:
+                      {t('name')}
                     </label>
                     <input 
                       type="text"
@@ -399,7 +391,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                   </div>
                   <div className="w-full">
                     <label htmlFor="building" className="block text-sm font-medium text-gray-700">
-                      Building:
+                      {t('building')}
                     </label>
                     <input
                       type="text"
@@ -414,7 +406,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                 <div className='w-full flex space-x-4'>
                   <div className="w-1/2">
                     <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
-                      Unit No:
+                      {t('unitNo')}
                     </label>
                     <input 
                       type="number"
@@ -427,7 +419,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                   </div>
                   <div className="w-full">
                     <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                      Phone No:
+                      {t('phoneNo')}
                     </label>
                     <input
                       type="number"
@@ -440,7 +432,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                   </div>
                   <div className="w-full">
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                      Email:
+                      {t('email')}
                     </label>
                     <input
                       type="email"

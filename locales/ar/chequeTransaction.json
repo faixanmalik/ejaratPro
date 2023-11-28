@@ -20,5 +20,21 @@
   "memo":"مذكرة",
   "print":"مطبعة",
   "saveChanges":"حفظ التغييرات",
-  "save":"يحفظ"
+  "save":"يحفظ",
+
+
+  "contracts":"انكماش",
+  "statementLabel":"كشف حساب المستأجر",
+  "building":"مبنى",
+  "unitNo":"رقم الوحدة",
+  "phoneNo":"رقم الهاتف",
+  "contractStartDate":"تاريخ بدء العقد",
+  "contractEndDate":"تاريخ انتهاء العقد",
+  "unitRent":"إيجار الوحدة",
+  "rentParking":"إيجار مواقف السيارات",
+  "contractStatus":"حالة التعاقد",
+  "trxType":"نوع المعاملة",
+  "trxNo":"رقم التحويلة",
+  "balance":"توازن",
+  "status":"حالة"
 }
