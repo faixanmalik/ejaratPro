@@ -109,5 +109,15 @@
   "commision":"عمولة",
   "bouncedChequeFine":"غرامة شيك مرتجع",
   "securityDeposit":"مبلغ التأمين",
-  "contractStatus":"حالة التعاقد"
+  "contractStatus":"حالة التعاقد",
+
+  "tenant":"مستأجر",
+  "searchTitle":"...بحث العقود",
+  "renewalContract":"تجديد العقد",
+  "issueInvoice":"إصدار الفاتورة",
+  "collectPayment":"جمع الدفعات المالية",
+  "sendReminder":"يرسل تذكير",
+  "terminateContract":"إنهاء عقد",
+  "saveContract":"حفظ العقد",
+  "type":"يكتب"
 }

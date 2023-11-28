@@ -107,6 +107,16 @@
   "commision":"Commision",
   "bouncedChequeFine":"Bounced Cheque Fine",
   "securityDeposit":"Security Deposit",
-  "contractStatus":"Contract Status"
+  "contractStatus":"Contract Status",
+
+  "tenant":"Tenant",
+  "searchTitle":"Search Contracts...",
+  "renewalContract":"Renewal Contract",
+  "issueInvoice":"Issue Invoice",
+  "collectPayment":"Collect Payment",
+  "sendReminder":"Send Reminder",
+  "terminateContract":"Terminate Contract",
+  "saveContract":"Save Contract",
+  "type":"Type"
 
 }

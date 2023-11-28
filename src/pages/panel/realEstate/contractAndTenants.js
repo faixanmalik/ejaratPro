@@ -37,6 +37,7 @@ import { MdAccountBox } from 'react-icons/md';
 import Buildings from 'models/Buildings';
 import { useRouter } from 'next/router';
 import ContractAndTenant from 'models/ContractAndTenant';
+import useTranslation from 'next-translate/useTranslation';
 
 
 
@@ -64,6 +65,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
   const ContractAndTenants = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
+    const { t } = useTranslation('buildings')
     const [open, setOpen] = useState(false)
     const [openNewContract, setOpenNewContract] = useState(false)
 
@@ -501,7 +503,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
     const newContractData = [
       
       {
-        label: "Unit Details",
+        label: t('unitDetails'),
         value: "unitDetails",
         icon: HiOutlineBuildingOffice2,
         desc: (
@@ -511,7 +513,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                 <div className="w-8/12">
                     <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
-                        Unit Number
+                        {t('unitNo')}
                     </label>
                     <input
                         type="number"
@@ -524,7 +526,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-full">
                     <label htmlFor="buildingNameInArabic" className="block text-sm font-medium text-gray-700">
-                        Building Name In Arabic
+                        {t('buildingNameInArabic')}
                     </label>
                     <input
                         type="text"
@@ -537,7 +539,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-full">
                     <label htmlFor="buildingNameInEnglish" className="block text-sm font-medium text-gray-700">
-                        Building Name In English
+                        {t('buildingNameInEnglish')}
                     </label>
                     <input
                         type="text"
@@ -550,7 +552,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="plotNo" className="block text-sm font-medium text-gray-700">
-                        Plot Number
+                        {t('plotNo')}
                     </label>
                     <input
                         type="number"
@@ -563,7 +565,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="rent" className="block text-sm font-medium text-gray-700">
-                        Rent
+                        {t('rent')}
                     </label>
                     <input
                         type="number"
@@ -580,7 +582,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                 <div className="w-8/12">
                     <label htmlFor="bathroom" className="block text-sm font-medium text-gray-700">
-                        Bathroom
+                        {t('bathroom')}
                     </label>
                     <input
                         type="number"
@@ -593,7 +595,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="parkings" className="block text-sm font-medium text-gray-700">
-                        Parkings
+                        {t('parkings')}
                     </label>
                     <input
                         type="number"
@@ -606,7 +608,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="rentParking" className="block text-sm font-medium text-gray-700">
-                        Rent Parking
+                        {t('rentParking')}
                     </label>
                     <input
                         type="number"
@@ -619,7 +621,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="roof" className="block text-sm font-medium text-gray-700">
-                        Roof
+                        {t('roof')}
                     </label>
                     <input
                         type="number"
@@ -632,7 +634,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="balcony" className="block text-sm font-medium text-gray-700">
-                        Balcony
+                        {t('balcony')}
                     </label>
                     <input
                         type="number"
@@ -645,7 +647,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-8/12">
                     <label htmlFor="size" className="block text-sm font-medium text-gray-700">
-                        Size
+                        {t('size')}
                     </label>
                     <input
                         type="number"
@@ -661,7 +663,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
             <div className='flex space-x-4 mb-14'>
                 <div className="w-full">
                     <label htmlFor="electricityMeterNo" className="block text-sm font-medium text-gray-700">
-                        Electricity Meter No
+                        {t('electricityMeterNo')}
                     </label>
                     <input
                         type="number"
@@ -675,7 +677,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                 <div className="w-full">
                     <label htmlFor="waterMeterNumber" className="block text-sm font-medium text-gray-700">
-                        Water Meter Number
+                        {t('waterMeterNumber')}
                     </label>
                     <input
                         type="number"
@@ -688,7 +690,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-full">
                     <label htmlFor="sewageNumber" className="block text-sm font-medium text-gray-700">
-                        Sewage Number
+                        {t('sewageNumber')}
                     </label>
                     <input
                         type="number"
@@ -705,7 +707,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
             <div className='flex space-x-4 mb-14'>
                 <div className="w-full">
                     <label htmlFor="ac" className="block text-sm font-medium text-gray-700">
-                        AC
+                        {t('ac')}
                     </label>
                     <select id="ac" name="ac" onChange={ handleChange } value={ac} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select ac</option>
@@ -716,7 +718,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-full">
                     <label htmlFor="unitType" className="block text-sm font-medium text-gray-700">
-                        Unit Type
+                        {t('unitType')}
                     </label>
                     <select id="unitType" name="unitType" onChange={ handleChange } value={unitType} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit type</option>
@@ -727,7 +729,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-full">
                     <label htmlFor="unitUse" className="block text-sm font-medium text-gray-700">
-                        Unit Use
+                        {t('unitUse')}
                     </label>
                     <select id="unitUse" name="unitUse" onChange={ handleChange } value={unitUse} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit use</option>
@@ -742,7 +744,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                 <div className="w-full">
                     <label htmlFor="unitStatus" className="block text-sm font-medium text-gray-700">
-                        Unit Status
+                        {t('unitStatus')}
                     </label>
                     <select id="unitStatus" name="unitStatus" onChange={ handleChange } value={unitStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select unit status</option>
@@ -754,7 +756,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                 <div className="w-full">
                     <label htmlFor="view" className="block text-sm font-medium text-gray-700">
-                        View
+                        {t('view')}
                     </label>
                     <input
                         type="text"
@@ -771,7 +773,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                 <div className="w-full">
                     <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                        Country
+                        {t('country')}
                     </label>
                     <select id="country" name="country" onChange={ handleChange } value={country} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select country</option>
@@ -782,7 +784,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-full">
                     <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                        City
+                        {t('city')}
                     </label>
                     <select id="city" name="city" onChange={ handleChange } value={city} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select city</option>
@@ -793,7 +795,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 </div>
                 <div className="w-full">
                     <label htmlFor="area" className="block text-sm font-medium text-gray-700">
-                        Area
+                        {t('area')}
                     </label>
                     <select id="area" name="area" onChange={ handleChange } value={area} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                         <option value=''>select area</option>
@@ -809,7 +811,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                 <textarea cols="30" rows="5" type="text"
                     onChange={ handleChange }
                     name="notes"
-                    placeholder='add your notes here...'
+                    placeholder={t('addNotesHere')}
                     value={notes}
                     id="notes"
                     className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -820,65 +822,71 @@ import ContractAndTenant from 'models/ContractAndTenant';
         ),
       },
       {
-        label: "Customer Details",
+        label: t('customerDetails'),
         value: "customerDetails",
         icon: FiUsers,
         desc: (
           <div>
-            <div>
-              <Select size="md" label="Tenant Profile" name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
-                {dbTenants.map((item, index) => {
-                  return <Option key={index} value={item.name}>{item.name}</Option>;
-                })}
-              </Select>
+            <div className='flex justify-between'>
+              <div className=''>
+                <Select size="md" label={t('tenantProfile')} name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
+                  {dbTenants.map((item, index) => {
+                    return <Option key={index} value={item.name}>{item.name}</Option>
+                  })}
+                </Select>
+              </div>
+              <div>
+                <Link href={'/panel/businessSetup/contactList?open=true&openTenant=true'} className='text-sm font-medium text-blue-600 no-underline'>{t('addNewTenant')}</Link>
+              </div>
             </div>
+
+
             <div className="bg-white py-5">
               <div className="grid grid-cols-6 gap-6">
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">Name:</label>
+                  <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">{t('name')}</label>
                   <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">Email address</label>
+                  <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">{t('email')}</label>
                   <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                  <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
                   <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">Opening Balance</label>
+                  <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
                   <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">Id Personal Number</label>
+                  <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">{t('idNumber')}</label>
                   <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
-                  <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">Expiry Date Id Number</label>
+                  <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">{t('expID')}</label>
                   <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
               </div>
 
-
             </div>
             <Accordion open={openTenantExtraForm === 0} icon={<Icon id={1} open={openTenantExtraForm} />}>
-              <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>Add More? Then click!</AccordionHeader>
+              <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>{t('accordationLabel')}</AccordionHeader>
               <AccordionBody>
                 <div>
                   <div className='flex space-x-4 mb-14'>
 
                     <div className="w-full">
                       <label htmlFor="tenantPassPortNumber" className="block text-sm font-medium text-gray-700">
-                        Passport Number
+                        {t('passPortNumber')}
                       </label>
                       <input
                         type="number"
@@ -892,7 +900,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                     <div className="w-full">
                       <label htmlFor="tenantExpPassPort" className="block text-sm font-medium text-gray-700">
-                        Expiry Date Passport
+                        {t('expPassPort')}
                       </label>
                       <input 
                         type="date"
@@ -906,7 +914,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                     <div className="w-full">
                       <label htmlFor="tenantVatRegistrationNo" className="block text-sm font-medium text-gray-700">
-                        Vat Registration No
+                        {t('vatRegistrationNo')}
                       </label>
                       <input 
                         type="number"
@@ -922,7 +930,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                   <div className='flex space-x-4 mb-14'>
                     <div className="w-full">
                       <label htmlFor="tenantIbanNo" className="block text-sm font-medium text-gray-700">
-                        IBAN Number
+                        {t('ibanNo')}
                       </label>
                       <input
                         type="number"
@@ -936,7 +944,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                     <div className="w-full">
                       <label htmlFor="tenantBank" className="block text-sm font-medium text-gray-700">
-                        The Bank
+                        {t('bank')}
                       </label>
                       <input 
                         type="text"
@@ -950,7 +958,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
                     <div className="w-full">
                       <label htmlFor="tenantBankAccountNumber" className="block text-sm font-medium text-gray-700">
-                        Bank Account Number
+                        {t('bankAccountNumber')}
                       </label>
                       <input 
                         type="number"
@@ -964,7 +972,6 @@ import ContractAndTenant from 'models/ContractAndTenant';
                     
                   </div>
                 </div>
-                
               </AccordionBody>
             </Accordion>
 
@@ -986,7 +993,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
         ),
       },
       {
-        label: "Rent",
+        label: t('rent'),
         value: "rent",
         icon: BsCashCoin,
         desc: (
@@ -995,7 +1002,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
             <div className='flex space-x-4 mb-14'>
               <div className="w-full">
                 <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
-                 Contract Start Date
+                 {t('contractStartDate')}
                 </label>
                 <input
                   type="date"
@@ -1008,7 +1015,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractEndDate" className="block text-sm font-medium text-gray-700">
-                 Contract End Date
+                 {t('contractEndDate')}
                 </label>
                 <input
                   type="date"
@@ -1021,7 +1028,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractUnitRent" className="block text-sm font-medium text-gray-700">
-                  Unit Rent
+                 {t('unitRent')}
                 </label>
                 <input
                   type="number"
@@ -1037,7 +1044,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
               
               <div className="w-full">
                 <label htmlFor="newContractCommission" className="block text-sm font-medium text-gray-700">
-                  Commision
+                  {t('commision')}
                 </label>
                 <input
                   type="number"
@@ -1050,7 +1057,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractRentParking" className="block text-sm font-medium text-gray-700">
-                  Rent Parking
+                  {t('rentParking')}
                 </label>
                 <input
                   type="number"
@@ -1063,7 +1070,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractBouncedChequeFine" className="block text-sm font-medium text-gray-700">
-                  Bounced Cheque Fine
+                  {t('bouncedChequeFine')}
                 </label>
                 <input
                   type="number"
@@ -1079,7 +1086,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
               <div className="w-full">
                 <label htmlFor="newContractSecurityDeposit" className="block text-sm font-medium text-gray-700">
-                  Security Deposit
+                  {t('securityDeposit')}
                 </label>
                 <input
                   type="number"
@@ -1092,7 +1099,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractStatus" className="block text-sm font-medium text-gray-700">
-                  Contract Status
+                  {t('contractStatus')}
                 </label>
                 <select id="newContractStatus" name="newContractStatus" onChange={ handleChange } value={newContractStatus} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select contract status</option>
@@ -1103,7 +1110,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
               </div>
               <div className="w-full">
                 <label htmlFor="newContractPaymentScheduling" className="block text-sm font-medium text-gray-700">
-                  Payment Scheduling
+                  {t('paymentScheduling')}
                 </label>
                 <select id="newContractPaymentScheduling" name="newContractPaymentScheduling" onChange={ handleChange } value={newContractPaymentScheduling} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select payment scheduling</option>
@@ -1122,7 +1129,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                   value={newContractNotes}
                   name="newContractNotes"
                   id="newContractNotes"
-                  placeholder='add your notes here...'
+                  placeholder={t('addNotesHere')}
                   className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </textarea>
                 
@@ -1304,7 +1311,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-bold leading-6 text-gray-900">Contract And Tenants</h3>
+              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
             </div>
           </div>
           <div className="mt-2 md:col-span-2 md:mt-0">
@@ -1320,7 +1327,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Contract..." required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchTitle')} required/>
                   </div>
                 </div>
               </div>
@@ -1331,7 +1338,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                     return <button 
                       type='button'
                       className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                      Print All
+                      {t('printAll')}
                       <AiOutlinePrinter className='text-lg ml-2'/>
                     </button>
                   }}
@@ -1345,23 +1352,23 @@ import ContractAndTenant from 'models/ContractAndTenant';
 
             {isChecked === true ? <div className='flex justify-end my-2'>
               <button onClick={(e)=>newContract(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Renewal Contract
+                {t('renewalContract')}
               </button>
               <button onClick={(e)=>issueInvoice(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Issue Invoice
+                {t('issueInvoice')}
               </button>
               <button onClick={(e)=>collectPayment(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Collect Payment
+                {t('collectPayment')}
               </button>
               <button className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Send Reminder
+                {t('sendReminder')}
               </button>
               <button onClick={(e)=>terminateContract(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Terminate Contract
+                {t('terminateContract')}
               </button>
 
               <button onClick={delEntry} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-red-800 flex hover:text-white border-2 border-red-800 hover:bg-red-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
               
@@ -1380,31 +1387,31 @@ import ContractAndTenant from 'models/ContractAndTenant';
                           </div>
                         </th>
                         <th scope="col" className="p-1">
-                            Tenant
+                            {t('tenant')}
                         </th>
                         <th scope="col" className="p-1">
-                            Building
+                            {t('building')}
                         </th>
                         <th scope="col" className="p-1">
-                            Unit No
+                            {t('unitNo')}
                         </th>
                         <th scope="col" className="p-1">
-                            Type
+                            {t('type')}
                         </th>
                         <th scope="col" className="p-1">
-                            Contract Start Date
+                            {t('contractStartDate')}
                         </th>
                         <th scope="col" className="p-1">
-                            Contract End Date
+                            {t('contractEndDate')}
                         </th>
                         <th scope="col" className="p-1">
-                            Contract Status
+                            {t('contractStatus')}
                         </th>
                         <th scope="col" className="p-1">
-                            Statement
+                            {t('statement')}
                         </th>
                         <th scope="col" className="pr-3">
-                            View
+                            {t('view')}
                         </th>
                       </tr>
                     </thead>
@@ -1532,7 +1539,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                                   return <button 
                                     type="button"
                                     className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                    Print
+                                    {t('print')}
                                     <AiOutlinePrinter className='text-lg ml-2'/>
                                   </button>
                                 }}
@@ -1541,7 +1548,7 @@ import ContractAndTenant from 'models/ContractAndTenant';
                                 pageStyle='print'
                               />
 
-                              <button type="submit" onClick={(e)=>{submitNewContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Contract</button>
+                              <button type="submit" onClick={(e)=>{submitNewContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveContract')}</button>
                             </div>
                           </div>
                         </div>
