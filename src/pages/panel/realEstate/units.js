@@ -1491,7 +1491,6 @@ import useTranslation from 'next-translate/useTranslation';
 
               </div>
 
-
             </div>
             <Accordion open={openTenantExtraForm === 0} icon={<Icon id={1} open={openTenantExtraForm} />}>
               <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>{t('accordationLabel')}</AccordionHeader>
@@ -1587,7 +1586,6 @@ import useTranslation from 'next-translate/useTranslation';
                     
                   </div>
                 </div>
-                
               </AccordionBody>
             </Accordion>
 
