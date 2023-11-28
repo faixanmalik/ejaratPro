@@ -66,6 +66,9 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
         { journalNo:formattedInvoice, journalDate, account: debitAccount || '', credit: 0, debit: amount || 0},
       ])
     }
+    else{
+      openSettings()
+    }
 
 
     setContacts(dbContacts, dbEmployees)
@@ -109,10 +112,6 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
   }, [inputList])
 
-
-  useEffect(() => {
-    openSettings();
-  }, [])
   
   
 
