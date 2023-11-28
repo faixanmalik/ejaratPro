@@ -18,11 +18,13 @@ import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link';
 import PaymentMethod from 'models/PaymentMethod';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
 
   const router = useRouter();
+  const { t } = useTranslation('chequeTransaction')
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
   const referCheque = searchParams.get('referCheque')
@@ -319,12 +321,12 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Cheque Transactions</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
             <Link
               onClick={()=>openSettings()}
               href={'?open=true'}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
+              {t('new')}
             </Link>
           </div>
         </div>
@@ -334,7 +336,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
             <button onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
               <AiOutlineDelete className='text-lg ml-2'/>
             </button>
 
@@ -343,7 +345,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                 return <button 
                   type='button'
                   className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Print All
+                  {t('printAll')}
                   <AiOutlinePrinter className='text-lg ml-2'/>
                 </button>
               }}
@@ -365,26 +367,25 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                         </div>
                       </th>
                       <th scope="col" className="px-2 py-3">
-                          Voucher No
+                          {t('voucherNo')}
                       </th>
                       <th scope="col" className="px-2 py-3">
-                          Date
+                          {t('date')}
                       </th>
                       <th scope="col" className="px-2 py-3">
-                          Name
+                          {t('name')}
                       </th>
                       <th scope="col" className="px-2 py-3">
-                          Account
+                          {t('account')}
                       </th>
                       <th scope="col" className="px-2 py-3">
-                          Total Debit
+                          {t('totalDebit')}
                       </th>
                       <th scope="col" className="px-2 py-3">
-                          Total Credit
+                          {t('totalCredit')}
                       </th>
-                      
                       <th scope="col" className="px-6 py-3">
-                        Action
+                          {t('action')}
                       </th>
                     </tr>
                   </thead>
@@ -458,30 +459,30 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
-                              Journal Date:
+                                {t('journalDate')}
                               </label>
                               <input 
-                              type="date"
-                              onChange={handleChange}
-                              name="journalDate"
-                              id="journalDate"
-                              value={journalDate}
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                type="date"
+                                onChange={handleChange}
+                                name="journalDate"
+                                id="journalDate"
+                                value={journalDate}
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
                             <div className="w-full">
                               <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
-                                Journal No:
+                                {t('journalNo')}
                               </label>
                               <input
-                              type="text"
-                              onChange={handleChange}
-                              name="journalNo"
-                              value={journalNo}
-                              id="journalNo"
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              readOnly
+                                type="text"
+                                onChange={handleChange}
+                                name="journalNo"
+                                value={journalNo}
+                                id="journalNo"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                readOnly
                               />
                             </div>
                           </div>
@@ -489,7 +490,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                           <div className='flex space-x-4 mb-14'>
                             <div className="w-1/3">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                  Name
+                                  {t('name')}
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option>select contacts</option>
@@ -502,7 +503,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
                             <div className="w-1/3">
                               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email:
+                                {t('email')}
                               </label>
                               <input
                                 type="text"
@@ -516,7 +517,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                             
                             <div className="w-2/3">
                               <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
-                                Description:
+                                {t('desc')}
                               </label>
                               <textarea cols="30" rows="1" type="text"
                                 onChange={ handleChange }
@@ -537,16 +538,16 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                   <th scope="col" className="p-2">
-                                      Account
+                                      {t('account')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Debit 
+                                      {t('debit')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Credit
+                                      {t('credit')}
                                   </th>
-                                  <th scope="col" className="p-2">
-                                      Add/Del
+                                  <th scope="col" className="p-2 w-20">
+                                      {t('addAndDelete')}
                                   </th>
                                 </tr>
                               </thead>
@@ -603,7 +604,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                             <div className='flex space-x-4 py-2 mt-10 justify-end pr-20 '>
                               <div className="w-44">
                                 <label htmlFor="totalDebit" className="block text-sm font-medium text-gray-700">
-                                    Total Debit:
+                                    {t('totalDebit')}
                                 </label>
                                 <input
                                   type="number"
@@ -617,7 +618,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                               </div>
                               <div className="w-44">
                                 <label htmlFor="totalCredit" className="block text-sm font-medium text-gray-700">
-                                  Total Credit:
+                                  {t('totalCredit')}
                                 </label>
                                 <input
                                   type="number"
@@ -635,7 +636,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                         
                           <div className=" mt-14">
                             <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
-                                Memo:
+                                {t('memo')}
                             </label>
                             <textarea cols="30" rows="4" type="text"
                                 name="memo"
@@ -670,7 +671,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                               return <button 
                                 type="button"
                                 className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                Print
+                                {t('print')}
                                 <AiOutlinePrinter className='text-lg ml-2'/>
                               </button>
                             }}
@@ -679,8 +680,8 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                             pageStyle='print'
                           />
 
-                          <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                          <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                         </div>
                       </div>
                     </form>
