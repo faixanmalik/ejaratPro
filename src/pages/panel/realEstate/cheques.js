@@ -43,6 +43,7 @@ import { MdAccountBox } from 'react-icons/md';
 import Cheque from 'models/Cheque';
 import { useSearchParams } from 'next/navigation';
 import PaymentMethod from 'models/PaymentMethod';
+import useTranslation from 'next-translate/useTranslation';
 
 
 
@@ -70,6 +71,9 @@ import PaymentMethod from 'models/PaymentMethod';
   const Cheques = ({ dbPaymentMethod, dbCheques, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
+    const { t } = useTranslation('cheques');
+
+
     const searchParams = useSearchParams()
     const openReceiptVoucher = searchParams.get('openReceiptVoucher')
     const openSalesInv = searchParams.get('openSalesInv')
@@ -581,7 +585,7 @@ import PaymentMethod from 'models/PaymentMethod';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-bold leading-6 text-gray-900">Funds Management</h3>
+              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
             </div>
           </div>
           <div className="mt-2 md:col-span-2 md:mt-0">
@@ -596,7 +600,7 @@ import PaymentMethod from 'models/PaymentMethod';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder="Search Funds..." required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchLabel')} required/>
                   </div>
                 </div>
               </div>
@@ -607,7 +611,7 @@ import PaymentMethod from 'models/PaymentMethod';
                     return <button 
                       type='button'
                       className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                      Print All
+                      {t('printAll')}
                       <AiOutlinePrinter className='text-lg ml-2'/>
                     </button>
                   }}
@@ -621,19 +625,19 @@ import PaymentMethod from 'models/PaymentMethod';
 
             {isChecked === true ? <div className='flex justify-end my-2'>
               <button onClick={(e)=>depositCheck(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Deposit Funds
+                {t('depositFunds')}
               </button>
               <button onClick={(e)=>returnCheque(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Return Funds
+                {t('returnFunds')}
               </button>
               <button onClick={(e)=>refundToCustomer(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Refund to Customer
+                {t('refundToCustomer')}
               </button>
               <button onClick={(e)=>refundToSupplier(e, true)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Refund to Supplier
+                {t('refundToSupplier')}
               </button>
               <button onClick={(e)=>clearCheck(e)} className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm p-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Clear Funds
+                {t('clearFunds')}
               </button>
               
             </div>: ''}
@@ -651,28 +655,28 @@ import PaymentMethod from 'models/PaymentMethod';
 													</div>
 												</th>
 												<th scope="col" className="p-1">
-														Voucher No
+														{t('voucherNo')}
 												</th>
 												<th scope="col" className="p-1">
-														Date
+														{t('date')}
 												</th>
 												<th scope="col" className="p-1">
-														Name
+														{t('name')}
 												</th>
 												<th scope="col" className="p-1">
-														Chq No
+														{t('chqNo')}
 												</th>
 												<th scope="col" className="p-1">
-														Due Date
+														{t('dueDate')}
 												</th>
 												<th scope="col" className="p-1">
-														Amount
+														{t('amount')}
 												</th> 
 												<th scope="col" className="p-1">
-														Cheque Status
+														{t('chequeStatus')}
 												</th> 
 												<th scope="col" className="p-1">
-													View
+														{t('view')}
 												</th>
 											</tr>
                     </thead>
@@ -777,7 +781,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                               <div className="w-full">
                                 <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
-                                Journal Date:
+                                  {t('journalDate')}
                                 </label>
                                 <input 
                                   type="date"
@@ -791,7 +795,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                               <div className="w-full">
                                 <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
-                                  Journal No:
+                                  {t('journalNo')}
                                 </label>
                                 <input
                                   type="text"
@@ -807,7 +811,7 @@ import PaymentMethod from 'models/PaymentMethod';
                             <div className='flex space-x-4 mb-14'>
                               <div className="w-full">
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                  Name:
+                                  {t('name')}
                                 </label>
                                 <input
                                   type="text"
@@ -823,7 +827,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                               <div className="w-full">
                                 <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                                  Phone No:
+                                  {t('phoneNo')}
                                 </label>
                                 <input
                                   type="number"
@@ -837,7 +841,7 @@ import PaymentMethod from 'models/PaymentMethod';
                               
                               <div className="w-full">
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                  Email:
+                                  {t('email')}
                                 </label>
                                 <input
                                   type="text"
@@ -851,7 +855,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                               <div className="w-full">
                                 <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                                  City:
+                                  {t('city')}
                                 </label>
                                 <input
                                   type="text"
@@ -865,7 +869,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                               <div className="w-full">
                                 <label htmlFor="project" className="block text-sm font-medium text-gray-700">
-                                  Project:
+                                  {t('project')}
                                 </label>
                                 <input
                                   type="text"
@@ -884,7 +888,7 @@ import PaymentMethod from 'models/PaymentMethod';
                           
                               <div className="w-full">
                                 <label htmlFor="receivedBy" className="block text-sm font-medium text-gray-700">
-                                  Received By:
+                                  {t('receivedBy')}
                                 </label>
                                 <input
                                   type="text"
@@ -898,7 +902,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                               <div className="w-1/2">
                                 <label htmlFor="chqNo" className="block text-sm font-medium text-gray-700">
-                                  Cheque No:
+                                  {t('chqNo')}
                                 </label>
                                 <input
                                   type="number"
@@ -912,7 +916,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                               <div className="w-1/2">
                                 <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
-                                Due Date:
+                                {t('dueDate')}
                                 </label>
                                 <input 
                                   type="date"
@@ -935,22 +939,22 @@ import PaymentMethod from 'models/PaymentMethod';
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                       <tr>
                                         <th scope="col" className="p-2">
-                                            Products / Services
+                                            {t('products')}
                                         </th>
                                         <th scope="col" className="p-2">
-                                            Description 
+                                            {t('desc')}
                                         </th>
                                         <th scope="col" className="p-2">
-                                            Amount
+                                            {t('amount')}
                                         </th>
                                         <th scope="col" className="p-2">
-                                            Tax Rate
+                                            {t('taxRate')}
                                         </th>
                                         <th scope="col" className="p-2">
-                                            Tax Amount
+                                            {t('taxAmount')}
                                         </th>
                                         <th scope="col" className="p-2">
-                                            Total
+                                            {t('total')}
                                         </th>
                                       </tr>
                                     </thead>
@@ -1032,7 +1036,7 @@ import PaymentMethod from 'models/PaymentMethod';
                               <div className='flex flex-col ml-auto mr-10 space-y-2 w-1/3 py-3 mt-20'>
                                 <div className="flex items-center">
                                   <label htmlFor="fullAmount" className="block w-full text-sm font-medium text-gray-700">
-                                    Total Amount:
+                                    {t('totalAmount')}
                                   </label>
                                   <input
                                     type="number"
@@ -1045,7 +1049,7 @@ import PaymentMethod from 'models/PaymentMethod';
                                 </div>
                                 <div className="flex items-center">
                                   <label htmlFor="fullTax" className="block w-full text-sm font-medium text-gray-700">
-                                    VAT:
+                                    {t('fullTax')}
                                   </label>
                                   <input
                                     type="number"
@@ -1058,7 +1062,7 @@ import PaymentMethod from 'models/PaymentMethod';
                                 </div>
                                 <div className="flex items-center">
                                   <label htmlFor="discount" className="block w-full text-sm font-medium text-gray-700">
-                                    Discount:
+                                    {t('discount')}
                                   </label>
                                   <input
                                     type="number"
@@ -1071,7 +1075,7 @@ import PaymentMethod from 'models/PaymentMethod';
                                 </div>
                                 <div className="flex items-center">
                                   <label htmlFor="totalAmount" className="block w-full text-sm font-medium text-gray-700">
-                                    Total Amount:
+                                    {t('totalAmount')}
                                   </label>
                                   <input
                                     type="number"
@@ -1088,7 +1092,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                             <div className=" mt-14">
                               <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
-                                Memo:
+                                {t('memo')}
                               </label>
                               <textarea cols="30" rows="4" type="text"
                                   name="memo"
@@ -1107,7 +1111,7 @@ import PaymentMethod from 'models/PaymentMethod';
                                 return <button 
                                   type="button"
                                   className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                  Print
+                                  {t('print')}
                                   <AiOutlinePrinter className='text-lg ml-2'/>
                                 </button>
                               }}
@@ -1116,8 +1120,8 @@ import PaymentMethod from 'models/PaymentMethod';
                               pageStyle='print'
                             />
 
-                            <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                            {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                            <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                            {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                           </div>
                         </div>
                       </form>
@@ -1156,7 +1160,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
-                                Journal Date:
+                              {t('journalDate')}
                               </label>
                               <input 
                                 type="date"
@@ -1170,7 +1174,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                             <div className="w-full">
                               <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
-                                Journal No:
+                                {t('journalNo')}
                               </label>
                               <input
                                 type="text"
@@ -1187,7 +1191,7 @@ import PaymentMethod from 'models/PaymentMethod';
                             
                             <div className="w-full">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Name:
+                                {t('name')}
                               </label>
                               <input
                                 type="text"
@@ -1204,7 +1208,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                             <div className="w-full">
                               <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                                Phone No:
+                                {t('phoneNo')}
                               </label>
                               <input
                                 type="number"
@@ -1218,7 +1222,7 @@ import PaymentMethod from 'models/PaymentMethod';
                             
                             <div className="w-full">
                               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email:
+                                {t('email')}
                               </label>
                               <input
                                 type="text"
@@ -1232,7 +1236,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                             <div className="w-full">
                               <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                                City:
+                                {t('city')}
                               </label>
                               <input
                                 type="text"
@@ -1243,9 +1247,6 @@ import PaymentMethod from 'models/PaymentMethod';
                                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
-
-                            
-
                           </div>
 
                           <div className='flex space-x-4 mb-14'>
@@ -1253,7 +1254,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                             <div className="w-1/4">
                               <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                                Amount:
+                                {t('amount')}
                               </label>
                               <input
                                 type="number"
@@ -1267,7 +1268,7 @@ import PaymentMethod from 'models/PaymentMethod';
                         
                             <div className="w-1/3">
                               <label htmlFor="reference" className="block text-sm font-medium text-gray-700">
-                                Reference:
+                                {t('reference')}
                               </label>
                               <input
                                 type="text"
@@ -1286,25 +1287,25 @@ import PaymentMethod from 'models/PaymentMethod';
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                   <th scope="col" className="p-2">
-                                      Bill No
+                                      {t('billNo')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Paid By 
+                                      {t('paidBy')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Desc
+                                      {t('desc')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Due Date
+                                      {t('dueDate')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Bank
+                                      {t('bank')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Reference
+                                      {t('reference')}
                                   </th>
                                   <th scope="col" className="p-2 min-w-[10px]">
-                                      Paid
+                                      {t('paid')}
                                   </th>
                                 </tr>
                               </thead>
@@ -1385,7 +1386,7 @@ import PaymentMethod from 'models/PaymentMethod';
 
                           <div className=" mt-14">
                             <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
-                              Memo:
+                              {t('memo')}
                             </label>
                             <textarea cols="30" rows="4" type="text"
                                 name="memo"
@@ -1419,7 +1420,7 @@ import PaymentMethod from 'models/PaymentMethod';
                               return <button 
                                 type="button"
                                 className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                Print
+                                 {t('print')}
                                 <AiOutlinePrinter className='text-lg ml-2'/>
                               </button>
                             }}
@@ -1428,7 +1429,7 @@ import PaymentMethod from 'models/PaymentMethod';
                             pageStyle='print'
                           />
 
-                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                         </div>
                       </div>
                     </form>
