@@ -305,73 +305,71 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
-            
           </div>
           <form method="POST">
             <div className="overflow-hidden shadow sm:rounded-md">
-            
-            <div className="overflow-x-auto shadow-sm">
-            <table className="w-full text-sm text-left text-gray-500" ref={tableRef}>
-                <thead className="text-xs text-gray-700 uppercase bg-[#e9ecf7]">
-                    <tr>
-                      <th scope="col" className="p-4">
-                        <div className="flex items-center">
-                          <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                        </div>
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        {t('sr')}
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        {t('code')}
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        {t('name')}
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          {t('linkedAccount')}
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          {t('linkedContract')}
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          {t('viewOrEdit')}
-                      </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                  {product.map((item, index)=>{
-                    return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
-                    <td className="w-4 p-4">
-                      <div className="flex items-center">
-                        <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                      </div>
-                    </td>
-                    <th scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
-                      {index + 1}
-                    </th>
-                    <td className="px-6 py-3">
-                      {item.code}
-                    </td>
-                    <td className="px-6 py-3">
-                      {item.name}
-                    </td>
-                    <td className="px-6 py-3">
-                      {item.linkAccount}
-                    </td>
-                    <td className="px-6 py-3">
-                      {item.linkContract}
-                    </td>
-                    <td className="flex items-center px-6 mr-5 py-4 space-x-4">
-                      <button type='button' onClick={()=>{getData(item._id)}} 
-                        className= {`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline" `} disabled={isAdmin === false}><AiOutlineEdit className='text-lg'/></button>
-                    </td>
-                  </tr>})}
-                </tbody>
-            </table>
-            {product.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
-            </div>
+              <div className="overflow-x-auto shadow-sm">
+                <table className="w-full text-sm text-left text-gray-500" ref={tableRef}>
+                    <thead className="text-xs text-gray-700 uppercase bg-[#e9ecf7]">
+                        <tr>
+                          <th scope="col" className="p-4">
+                            <div className="flex items-center">
+                              <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                            </div>
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            {t('sr')}
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            {t('code')}
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                            {t('name')}
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                              {t('linkedAccount')}
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                              {t('linkedContract')}
+                          </th>
+                          <th scope="col" className="px-6 py-3">
+                              {t('viewOrEdit')}
+                          </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                      {product.map((item, index)=>{
+                        return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
+                        <td className="w-4 p-4">
+                          <div className="flex items-center">
+                            <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                          </div>
+                        </td>
+                        <th scope="row" className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                          {index + 1}
+                        </th>
+                        <td className="px-6 py-3">
+                          {item.code}
+                        </td>
+                        <td className="px-6 py-3">
+                          {item.name}
+                        </td>
+                        <td className="px-6 py-3">
+                          {item.linkAccount}
+                        </td>
+                        <td className="px-6 py-3">
+                          {item.linkContract}
+                        </td>
+                        <td className="flex items-center px-6 mr-5 py-4 space-x-4">
+                          <button type='button' onClick={()=>{getData(item._id)}} 
+                            className= {`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline" `} disabled={isAdmin === false}><AiOutlineEdit className='text-lg'/></button>
+                        </td>
+                      </tr>})}
+                    </tbody>
+                </table>
+                  {product.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
+              </div>
             </div>
           </form>
         </div>
