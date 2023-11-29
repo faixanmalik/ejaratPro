@@ -18,11 +18,14 @@ import PaymentMethod from 'models/PaymentMethod';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
   const router = useRouter();
+  const { t } = useTranslation('businessSetup')
+
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
   const openTenant = searchParams.get('openTenant')
@@ -330,21 +333,21 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Contact List</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('contactListTitle')}</h3>
             <Link
               onClick={()=>openSettings()}
               href={'?open=true'}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
+              {t('new')}
             </Link>
             
           </div>
           <div className='flex space-x-7 ml-5 mt-4 font-bold text-sm'>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('allContacts')}}>All Accounts</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Customer')}}>Customer</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Supplier')}}>Supplier</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Tenant')}}>Tenant</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Owner')}}>Owner</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('allContacts')}}>{t('allContacts')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Customer')}}>{t('customer')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Supplier')}}>{t('supplier')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Tenant')}}>{t('tenant')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Owner')}}>{t('owner')}</button>
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
@@ -357,7 +360,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                 sheet="Contact List"
                 currentTableRef={tableRef.current}>
                 <button type="button" className="text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
-                  Export
+                  {t('export')}
                   <BiExport className='text-lg ml-2'/>
                 </button>
 
@@ -366,7 +369,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
             <div className=''>
               <button type="button" onClick={handleClick} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                Import
+                {t('import')}
                 <BiImport className='text-lg ml-2'/>
               </button>
               <input type="file"
@@ -379,7 +382,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
               <button type="button" onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
@@ -399,25 +402,25 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                         </div>
                       </th>
                       <th scope="col" className="p-3">
-                          Sr.
+                          {t('sr')}
                       </th>
                       <th scope="col" className="p-3">
-                          Name
+                          {t('name')}
                       </th>
                       <th scope="col" className="p-3">
-                          Type
+                          {t('type')}
                       </th>
                       <th scope="col" className="p-3">
-                          Email
+                          {t('email')}
                       </th>
                       <th scope="col" className="p-3">
-                          Phone no
+                          {t('phoneNo')}
                       </th>
                       <th scope="col" className="p-3">
-                          Balance
+                          {t('balance')}
                       </th>
                       <th scope="col" className="p-3">
-                          <span className="">View / Edit</span>
+                          <span className="">{t('viewOrEdit')}</span>
                       </th>
                   </tr>
                 </thead>
@@ -487,7 +490,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                       <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="md:col-span-1">
                           <div className="px-4 sm:px-0">
-                            <h3 className="text-lg font-bold leading-6 text-gray-900">Add Contact</h3>
+                            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('addContact')}</h3>
                           </div>
                         </div>
                         <div className="mt-2 md:col-span-2 md:mt-0 w-full">
@@ -497,12 +500,12 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                                 <div className="grid grid-cols-6 gap-6">
 
                                   <div className="col-span-6 sm:col-span-4">
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">{t('name')}</label>
                                     <input type="name" onChange={handleChange} name="name" id="name" value={name} placeholder='John Doe' className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                   </div>
                             
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="type" className="block text-sm font-medium text-gray-700">Contact Type:</label>
+                                      <label htmlFor="type" className="block text-sm font-medium text-gray-700">{t('contactType')}</label>
                                       <select id="type" name="type" onChange={handleChange} value={type} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>Select Contact Type</option>
                                         {contactType.map((item, index)=>{
@@ -513,12 +516,12 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
+                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t('email')}</label>
                                       <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="accounts" className="block text-sm font-medium text-gray-700">Accounts</label>
+                                      <label htmlFor="accounts" className="block text-sm font-medium text-gray-700">{t('accounts')}</label>
                                       <select id="accounts" name="accounts" onChange={handleChange} value={accounts} autoComplete="accounts" className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>select accounts</option>
                                         {dbAccounts.map((item,index)=>{
@@ -528,12 +531,12 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                                      <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
                                       <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
+                                      <label htmlFor="country" className="block text-sm font-medium text-gray-700">{t('country')}</label>
                                       <select id="country" name="country" onChange={handleChange} value={country} autoComplete="country" className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>select country</option>
                                         {mainCountries.map((item, index)=>{
@@ -543,34 +546,34 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                                     </div>
 
                                     <div className="col-span-6">
-                                      <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">Street Address</label>
+                                      <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">{t('streetAddress')}</label>
                                       <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                                      <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
+                                      <label htmlFor="city" className="block text-sm font-medium text-gray-700">{t('city')}</label>
                                       <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="state" className="block text-sm font-medium text-gray-700">State / Province</label>
+                                      <label htmlFor="state" className="block text-sm font-medium text-gray-700">{t('state')}</label>
                                       <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="zip" className="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
+                                      <label htmlFor="zip" className="block text-sm font-medium text-gray-700">{t('zip')}</label>
                                       <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="taxRigNo" className="block text-sm font-medium text-gray-700">Tax Reg.No</label>
+                                      <label htmlFor="taxRigNo" className="block text-sm font-medium text-gray-700">{t('taxRegNo')}</label>
                                       <input onChange={handleChange} value={taxRigNo} type="number" name="taxRigNo" id="taxRigNo" autoComplete="taxRigNo" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">Prefered Payment Method</label>
+                                      <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">{t('paymentMethod')}</label>
                                       <select id="paymentMethod" name="paymentMethod" onChange={handleChange} value={paymentMethod} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={''}>Select Payment Method</option>
                                         {dbPaymentType.map((item, index)=>{
@@ -580,7 +583,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="terms" className="block text-sm font-medium text-gray-700">Terms</label>
+                                      <label htmlFor="terms" className="block text-sm font-medium text-gray-700">{t('terms')}</label>
                                       <select id="terms" name="terms" onChange={handleChange} value={terms} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
                                         <option value={'Due on receipt'}>Due on receipt</option>
                                         <option value={'Net 15'}>Net 15</option>
@@ -590,21 +593,20 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="openingBalance" className="block text-sm font-medium text-gray-700">Opening Balance</label>
+                                      <label htmlFor="openingBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
                                       <input onChange={handleChange} value={openingBalance} type="number" name="openingBalance" id="openingBalance" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date
-                                      </label>
+                                      <label htmlFor="date" className="block text-sm font-medium text-gray-700">{t('date')}</label>
                                       <input onChange={handleChange} value={date} type="date" name="date" id="date" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                 </div>
                               </div>
                               <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                             
                             </div>

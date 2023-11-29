@@ -26,8 +26,29 @@
   "sr":"رقم سري",
   "name":"اسم",
   "chartsOfAccount":"مخططات الحساب",
-  "addTaxRate":"إضافة معدل الضريبة"
+  "addTaxRate":"إضافة معدل الضريبة",
 
 
-  
+  "contactListTitle":"قائمة الإتصال",
+  "allContacts":"كل الاتصالات",
+  "customer":"عميل",
+  "supplier":"المورد",
+  "tenant":"مستأجر",
+  "owner":"مالك",
+  "type":"يكتب",
+  "addContact":"إضافة جهة اتصال",
+  "contactType":"نوع الاتصال",
+  "accounts":"حسابات",
+  "streetAddress":"عنوان الشارع",
+  "city":"مدينة",
+  "country":"دولة",
+  "phoneNo":"رقم التليفون",
+  "state":"الولاية/المقاطعة",
+  "zip":"الرمز البريدي / الرمز البريدي",
+  "taxRegNo":"رقم التسجيل الضريبي",
+  "paymentMethod":"طريقة الدفع او السداد",
+  "terms":"شروط",
+  "openingBalance":"الرصيد الافتتاحي",
+  "date":"تاريخ",
+  "email":"بريد إلكتروني"
 }

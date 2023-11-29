@@ -27,5 +27,30 @@
   "sr":"Sr",
   "name":"Name",
   "chartsOfAccount":"Charts of Account",
-  "addTaxRate":"Add Tax Rate"
+  "addTaxRate":"Add Tax Rate",
+
+
+  "contactListTitle":"Contact List",
+  "allContacts":"All Contacts",
+  "customer":"Customer",
+  "supplier":"Supplier",
+  "tenant":"Tenant",
+  "owner":"Owner",
+  "type":"Type",
+  "addContact":"Add Contact",
+  "contactType":"Contact Type",
+  "accounts":"Accounts",
+  "streetAddress":"Street Address",
+  "city":"City",
+  "country":"Country",
+  "phoneNo":"Phone Number",
+  "state":"State / Province",
+  "zip":"ZIP / Postal code",
+  "taxRegNo":"Tax Reg.No",
+  "paymentMethod":"Payment Method",
+  "terms":"Terms",
+  "openingBalance":"Opening Balance",
+  "date":"Date",
+  "email":"Email"
+
 }

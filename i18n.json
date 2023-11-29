@@ -18,6 +18,8 @@
     "/panel/userManagment/addRole": ["panel", "users"],
     
     "/panel/businessSetup/chartsOfAccount": ["panel", "businessSetup"],
-    "/panel/businessSetup/taxRate": ["panel", "businessSetup"]
+    "/panel/businessSetup/taxRate": ["panel", "businessSetup"],
+    "/panel/businessSetup/contactList": ["panel", "businessSetup"]
+    
   }
 }
