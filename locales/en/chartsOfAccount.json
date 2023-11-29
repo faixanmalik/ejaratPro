@@ -1,0 +1,23 @@
+{
+  "title":"Charts of Accounts",
+  "new":"New",
+  "allAccounts":"All Accounts",
+  "assets":"Assets",
+  "liabilites":"Liabilites",
+  "equity":"Equity",
+  "incomes":"Incomes",
+  "expenses":"Expenses",
+  "export":"Export",
+  "import":"Import",
+  "delete":"Delete",
+  "accountCode":"Account Code",
+  "accountName":"Account Name",
+  "account":"Account",
+  "subAccount":"Sub Account",
+  "balance":"Balance",
+  "viewOrEdit":"View / Edit",
+  "desc":"Description",
+  "asof":"As of",
+  "saveChanges":"Save Changes",
+  "save":"Save"
+}

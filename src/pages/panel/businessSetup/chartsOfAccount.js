@@ -14,12 +14,14 @@ import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { BiExport, BiImport } from 'react-icons/bi';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import {XLSX, read, utils} from 'xlsx';
+import useTranslation from 'next-translate/useTranslation';
 
 
 
 const ChartsOfAccounts = ({dbAllCharts}) => {
 
   const tableRef = useRef(null);
+  const { t } = useTranslation('chartsOfAccount');
   const [open, setOpen] = useState(false)
 
   // Filter Usestates
@@ -298,7 +300,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Charts of Accounts</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
             <button onClick={()=>{
               setOpen(true)
               setAccountCode(''),
@@ -311,16 +313,16 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
               setDesc('')
             }}
             className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-            New
+            {t('new')}
             </button>
           </div>
           <div className='flex mt-4 space-x-7 ml-5 font-bold text-sm'>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('allCharts')}}>All Accounts</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Assets')}}>Assets</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Liabilities')}}>Liabilites</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Equity')}}>Equity</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Incomes')}}>Incomes</button>
-            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Expenses')}}>Expenses</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('allCharts')}}>{t('allAccounts')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Assets')}}>{t('assets')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Liabilities')}}>{t('liabilites')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Equity')}}>{t('equity')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Incomes')}}>{t('incomes')}</button>
+            <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Expenses')}}>{t('expenses')}</button>
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
@@ -331,7 +333,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                 sheet="Charts Of Accounts"
                 currentTableRef={tableRef.current}>
                 <button type="button" className="text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
-                  Export
+                  {t('export')}
                   <BiExport className='text-lg ml-2'/>
                 </button>
 
@@ -340,7 +342,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
             <div className=''>
               <button type="button" onClick={handleClick} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Import
+                  {t('import')}
                 <BiImport className='text-lg ml-2'/>
               </button>
               <input type="file"
@@ -353,7 +355,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
               <button type="button" onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
@@ -371,23 +373,23 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                           <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                         </div>
                       </th>
-                        <th scope="col" className="px-6 py-3">
-                            Account code
+                        <th scope="col" className="px-3 py-3">
+                            {t('accountCode')}
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Account Name
+                            {t('accountName')}
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Account
+                            {t('account')}
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Sub Account
+                            {t('subAccount')}
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Balance
+                            {t('balance')}
                         </th>
                         <th scope="col" className="px-2 pr-5 w-24 py-3">
-                            <span className="">View / Edit</span>
+                            <span className="">{t('viewOrEdit')}</span>
                         </th>
                     </tr>
                   </thead>
@@ -452,7 +454,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                     <div className="md:grid md:grid-cols-1 md:gap-6">
                       <div className="md:col-span-1">
                         <div className="px-4 sm:px-0">
-                          <h3 className="text-lg font-bold leading-6 text-gray-900">Charts of Accounts</h3>
+                          <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
                         </div>
                       </div>
                       <div className="mt-2 md:col-span-2 md:mt-0">
@@ -462,7 +464,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                               <div className="grid grid-cols-6 gap-6">
                                 <div className="col-span-6 sm:col-span-2">
                                   <label htmlFor="accountCode" className="block text-sm font-medium text-gray-700">
-                                    Account Code
+                                    {t('accountCode')}
                                   </label>
                                   <input onChange={handleChange} value={accountCode} type="number" name="accountCode" id="accountCode" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                   {/* <p className='text-xs'>hello 10 world account code</p> */}
@@ -470,14 +472,14 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                 
                                 <div className="col-span-6 sm:col-span-3">
                                   <label htmlFor="accountName" className="block text-sm font-medium text-gray-700">
-                                    Account Name:
+                                    {t('accountName')}
                                   </label>
                                   <input onChange={handleChange} value={accountName} type="text" name="accountName" id="accountName" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                   {/* <p className='text-xs'>hello 10 world account code</p> */}
                                 </div>
                                 <div className="col-span-6 sm:col-span-3">
                                   <label htmlFor="account" className="block text-sm font-medium text-gray-700">
-                                    Account:
+                                    {t('account')}
                                   </label>
                                   <select id="account" name="account" onChange={handleChange} value={account} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                     <option>Select Account Type</option>
@@ -492,7 +494,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
 
                                 <div className="col-span-6 sm:col-span-3">
                                   <label htmlFor="subAccount" className="block text-sm font-medium text-gray-700">
-                                    Sub Account
+                                    {t('subAccount')}
                                   </label>
                                   <select id="subAccount" name="subAccount" onChange={handleChange} value={subAccount} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
 
@@ -517,7 +519,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                 
                                 <div className="col-span-6 sm:col-span-3 lg:col-span-6">
                                   <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
-                                    Description:
+                                    {t('desc')}
                                   </label>
                                   <textarea cols="30" rows="3" type="text"
                                     name="desc"
@@ -531,7 +533,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
 
                                 <div className="col-span-6 sm:col-span-2">
                                   <label htmlFor="balance" className="block text-sm font-medium text-gray-700">
-                                    Balance:
+                                    {t('balance')}
                                   </label>
                                   <input
                                     type="number"
@@ -547,7 +549,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                 
                                 <div className="col-span-6 sm:col-span-2">
                                   <label htmlFor="asof" className="block text-sm font-medium text-gray-700">
-                                    As of:
+                                    {t('asof')}
                                   </label>
                                   <input
                                     type="date"
@@ -564,8 +566,8 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
 
                             </div>
                             <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-                              <button type='button' onClick={editEntry} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                              <button type='button' onClick={editEntry} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                           </div>
                           

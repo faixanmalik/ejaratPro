@@ -1,0 +1,24 @@
+{
+  "title":"مخططات الحسابات",
+  "new":"جديد",
+  "allAccounts":"جميع الحسابات",
+  "assets":"أصول",
+  "liabilites":"الإلتزامات",
+  "equity":"عدالة",
+  "incomes":"الدخل",
+  "expenses":"نفقات",
+  "export":"يصدّر",
+  "import":"يستورد",
+  "delete":"يمسح",
+  "accountCode":"رمز الحساب",
+  "accountName":"إسم الحساب",
+  "account":"حساب",
+  "subAccount":"الحساب الفرعي",
+  "balance":"توازن",
+  "viewOrEdit":"منظر / يحرر",
+  "desc":"وصف",
+  "asof":"اعتبارا من",
+  "saveChanges":"حفظ التغييرات",
+  "save":"يحفظ"
+
+}
