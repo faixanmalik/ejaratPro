@@ -1,7 +1,7 @@
 {
-  "title": "المباني وأصحابها",
+  "buildingTitle": "المباني وأصحابها",
   "new":"جديد",
-  "searchLabel": "...بحث في المباني",
+  "buildingSearchLabel": "...بحث في المباني",
   "delete": "يمسح",
   "printAll": "طباعة الكل",
   "buildingName": "اسم المبنى",
@@ -14,11 +14,8 @@
   "investmentStructure": "هيكل الاستثمار",
   "view":"منظر",
   "edit":"يحرر",
-
   "management": "تفاصيل الإدارة/الاستثمار",
   "receiveUnits": "وحدات الاستقبال",
-
-
   "name": "اسم",
   "nameInInvoice":"الاسم في الفاتورة",
   "phoneNo":"رقم الهاتف",
@@ -39,9 +36,7 @@
   "vatRegistrationNo":"رقم تسجيل ضريبة القيمة المضافة",
   "bankAccountNumber":"رقم الحساب المصرفي",
   "tradeLicenseNo":"رقم الرخصة التجارية",
-
   "accordationLabel":"!أضف المزيد؟ ثم اضغط",
-
   "buildingNameInArabic":"اسم المبنى باللغة العربية",
   "buildingNameInEnglish":"اسم المبنى بالانجليزي",
   "totalUnits":"إجمالي الوحدات",
@@ -56,23 +51,17 @@
   "floor":"أرضية",
   "buildingArea":"منطقة بناء",
   "electricityMeterNo":"رقم عداد الكهرباء",
-
-
   "contractStartDate":"تاريخ بدء العقد",
   "gracePeriodFrom":"فترة السماح من",
   "contractEndDate":"تاريخ انتهاء العقد",
   "amount":"كمية",
   "gracePeriodTo":"فترة السماح ل",
   "paymentScheduling":"جدولة الدفع",
-
   "unitNo":"رقم الوحدة",
   "unitName":"إسم الوحدة",
   "unitRent":"إيجار الوحدة",
   "unitType":"نوع الوحدة",
-
   "addUnitType":"أضف نوع الوحدة",
-
-
   "unitUse":"استخدام الوحدة",
   "addUnitUse":"إضافة استخدام الوحدة",
   "unitSize":"حجم الوحدة",
@@ -84,7 +73,6 @@
   "noToSave":"لا للحفظ",
   "saveUnit":"وحدة الحفظ",
   "editAndDel":"تحرير/ديل",
-
   "unitTitle":"وحدة",
   "searchUnit":"...وحدات البحث",
   "space":"فضاء",
@@ -102,7 +90,6 @@
   "saveChanges":"حفظ التغييرات",
   "unitDetails":"تفاصيل الوحدة",
   "customerDetails":"تفاصيل العميل",
-
   "tenantProfile":"الملف الشخصي للمستأجر",
   "addNewTenant":"إضافة مستأجر جديد؟",
   "openingBalance":"الرصيد الافتتاحي",
@@ -110,7 +97,6 @@
   "bouncedChequeFine":"غرامة شيك مرتجع",
   "securityDeposit":"مبلغ التأمين",
   "contractStatus":"حالة التعاقد",
-
   "tenant":"مستأجر",
   "searchTitle":"...بحث العقود",
   "renewalContract":"تجديد العقد",
@@ -119,5 +105,65 @@
   "sendReminder":"يرسل تذكير",
   "terminateContract":"إنهاء عقد",
   "saveContract":"حفظ العقد",
-  "type":"يكتب"
+  "type":"يكتب",
+
+
+
+
+
+
+
+  "chequeTitle":"إدارة الأموال",
+  "chequeSearchLabel":"...بحث عن الصناديق",
+  "depositFunds":"إيداع الأموال",
+  "returnFunds":"عودة الأموال",
+  "refundToCustomer":"رد الأموال إلى العميل",
+  "refundToSupplier":"استرداد المبلغ إلى المورد",
+  "clearFunds":"مسح الأموال",
+  "voucherNo":"رقم القسيمة",
+  "date":"تاريخ",
+  "chqNo":"رقم الشيك",
+  "dueDate":"تاريخ الاستحقاق",
+  "chequeStatus":"التحقق من الحالة",
+  "journalDate":"تاريخ المجلة",
+  "journalNo":"رقم المجلة",
+  "project":"مشروع",
+  "receivedBy":"استلمت من قبل",
+  "products":"المنتجات والخدمات",
+  "desc":"وصف",
+  "taxRate":"معدل الضريبة",
+  "taxAmount":"قيمة الضريبة",
+  "total":"المجموع",
+  "totalAmount":"المبلغ الإجمالي",
+  "fullTax":"ضريبة",
+  "discount":"تخفيض",
+  "memo":"مذكرة",
+  "reference":"مرجع",
+  "billNo":"رقم الفاتوره",
+  "paidBy":"المدفوعة بواسطة",
+  "paid":"مدفوع",
+
+
+
+  "ChequeTrxTitle":"التحقق من المعاملات",
+  "account":"حساب",
+  "totalDebit":"إجمالي الدين",
+  "totalCredit":"إجمالي الائتمان",
+  "action":"فعل",
+  "debit":"دَين",
+  "credit":"ائتمان",
+  "addAndDelete":"إضافة/ديل",
+  "contracts":"انكماش",
+  "statementLabel":"كشف حساب المستأجر",
+  "trxType":"نوع المعاملة",
+  "trxNo":"رقم التحويلة",
+  "balance":"توازن",
+  "status":"حالة",
+  "endContract":"إنهاء العقد",
+  "totalDays": "مجموع الأيام",
+  "accuredRent":"الإيجار المستحق",
+  "refund":"استرداد",
+  "reverseSecurityDeposit":"عكس إيداع الضمان",
+  "returnCheques":"الشيكات المرتجعة",
+  "previewStatement":"بيان المعاينة"
 }

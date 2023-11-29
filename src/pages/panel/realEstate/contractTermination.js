@@ -60,7 +60,7 @@ function Icon({ id, open }) {
 const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) => {
 
   const router = useRouter();
-  const { t } = useTranslation('chequeTransaction');
+  const { t } = useTranslation('realEstate');
   const searchParams = useSearchParams()
   const open = searchParams.get('open')
   const contractId = searchParams.get('contractId')

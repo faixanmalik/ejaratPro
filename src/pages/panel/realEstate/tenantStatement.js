@@ -36,7 +36,7 @@ function Icon({ id, open }) {
 const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCreditSalesInvoices, dbCreditNotes, dbPaymentVoucher }) => {
 
   const router = useRouter();
-  const { t } = useTranslation('chequeTransaction')
+  const { t } = useTranslation('realEstate')
   const searchParams = useSearchParams()
   const tenantId = searchParams.get('id')
 

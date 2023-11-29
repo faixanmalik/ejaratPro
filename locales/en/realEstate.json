@@ -1,7 +1,7 @@
 {
-  "title": "Buildings and Owners",
+  "buildingTitle": "Buildings and Owners",
   "new": "New",
-  "searchLabel": "Search Buildings...",
+  "buildingSearchLabel": "Search Buildings...",
   "delete": "Delete",
   "printAll": "Print All",
   "buildingName": "Building Name",
@@ -14,10 +14,8 @@
   "investmentStructure": "Investment Structure",
   "view":"View",
   "edit":"Edit",
-
   "management": "Management/Investment Details",
   "receiveUnits": "Receive Units",
-
   "name": "Name",
   "nameInInvoice":"Name In Invoice",
   "phoneNo":"Phone No",
@@ -38,10 +36,7 @@
   "vatRegistrationNo":"Vat Registration No",
   "bankAccountNumber":"Bank Account Number",
   "tradeLicenseNo":"Trade License Number",
-
   "accordationLabel":"Add More? Then click!",
-
-
   "buildingNameInArabic":"Building Name In Arabic",
   "buildingNameInEnglish":"Building Name In English",
   "totalUnits":"Total Units",
@@ -56,21 +51,17 @@
   "floor":"Floor",
   "buildingArea":"Building Area",
   "electricityMeterNo":"Electricity Meter No",
-
   "contractStartDate":"Contract Start Date",
   "gracePeriodFrom":"Grace Period From",
   "contractEndDate":"Contract End Date",
   "amount":"amount",
   "gracePeriodTo":"Grace Period To",
   "paymentScheduling":"Payment Scheduling",
-
   "unitNo":"Unit No",
   "unitName":"Unit Name",
   "unitRent":"Unit Rent",
   "unitType":"Unit Type",
-
   "addUnitType":"Add Unit Type",
-
   "unitUse":"Unit Use",
   "addUnitUse":"Add Unit Use",
   "unitSize":"Unit Size",
@@ -82,7 +73,6 @@
   "noToSave":"No's to save",
   "saveUnit":"Save Unit",
   "editAndDel":"Edit/Del",
-
   "unitTitle":"Unit",
   "searchUnit":"Search Units...",
   "space":"Space",
@@ -100,7 +90,6 @@
   "saveChanges":"Save Changes",
   "unitDetails":"Unit Details",
   "customerDetails":"Customer Details",
-
   "tenantProfile":"Tenant Profile",
   "addNewTenant":"Add New Tenant ?",
   "openingBalance":"Opening Balance",
@@ -108,7 +97,6 @@
   "bouncedChequeFine":"Bounced Cheque Fine",
   "securityDeposit":"Security Deposit",
   "contractStatus":"Contract Status",
-
   "tenant":"Tenant",
   "searchTitle":"Search Contracts...",
   "renewalContract":"Renewal Contract",
@@ -117,6 +105,64 @@
   "sendReminder":"Send Reminder",
   "terminateContract":"Terminate Contract",
   "saveContract":"Save Contract",
-  "type":"Type"
+  "type":"Type",
+
+
+
+  "chequeTitle":"Funds Management",
+  "chequeSearchLabel":"Search Funds...",
+  "depositFunds":"Deposit Funds",
+  "returnFunds":"Return Funds",
+  "refundToCustomer":"Refund To Customer",
+  "refundToSupplier":"Refund To Supplier",
+  "clearFunds":"Clear Funds",
+  "voucherNo":"Voucher No",
+  "date":"Date",
+  "chqNo":"Cheque No",
+  "dueDate":"Due Date",
+  "chequeStatus":"Cheque Status",
+  "journalDate":"Journal Date",
+  "journalNo":"Journal No",
+  "project":"Project",
+  "receivedBy":"Received By",
+
+  "products":"Products / Services",
+  "desc":"Description",
+  "taxRate":"Tax Rate",
+  "taxAmount":"Tax Amount",
+  "total":"Total",
+  "totalAmount":"Total Amount",
+  "fullTax":"VAT",
+  "discount":"Discount",
+  "memo":"Memo",
+  "reference":"Reference",
+  "billNo":"Bill No",
+  "paidBy":"Paid By",
+  "paid":"Paid",
+
+
+
+
+  "ChequeTrxTitle":"Cheque Transactions",
+  "account":"Account",
+  "totalDebit":"Total Debit",
+  "totalCredit":"Total Credit",
+  "action":"Action",
+  "debit":"Debit",
+  "credit":"Credit",
+  "addAndDelete":"Add/Del",
+  "contracts":"Contracts",
+  "statementLabel":"Tenant Account Statement",
+  "trxType":"Trx Type",
+  "trxNo":"Trx No",
+  "balance":"Balance",
+  "status":"Status",
+  "endContract":"End Contract",
+  "totalDays": "Total Days",
+  "accuredRent":"Accured Rent",
+  "refund":"Refund",
+  "reverseSecurityDeposit":"Reverse Security Deposit",
+  "returnCheques":"Return Cheques",
+  "previewStatement":"Preview Statement"
 
 }

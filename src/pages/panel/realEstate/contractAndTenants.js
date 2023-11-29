@@ -65,7 +65,7 @@ import useTranslation from 'next-translate/useTranslation';
   const ContractAndTenants = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
-    const { t } = useTranslation('buildings')
+    const { t } = useTranslation('realEstate')
     const [open, setOpen] = useState(false)
     const [openNewContract, setOpenNewContract] = useState(false)
 

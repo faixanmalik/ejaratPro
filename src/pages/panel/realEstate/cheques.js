@@ -71,7 +71,7 @@ import useTranslation from 'next-translate/useTranslation';
   const Cheques = ({ dbPaymentMethod, dbCheques, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
-    const { t } = useTranslation('cheques');
+    const { t } = useTranslation('realEstate');
 
 
     const searchParams = useSearchParams()
@@ -585,7 +585,7 @@ import useTranslation from 'next-translate/useTranslation';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
+              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('chequeTitle')}</h3>
             </div>
           </div>
           <div className="mt-2 md:col-span-2 md:mt-0">
@@ -600,7 +600,7 @@ import useTranslation from 'next-translate/useTranslation';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchLabel')} required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('chequeSearchLabel')} required/>
                   </div>
                 </div>
               </div>

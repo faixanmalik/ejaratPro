@@ -60,7 +60,7 @@ import useTranslation from 'next-translate/useTranslation';
     
     const [open, setOpen] = useState(false)
 
-    const { t } = useTranslation('buildings')
+    const { t } = useTranslation('realEstate')
 
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
@@ -1753,7 +1753,7 @@ import useTranslation from 'next-translate/useTranslation';
         <div className="md:grid md:grid-cols-1 md:gap-6">
           <div className="md:col-span-1">
             <div className="pl-4 flex">
-              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
+              <h3 className="text-lg font-bold leading-6 text-gray-900">{t('buildingTitle')}</h3>
               <button 
                 onClick={()=>{
                   setOpen(true)
@@ -1818,7 +1818,7 @@ import useTranslation from 'next-translate/useTranslation';
                     </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchLabel')} required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('buildingSearchLabel')} required/>
                   </div>
                 </div>
               </div>
@@ -1990,7 +1990,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   return <button 
                                     type="button"
                                     className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                    Print
+                                    {t('print')}
                                     <AiOutlinePrinter className='text-lg ml-2'/>
                                   </button>
                                 }}
@@ -1999,8 +1999,8 @@ import useTranslation from 'next-translate/useTranslation';
                                 pageStyle='print'
                               />
 
-                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                              <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                              {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                           </div>
                         </div>
