@@ -1,5 +1,5 @@
 {
-  "title":"Charts of Accounts",
+  "coaTitle":"Charts of Accounts",
   "new":"New",
   "allAccounts":"All Accounts",
   "assets":"Assets",
@@ -19,5 +19,13 @@
   "desc":"Description",
   "asof":"As of",
   "saveChanges":"Save Changes",
-  "save":"Save"
+  "save":"Save",
+
+
+  
+  "taxRateTitle":"Tax Rate",
+  "sr":"Sr",
+  "name":"Name",
+  "chartsOfAccount":"Charts of Account",
+  "addTaxRate":"Add Tax Rate"
 }

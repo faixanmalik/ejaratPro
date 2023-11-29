@@ -16,6 +16,7 @@
     "/panel/realEstate/contractTermination": ["panel", "sidebar", "chequeTransaction"],
 
     "/panel/userManagment/addRole": ["panel", "sidebar", "users"],
-    "/panel/businessSetup/chartsOfAccount": ["panel", "sidebar", "chartsOfAccount"]
+    "/panel/businessSetup/chartsOfAccount": ["panel", "sidebar", "businessSetup"],
+    "/panel/businessSetup/taxRate": ["panel", "sidebar", "businessSetup"]
   }
 }

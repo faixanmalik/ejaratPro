@@ -13,6 +13,7 @@ import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { BiExport, BiImport } from 'react-icons/bi';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import {XLSX, read, utils} from 'xlsx';
+import useTranslation from 'next-translate/useTranslation';
 
 
 
@@ -20,7 +21,7 @@ const TaxRate = ({dbTaxRate, charts}) => {
 
 
   const [open, setOpen] = useState(false)
-
+  const { t } = useTranslation('businessSetup')
   // Add taxRates
   const [name, setName] = useState('')
   const [taxRate, setTaxRate] = useState('')
@@ -229,7 +230,7 @@ const TaxRate = ({dbTaxRate, charts}) => {
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Tax Rates</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('taxRateTitle')}</h3>
             <button onClick={()=>{ 
               setOpen(true), 
               setName(''),
@@ -238,7 +239,7 @@ const TaxRate = ({dbTaxRate, charts}) => {
               setChartsOfAccount('')
             }} 
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-               New
+               {t('new')}
             </button>
           </div>
         </div>
@@ -252,7 +253,7 @@ const TaxRate = ({dbTaxRate, charts}) => {
                 sheet="Bank Account"
                 currentTableRef={tableRef.current}>
                 <button type="button" className="text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
-                  Export
+                  {t('export')}
                   <BiExport className='text-lg ml-2'/>
                 </button>
 
@@ -261,7 +262,7 @@ const TaxRate = ({dbTaxRate, charts}) => {
             <div className=''>
               <button type="button" onClick={handleClick} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Import
+                  {t('import')}
                 <BiImport className='text-lg ml-2'/>
               </button>
               <input type="file"
@@ -274,7 +275,7 @@ const TaxRate = ({dbTaxRate, charts}) => {
               <button button type="button" onClick={delEntry}
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
                 >
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
@@ -292,19 +293,19 @@ const TaxRate = ({dbTaxRate, charts}) => {
                       </div>
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Sr.
+                        {t('sr')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Name
+                        {t('name')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Tax Rate
+                        {t('taxRateTitle')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Charts of Account
+                        {t('chartsOfAccount')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        <span className="">View / Edit</span>
+                        <span className="">{t('viewOrEdit')}</span>
                     </th>
                   </tr>
                 </thead>
@@ -367,7 +368,7 @@ const TaxRate = ({dbTaxRate, charts}) => {
                       <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="md:col-span-1">
                           <div className="px-4 sm:px-0">
-                            <h3 className="text-lg font-bold leading-6 text-gray-900">Add Tax Rate</h3>
+                            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('addTaxRate')}</h3>
                           </div>
                         </div>
                         <div className="mt-2 md:col-span-2 md:mt-0 w-full">
@@ -377,18 +378,18 @@ const TaxRate = ({dbTaxRate, charts}) => {
                                 <div className="grid grid-cols-6 gap-6">
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                                      <label htmlFor="name" className="block text-sm font-medium text-gray-700">{t('name')}</label>
                                       <input onChange={handleChange} value={name} type="text" name="name" id="name" autoComplete="name" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="taxRate" className="block text-sm font-medium text-gray-700">Tax Rate: ( in % )</label>
+                                      <label htmlFor="taxRate" className="block text-sm font-medium text-gray-700">{t('taxRateTitle')}: ( in % )</label>
                                       <input onChange={handleChange} value={taxRate} type="number" name="taxRate" id="taxRate" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s required"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="chartsOfAccounts" className="block text-sm font-medium text-gray-700">
-                                        Charts of Account
+                                        {t('chartsOfAccount')}
                                       </label>
                                       <select
                                         onChange={handleChange}
@@ -407,8 +408,8 @@ const TaxRate = ({dbTaxRate, charts}) => {
                                 </div>
                               </div>
                               <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                             
                             </div>
