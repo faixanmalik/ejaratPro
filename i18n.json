@@ -13,6 +13,9 @@
     "/panel/realEstate/cheques": ["panel", "sidebar", "cheques"],
     "/panel/realEstate/chequeTransactions": ["panel", "sidebar", "chequeTransaction"],
     "/panel/realEstate/tenantStatement": ["panel", "sidebar", "chequeTransaction"],
-    "/panel/realEstate/contractTermination": ["panel", "sidebar", "chequeTransaction"]
+    "/panel/realEstate/contractTermination": ["panel", "sidebar", "chequeTransaction"],
+
+
+    "/panel/userManagment/addRole": ["panel", "sidebar", "users"]
   }
 }
