@@ -50,5 +50,10 @@
   "terms":"شروط",
   "openingBalance":"الرصيد الافتتاحي",
   "date":"تاريخ",
-  "email":"بريد إلكتروني"
+  "email":"بريد إلكتروني",
+
+  "productTitle": "المنتجات والخدمات",
+  "code":"شفرة",
+  "linkedAccount": "الحساب المرتبط",
+  "linkedContract":"العقد المرتبط"
 }

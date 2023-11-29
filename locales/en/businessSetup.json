@@ -51,6 +51,11 @@
   "terms":"Terms",
   "openingBalance":"Opening Balance",
   "date":"Date",
-  "email":"Email"
+  "email":"Email",
+
+  "productTitle": "Product and Services",
+  "code":"Code",
+  "linkedAccount": "Linked Account",
+  "linkedContract":"Linked Contract"
 
 }

@@ -16,12 +16,16 @@ import { DownloadTableExcel } from 'react-export-table-to-excel';
 import {XLSX, read, utils} from 'xlsx';
 import TaxRate from 'models/TaxRate';
 import { Switch } from "@material-tailwind/react";
+import useTranslation from 'next-translate/useTranslation';
 
 
 
 const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
   const [open, setOpen] = useState(false)
+
+  const { t } = useTranslation('businessSetup')
+
   const [id, setId] = useState('')
   const [selectedIds, setSelectedIds] = useState([]);
 
@@ -111,27 +115,12 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
     }
   }
 
-
-
-
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
-
-  const [purchaseStatus, setPurchaseStatus] = useState('')
-  
-  const [costPrice, setCostPrice] = useState('')
   const [linkAccount, setLinkAccount] = useState('')
   const [linkContract, setLinkContract] = useState(false)
-  const [purchaseTaxRate, setPurchaseTaxRate] = useState('')
   const [desc, setdesc] = useState('')
   const [linkedCheck, setLinkedCheck] = useState('')
-  
-  
-  const [salesStatus, setSalesStatus] = useState('')
-  const [salesPrice, setSalesPrice] = useState('')
-  const [salesAccount, setSalesAccount] = useState('')
-  const [salesTaxRate, setSalesTaxRate] = useState('')
-  const [salesDesc, setSalesDesc] = useState('')
 
 
   const handleChange = (e) => {
@@ -141,43 +130,16 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
     else if(e.target.name === 'name'){
       setName(e.target.value)
     }
-    else if(e.target.name === 'purchaseStatus'){
-      setPurchaseStatus(e.target.value)
-    }
-    
-    else if(e.target.name === 'costPrice'){
-      setCostPrice(e.target.value)
-    }
     else if(e.target.name === 'linkAccount'){
       setLinkAccount(e.target.value)
     }
     else if(e.target.name === 'linkContract'){
       setLinkContract(e.target.value)
     }
-    else if(e.target.name === 'purchaseTaxRate'){
-      setPurchaseTaxRate(e.target.value)
-    }
     else if(e.target.name === 'desc'){
         setdesc(e.target.value)
     }
-
-    else if(e.target.name === 'salesStatus'){
-      setSalesStatus(e.target.value)
-    }
-    else if(e.target.name === 'salesPrice'){
-      setSalesPrice(e.target.value)
-    }
-    else if(e.target.name === 'salesAccount'){
-      setSalesAccount(e.target.value)
-    }
-    else if(e.target.name === 'salesTaxRate'){
-      setSalesTaxRate(e.target.value)
-    }
-    else if(e.target.name === 'salesDesc'){
-        setSalesDesc(e.target.value)
-    }
-    
-
+  
   }
 
   const submit = async(e)=>{
@@ -294,7 +256,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Product and Services</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('productTitle')}</h3>
             <button onClick={()=>{
               setOpen(true);
               setCode('');
@@ -305,7 +267,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
               setIsOpenSaveChange(true)
             }} 
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
+              {t('new')}
             </button>
           </div>
         </div>
@@ -317,7 +279,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                 sheet="Product And Services"
                 currentTableRef={tableRef.current}>
                 <button type="button" className="text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
-                  Export
+                  {t('export')}
                   <BiExport className='text-lg ml-2'/>
                 </button>
 
@@ -326,7 +288,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
             <div className=''>
               <button type="button" onClick={handleClick} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Import
+                  {t('import')}
                 <BiImport className='text-lg ml-2'/>
               </button>
               <input type="file"
@@ -339,7 +301,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
               <button type="button" onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
@@ -358,22 +320,22 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                         </div>
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          SR
+                        {t('sr')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Code
+                        {t('code')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Name
+                        {t('name')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Linked Account
+                          {t('linkedAccount')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Linked Contract
+                          {t('linkedContract')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          View / Edit
+                          {t('viewOrEdit')}
                       </th>
                     </tr>
                 </thead>
@@ -438,7 +400,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                         <div className="grid grid-cols-6 gap-6">
                           <div className="col-span-2">
                             <label htmlFor="code" className="block text-sm font-medium text-gray-700">
-                              Code (required)
+                              {t('code')} (required)
                             </label>
                             <input
                               value={code}
@@ -453,7 +415,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                           </div>
                           <div className="col-span-2">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                              Name
+                              {t('name')}
                             </label>
                             <input
                               value={name}
@@ -469,7 +431,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                           
                           <div className="col-span-2">
                             <label htmlFor="linkAccount" className="block text-sm font-medium text-gray-700">
-                              Link Account
+                              {t('linkedAccount')}
                             </label>
                             <select
                               onChange={handleChange}
@@ -491,7 +453,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
                             <div className="w-1/4 flex space-x-5 my-auto">
                               <label htmlFor="linkContract" className="block text-sm font-medium text-gray-700">
-                                Link Contract
+                                {t('linkedContract')}
                               </label>
                               <div>
                                 <Switch color="blue" value={linkedCheck} onChange={handleLinkedCheck} />
@@ -501,7 +463,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
                           {linkedCheck ? <div className='col-span-2'>
                             <label htmlFor="linkContract" className="block text-sm font-medium text-gray-700">
-                              Link Contract
+                              {t('linkedContract')}
                             </label>
                             <select
                               onChange={handleChange}
@@ -521,7 +483,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
                           <div className="col-span-6">
                             <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
-                              Description
+                              {t('desc')}
                             </label>
                             <textarea cols="30" rows="4" type="text"
                               onChange={handleChange}
@@ -535,8 +497,8 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                         </div>
                       </div>
                       <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-                        <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                        {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                        <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                        {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                     </div>
                     </div>
                   </form>
