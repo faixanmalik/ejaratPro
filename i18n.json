@@ -3,9 +3,9 @@
   "defaultLocale": "en",
   "pages": {
     "*": ["common"],
-    "/": ["login"],
-    "/login": ["login"],
-    "/signup": ["signup"],
+    "/": ["credentials"],
+    "/login": ["credentials"],
+    "/signup": ["credentials"],
     "/panel": ["panel"],
     "/panel/realEstate/buildings": ["panel", "realEstate"],
     "/panel/realEstate/units": ["panel", "realEstate"],

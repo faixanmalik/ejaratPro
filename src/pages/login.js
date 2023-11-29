@@ -21,7 +21,7 @@ import { FaFacebookF } from 'react-icons/fa';
 
 function Login() {
   const router = useRouter()
-  const { t } = useTranslation('login')
+  const { t } = useTranslation('credentials')
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -86,7 +86,7 @@ return (
           <div className='flex'>
 
             <div className='w-full pt-10'>
-              <h1 className='text-black text-center font-bold'>{t('title')}</h1>          
+              <h1 className='text-black text-center font-bold'>{t('signIn')}</h1>          
               <div className="flex justify-center space-x-3 pt-3 mx-3">
 
                 <button>
@@ -109,7 +109,7 @@ return (
                 </div>
               </CardBody>
               <CardFooter className="pt-0 pb-10 flex flex-col justify-center">
-                <button onClick={(e)=>submit(e)} className='bg-blue-800 hover:bg-blue-900 mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('title')}</button>
+                <button onClick={(e)=>submit(e)} className='bg-blue-800 hover:bg-blue-900 mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('signIn')}</button>
               </CardFooter>
             </div>
 
@@ -120,7 +120,7 @@ return (
                   <h1 className='w-10/12 text-center text-sm text-gray-50 font-semibold'>{t('headingDescription')}</h1>          
                 </CardBody>
                 <CardFooter className="pt-0 flex justify-center">
-                  <Link href={'/signup'} className='no-underline bg-transparent border border-white mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('signUpText')}</Link>
+                  <Link href={'/signup'} className='no-underline bg-transparent border border-white mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('signUp')}</Link>
                 </CardFooter>
               </div>
             </div>

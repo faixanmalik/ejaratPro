@@ -18,7 +18,7 @@ import useTranslation from 'next-translate/useTranslation'
 
 function Signup() {
   const router = useRouter()
-  const { t } = useTranslation('signup')
+  const { t } = useTranslation('credentials')
 
   useEffect(() => {
     if(localStorage.getItem("token")){
@@ -128,7 +128,7 @@ return (
           <div className='flex'>
 
             <div className='w-full pt-10'>
-              <h1 className='text-black text-center font-bold'>{t('title')}</h1>          
+              <h1 className='text-black text-center font-bold'>{t('signUp')}</h1>          
               
               <CardBody className="flex flex-col gap-3 py-7">
 
@@ -144,7 +144,7 @@ return (
                 <h1 id="checkPassword" className='text-sm text-red-600 '></h1>
 
                 
-                <button onClick={(e)=>submit(e)} className='bg-blue-800 hover:bg-blue-900 mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('title')}</button>
+                <button onClick={(e)=>submit(e)} className='bg-blue-800 hover:bg-blue-900 mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('signUp')}</button>
 
               </CardBody>
             </div>
@@ -156,7 +156,7 @@ return (
                   <h1 className='w-10/12 text-center text-sm text-gray-50 font-semibold'>{t('headingDescription')}</h1>          
                 </CardBody>
                 <CardFooter className="pt-0 flex justify-center">
-                  <Link href={'/login'} className='no-underline bg-transparent border border-white mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('loginText')}</Link>
+                  <Link href={'/login'} className='no-underline bg-transparent border border-white mb-2 font-bold tracking-wider text-white px-14 py-2 rounded-lg'>{t('signIn')}</Link>
                 </CardFooter>
               </div>
             </div>
