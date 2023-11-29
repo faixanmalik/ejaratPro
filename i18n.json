@@ -6,17 +6,18 @@
     "/": ["login"],
     "/login": ["login"],
     "/signup": ["signup"],
-    "/panel": ["panel","sidebar"],
-    "/panel/realEstate/buildings": ["panel", "sidebar", "realEstate"],
-    "/panel/realEstate/units": ["panel", "sidebar", "realEstate"],
-    "/panel/realEstate/contractAndTenants": ["panel", "sidebar", "realEstate"],
-    "/panel/realEstate/cheques": ["panel", "sidebar", "realEstate"],
-    "/panel/realEstate/chequeTransactions": ["panel", "sidebar", "realEstate"],
-    "/panel/realEstate/tenantStatement": ["panel", "sidebar", "realEstate"],
-    "/panel/realEstate/contractTermination": ["panel", "sidebar", "realEstate"],
+    "/panel": ["panel"],
+    "/panel/realEstate/buildings": ["panel", "realEstate"],
+    "/panel/realEstate/units": ["panel", "realEstate"],
+    "/panel/realEstate/contractAndTenants": ["panel", "realEstate"],
+    "/panel/realEstate/cheques": ["panel", "realEstate"],
+    "/panel/realEstate/chequeTransactions": ["panel", "realEstate"],
+    "/panel/realEstate/tenantStatement": ["panel", "realEstate"],
+    "/panel/realEstate/contractTermination": ["panel", "realEstate"],
 
-    "/panel/userManagment/addRole": ["panel", "sidebar", "users"],
-    "/panel/businessSetup/chartsOfAccount": ["panel", "sidebar", "businessSetup"],
-    "/panel/businessSetup/taxRate": ["panel", "sidebar", "businessSetup"]
+    "/panel/userManagment/addRole": ["panel", "users"],
+    
+    "/panel/businessSetup/chartsOfAccount": ["panel", "businessSetup"],
+    "/panel/businessSetup/taxRate": ["panel", "businessSetup"]
   }
 }

@@ -27,7 +27,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
 
     
   const router = useRouter();
-  const { t } = useTranslation('sidebar')
+  const { t } = useTranslation('panel')
   const location = router.pathname;
   const [open, setOpen] = useState(false)
 
