@@ -59,5 +59,13 @@
   "productAndServices":"المنتجات والخدمات",
 
 
+  "creditSalesInvoiceTitle":"فاتورة مبيعات الائتمان",
+  "deleteInvoice":"حذف الفاتورة",
+  "deleteInvoicePara":"هل أنت متأكد أنك تريد حذف فاتورتك؟ وربما كان مرتبطا بالعقود",
+  "cancel":"يلغي",
+  "customerName":"اسم الزبون",
+  "discount":"تخفيض",
+
+
   "":""
 }

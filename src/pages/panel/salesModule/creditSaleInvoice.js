@@ -20,6 +20,7 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link';
 
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import useTranslation from 'next-translate/useTranslation';
 
 
 
@@ -30,6 +31,8 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
   const CreditSalesInvoice = ({ dbVouchers, dbProducts, dbContacts, dbEmployees, dbTaxRate }) => {
 
     const router = useRouter();
+    const { t } = useTranslation('modules')
+
     const searchParams = useSearchParams()
     const open = searchParams.get('open')
     const refer = searchParams.get('refer')
@@ -58,9 +61,6 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
         setSelectedIds(selectedIds.filter(rowId => rowId !== id));
       }
     }
-
-    
-   
 
     // JV
     const [billNo, setBillNo] = useState('')
@@ -450,12 +450,12 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Credit Sales Invoice</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('creditSalesInvoiceTitle')}</h3>
             <Link
               onClick={()=>openSettings()}
               href={'?open=true'}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
+              {t('new')}
             </Link>
           </div>
         </div>
@@ -464,7 +464,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
             <button onClick={() => setOpenModal(true)}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
               <AiOutlineDelete className='text-lg ml-2'/>
             </button>
 
@@ -501,11 +501,11 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             </div>
                             <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                               <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                Delete Invoice
+                                {t('deleteInvoice')}
                               </Dialog.Title>
                               <div className="mt-2">
                                 <p className="text-sm text-gray-500">
-                                  Are you sure you want to delete your invoice? May be it linked with the contracts
+                                  {t('deleteInvoicePara')}
                                 </p>
                               </div>
                             </div>
@@ -517,7 +517,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
                             onClick={delEntry}
                           >
-                            Delete
+                            {t('delete')}
                           </button>
                           <button
                             type="button"
@@ -525,7 +525,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             onClick={() => setOpenModal(false)}
                             ref={cancelButtonRef}
                           >
-                            Cancel
+                            {t('cancel')}
                           </button>
                         </div>
                       </Dialog.Panel>
@@ -540,7 +540,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                 return <button 
                   type='button'
                   className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Print All
+                  {t('printAll')}
                   <AiOutlinePrinter className='text-lg ml-2'/>
                 </button>
               }}
@@ -562,28 +562,28 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                         </div>
                       </th>
                       <th scope="col" className="p-1">
-                          Bill No
+                          {t('billNo')}
                       </th>
                       <th scope="col" className="p-1">
-                          Name
+                          {t('name')}
                       </th>
                       <th scope="col" className="p-1">
-                          Due Date
+                          {t('dueDate')}
                       </th>
                       <th scope="col" className="p-1">
-                          Total Amount
+                          {t('totalAmount')}
                       </th>
                       <th scope="col" className="p-1">
-                          Amount Paid
+                          {t('amountPaid')}
                       </th>
                       <th scope="col" className="p-1">
-                          Amount Received
+                          {t('amountReceived')}
                       </th>
                       <th scope="col" className="p-1">
-                          Status
+                          {t('status')}
                       </th>
                       <th scope="col" className="p-1">
-                        View/Edit
+                          {t('viewOrEdit')}
                       </th>
                     </tr>
                   </thead>
@@ -660,7 +660,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
-                                Journal Date:
+                                {t('journalDate')}
                               </label>
                               <input 
                                 type="date"
@@ -674,15 +674,15 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
                             <div className="w-full">
                               <label htmlFor="billNo" className="block text-sm font-medium text-gray-700">
-                                Bill No:
+                                {t('billNo')}
                               </label>
                               <input
-                              type="text"
-                              name="billNo"
-                              value={billNo}
-                              onChange={ handleChange }
-                              id="billNo"
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                type="text"
+                                name="billNo"
+                                value={billNo}
+                                onChange={ handleChange }
+                                id="billNo"
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
                           </div>
@@ -690,7 +690,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                           <div className='flex space-x-4 mb-14'>
                             <div className="w-full">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Customer Name
+                                {t('customerName')}
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select contacts</option>
@@ -705,7 +705,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
                             <div className="w-full">
                               <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                                Phone No:
+                                {t('phoneNo')}
                               </label>
                               <input
                                 type="number"
@@ -719,7 +719,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             
                             <div className="w-full">
                               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email:
+                                {t('email')}
                               </label>
                               <input
                                 type="text"
@@ -733,7 +733,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
                             <div className="w-full">
                               <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                                City:
+                                {t('city')}
                               </label>
                               <input
                                 type="text"
@@ -747,7 +747,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
                             <div className="w-full">
                               <label htmlFor="reference" className="block text-sm font-medium text-gray-700">
-                                Reference:
+                                {t('reference')}
                               </label>
                               <input
                                 type="text"
@@ -766,7 +766,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                         
                             <div className="w-full">
                               <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                                Address:
+                                {t('address')}
                               </label>
                               <input
                                 type="text"
@@ -781,7 +781,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             
                             <div className="w-1/3">
                               <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
-                                Due Date:
+                                {t('dueDate')}
                               </label>
                               <input 
                                 type="date"
@@ -800,26 +800,26 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             <table className="w-full text-sm text-left text-gray-500 ">
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                  <th scope="col" className="p-2">
-                                      Products / Services
+                                  <th scope="col" className="p-2 py-3">
+                                      {t('productAndServices')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Description 
+                                      {t('desc')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Amount
+                                      {t('amount')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Tax Rate
+                                      {t('taxRate')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Tax Amount
+                                      {t('taxAmount')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Total
+                                      {t('total')}
                                   </th>
-                                  <th scope="col" className="p-2">
-                                      Add/Del
+                                  <th scope="col" className="p-2 w-20">
+                                      {t('addOrDel')}
                                   </th>
                                 </tr>
                               </thead>
@@ -904,7 +904,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             <div className='flex flex-col ml-auto mr-10 space-y-2 w-1/3 py-3 mt-20'>
                               <div className="flex items-center">
                                 <label htmlFor="fullAmount" className="block w-full text-sm font-medium text-gray-700">
-                                  Total Amount:
+                                  {t('totalAmount')}
                                 </label>
                                 <input
                                   type="number"
@@ -917,7 +917,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                               </div>
                               <div className="flex items-center">
                                 <label htmlFor="fullTax" className="block w-full text-sm font-medium text-gray-700">
-                                  VAT:
+                                  {t('vat')}
                                 </label>
                                 <input
                                   type="number"
@@ -929,12 +929,9 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                                 />
                               </div>
 
-
-
-
                               <div className="flex items-center">
                                 <label htmlFor="discount" className="block w-full text-sm font-medium text-gray-700">
-                                  Discount:
+                                  {t('discount')}
                                 </label>
                                 <input
                                   type="number"
@@ -947,7 +944,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                               </div>
                               <div className="flex items-center">
                                 <label htmlFor="totalAmount" className="block w-full text-sm font-medium text-gray-700">
-                                  Total Amount:
+                                  {t('totalAmount')}
                                 </label>
                                 <input
                                   type="number"
@@ -964,7 +961,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
                           <div className=" mt-14">
                             <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
-                              Memo:
+                              {t('memo')}
                             </label>
                             <textarea cols="30" rows="4" type="text"
                                 name="memo"
@@ -997,7 +994,7 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                               return <button 
                                 type="button"
                                 className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                Print
+                                  {t('print')}
                                 <AiOutlinePrinter className='text-lg ml-2'/>
                               </button>
                             }}
@@ -1005,8 +1002,8 @@ import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
                             documentTitle='Credit Sales Invoice'
                             pageStyle='print'
                           />
-                          <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                          <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                         </div>
                       </div>
                     </form>

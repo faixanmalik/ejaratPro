@@ -63,6 +63,14 @@
   "productAndServices":"Products / Services",
 
 
+  "creditSalesInvoiceTitle":"Credit Sales Invoice",
+  "deleteInvoice":"Delete Invoice",
+  "deleteInvoicePara":"Are you sure you want to delete your invoice? May be it linked with the contracts",
+  "cancel":"Cancel",
+  "customerName":"Customer Name",
+  "discount":"Discount",
+
+
 
   "":""
 }

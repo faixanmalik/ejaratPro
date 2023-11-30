@@ -30,7 +30,9 @@
     "/panel/purchaseModule/paymentVoucher": ["panel", "modules"],
 
 
-    "/panel/salesModule/salesInvoice": ["panel", "modules"]
+    "/panel/salesModule/salesInvoice": ["panel", "modules"],
+    "/panel/salesModule/creditSaleInvoice": ["panel", "modules"]
+
     
     
   }
