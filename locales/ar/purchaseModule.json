@@ -1,0 +1,45 @@
+{
+  "purchaseInvoiceTitle":"فاتورة الشراء",
+  "new":"جديد",
+  "delete":"يمسح",
+  "printAll":"طباعة الكل",
+  "billNo":"رقم الفاتوره",
+  "date":"تاريخ",
+  "supplier":"المورد",
+  "totalAmount":"المبلغ الإجمالي",
+  "amountPaid":"المبلغ المدفوع",
+  "amountReceived":"تم استلام المبلغ",
+  "status":"حالة",
+  "viewOrEdit":"منظر / يحرر",
+  "journalDate":"تاريخ المجلة",
+  "supplierName":"اسم المورد",
+  "phoneNo":"رقم الهاتف",
+  "email":"بريد إلكتروني",
+  "city":"مدينة",
+  "reference":"مرجع",
+  "address":"عنوان",
+  "dueDate":"تاريخ الاستحقاق",
+  "account":"حساب",
+  "desc":"وصف",
+  "amount":"كمية",
+  "taxRate":"معدل الضريبة",
+  "taxAmount":"قيمة الضريبة",
+  "total":"المجموع",
+  "addOrDel":"إضافة/حذف",
+  "vat":"ضريبة القيمة المضافة",
+  "memo":"مذكرة",
+  "print":"مطبعة",
+  "saveChanges":"حفظ التغييرات",
+  "save":"يحفظ",
+
+
+
+
+
+
+
+
+
+
+  "":""
+}

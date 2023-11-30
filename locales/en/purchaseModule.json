@@ -1,0 +1,48 @@
+{
+  "purchaseInvoiceTitle":"Purchase Invoice",
+  "new":"New",
+  "delete":"Delete",
+  "printAll":"Print All",
+  "billNo":"Bill No",
+  "date":"Date",
+  "supplier":"Supplier",
+  "totalAmount":"Total Amount",
+  "amountPaid":"Amount Paid",
+  "amountReceived":"Amount Received",
+  "status":"Status",
+  "viewOrEdit":"View/Edit",
+  "journalDate":"Journal Date",
+  "supplierName":"Supplier Name",
+  "phoneNo":"Phone No",
+  "email":"Email",
+  "city":"City",
+  "reference":"Reference",
+  "address":"Address",
+  "dueDate":"Due Date",
+  "account":"Account",
+  "desc":"Description",
+  "amount":"Amount",
+  "taxRate":"Tax Rate",
+  "taxAmount":"Tax Amount",
+  "total":"Total",
+  "addOrDel":"Add/Del",
+  "vat":"VAT",
+  "memo":"Memo",
+  "print":"Print",
+  "saveChanges":"Save Changes",
+  "save":"Save",
+
+
+
+
+
+
+
+
+
+
+
+
+  "":""
+
+}
