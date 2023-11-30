@@ -24,7 +24,8 @@
     "/panel/businessSetup/bankAccount": ["panel", "businessSetup"],
 
 
-    "/panel/purchaseModule/purchaseInvoice": ["panel", "purchaseModule"]
+    "/panel/purchaseModule/purchaseInvoice": ["panel", "purchaseModule"],
+    "/panel/purchaseModule/debitNote": ["panel", "purchaseModule"]
     
     
   }
