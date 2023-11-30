@@ -43,6 +43,17 @@
   "name":"اسم",
 
 
+  "paymentVoucherTitle":"قسائم الدفع",
+  "balance":"توازن",
+  "prevPaid":"المدفوعة السابقة",
+  "remaining":"متبقي",
+  "paid":"مدفوع",
+  "netBalance":"الرصيد الصافي",
+  "totalBalance":"الرصيد الإجمالي",
+  "totalPaid":"مجموع المبالغ المدفوعة",
+  "totalNetBalance":"إجمالي صافي الرصيد",
+
+
 
 
 

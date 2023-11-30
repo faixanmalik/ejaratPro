@@ -26,7 +26,8 @@
 
     "/panel/purchaseModule/purchaseInvoice": ["panel", "purchaseModule"],
     "/panel/purchaseModule/debitNote": ["panel", "purchaseModule"],
-    "/panel/purchaseModule/expenses": ["panel", "purchaseModule"]
+    "/panel/purchaseModule/expenses": ["panel", "purchaseModule"],
+    "/panel/purchaseModule/paymentVoucher": ["panel", "purchaseModule"]
     
     
   }

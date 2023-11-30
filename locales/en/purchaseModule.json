@@ -45,6 +45,16 @@
   "name":"Name",
 
 
+  "paymentVoucherTitle":"Payment Vouchers",
+  "balance":"Balance",
+  "prevPaid":"Prev Paid",
+  "remaining":"Remaining",
+  "paid":"Paid",
+  "netBalance":"Net Balance",
+  "totalBalance":"Total Balance",
+  "totalPaid":"Total Paid",
+  "totalNetBalance":"Total Net Balance",
+
 
 
 

@@ -16,6 +16,7 @@ import Employees from 'models/Employees';
 import ReactToPrint from 'react-to-print';
 import PaymentType from 'models/PaymentMethod';
 import PurchaseInvoice from 'models/PurchaseInvoice';
+import useTranslation from 'next-translate/useTranslation';
 
 
   function classNames(...classes) {
@@ -25,6 +26,8 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
   const PaymentVoucher = ({ dbVouchers, dbPurchaseInvoice, dbPaymentType, dbContacts, dbEmployees, }) => {
     
     const [open, setOpen] = useState(false)
+    const { t } = useTranslation('purchaseModule')
+
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
@@ -168,7 +171,6 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
       }
     }
 
-
     const delEntry = async()=>{
 
       const data = { selectedIds , path: 'PaymentVoucher' };
@@ -225,8 +227,6 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
       }
     }
 
-
-
     const change = (e, index, id, balance, prevPaid, billNo) => {
 
       const values = [...inputList];
@@ -257,7 +257,6 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
       setTotalNetBalance(totalNetBalance)
     }
 
-
     const newStateSettings = ()=>{
 
       setOpen(true)
@@ -281,9 +280,6 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
       setPaidBy('')
       setDueDate('')
     }
-
-
-   
 
     // For print
     const componentRef = useRef();
@@ -309,12 +305,12 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Payment Vouchers</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('paymentVoucherTitle')}</h3>
             <button
               type='button'
               onClick={newStateSettings}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
+              {t('new')}
             </button>
           </div>
         </div>
@@ -325,7 +321,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
               onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
               <AiOutlineDelete className='text-lg ml-2'/>
             </button>
 
@@ -334,7 +330,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                 return <button 
                   type='button'
                   className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Print All
+                  {t('printAll')}
                   <AiOutlinePrinter className='text-lg ml-2'/>
                 </button>
               }}
@@ -356,22 +352,22 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                         </div>
                       </th>
                       <th scope="col" className="p-1">
-                          Voucher No
+                          {t('voucherNo')}
                       </th>
                       <th scope="col" className="p-1">
-                          Date
+                          {t('date')}
                       </th>
                       <th scope="col" className="p-1">
-                          Name
+                          {t('name')}
                       </th>
                       <th scope="col" className="p-1">
-                          Total Paid
+                          {t('totalPaid')}
                       </th>
                       <th scope="col" className="p-1">
-                          Paid By
+                          {t('paidBy')}
                       </th>
                       <th scope="col" className="p-1">
-                        View
+                          {t('view')}
                       </th>
                     </tr>
                   </thead>
@@ -442,7 +438,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
-                              Journal Date:
+                              {t('journalDate')}
                               </label>
                               <input 
                                 type="date"
@@ -456,7 +452,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
 
                             <div className="w-full">
                               <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
-                                Journal No:
+                                {t('journalNo')}
                               </label>
                               <input
                                 type="text"
@@ -472,7 +468,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                           <div className='flex space-x-4 mb-14'>
                             <div className="w-full">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Name:
+                                {t('name')}
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select contacts</option>
@@ -487,7 +483,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
 
                             <div className="w-full">
                               <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                                Phone No:
+                                {t('phoneNo')}
                               </label>
                               <input
                                 type="number"
@@ -501,7 +497,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                             
                             <div className="w-full">
                               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email:
+                                {t('email')}
                               </label>
                               <input
                                 type="text"
@@ -515,7 +511,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
 
                             <div className="w-full">
                               <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                                City:
+                                {t('city')}
                               </label>
                               <input
                                 type="text"
@@ -529,7 +525,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
 
                             <div className="w-full">
                               <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                                Amount:
+                                {t('amount')}
                               </label>
                               <input
                                 type="number"
@@ -548,7 +544,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                         
                             <div className="w-full">
                               <label htmlFor="paidBy" className="block text-sm font-medium text-gray-700">
-                                Paid By:
+                                {t('paidBy')}
                               </label>
                               
                               <select id="paidBy" name="paidBy" onChange={ handleChange } value={paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
@@ -563,23 +559,23 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
 
                             <div className="w-1/2">
                               <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700">
-                              Due Date:
+                                {t('dueDate')}
                               </label>
                               <input 
-                              type="date"
-                              onChange={handleChange}
-                              name="dueDate"
-                              id="dueDate"
-                              value={dueDate}
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              required
+                                type="date"
+                                onChange={handleChange}
+                                name="dueDate"
+                                id="dueDate"
+                                value={dueDate}
+                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                required
                               />
                             </div>
 
 
                             <div className="w-1/3">
                               <label htmlFor="reference" className="block text-sm font-medium text-gray-700">
-                                Reference:
+                                {t('reference')}
                               </label>
                               <input
                                 type="text"
@@ -590,35 +586,32 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
-
                           </div>
-
-
-
+                          
                           <div className='space-x-4 my-10'>
                             <table className="w-full text-sm text-left text-gray-500 ">
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                   <th scope="col" className="p-2">
-                                      Bill No
+                                      {t('billNo')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Date 
+                                      {t('date')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Balance
+                                      {t('balance')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Prev Paid
+                                      {t('prevPaid')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Remaining
+                                      {t('remaining')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Paid
+                                      {t('paid')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Net Balance
+                                      {t('netBalance')}
                                   </th>
                                 </tr>
                               </thead>
@@ -674,7 +667,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                             <div className='flex ml-auto mr-10 space-y-2 space-x-5 items-center w-3/5 py-3 mt-20'>
                               <div className="flex flex-col items-center">
                                 <label htmlFor="totalBalance" className="block w-full text-sm font-medium text-gray-700">
-                                  Total Balance:
+                                  {t('totalBalance')}
                                 </label>
                                 <input
                                   type="number"
@@ -687,7 +680,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                               </div>
                               <div className="flex flex-col items-center">
                                 <label htmlFor="totalPaid" className="block w-full text-sm font-medium text-gray-700">
-                                  Total Paid:
+                                  {t('totalPaid')}
                                 </label>
                                 <input
                                   type="number"
@@ -700,7 +693,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                               </div>
                               <div className="flex flex-col items-center">
                                 <label htmlFor="totalNetBalance" className="block w-full text-sm font-medium text-gray-700">
-                                  Total Net Balance:
+                                  {t('totalNetBalance')}
                                 </label>
                                 <input
                                   type="number"
@@ -717,7 +710,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
 
                           <div className=" mt-14">
                             <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
-                              Memo:
+                              {t('memo')}
                             </label>
                             <textarea cols="30" rows="4" type="text"
                                 name="memo"
@@ -751,7 +744,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                               return <button 
                                 type="button"
                                 className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                Print
+                                {t('print')}
                                 <AiOutlinePrinter className='text-lg ml-2'/>
                               </button>
                             }}
@@ -760,7 +753,7 @@ import PurchaseInvoice from 'models/PurchaseInvoice';
                             pageStyle='print'
                           />
 
-                          <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                          <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>
                         </div>
                       </div>
                     </form>
