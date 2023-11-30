@@ -775,7 +775,6 @@ import useTranslation from 'next-translate/useTranslation';
 }
 
 
-
 export async function getServerSideProps() {
   if (!mongoose.connections[0].readyState){
     mongoose.set("strictQuery", false);
