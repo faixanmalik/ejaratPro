@@ -55,5 +55,15 @@
   "productTitle": "المنتجات والخدمات",
   "code":"شفرة",
   "linkedAccount": "الحساب المرتبط",
-  "linkedContract":"العقد المرتبط"
+  "linkedContract":"العقد المرتبط",
+
+  "bankAccountTitle": "قائمة الحسابات المصرفية",
+  "branchName":"اسم الفرع",
+  "bankBranch":"فرع بنك",
+  "accountTitle":"عنوان الحساب",
+  "accountNumber":"رقم حساب",
+  "accountType":"نوع الحساب",
+  "addBankAccount":"إضافة حساب بنكي",
+  "accountDesc":"وصف الحساب",
+  "borrowingLimit":"حد الاقتراض"
 }

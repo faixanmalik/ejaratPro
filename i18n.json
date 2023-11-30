@@ -20,7 +20,8 @@
     "/panel/businessSetup/chartsOfAccount": ["panel", "businessSetup"],
     "/panel/businessSetup/taxRate": ["panel", "businessSetup"],
     "/panel/businessSetup/contactList": ["panel", "businessSetup"],
-    "/panel/businessSetup/productAndServices": ["panel", "businessSetup"]
+    "/panel/businessSetup/productAndServices": ["panel", "businessSetup"],
+    "/panel/businessSetup/bankAccount": ["panel", "businessSetup"]
     
   }
 }

@@ -56,6 +56,17 @@
   "productTitle": "Product and Services",
   "code":"Code",
   "linkedAccount": "Linked Account",
-  "linkedContract":"Linked Contract"
+  "linkedContract":"Linked Contract",
+
+
+  "bankAccountTitle": "Bank Accounts List",
+  "branchName":"Branch Name",
+  "bankBranch":"Bank Branch",
+  "accountTitle":"Account Title",
+  "accountNumber":"Account Number",
+  "accountType":"Account Type",
+  "addBankAccount":"Add Bank Account",
+  "accountDesc":"Account Desctiption",
+  "borrowingLimit":"Borrowing Limit"
 
 }

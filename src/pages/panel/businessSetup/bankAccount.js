@@ -13,12 +13,15 @@ import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { BiExport, BiImport } from 'react-icons/bi';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import {XLSX, read, utils} from 'xlsx';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const BankAccount = ({dbBankAccount, charts}) => {
 
 
   const [open, setOpen] = useState(false)
+
+  const { t } = useTranslation('businessSetup')
 
   // Add accountTitles
   const [bankBranch, setBankBranch] = useState('')
@@ -250,7 +253,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Bank Accounts List</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('bankAccountTitle')}</h3>
             <button onClick={()=>{ 
               setOpen(true), 
               setBankBranch(''), 
@@ -263,7 +266,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
               setIsOpenSaveChange(true)
             }} 
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-               New
+               {t('new')}
             </button>
           </div>
         </div>
@@ -277,7 +280,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
                 sheet="Bank Account"
                 currentTableRef={tableRef.current}>
                 <button type="button" className="text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
-                  Export
+                {t('export')}
                   <BiExport className='text-lg ml-2'/>
                 </button>
 
@@ -286,7 +289,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
             <div className=''>
               <button type="button" onClick={handleClick} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Import
+                  {t('import')}
                 <BiImport className='text-lg ml-2'/>
               </button>
               <input type="file"
@@ -299,7 +302,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
               <button button type="button" onClick={delEntry}
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
                 >
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
@@ -316,26 +319,26 @@ const BankAccount = ({dbBankAccount, charts}) => {
                         <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                       </div>
                     </th>
-                    <th scope="col" className="px-6 py-3">
-                        Sr.
+                    <th scope="col" className="px-4 py-3">
+                        {t('sr')}
+                    </th>
+                    <th scope="col" className="px-2 py-3">
+                        {t('branchName')}
+                    </th>
+                    <th scope="col" className="px-2 py-3">
+                        {t('accountTitle')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Branh Name
+                        {t('accountNumber')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Account Title
+                        {t('accountType')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Account Number
+                        {t('chartsOfAccount')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Account Type
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        Charts of Account
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                        <span className="">View / Edit</span>
+                        <span className="">{t('viewOrEdit')}</span>
                     </th>
                   </tr>
                 </thead>
@@ -349,13 +352,13 @@ const BankAccount = ({dbBankAccount, charts}) => {
                         <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                       </div>
                     </td>
-                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    <td scope="row" className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {index + 1}
                     </td>
-                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                    <td scope="row" className="px-2 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {item.bankBranch}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-2 py-4">
                         {item.accountTitle}
                     </td>
                     <td className="px-6 py-4">
@@ -404,7 +407,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
                       <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="md:col-span-1">
                           <div className="px-4 sm:px-0">
-                            <h3 className="text-lg font-bold leading-6 text-gray-900">Add Bank Account</h3>
+                            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('addBankAccount')}</h3>
                           </div>
                         </div>
                         <div className="mt-2 md:col-span-2 md:mt-0 w-full">
@@ -414,27 +417,27 @@ const BankAccount = ({dbBankAccount, charts}) => {
                                 <div className="grid grid-cols-6 gap-6">
 
                                     <div className="col-span-6 sm:col-span-6">
-                                      <label htmlFor="bankBranch" className="block text-sm font-medium text-gray-700">Bank Branch</label>
+                                      <label htmlFor="bankBranch" className="block text-sm font-medium text-gray-700">{t('bankBranch')}</label>
                                       <input onChange={handleChange} value={bankBranch} type="text" name="bankBranch" id="bankBranch" autoComplete="bankBranch" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
-                                      <label htmlFor="accountTitle" className="block text-sm font-medium text-gray-700">Account Title</label>
+                                      <label htmlFor="accountTitle" className="block text-sm font-medium text-gray-700">{t('accountTitle')}</label>
                                       <input onChange={handleChange} value={accountTitle} type="text" name="accountTitle" id="accountTitle" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="accountNo" className="block text-sm font-medium text-gray-700">Account Number</label>
+                                      <label htmlFor="accountNo" className="block text-sm font-medium text-gray-700">{t('accountNumber')}</label>
                                       <input onChange={handleChange} value={accountNo} type="number" name="accountNo" id="accountNo" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6">
-                                      <label htmlFor="accountDesc" className="block text-sm font-medium text-gray-700">Account Desctiption</label>
+                                      <label htmlFor="accountDesc" className="block text-sm font-medium text-gray-700">{t('accountDesc')}</label>
                                       <input onChange={handleChange} value={accountDesc} type="text" name="accountDesc" id="accountDesc" autoComplete="accountDesc" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="accountType" className="block text-sm font-medium text-gray-700">Account Type</label>
+                                      <label htmlFor="accountType" className="block text-sm font-medium text-gray-700">{t('accountType')}</label>
                                       <select id="accountType" name="accountType" onChange={handleChange} value={accountType} autoComplete="accountType" className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>Select Account Type</option>
                                         <option value={'Current'}>Current</option>
@@ -442,7 +445,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
-                                      <label htmlFor="borrowingLimit" className="block text-sm font-medium text-gray-700">Borrowing Limit</label>
+                                      <label htmlFor="borrowingLimit" className="block text-sm font-medium text-gray-700">{t('borrowingLimit')}</label>
                                       <input onChange={handleChange} value={borrowingLimit} type="number" name="borrowingLimit" id="borrowingLimit" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
@@ -450,7 +453,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
 
                                     <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="chartsOfAccounts" className="block text-sm font-medium text-gray-700">
-                                        Charts of Account
+                                        {t('chartsOfAccount')}
                                       </label>
                                       <select
                                         onChange={handleChange}
@@ -470,8 +473,8 @@ const BankAccount = ({dbBankAccount, charts}) => {
                                 </div>
                               </div>
                               <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                             
                             </div>
