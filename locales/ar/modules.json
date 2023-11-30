@@ -53,5 +53,11 @@
   "totalPaid":"مجموع المبالغ المدفوعة",
   "totalNetBalance":"إجمالي صافي الرصيد",
   
+  "salesInvoiceTitle":"فواتير المبيعات",
+  "receivedBy":"استلمت من قبل",
+  "chqNo":"رقم الشيك",
+  "productAndServices":"المنتجات والخدمات",
+
+
   "":""
 }

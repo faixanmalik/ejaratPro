@@ -24,10 +24,13 @@
     "/panel/businessSetup/bankAccount": ["panel", "businessSetup"],
 
 
-    "/panel/purchaseModule/purchaseInvoice": ["panel", "purchaseModule"],
-    "/panel/purchaseModule/debitNote": ["panel", "purchaseModule"],
-    "/panel/purchaseModule/expenses": ["panel", "purchaseModule"],
-    "/panel/purchaseModule/paymentVoucher": ["panel", "purchaseModule"]
+    "/panel/purchaseModule/purchaseInvoice": ["panel", "modules"],
+    "/panel/purchaseModule/debitNote": ["panel", "modules"],
+    "/panel/purchaseModule/expenses": ["panel", "modules"],
+    "/panel/purchaseModule/paymentVoucher": ["panel", "modules"],
+
+
+    "/panel/salesModule/salesInvoice": ["panel", "modules"]
     
     
   }

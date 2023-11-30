@@ -54,5 +54,15 @@
   "totalBalance":"Total Balance",
   "totalPaid":"Total Paid",
   "totalNetBalance":"Total Net Balance",
+
+
+
+  "salesInvoiceTitle":"Sales Invoices",
+  "receivedBy":"Received By",
+  "chqNo":"Cheque No",
+  "productAndServices":"Products / Services",
+
+
+
   "":""
 }

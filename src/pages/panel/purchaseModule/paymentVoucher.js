@@ -26,7 +26,7 @@ import useTranslation from 'next-translate/useTranslation';
   const PaymentVoucher = ({ dbVouchers, dbPurchaseInvoice, dbPaymentType, dbContacts, dbEmployees, }) => {
     
     const [open, setOpen] = useState(false)
-    const { t } = useTranslation('purchaseModule')
+    const { t } = useTranslation('modules')
 
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
