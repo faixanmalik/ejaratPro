@@ -242,7 +242,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
               <MenuItem href={`/${router.locale}/panel/salesModule/salesInvoice`} icon={<HiOutlineCash className='text-lg'/>} className={ location === '/panel/salesModule/salesInvoice' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
                 {t('salesInvoice')}
               </MenuItem>
-              <MenuItem href={`/${router.locale}/panel/salesModule/creditSaleInvoice`} icon={<HiOutlineCash className='text-lg'/>} className={ location === '/panel/salesModule/purchaseOrder' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+              <MenuItem href={`/${router.locale}/panel/salesModule/creditSaleInvoice`} icon={<HiOutlineCash className='text-lg'/>} className={ location === '/panel/salesModule/creditSaleInvoice' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
                 {t('creditSaleInvoice')}
               </MenuItem>
               <MenuItem href={`/${router.locale}/panel/salesModule/creditNote`} icon={<HiOutlineCash className='text-lg'/>} className={ location === '/panel/salesModule/creditNote' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
