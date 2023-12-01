@@ -20,6 +20,7 @@ import PaymentMethod from 'models/PaymentMethod';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link';
+import useTranslation from 'next-translate/useTranslation';
 
 
   function classNames(...classes) {
@@ -29,6 +30,7 @@ import Link from 'next/link';
   const ReceiptVoucher = ({ dbVouchers, dbBankAccount, dbCreditSalesInvoice, dbPaymentMethod, dbContacts, dbEmployees, }) => {
 
     const router = useRouter();
+    const { t } = useTranslation('modules')
     const searchParams = useSearchParams()
     const open = searchParams.get('open')
     const refer = searchParams.get('refer')
@@ -104,9 +106,7 @@ import Link from 'next/link';
     const [email, setEmail] = useState('')
     const [city, setCity] = useState('')
     const [amount, setAmount] = useState('')
-
     const [totalPaid, setTotalPaid] = useState(0)
-
 
     // JV
     const [inputList, setInputList] = useState([
@@ -271,8 +271,6 @@ import Link from 'next/link';
       }
     }
 
-
-
     const change = (e, index, id, balance, prevPaid, billNo) => {
 
       const values = [...inputList];
@@ -297,7 +295,6 @@ import Link from 'next/link';
       }
       setTotalPaid(totalPaid)
     }
-
 
     const openSettings = ()=>{
 
@@ -348,12 +345,12 @@ import Link from 'next/link';
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Receipt Vouchers</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('receiptVoucherTitle')}</h3>
             <Link
               onClick={()=>openSettings()}
               href={'?open=true'}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} no-underline ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
+                {t('new')}
             </Link>
           </div>
         </div>
@@ -364,7 +361,7 @@ import Link from 'next/link';
               onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
               <AiOutlineDelete className='text-lg ml-2'/>
             </button>
 
@@ -373,7 +370,7 @@ import Link from 'next/link';
                 return <button 
                   type='button'
                   className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Print All
+                    {t('printAll')}
                   <AiOutlinePrinter className='text-lg ml-2'/>
                 </button>
               }}
@@ -395,19 +392,19 @@ import Link from 'next/link';
                         </div>
                       </th>
                       <th scope="col" className="p-1">
-                          Voucher No
+                          {t('vocherNo')}
                       </th>
                       <th scope="col" className="p-1">
-                          Date
+                          {t('date')}
                       </th>
                       <th scope="col" className="p-1">
-                          Name
+                          {t('name')}
                       </th>
                       <th scope="col" className="p-1">
-                          Amount Received
+                          {t('amountReceived')}
                       </th>
                       <th scope="col" className="p-1">
-                        View
+                        {t('view')}
                       </th>
                     </tr>
                   </thead>
@@ -475,7 +472,7 @@ import Link from 'next/link';
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
-                                Journal Date:
+                                {t('journalDate')}
                               </label>
                               <input 
                                 type="date"
@@ -489,7 +486,7 @@ import Link from 'next/link';
 
                             <div className="w-full">
                               <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
-                                Journal No:
+                                {t('journalNo')}
                               </label>
                               <input
                                 type="text"
@@ -506,7 +503,7 @@ import Link from 'next/link';
                             
                             <div className="w-full">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Name:
+                                {t('name')}
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select contacts</option>
@@ -521,7 +518,7 @@ import Link from 'next/link';
 
                             <div className="w-full">
                               <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">
-                                Phone No:
+                                {t('phoneNo')}
                               </label>
                               <input
                                 type="number"
@@ -535,7 +532,7 @@ import Link from 'next/link';
                             
                             <div className="w-full">
                               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email:
+                                {t('email')}
                               </label>
                               <input
                                 type="text"
@@ -549,7 +546,7 @@ import Link from 'next/link';
 
                             <div className="w-full">
                               <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                                City:
+                                {t('city')}
                               </label>
                               <input
                                 type="text"
@@ -560,17 +557,12 @@ import Link from 'next/link';
                                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
-
-                            
-
                           </div>
 
                           <div className='flex space-x-4 mb-14'>
-
-
                             <div className="w-1/4">
                               <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
-                                Amount:
+                                {t('amount')}
                               </label>
                               <input
                                 type="number"
@@ -584,7 +576,7 @@ import Link from 'next/link';
                         
                             <div className="w-1/3">
                               <label htmlFor="reference" className="block text-sm font-medium text-gray-700">
-                                Reference:
+                                {t('reference')}
                               </label>
                               <input
                                 type="text"
@@ -595,7 +587,6 @@ import Link from 'next/link';
                                 className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
-
                           </div>
 
                           <div className='space-x-4 my-10'>
@@ -603,28 +594,28 @@ import Link from 'next/link';
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                   <th scope="col" className="p-2">
-                                      Bill No
+                                      {t('billNo')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Paid By 
+                                      {t('paidBy')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Chq No
+                                      {t('chqNo')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Due Date
+                                      {t('dueDate')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Bank
+                                      {t('bank')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Balance
+                                      {t('balance')}
                                   </th>
                                   <th scope="col" className="p-2 min-w-[10px]">
-                                      Paid
+                                      {t('paid')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Add/Del
+                                      {t('addOrDel')}
                                   </th>
                                 </tr>
                               </thead>
@@ -718,21 +709,12 @@ import Link from 'next/link';
                             </table>
                             { inputList.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                           </div>
-
-
-            
-
-
-
-
-
-
-                        
+             
                           <div className='bg-gray-100'>
                             <div className='flex justify-end space-y-2 space-x-5 items-center w-full py-3 mt-20'>
                               <div className="flex flex-col items-center mr-20">
                                 <label htmlFor="totalPaid" className="block w-10/12 text-sm font-medium text-gray-700">
-                                  Total Paid:
+                                  {t('totalPaid')}
                                 </label>
                                 <input
                                   type="number"
@@ -743,13 +725,12 @@ import Link from 'next/link';
                                   readOnly
                                 />
                               </div>
-                              
                             </div>
                           </div>
 
                           <div className=" mt-14">
                             <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
-                              Memo:
+                              {t('memo')}
                             </label>
                             <textarea cols="30" rows="4" type="text"
                                 name="memo"
@@ -783,7 +764,7 @@ import Link from 'next/link';
                               return <button 
                                 type="button"
                                 className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                Print
+                                  {t('print')}
                                 <AiOutlinePrinter className='text-lg ml-2'/>
                               </button>
                             }}
@@ -792,7 +773,7 @@ import Link from 'next/link';
                             pageStyle='print'
                           />
 
-                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                         </div>
                       </div>
                     </form>

@@ -74,6 +74,11 @@
   "creditNoteTitle":"Credit Note Invoices",
   "product":"Product",
 
+  "receiptVoucherTitle":"Receipt Vouchers",
+  "view":"View",
+  "vocherNo":"Voucher No",
+  
+
 
   "":""
 }

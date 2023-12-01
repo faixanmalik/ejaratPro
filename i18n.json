@@ -32,7 +32,8 @@
 
     "/panel/salesModule/salesInvoice": ["panel", "modules"],
     "/panel/salesModule/creditSaleInvoice": ["panel", "modules"],
-    "/panel/salesModule/creditNote": ["panel", "modules"]
+    "/panel/salesModule/creditNote": ["panel", "modules"],
+    "/panel/salesModule/receiptVoucher": ["panel", "modules"]
 
     
     
