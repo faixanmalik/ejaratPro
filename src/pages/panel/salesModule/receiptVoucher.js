@@ -480,7 +480,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="journalDate"
                                 id="journalDate"
                                 value={journalDate}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
@@ -493,7 +493,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="journalNo"
                                 value={journalNo}
                                 id="journalNo"
-                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 readOnly
                               />
                             </div>
@@ -526,7 +526,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="phoneNo"
                                 value={phoneNo}
                                 id="phoneNo"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
                             
@@ -540,7 +540,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="email"
                                 value={email}
                                 id="email"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
@@ -554,7 +554,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="city"
                                 value={city}
                                 id="city"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
                           </div>
@@ -569,7 +569,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="amount"
                                 value={totalPaid}
                                 id="amount"
-                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 readOnly
                               />
                             </div>
@@ -584,7 +584,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 value={reference}
                                 onChange={handleChange}
                                 id="reference"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
                           </div>
@@ -657,7 +657,7 @@ import useTranslation from 'next-translate/useTranslation';
                                       onChange={e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo)}
                                       name="ref"
                                       id="ref"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                   </td>
 
@@ -668,7 +668,7 @@ import useTranslation from 'next-translate/useTranslation';
                                       onChange={e=> change(e, index)}
                                       name="chequeDueDate"
                                       id="chequeDueDate"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       
                                     />
                                   </td>
@@ -693,7 +693,7 @@ import useTranslation from 'next-translate/useTranslation';
                                       onChange={e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo)}
                                       name="paid"
                                       id="paid"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                   </td>
 
@@ -721,7 +721,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   value = { totalPaid }
                                   name="totalPaid"
                                   id="totalPaid"
-                                  className="w-10/12 mt-1 p-2 cursor-not-allowed block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="w-10/12 mt-1 p-2 cursor-not-allowed block rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                 />
                               </div>
@@ -737,7 +737,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 onChange={handleChange}
                                 id="memo"
                                 value={memo}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             </textarea>
                           </div>
                             
@@ -751,7 +751,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="attachment"
                                 value={attachment}
                                 id="attachment"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 multiple
                             />
                           </div> */}

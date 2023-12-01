@@ -1460,33 +1460,33 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">{t('name')}</label>
-                  <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">{t('email')}</label>
-                  <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
-                  <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
-                  <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">{t('idNumber')}</label>
-                  <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">{t('expID')}</label>
-                  <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
               </div>
@@ -1508,7 +1508,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantPassPortNumber"
                         value={tenantPassPortNumber}
                         id="tenantPassPortNumber"
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -1522,7 +1522,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantExpPassPort"
                         id="tenantExpPassPort"
                         value={tenantExpPassPort}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -1536,7 +1536,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantVatRegistrationNo"
                         id="tenantVatRegistrationNo"
                         value={tenantVatRegistrationNo}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div> 
                   </div>
@@ -1552,7 +1552,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantIbanNo"
                         value={tenantIbanNo}
                         id="tenantIbanNo"
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -1566,7 +1566,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantBank"
                         id="tenantBank"
                         value={tenantBank}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -1580,7 +1580,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantBankAccountNumber"
                         id="tenantBankAccountNumber"
                         value={tenantBankAccountNumber}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     

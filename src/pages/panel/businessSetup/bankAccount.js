@@ -418,22 +418,22 @@ const BankAccount = ({dbBankAccount, charts}) => {
 
                                     <div className="col-span-6 sm:col-span-6">
                                       <label htmlFor="bankBranch" className="block text-sm font-medium text-gray-700">{t('bankBranch')}</label>
-                                      <input onChange={handleChange} value={bankBranch} type="text" name="bankBranch" id="bankBranch" autoComplete="bankBranch" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={bankBranch} type="text" name="bankBranch" id="bankBranch" autoComplete="bankBranch" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
                                       <label htmlFor="accountTitle" className="block text-sm font-medium text-gray-700">{t('accountTitle')}</label>
-                                      <input onChange={handleChange} value={accountTitle} type="text" name="accountTitle" id="accountTitle" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"/>
+                                      <input onChange={handleChange} value={accountTitle} type="text" name="accountTitle" id="accountTitle" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="accountNo" className="block text-sm font-medium text-gray-700">{t('accountNumber')}</label>
-                                      <input onChange={handleChange} value={accountNo} type="number" name="accountNo" id="accountNo" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={accountNo} type="number" name="accountNo" id="accountNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6">
                                       <label htmlFor="accountDesc" className="block text-sm font-medium text-gray-700">{t('accountDesc')}</label>
-                                      <input onChange={handleChange} value={accountDesc} type="text" name="accountDesc" id="accountDesc" autoComplete="accountDesc" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
+                                      <input onChange={handleChange} value={accountDesc} type="text" name="accountDesc" id="accountDesc" autoComplete="accountDesc" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -446,7 +446,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
                                       <label htmlFor="borrowingLimit" className="block text-sm font-medium text-gray-700">{t('borrowingLimit')}</label>
-                                      <input onChange={handleChange} value={borrowingLimit} type="number" name="borrowingLimit" id="borrowingLimit" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={borrowingLimit} type="number" name="borrowingLimit" id="borrowingLimit" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
 

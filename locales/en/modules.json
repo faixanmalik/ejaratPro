@@ -77,6 +77,13 @@
   "receiptVoucherTitle":"Receipt Vouchers",
   "view":"View",
   "vocherNo":"Voucher No",
+
+  "journalVoucherTitle":"Journal Vouchers",
+  "debit":"Debit",
+  "credit":"Credit",
+  "totalDebit":"Total Debit",
+  "totalCredit":"Total Credit",
+  "action":"Action",
   
 
 

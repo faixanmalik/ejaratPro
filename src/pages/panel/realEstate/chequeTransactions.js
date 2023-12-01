@@ -466,7 +466,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                 name="journalDate"
                                 id="journalDate"
                                 value={journalDate}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
@@ -480,7 +480,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                 name="journalNo"
                                 value={journalNo}
                                 id="journalNo"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 readOnly
                               />
                             </div>
@@ -510,7 +510,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                 name="email"
                                 value={email}
                                 id="email"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
                             
@@ -523,7 +523,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                 name="desc"
                                 value={desc}
                                 id="desc"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                               </textarea>
                             </div>
 
@@ -570,7 +570,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                       value={ inputList.debit }
                                       name="debit"
                                       id="debit"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                   </td>
 
@@ -581,7 +581,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                       value = { inputList.credit }
                                       name="credit"
                                       id="credit"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     />
                                   </td>
 
@@ -611,7 +611,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                   value = { totalDebit }
                                   name="totalDebit"
                                   id="totalDebit"
-                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                   />
                               </div>
@@ -625,7 +625,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                   value = { totalCredit }
                                   name="totalCredit"
                                   id="totalCredit"
-                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                   />
                               </div>
@@ -642,7 +642,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                 onChange={handleChange}
                                 id="memo"
                                 value={memo}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             </textarea>
                           </div>
                             
@@ -656,7 +656,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                 name="attachment"
                                 value={attachment}
                                 id="attachment"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 multiple
                             />
                           </div> */}

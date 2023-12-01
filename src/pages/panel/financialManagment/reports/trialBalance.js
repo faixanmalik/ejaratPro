@@ -670,7 +670,7 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                                 name="fromDate"
                                 id="fromDate"
                                 value={fromDate}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
                         <div className="col-span-6 sm:col-span-2">
@@ -683,7 +683,7 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                                 name="toDate"
                                 id="toDate"
                                 value={toDate}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
                         <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>Update</button>

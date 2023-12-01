@@ -679,7 +679,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="nameInInvoice"
                   value={nameInInvoice}
                   id="nameInInvoice"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -693,7 +693,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="phoneNo"
                   value={phoneNo}
                   id="phoneNo"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -707,7 +707,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="email"
                   value={email}
                   id="email"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -723,7 +723,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="lessorName"
                   value={lessorName}
                   id="lessorName"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -766,7 +766,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="idNumber"
                         value={idNumber}
                         id="idNumber"
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -779,7 +779,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="expID"
                         id="expID"
                         value={expID}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -806,7 +806,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="passPortNumber"
                         value={passPortNumber}
                         id="passPortNumber"
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -819,7 +819,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="expPassPort"
                         id="expPassPort"
                         value={expPassPort}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -919,7 +919,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="ibanNo"
                         value={ibanNo}
                         id="ibanNo"
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -932,7 +932,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="vatRegistrationNo"
                         id="vatRegistrationNo"
                         value={vatRegistrationNo}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -945,7 +945,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="bankAccountNumber"
                         id="bankAccountNumber"
                         value={bankAccountNumber}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     <div className="w-full">
@@ -958,7 +958,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tradeLicenseNo"
                         id="tradeLicenseNo"
                         value={tradeLicenseNo}
-                        className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                   </div>
@@ -1000,7 +1000,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="buildingNameInArabic"
                   value={buildingNameInArabic}
                   id="buildingNameInArabic"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1013,7 +1013,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="buildingNameInEnglish"
                   value={buildingNameInEnglish}
                   id="buildingNameInEnglish"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-8/12">
@@ -1026,7 +1026,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="totalUnits"
                   value={totalUnits}
                   id="totalUnits"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -1040,7 +1040,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="unitsPerFloor"
                   value={unitsPerFloor}
                   id="unitsPerFloor"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -1055,7 +1055,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="parkings"
                   value={parkings}
                   id="parkings"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-8/12">
@@ -1068,7 +1068,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="roof"
                   value={roof}
                   id="roof"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-8/12">
@@ -1081,7 +1081,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="titleDeedNo"
                   value={titleDeedNo}
                   id="titleDeedNo"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1130,7 +1130,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="mizan"
                   value={mizan}
                   id="mizan"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1143,7 +1143,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="plotArea"
                   value={plotArea}
                   id="plotArea"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1156,7 +1156,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="floor"
                   value={floor}
                   id="floor"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -1170,7 +1170,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="buildingArea"
                   value={buildingArea}
                   id="buildingArea"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -1184,7 +1184,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="electricityMeterNo"
                   value={electricityMeterNo}
                   id="electricityMeterNo"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               
@@ -1223,7 +1223,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="contractStartDate"
                   value={contractStartDate}
                   id="contractStartDate"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1247,7 +1247,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="gracePeriodFrom"
                   value={gracePeriodFrom}
                   id="gracePeriodFrom"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -1262,7 +1262,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="contractEndDate"
                   value={contractEndDate}
                   id="contractEndDate"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1275,7 +1275,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="amount"
                   value={amount}
                   id="amount"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1288,7 +1288,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="gracePeriodTo"
                   value={gracePeriodTo}
                   id="gracePeriodTo"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -1327,7 +1327,7 @@ import useTranslation from 'next-translate/useTranslation';
                   value={unitNo}
                   onChange={handleChange}
                   id="unitNo"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1340,7 +1340,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="unitName"
                   value={unitName}
                   id="unitName"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1353,7 +1353,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="unitRent"
                   value={unitRent}
                   id="unitRent"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1535,7 +1535,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="unitSize"
                   value={unitSize}
                   id="unitSize"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -1551,7 +1551,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="bathroom"
                   value={bathroom}
                   id="bathroom"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-11/12">
@@ -1564,7 +1564,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="parking"
                   value={parking}
                   id="parking"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-11/12">
@@ -1577,7 +1577,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="balcony"
                   value={balcony}
                   id="balcony"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -1613,7 +1613,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="noOfFunctionLoop"
                   value={noOfFunctionLoop}
                   id="noOfFunctionLoop"
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 

@@ -14,19 +14,21 @@ import { ProSidebarProvider } from 'react-pro-sidebar';
 import FullLayout from '@/panel/layouts/FullLayout';
 import Employees from 'models/Employees';
 import ReactToPrint from 'react-to-print';
+import useTranslation from 'next-translate/useTranslation';
 
 
   const JournalVoucher = ({ dbVouchers, dbCharts, dbContacts, dbEmployees }) => {
     
     const [open, setOpen] = useState(false)
+    const { t } = useTranslation('modules')
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
 
     // authentications
-  const [isAdmin, setIsAdmin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
 
-  const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
+    const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
   
 
     function handleRowCheckboxChange(e, id) {
@@ -227,9 +229,9 @@ import ReactToPrint from 'react-to-print';
         }
     }
 
-  // For print
-  const componentRef = useRef();
-  const speceficComponentRef = useRef();
+    // For print
+    const componentRef = useRef();
+    const speceficComponentRef = useRef();
 
   return (
     <>
@@ -251,7 +253,7 @@ import ReactToPrint from 'react-to-print';
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Journal Vouchers</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('journalVoucherTitle')}</h3>
             <button onClick={()=>{
               setOpen(true)
               setId('')
@@ -274,7 +276,7 @@ import ReactToPrint from 'react-to-print';
 
               }} 
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-              New
+              {t('new')}
             </button>
           </div>
         </div>
@@ -284,7 +286,7 @@ import ReactToPrint from 'react-to-print';
             <button onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
               <AiOutlineDelete className='text-lg ml-2'/>
             </button>
 
@@ -293,7 +295,7 @@ import ReactToPrint from 'react-to-print';
                 return <button 
                   type='button'
                   className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Print All
+                    {t('printAll')}
                   <AiOutlinePrinter className='text-lg ml-2'/>
                 </button>
               }}
@@ -315,26 +317,25 @@ import ReactToPrint from 'react-to-print';
                         </div>
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Voucher No
+                          {t('voucherNo')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Date
+                          {t('date')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Name
+                          {t('name')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Account
+                          {t('account')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Total Debit
+                          {t('totalDebit')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Total Credit
+                          {t('totalCredit')}
                       </th>
-                      
                       <th scope="col" className="px-6 py-3">
-                        Action
+                        {t('action')}
                       </th>
                     </tr>
                   </thead>
@@ -408,38 +409,38 @@ import ReactToPrint from 'react-to-print';
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
-                              Journal Date:
+                                {t('journalDate')}
                               </label>
                               <input 
-                              type="date"
-                              onChange={handleChange}
-                              name="journalDate"
-                              id="journalDate"
-                              value={journalDate}
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                type="date"
+                                onChange={handleChange}
+                                name="journalDate"
+                                id="journalDate"
+                                value={journalDate}
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
                             <div className="w-full">
                               <label htmlFor="journalNo" className="block text-sm font-medium text-gray-700">
-                                Journal No:
+                                {t('journalNo')}
                               </label>
                               <input
-                              type="text"
-                              onChange={handleChange}
-                              name="journalNo"
-                              value={journalNo}
-                              id="journalNo"
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                              readOnly
+                                type="text"
+                                onChange={handleChange}
+                                name="journalNo"
+                                value={journalNo}
+                                id="journalNo"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                readOnly
                               />
                             </div>
                           </div>
 
                           <div className='flex space-x-4 mb-14'>
-                          <div className="w-1/3">
+                            <div className="w-1/3">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                  Name
+                                  {t('name')}
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option>select contacts</option>
@@ -452,94 +453,90 @@ import ReactToPrint from 'react-to-print';
                             
                             <div className="w-2/3">
                               <label htmlFor="desc" className="block text-sm font-medium text-gray-700">
-                                Description:
+                                {t('desc')}
                               </label>
                               <textarea cols="30" rows="1" type="text"
                                 onChange={ handleChange }
                                 name="desc"
                                 value={desc}
                                 id="desc"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                               </textarea>
                             </div>
 
                           </div>
-
-
-
 
                           <div className='flex space-x-4 my-10'>
                             <table className="w-full text-sm text-left text-gray-500 ">
                               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                   <th scope="col" className="p-2">
-                                      Account
+                                      {t('account')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Debit 
+                                      {t('debit')}
                                   </th>
                                   <th scope="col" className="p-2">
-                                      Credit
+                                      {t('credit')}
                                   </th>
-                                  <th scope="col" className="p-2">
-                                      Add/Del
+                                  <th scope="col" className="p-2 w-20 py-3">
+                                      {t('addOrDel')}
                                   </th>
                                 </tr>
                               </thead>
                             
                               <tbody >
-                              {inputList.map(( inputList , index)=>{
-                                return <tr key={index} className="bg-white text-black border-b hover:bg-gray-50">
-                                
-                                  <td className="p-2 w-1/2">
-                                    <select id="account" name="account" onChange={ e => change(e, index) } value={inputList.account} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                      <option>select accounts</option>
-                                      {dbCharts.map((item)=>{
-                                        return <option key={item._id} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
-                                      })}
-                                    </select>
-                                  </td>
-                                  <td className="p-2">
-                                    <input
-                                      type="number"
-                                      onChange={ e=> change(e, index) }
-                                      value={ inputList.debit }
-                                      name="debit"
-                                      id="debit"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                    />
-                                  </td>
-
-                                  <td className="p-2">
-                                    <input
-                                      type="number"
-                                      onChange={ e=> change(e, index) }
-                                      value = { inputList.credit }
-                                      name="credit"
-                                      id="credit"
-                                      className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                    />
-                                  </td>
-
+                                {inputList.map(( inputList , index)=>{
+                                  return <tr key={index} className="bg-white text-black border-b hover:bg-gray-50">
                                   
-                                  <td className="p-1 flex items-center mt-[18px]">
+                                    <td className="p-2 w-1/2">
+                                      <select id="account" name="account" onChange={ e => change(e, index) } value={inputList.account} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                        <option>select accounts</option>
+                                        {dbCharts.map((item)=>{
+                                          return <option key={item._id} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
+                                        })}
+                                      </select>
+                                    </td>
+                                    <td className="p-2">
+                                      <input
+                                        type="number"
+                                        onChange={ e=> change(e, index) }
+                                        value={ inputList.debit }
+                                        name="debit"
+                                        id="debit"
+                                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      />
+                                    </td>
+
+                                    <td className="p-2">
+                                      <input
+                                        type="number"
+                                        onChange={ e=> change(e, index) }
+                                        value = { inputList.credit }
+                                        name="credit"
+                                        id="credit"
+                                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      />
+                                    </td>
+
                                     
-                                    <button type='button' className='mx-auto' onClick={addLines}><AiOutlinePlusCircle className='text-xl text-green-600'/></button>
-                                    <button type='button' className='mx-auto'><AiOutlineDelete onClick={()=>index != 0 && delLines(index)} className='text-xl text-red-700'/></button>
-                                  </td>
+                                    <td className="p-1 flex items-center mt-[18px]">
+                                      
+                                      <button type='button' className='mx-auto' onClick={addLines}><AiOutlinePlusCircle className='text-xl text-green-600'/></button>
+                                      <button type='button' className='mx-auto'><AiOutlineDelete onClick={()=>index != 0 && delLines(index)} className='text-xl text-red-700'/></button>
+                                    </td>
 
                                 </tr>})}
-                                  
                               </tbody>
                             </table>
                           </div>
 
-                            
+                          
                           <div className='bg-gray-50'>
                             <div className='flex space-x-4 py-2 mt-10 justify-end pr-20 '>
                               <div className="w-44">
                                 <label htmlFor="totalDebit" className="block text-sm font-medium text-gray-700">
-                                    Total Debit:
+                                    {t('totalDebit')}
                                 </label>
                                 <input
                                   type="number"
@@ -547,13 +544,13 @@ import ReactToPrint from 'react-to-print';
                                   value = { totalDebit }
                                   name="totalDebit"
                                   id="totalDebit"
-                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                   />
                               </div>
                               <div className="w-44">
                                 <label htmlFor="totalCredit" className="block text-sm font-medium text-gray-700">
-                                  Total Credit:
+                                  {t('totalCredit')}
                                 </label>
                                 <input
                                   type="number"
@@ -561,7 +558,7 @@ import ReactToPrint from 'react-to-print';
                                   value = { totalCredit }
                                   name="totalCredit"
                                   id="totalCredit"
-                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                   />
                               </div>
@@ -571,14 +568,14 @@ import ReactToPrint from 'react-to-print';
                         
                           <div className=" mt-14">
                             <label htmlFor="memo" className="block text-sm font-medium text-gray-700">
-                                Memo:
+                                {t('memo')}
                             </label>
                             <textarea cols="30" rows="4" type="text"
                                 name="memo"
                                 onChange={handleChange}
                                 id="memo"
                                 value={memo}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             </textarea>
                           </div>
                             
@@ -592,7 +589,7 @@ import ReactToPrint from 'react-to-print';
                                 name="attachment"
                                 value={attachment}
                                 id="attachment"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 multiple
                             />
                           </div> */}
@@ -606,7 +603,7 @@ import ReactToPrint from 'react-to-print';
                               return <button 
                                 type="button"
                                 className='inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
-                                Print
+                                  {t('print')}
                                 <AiOutlinePrinter className='text-lg ml-2'/>
                               </button>
                             }}
@@ -615,8 +612,8 @@ import ReactToPrint from 'react-to-print';
                             pageStyle='print'
                           />
 
-                          <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                          <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                          {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                         </div>
                       </div>
                     </form>

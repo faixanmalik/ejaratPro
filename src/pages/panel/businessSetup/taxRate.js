@@ -379,12 +379,12 @@ const TaxRate = ({dbTaxRate, charts}) => {
 
                                     <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="name" className="block text-sm font-medium text-gray-700">{t('name')}</label>
-                                      <input onChange={handleChange} value={name} type="text" name="name" id="name" autoComplete="name" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={name} type="text" name="name" id="name" autoComplete="name" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="taxRate" className="block text-sm font-medium text-gray-700">{t('taxRateTitle')}: ( in % )</label>
-                                      <input onChange={handleChange} value={taxRate} type="number" name="taxRate" id="taxRate" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s required"/>
+                                      <input onChange={handleChange} value={taxRate} type="number" name="taxRate" id="taxRate" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s required"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">

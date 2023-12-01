@@ -466,7 +466,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                   <label htmlFor="accountCode" className="block text-sm font-medium text-gray-700">
                                     {t('accountCode')}
                                   </label>
-                                  <input onChange={handleChange} value={accountCode} type="number" name="accountCode" id="accountCode" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                  <input onChange={handleChange} value={accountCode} type="number" name="accountCode" id="accountCode" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                   {/* <p className='text-xs'>hello 10 world account code</p> */}
                                 </div>
                                 
@@ -474,7 +474,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                   <label htmlFor="accountName" className="block text-sm font-medium text-gray-700">
                                     {t('accountName')}
                                   </label>
-                                  <input onChange={handleChange} value={accountName} type="text" name="accountName" id="accountName" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                  <input onChange={handleChange} value={accountName} type="text" name="accountName" id="accountName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                   {/* <p className='text-xs'>hello 10 world account code</p> */}
                                 </div>
                                 <div className="col-span-6 sm:col-span-3">
@@ -526,7 +526,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                     id="desc"
                                     onChange={handleChange}
                                     value={desc}
-                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                   </textarea>
                                 </div>
 
@@ -542,7 +542,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                     id="balance"
                                     value={balance}
                                     autoComplete="balance"
-                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   />
                                 </div>
                                 
@@ -557,7 +557,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                                     name="asof"
                                     id="asof"
                                     value={asof}
-                                    className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                     required
                                   />
                                 </div>

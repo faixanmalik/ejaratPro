@@ -407,7 +407,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                               name="code"
                               id="code"
                               autoComplete="given-name"
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               required
                             />
                           </div>
@@ -422,7 +422,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                               name="name"
                               id="name"
                               autoComplete="given-name"
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               required
                             />
                           </div>
@@ -488,7 +488,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                               value={desc}
                               name="desc"
                               id="desc"
-                              className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                              className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             </textarea>
                           </div>
 

@@ -528,38 +528,38 @@ const Employees = ({ dbEmployee, dbRole }) => {
 
                                     <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
-                                      <input type="text" onChange={handleChange} name="name" id="name" value={name} placeholder='John Doe' className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input type="text" onChange={handleChange} name="name" id="name" value={name} placeholder='John Doe' className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-2">
                                       <label htmlFor="fatherName" className="block text-sm font-medium text-gray-700">Father Name:</label>
-                                      <input onChange={handleChange} value={fatherName} type="text" name="fatherName" id="fatherName" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                      <input onChange={handleChange} value={fatherName} type="text" name="fatherName" id="fatherName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of birth
                                       </label>
-                                      <input onChange={handleChange} value={dob} type="date" name="dob" id="dob" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={dob} type="date" name="dob" id="dob" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
                                     
                                     <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
-                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-2">
                                       <label htmlFor="cnic" className="block text-sm font-medium text-gray-700">Cnic:</label>
-                                      <input onChange={handleChange} value={cnic} type="number" name="cnic" id="cnic" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
+                                      <input onChange={handleChange} value={cnic} type="number" name="cnic" id="cnic" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                                      <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
                                         <label htmlFor="citizenship" className="block text-sm font-medium text-gray-700">Citizenship:</label>
-                                        <input type="text" onChange={handleChange} name="citizenship" id="citizenship" value={citizenship} className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                        <input type="text" onChange={handleChange} name="citizenship" id="citizenship" value={citizenship} className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
@@ -628,7 +628,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
 
                                     <div className="col-span-1 mt-3">
                                       <label htmlFor="basicPay" className="block text-sm font-medium text-gray-700">Basic Pay:</label>
-                                      <input onChange={handleChange} value={basicPay} type="number" name="basicPay" id="basicPay" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
+                                      <input onChange={handleChange} value={basicPay} type="number" name="basicPay" id="basicPay" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     
@@ -655,26 +655,26 @@ const Employees = ({ dbEmployee, dbRole }) => {
 
                                     <div className="col-span-1 mt-3">
                                       <label htmlFor="workHour" className="block text-sm font-medium text-gray-700">Work Hour:</label>
-                                      <input onChange={handleChange} value={workHour} type="number" name="workHour" id="workHour" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                      <input onChange={handleChange} value={workHour} type="number" name="workHour" id="workHour" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-1 mt-3">
                                       <label htmlFor="hireDate" className="block text-sm font-medium text-gray-700">Hire Date:
                                       </label>
-                                      <input onChange={handleChange} value={hireDate} type="date" name="hireDate" id="hireDate" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                      <input onChange={handleChange} value={hireDate} type="date" name="hireDate" id="hireDate" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     
 
                                     <div className="col-span-2 mt-3">
                                       <label htmlFor="siteName" className="block text-sm font-medium text-gray-700">Site Name:</label>
-                                      <input onChange={handleChange} value={siteName} type="text" name="siteName" id="siteName" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
+                                      <input onChange={handleChange} value={siteName} type="text" name="siteName" id="siteName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2 mt-3">
                                       <label htmlFor="joiningDate" className="block text-sm font-medium text-gray-700">Joining Date:
                                       </label>
-                                      <input onChange={handleChange} value={joiningDate} type="date" name="joiningDate" id="joiningDate" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={joiningDate} type="date" name="joiningDate" id="joiningDate" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
 
@@ -691,24 +691,24 @@ const Employees = ({ dbEmployee, dbRole }) => {
 
                                     <div className="col-span-6 mt-3">
                                       <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">Street Address</label>
-                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                                       <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
-                                      <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="state" className="block text-sm font-medium text-gray-700">State / Province</label>
-                                      <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                      <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="zip" className="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
-                                      <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                      <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                 </div>

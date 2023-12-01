@@ -501,7 +501,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
                                   <div className="col-span-6 sm:col-span-4">
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">{t('name')}</label>
-                                    <input type="name" onChange={handleChange} name="name" id="name" value={name} placeholder='John Doe' className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                    <input type="name" onChange={handleChange} name="name" id="name" value={name} placeholder='John Doe' className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                   </div>
                             
                                     <div className="col-span-6 sm:col-span-2">
@@ -517,7 +517,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t('email')}</label>
-                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -532,7 +532,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
-                                      <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -547,29 +547,29 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6">
                                       <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">{t('streetAddress')}</label>
-                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
+                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                                       <label htmlFor="city" className="block text-sm font-medium text-gray-700">{t('city')}</label>
-                                      <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
+                                      <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="state" className="block text-sm font-medium text-gray-700">{t('state')}</label>
-                                      <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
+                                      <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="zip" className="block text-sm font-medium text-gray-700">{t('zip')}</label>
-                                      <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="taxRigNo" className="block text-sm font-medium text-gray-700">{t('taxRegNo')}</label>
-                                      <input onChange={handleChange} value={taxRigNo} type="number" name="taxRigNo" id="taxRigNo" autoComplete="taxRigNo" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={taxRigNo} type="number" name="taxRigNo" id="taxRigNo" autoComplete="taxRigNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -594,12 +594,12 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="openingBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
-                                      <input onChange={handleChange} value={openingBalance} type="number" name="openingBalance" id="openingBalance" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={openingBalance} type="number" name="openingBalance" id="openingBalance" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="date" className="block text-sm font-medium text-gray-700">{t('date')}</label>
-                                      <input onChange={handleChange} value={date} type="date" name="date" id="date" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={date} type="date" name="date" id="date" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                 </div>

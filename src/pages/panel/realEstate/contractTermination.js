@@ -304,7 +304,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                       value={ inputList.amount }
                       name="amount"
                       id="amount"
-                      className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       readOnly
                     />
                   </td>
@@ -315,7 +315,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                       value={ Math.floor(inputList.accruedRent) }
                       name="accruedRent"
                       id="accruedRent"
-                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       readOnly
                     />
                   </td>
@@ -325,7 +325,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                       value={ Math.floor(inputList.refund) }
                       name="refund"
                       id="refund"
-                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       readOnly
                     />
                   </td>

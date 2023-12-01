@@ -539,7 +539,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="journalDate"
                                 id="journalDate"
                                 value={journalDate}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
@@ -552,7 +552,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="journalNo"
                                 value={journalNo}
                                 id="journalNo"
-                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 readOnly
                               />
                             </div>
@@ -584,7 +584,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="phoneNo"
                                 value={phoneNo}
                                 id="phoneNo"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
                             
@@ -598,7 +598,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="email"
                                 value={email}
                                 id="email"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
@@ -612,7 +612,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="city"
                                 value={city}
                                 id="city"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
@@ -657,7 +657,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="chqNo"
                                 value={chqNo}
                                 id="chqNo"
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               />
                             </div>
 
@@ -671,7 +671,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 name="dueDate"
                                 id="dueDate"
                                 value={dueDate}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required
                               />
                             </div>
@@ -728,7 +728,7 @@ import useTranslation from 'next-translate/useTranslation';
                                           value={ inputList.desc }
                                           name="desc"
                                           id="desc"
-                                          className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                          className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                         />
                                       </td>
 
@@ -739,7 +739,7 @@ import useTranslation from 'next-translate/useTranslation';
                                             value={ inputList.amount }
                                             name="amount"
                                             id="amount"
-                                            className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                         />
                                       </td>
 
@@ -758,7 +758,7 @@ import useTranslation from 'next-translate/useTranslation';
                                           value={ inputList.taxAmount }
                                           name="taxAmount"
                                           id="taxAmount"
-                                          className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                          className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                           readOnly
                                         />
                                       </td>
@@ -769,7 +769,7 @@ import useTranslation from 'next-translate/useTranslation';
                                           value = { inputList.totalAmountPerItem }
                                           name="totalAmountPerItem"
                                           id="totalAmountPerItem"
-                                          className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                          className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                           readOnly
                                           />
                                       </td>
@@ -796,7 +796,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   value = { fullAmount }
                                   name="fullAmount"
                                   id="fullAmount"
-                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                 />
                               </div>
@@ -809,7 +809,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   value = { fullTax }
                                   name="fullTax"
                                   id="fullTax"
-                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 p-2 cursor-not-allowed block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                 />
                               </div>
@@ -823,7 +823,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   onChange={handleChange}
                                   name="discount"
                                   id="discount"
-                                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 />
                               </div>
                               <div className="flex items-center">
@@ -835,7 +835,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   value = { totalAmount }
                                   name="totalAmount"
                                   id="totalAmount"
-                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 cursor-not-allowed p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                   readOnly
                                 />
                               </div>
@@ -852,7 +852,7 @@ import useTranslation from 'next-translate/useTranslation';
                                 onChange={handleChange}
                                 id="memo"
                                 value={memo}
-                                className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             </textarea>
                           </div>
 

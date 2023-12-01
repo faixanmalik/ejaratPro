@@ -73,6 +73,13 @@
   "view":"منظر",
   "vocherNo":"رقم القسيمة",
 
+  "journalVoucherTitle":"قسائم المجلة",
+  "debit":"دَين",
+  "credit":"ائتمان",
+  "totalDebit":"إجمالي الدين",
+  "totalCredit":"إجمالي الائتمان",
+  "action":"فعل",
+
 
   "":""
 }
