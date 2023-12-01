@@ -14,10 +14,12 @@ import { BiExport, BiImport } from 'react-icons/bi';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import {read, utils} from 'xlsx';
 import Role from 'models/Role';
+import useTranslation from 'next-translate/useTranslation';
 
 const Employees = ({ dbEmployee, dbRole }) => {
 
   const [open, setOpen] = useState(false)
+  const { t } = useTranslation('payroll')
 
   // Add States
   const [name, setName] = useState('')
@@ -46,10 +48,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
   const [cnic, setCnic] = useState('')
   const [siteName, setSiteName] = useState('')
   const [joiningDate, setJoiningDate] = useState('')
-
   const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
-
-
 
   // id For delete contact
   const [id, setId] = useState('')
@@ -130,8 +129,6 @@ const Employees = ({ dbEmployee, dbRole }) => {
         toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
       }
   }
-
-  
 
   const handleChange = (e) => {
   
@@ -351,7 +348,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0 flex">
-            <h3 className="text-lg font-bold leading-6 text-gray-900">Employees</h3>
+            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('employeeTitle')}</h3>
             <button onClick={()=>{
               setOpen(true), 
               setName(''),
@@ -383,7 +380,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
               setIsOpenSaveChange(true)
               }} 
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-               New
+               {t('new')}
             </button>
           </div>  
         </div>
@@ -396,7 +393,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                 sheet="Employee"
                 currentTableRef={tableRef.current}>
                 <button type="button" className="text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
-                  Export
+                  {t('export')}
                   <BiExport className='text-lg ml-2'/>
                 </button>
               </DownloadTableExcel>
@@ -404,7 +401,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
             <div className=''>
               <button type="button" onClick={handleClick} 
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
-                  Import
+                  {t('import')}
                 <BiImport className='text-lg ml-2'/>
               </button>
               <input type="file"
@@ -417,7 +414,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
               <button type="button" onClick={delEntry}
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
               >
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
@@ -436,22 +433,22 @@ const Employees = ({ dbEmployee, dbRole }) => {
                         </div>
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Sr.
+                          {t('sr')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Name
+                          {t('name')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Designation
+                          {t('designation')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          SiteName
+                          {t('siteName')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Salary
+                          {t('salaray')}
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          <span className="">View / Edit</span>
+                          <span className="">{t('viewOrEdit')}</span>
                       </th>
                   </tr>
                 </thead>
@@ -517,7 +514,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                       <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="md:col-span-1">
                           <div className="px-4 sm:px-0">
-                            <h3 className="text-lg font-bold leading-6 text-gray-900">Add Employee</h3>
+                            <h3 className="text-lg font-bold leading-6 text-gray-900">{t('addEmployee')}</h3>
                           </div>
                         </div>
                         <div className="mt-2 md:col-span-2 md:mt-0 w-full">
@@ -527,43 +524,43 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                 <div className="grid grid-cols-6 gap-6">
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+                                      <label htmlFor="name" className="block text-sm font-medium text-gray-700">{t('name')}</label>
                                       <input type="text" onChange={handleChange} name="name" id="name" value={name} placeholder='John Doe' className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-2">
-                                      <label htmlFor="fatherName" className="block text-sm font-medium text-gray-700">Father Name:</label>
+                                      <label htmlFor="fatherName" className="block text-sm font-medium text-gray-700">{t('fatherName')}</label>
                                       <input onChange={handleChange} value={fatherName} type="text" name="fatherName" id="fatherName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date of birth
+                                      <label htmlFor="dob" className="block text-sm font-medium text-gray-700">{t('dateOfBirth')}
                                       </label>
                                       <input onChange={handleChange} value={dob} type="date" name="dob" id="dob" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
                                     
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
+                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t('email')}</label>
                                       <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-2">
-                                      <label htmlFor="cnic" className="block text-sm font-medium text-gray-700">Cnic:</label>
+                                      <label htmlFor="cnic" className="block text-sm font-medium text-gray-700">{t('cnic')}</label>
                                       <input onChange={handleChange} value={cnic} type="number" name="cnic" id="cnic" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">Phone Number</label>
+                                      <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
                                       <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                        <label htmlFor="citizenship" className="block text-sm font-medium text-gray-700">Citizenship:</label>
+                                        <label htmlFor="citizenship" className="block text-sm font-medium text-gray-700">{t('citizenship')}</label>
                                         <input type="text" onChange={handleChange} name="citizenship" id="citizenship" value={citizenship} className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender:</label>
+                                      <label htmlFor="gender" className="block text-sm font-medium text-gray-700">{t('gender')}</label>
                                       <select id="gender" name="gender" onChange={handleChange} value={gender} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>Select Gender</option>
                                         <option value={'Admin'}>Male</option>
@@ -572,7 +569,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="maritalStatus" className="block text-sm font-medium text-gray-700">Marital Status:</label>
+                                      <label htmlFor="maritalStatus" className="block text-sm font-medium text-gray-700">{t('maritalStatus')}</label>
                                       <select id="maritalStatus" name="maritalStatus" onChange={handleChange} value={maritalStatus} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={'Single'}>Single</option>
                                         <option value={'Married'}>Married</option>
@@ -580,7 +577,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2 mt-3">
-                                      <label htmlFor="designation" className="block text-sm font-medium text-gray-700">Designation:</label>
+                                      <label htmlFor="designation" className="block text-sm font-medium text-gray-700">{t('designation')}</label>
                                       <select id="designation" name="designation" onChange={handleChange} value={designation} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>Select Designation </option>
                                         {dbRole.map((item, index)=>{return <option key={index} value={item.roleName}>{item.roleName}</option>})}
@@ -588,7 +585,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2 mt-3">
-                                      <label htmlFor="department" className="block text-sm font-medium text-gray-700">Department:</label>
+                                      <label htmlFor="department" className="block text-sm font-medium text-gray-700">{t('department')}</label>
                                       <select id="department" name="department" onChange={handleChange} value={department} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>Select Department </option>
                                         <option value={'Admin'}>Admin</option>
@@ -600,7 +597,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-1 mt-3">
-                                      <label htmlFor="workShift" className="block text-sm font-medium text-gray-700">Work Shift:</label>
+                                      <label htmlFor="workShift" className="block text-sm font-medium text-gray-700">{t('workShift')}</label>
                                       <select id="workShift" name="workShift" onChange={handleChange} value={workShift} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={'Morning'}>Morning</option>
                                         <option value={'Afternoon'}>Afternoon</option>
@@ -610,7 +607,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-1 mt-3">
-                                      <label htmlFor="employmentMode" className="block text-sm font-medium text-gray-700">Eployment Mode:</label>
+                                      <label htmlFor="employmentMode" className="block text-sm font-medium text-gray-700">{t('employmentMode')}</label>
                                       <select id="employmentMode" name="employmentMode" onChange={handleChange} value={employmentMode} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={'Full Time'}>Full Time</option>
                                         <option value={'Part Time'}>Part Time</option>
@@ -618,7 +615,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-1 mt-3">
-                                      <label htmlFor="payPolicy" className="block text-sm font-medium text-gray-700">Pay Policy:</label>
+                                      <label htmlFor="payPolicy" className="block text-sm font-medium text-gray-700">{t('payPolicy')}</label>
                                       <select id="payPolicy" name="payPolicy" onChange={handleChange} value={payPolicy} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={'Hourly'}>Hourly</option>
                                         <option value={'Weekly'}>Weekly</option>
@@ -627,14 +624,14 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-1 mt-3">
-                                      <label htmlFor="basicPay" className="block text-sm font-medium text-gray-700">Basic Pay:</label>
+                                      <label htmlFor="basicPay" className="block text-sm font-medium text-gray-700">{t('basicPay')}</label>
                                       <input onChange={handleChange} value={basicPay} type="number" name="basicPay" id="basicPay" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     
 
                                     <div className="col-span-6 sm:col-span-1 mt-3">
-                                      <label htmlFor="paymentMode" className="block text-sm font-medium text-gray-700">Payment Mode:</label>
+                                      <label htmlFor="paymentMode" className="block text-sm font-medium text-gray-700">{t('paymentMode')}</label>
                                       <select id="paymentMode" name="paymentMode" onChange={handleChange} value={paymentMode} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={'Cash'}>Cash</option>
                                         <option value={'Cheque'}>Cheque</option>
@@ -644,7 +641,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-1 mt-3">
-                                      <label htmlFor="status" className="block text-sm font-medium text-gray-700">Status:</label>
+                                      <label htmlFor="status" className="block text-sm font-medium text-gray-700">{t('status')}</label>
                                       <select id="status" name="status" onChange={handleChange} value={status} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={'Active'}>Active</option>
                                         <option value={'Inactive'}>Inactive</option>
@@ -654,12 +651,12 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     
 
                                     <div className="col-span-1 mt-3">
-                                      <label htmlFor="workHour" className="block text-sm font-medium text-gray-700">Work Hour:</label>
+                                      <label htmlFor="workHour" className="block text-sm font-medium text-gray-700">{t('workHour')}</label>
                                       <input onChange={handleChange} value={workHour} type="number" name="workHour" id="workHour" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-1 mt-3">
-                                      <label htmlFor="hireDate" className="block text-sm font-medium text-gray-700">Hire Date:
+                                      <label htmlFor="hireDate" className="block text-sm font-medium text-gray-700">{t('hireDate')}
                                       </label>
                                       <input onChange={handleChange} value={hireDate} type="date" name="hireDate" id="hireDate" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
@@ -667,19 +664,18 @@ const Employees = ({ dbEmployee, dbRole }) => {
                                     
 
                                     <div className="col-span-2 mt-3">
-                                      <label htmlFor="siteName" className="block text-sm font-medium text-gray-700">Site Name:</label>
+                                      <label htmlFor="siteName" className="block text-sm font-medium text-gray-700">{t('siteName')}</label>
                                       <input onChange={handleChange} value={siteName} type="text" name="siteName" id="siteName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2 mt-3">
-                                      <label htmlFor="joiningDate" className="block text-sm font-medium text-gray-700">Joining Date:
-                                      </label>
+                                      <label htmlFor="joiningDate" className="block text-sm font-medium text-gray-700">{t('joiningDate')}</label>
                                       <input onChange={handleChange} value={joiningDate} type="date" name="joiningDate" id="joiningDate" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
 
                                     <div className="col-span-6 sm:col-span-2 mt-3">
-                                      <label htmlFor="country" className="block text-sm font-medium text-gray-700">Country</label>
+                                      <label htmlFor="country" className="block text-sm font-medium text-gray-700">{t('country')}</label>
                                       <select id="country" name="country" onChange={handleChange} value={country} autoComplete="country" className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={'United States'}>United States</option>
                                         <option value={'Canada'}>Canada</option>
@@ -690,32 +686,32 @@ const Employees = ({ dbEmployee, dbRole }) => {
 
 
                                     <div className="col-span-6 mt-3">
-                                      <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">Street Address</label>
+                                      <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">{t('streetAddress')}</label>
                                       <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                                      <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
+                                      <label htmlFor="city" className="block text-sm font-medium text-gray-700">{t('city')}</label>
                                       <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="state" className="block text-sm font-medium text-gray-700">State / Province</label>
+                                      <label htmlFor="state" className="block text-sm font-medium text-gray-700">{t('state')}</label>
                                       <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="zip" className="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
+                                      <label htmlFor="zip" className="block text-sm font-medium text-gray-700">{t('zip')}</label>
                                       <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                 </div>
                               </div>
                               <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                             
                             </div>

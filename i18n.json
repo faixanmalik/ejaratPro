@@ -37,7 +37,8 @@
     "/panel/salesModule/journalVoucher": ["panel", "modules"],
 
 
-    "/panel/settings/paymentMethod": ["panel", "settings"]
+    "/panel/settings/paymentMethod": ["panel", "settings"],
+    "/panel/payroll/employees": ["panel", "payroll"]
 
     
     
