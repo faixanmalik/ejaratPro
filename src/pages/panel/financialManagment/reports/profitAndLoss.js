@@ -785,7 +785,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                 <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">
                     Profit & Loss Summary
                     {fDate && tDate &&
-                        <span className='text-sm ml-1'>({fDate} to {tDate})</span>
+                        <span className='text-sm ml-1'>({fDate} {t('to')} {tDate})</span>
                     }
                 </h3>
             </div>

@@ -9,5 +9,12 @@
   "date":"تاريخ",
   "debit":"دَين",
   "credit":"ائتمان",
-  "balance":"توازن"
+  "balance":"توازن",
+
+
+  "trialBalanceTitle":"ملخص ميزان المراجعة",
+  "accountName":"إسم الحساب",
+  "subAccount":"الحساب الفرعي",
+  "totalDebit":"إجمالي الدين",
+  "totalCredit":"إجمالي الائتمان"
 }

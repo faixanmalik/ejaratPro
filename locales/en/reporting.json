@@ -9,5 +9,12 @@
   "date":"Date",
   "debit":"Debit",
   "credit":"Credit",
-  "balance":"Balance"
+  "balance":"Balance",
+
+
+  "trialBalanceTitle":"Trial Balance Summary",
+  "accountName":"Account Name",
+  "subAccount":"Sub-Account",
+  "totalDebit":"Total Debit",
+  "totalCredit":"Total Credit"
 }

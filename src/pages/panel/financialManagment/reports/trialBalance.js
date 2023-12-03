@@ -18,25 +18,24 @@ import Expenses from 'models/Expenses';
 import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
 import ChequeTransaction from 'models/ChequeTransaction';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) => {
 
+    const { t } = useTranslation('reporting');
+
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
     const [charts, setCharts] = useState([])
-
     const [newBalance, setNewBalance] = useState([])
     const [debitSum, setDebitSum] = useState(0)
     const [creditSum, setCreditSum] = useState(0)
-
     const [fDate, setFDate] = useState('')
     const [tDate, setTDate] = useState('')
-    const [isCash, setIsCash] = useState(false)
 
 
     let balance = [];
-    
     const submit = ()=>{
 
         if(fromDate && toDate){
@@ -622,10 +621,6 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
         
         setNewBalance(balance)
     }
-    
-
-
-
 
     const handleChange = (e) => {
         if (e.target.name === 'fromDate') {
@@ -635,9 +630,6 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
             setToDate(e.target.value)
         }
     }
-
-    
-
 
     return (
     <>
@@ -662,7 +654,7 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-2">
                             <label htmlFor="fromDate" className="block text-sm font-medium text-gray-700">
-                                From:
+                                {t('from')}
                             </label>
                             <input
                                 type="date"
@@ -675,7 +667,7 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                         </div>
                         <div className="col-span-6 sm:col-span-2">
                             <label htmlFor="toDate" className="block text-sm font-medium text-gray-700">
-                                To:
+                                {t('to')}
                             </label>
                             <input
                                 type="date"
@@ -686,7 +678,7 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                                 className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
-                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>Update</button>
+                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>{t('update')}</button>
                     </div>
                 </div>
             </div>
@@ -697,9 +689,9 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
         <div className="md:col-span-1">
             <div className="px-4 mt-4 sm:px-0 flex">
                 <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">
-                    Trial Balance Summary  
+                    {t('trialBalanceTitle')}  
                     {fDate && tDate &&
-                        <span className='text-sm ml-1'>({fDate} to {tDate})</span>
+                        <span className='text-sm ml-1'>({fDate} {t('to')} {tDate})</span>
                     }
                 </h3>
             </div>
@@ -713,16 +705,16 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
-                                        Account Name
+                                        {t('accountName')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Sub-Account
+                                        {t('subAccount')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Debit
+                                        {t('debit')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Credit
+                                        {t('credit')}
                                     </th>
                                 </tr>
                             </thead>
@@ -776,16 +768,14 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                         { charts.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                     </div>
 
-                
                     {charts.length != 0  ? <div className="flex justify-around bg-slate-100 px-4 py-3 text-right sm:px-6">
-                        <h1 className={`text-sm ${debitSum === creditSum ? 'text-green-700' : 'text-red-700'} ml-auto mr-10`}>Total Debit: 
-                            <span className={`font-bold ml-1 `}>${debitSum.toLocaleString()}</span>
+                        <h1 className={`text-sm ${debitSum === creditSum ? 'text-green-700' : 'text-red-700'} ml-auto mr-10`}>{t('totalDebit')}: 
+                            <span className={`font-bold ml-1 `}> ${debitSum.toLocaleString()}</span>
                         </h1>
-                        <h1 className={`text-sm ${debitSum === creditSum ? 'text-green-700' : 'text-red-700'} mr-10`}>Total Credit: 
-                            <span className='font-bold ml-1'>${creditSum.toLocaleString()}</span>
+                        <h1 className={`text-sm ${debitSum === creditSum ? 'text-green-700' : 'text-red-700'} mr-10`}>{t('totalCredit')}: 
+                            <span className='font-bold ml-1'> ${creditSum.toLocaleString()}</span>
                         </h1>
                     </div> : ''}
-
 
                 </div>
             </form>
@@ -801,8 +791,8 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
 
 export async function getServerSideProps() {
     if (!mongoose.connections[0].readyState) {
-        mongoose.set("strictQuery", false);
-        await mongoose.connect(process.env.MONGO_URI)
+      mongoose.set("strictQuery", false);
+      await mongoose.connect(process.env.MONGO_URI)
     }
     let dbJournalVoucher = await JournalVoucher.find()
     let dbCharts = await Charts.find()
@@ -822,21 +812,21 @@ export async function getServerSideProps() {
 
     // Pass data to the page via props
     return {
-        props: {
-            dbJournalVoucher: JSON.parse(JSON.stringify(dbJournalVoucher)),
-            dbCharts: JSON.parse(JSON.stringify(dbCharts)),
-            dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),
-            dbChequeTransaction: JSON.parse(JSON.stringify(dbChequeTransaction)),
-            dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
-            dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)),
-            dbDebitNote: JSON.parse(JSON.stringify(dbDebitNote)),
-            dbCreditNote: JSON.parse(JSON.stringify(dbCreditNote)),
-            dbReceiptVoucher: JSON.parse(JSON.stringify(dbReceiptVoucher)),
-            dbPaymentVoucher: JSON.parse(JSON.stringify(dbPaymentVoucher)),
-            dbExpensesVoucher: JSON.parse(JSON.stringify(dbExpensesVoucher)),
-            dbProducts: JSON.parse(JSON.stringify(dbProducts)),
-            dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)),
-        }
+      props: {
+        dbJournalVoucher: JSON.parse(JSON.stringify(dbJournalVoucher)),
+        dbCharts: JSON.parse(JSON.stringify(dbCharts)),
+        dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),
+        dbChequeTransaction: JSON.parse(JSON.stringify(dbChequeTransaction)),
+        dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
+        dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)),
+        dbDebitNote: JSON.parse(JSON.stringify(dbDebitNote)),
+        dbCreditNote: JSON.parse(JSON.stringify(dbCreditNote)),
+        dbReceiptVoucher: JSON.parse(JSON.stringify(dbReceiptVoucher)),
+        dbPaymentVoucher: JSON.parse(JSON.stringify(dbPaymentVoucher)),
+        dbExpensesVoucher: JSON.parse(JSON.stringify(dbExpensesVoucher)),
+        dbProducts: JSON.parse(JSON.stringify(dbProducts)),
+        dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)),
+      }
     }
 }
 
