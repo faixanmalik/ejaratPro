@@ -375,7 +375,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
             <div className='flex w-full'>
               <div className='flex flex-col space-y-8 w-3/5'>
 
-                <div className='w-full flex space-x-4'>
+                <div className='w-full flex space-x-4 rtl:space-x-reverse'>
                   <div className="w-full">
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                       {t('name')}
@@ -403,7 +403,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                     />
                   </div>
                 </div>
-                <div className='w-full flex space-x-4'>
+                <div className='w-full flex space-x-4 rtl:space-x-reverse'>
                   <div className="w-1/2">
                     <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
                       {t('unitNo')}

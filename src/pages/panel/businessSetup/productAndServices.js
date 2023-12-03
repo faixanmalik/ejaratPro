@@ -272,7 +272,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
-        <div className='flex items-center space-x-2 mb-1'>
+        <div className='flex items-center space-x-2 rtl:space-x-reverse mb-1'>
             <div>
               <DownloadTableExcel
                 filename="Product And Services"
@@ -361,7 +361,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
                         <td className="px-6 py-3">
                           {item.linkContract}
                         </td>
-                        <td className="flex items-center px-6 mr-5 py-4 space-x-4">
+                        <td className="flex items-center px-6 mr-5 py-4 space-x-4 rtl:space-x-reverse">
                           <button type='button' onClick={()=>{getData(item._id)}} 
                             className= {`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline" `} disabled={isAdmin === false}><AiOutlineEdit className='text-lg'/></button>
                         </td>
@@ -449,7 +449,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
                           <div className='col-span-4 flex'>
 
-                            <div className="w-1/4 flex space-x-5 my-auto">
+                            <div className="w-1/4 flex space-x-5 rtl:space-x-reverse my-auto">
                               <label htmlFor="linkContract" className="block text-sm font-medium text-gray-700">
                                 {t('linkedContract')}
                               </label>
@@ -494,7 +494,7 @@ const ProductAndServices = ({product, charts, dbTaxRate}) => {
 
                         </div>
                       </div>
-                      <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+                      <div className="bg-gray-50 space-x-3 rtl:space-x-reverse px-4 py-3 text-right sm:px-6">
                         <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
                         {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                     </div>

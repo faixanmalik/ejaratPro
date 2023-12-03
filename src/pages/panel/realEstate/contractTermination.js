@@ -180,7 +180,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       desc: (
         <div>
 
-          <div className='flex space-x-4 mb-14'>
+          <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
             <div className="w-8/12">
               <label htmlFor="tenant" className="block text-sm font-medium text-gray-700">
@@ -222,7 +222,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
               />
             </div>
           </div>
-          <div className='flex space-x-4 mb-14'>
+          <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
             <div className="w-full">
               <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
@@ -265,7 +265,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
             </div>
           </div>
 
-          <div className='flex space-x-4 mb-14'>
+          <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
             <table className="w-full text-sm text-left text-gray-500 ">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -482,7 +482,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
                           <div className="flex justify-end bg-gray-50 px-4 py-3 text-right sm:px-6">
 
-                            <div className='flex space-x-3'>
+                            <div className='flex space-x-3 rtl:space-x-reverse'>
 
                               <button type="submit" onClick={(e)=>{endContract(e)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                 {t('endContract')}

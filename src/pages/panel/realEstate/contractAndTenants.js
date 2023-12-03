@@ -509,7 +509,7 @@ import useTranslation from 'next-translate/useTranslation';
         desc: (
           <div>
 
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
                 <div className="w-8/12">
                     <label htmlFor="unitNo" className="block text-sm font-medium text-gray-700">
@@ -578,7 +578,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
             </div>
 
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
                 <div className="w-8/12">
                     <label htmlFor="bathroom" className="block text-sm font-medium text-gray-700">
@@ -660,7 +660,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
             </div>
 
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
                 <div className="w-full">
                     <label htmlFor="electricityMeterNo" className="block text-sm font-medium text-gray-700">
                         {t('electricityMeterNo')}
@@ -704,7 +704,7 @@ import useTranslation from 'next-translate/useTranslation';
 
             </div>
 
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
                 <div className="w-full">
                     <label htmlFor="ac" className="block text-sm font-medium text-gray-700">
                         {t('ac')}
@@ -769,7 +769,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </div>
             </div>
 
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
                 <div className="w-full">
                     <label htmlFor="country" className="block text-sm font-medium text-gray-700">
@@ -807,7 +807,7 @@ import useTranslation from 'next-translate/useTranslation';
 
             </div>
 
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
                 <textarea cols="30" rows="5" type="text"
                     onChange={ handleChange }
                     name="notes"
@@ -882,7 +882,7 @@ import useTranslation from 'next-translate/useTranslation';
               <AccordionHeader onClick={() => handleOpenTenantExtraForm(1)}>{t('accordationLabel')}</AccordionHeader>
               <AccordionBody>
                 <div>
-                  <div className='flex space-x-4 mb-14'>
+                  <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
                     <div className="w-full">
                       <label htmlFor="tenantPassPortNumber" className="block text-sm font-medium text-gray-700">
@@ -927,7 +927,7 @@ import useTranslation from 'next-translate/useTranslation';
                     </div> 
                   </div>
 
-                  <div className='flex space-x-4 mb-14'>
+                  <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
                     <div className="w-full">
                       <label htmlFor="tenantIbanNo" className="block text-sm font-medium text-gray-700">
                         {t('ibanNo')}
@@ -999,7 +999,7 @@ import useTranslation from 'next-translate/useTranslation';
         desc: (
           <div>
 
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
               <div className="w-full">
                 <label htmlFor="newContractStartDate" className="block text-sm font-medium text-gray-700">
                  {t('contractStartDate')}
@@ -1040,7 +1040,7 @@ import useTranslation from 'next-translate/useTranslation';
                 />
               </div>
             </div>
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
               
               <div className="w-full">
                 <label htmlFor="newContractCommission" className="block text-sm font-medium text-gray-700">
@@ -1082,7 +1082,7 @@ import useTranslation from 'next-translate/useTranslation';
                 />
               </div>
             </div>
-            <div className='flex space-x-4 mb-14'>
+            <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
               <div className="w-full">
                 <label htmlFor="newContractSecurityDeposit" className="block text-sm font-medium text-gray-700">
@@ -1121,7 +1121,7 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
               
             </div>
-            <div className='flex space-x-4'>
+            <div className='flex space-x-4 rtl:space-x-reverse'>
 
               <div className="w-full">
                 <textarea cols="30" rows="5" type="text"
@@ -1447,7 +1447,7 @@ import useTranslation from 'next-translate/useTranslation';
                         <td className="p-1 w-[100px] text-center">
                           <Link target="_blank" href={`/panel/realEstate/tenantStatement?id=${item._id}`} className=''>{<MdAccountBox className='text-2xl text-black ml-4'/>}</Link>
                         </td>
-                        <td className="flex items-center py-4 space-x-4">
+                        <td className="flex items-center py-4 space-x-4 rtl:space-x-reverse">
                           <button type='button' onClick={(e)=>{getData(item._id), setOpenNewContract(true)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
@@ -1532,7 +1532,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </TabsBody>
                             </Tabs>
 
-                            <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+                            <div className="bg-gray-50 space-x-3 rtl:space-x-reverse px-4 py-3 text-right sm:px-6">
 
                               <ReactToPrint
                                 trigger={()=>{

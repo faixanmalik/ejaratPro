@@ -316,7 +316,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
             {t('new')}
             </button>
           </div>
-          <div className='flex mt-4 space-x-7 ml-5 font-bold text-sm'>
+          <div className='flex mt-4 space-x-7 rtl:space-x-reverse ml-5 font-bold text-sm'>
             <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('allCharts')}}>{t('allAccounts')}</button>
             <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Assets')}}>{t('assets')}</button>
             <button className='text-indigo-600 hover:text-indigo-800' onClick={()=>{setFilterCharts('Liabilities')}}>{t('liabilites')}</button>
@@ -326,7 +326,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
-        <div className='flex items-center space-x-2 mb-1'>
+        <div className='flex items-center space-x-2 rtl:space-x-reverse mb-1'>
             <div>
               <DownloadTableExcel
                 filename="Charts Of Accounts"
@@ -419,7 +419,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                       <td className="px-6 py-1">
                           {item.balance}
                       </td>
-                      <td className="flex items-center px-6 mr-5 py-4 space-x-4">
+                      <td className="flex items-center px-6 mr-5 py-4 space-x-4 rtl:space-x-reverse">
                         <button type='button' onClick={()=>{getData(item._id)}} 
                          className= {`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline" `} disabled={isAdmin === false}><AiOutlineEdit className='text-lg'/></button>
                       </td>
@@ -565,7 +565,7 @@ const ChartsOfAccounts = ({dbAllCharts}) => {
                               </div>
 
                             </div>
-                            <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+                            <div className="bg-gray-50 space-x-3 rtl:space-x-reverse px-4 py-3 text-right sm:px-6">
                               <button type='button' onClick={editEntry} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
                               {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>

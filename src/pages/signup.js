@@ -132,7 +132,7 @@ return (
               
               <CardBody className="flex flex-col gap-3 py-7">
 
-                <div className='flex space-x-2'>
+                <div className='flex space-x-2 rtl:space-x-reverse'>
                   <input type="text" onChange={handleChange} value={firstname} className="bg-gray-100 bg-opacity-50 w-full rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-2 resize-none leading-6 transition-colors duration-200 ease-in-out" name="firstname" placeholder="First Name"/>
                   <input type="text" onChange={handleChange} value={lastname} className="bg-gray-100 bg-opacity-50 w-full rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-2 resize-none leading-6 transition-colors duration-200 ease-in-out" name="lastname" placeholder="Last Name"/>
                 </div>

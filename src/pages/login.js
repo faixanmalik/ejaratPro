@@ -87,7 +87,7 @@ return (
 
             <div className='w-full pt-10'>
               <h1 className='text-black text-center font-bold'>{t('signIn')}</h1>          
-              <div className="flex justify-center space-x-3 pt-3 mx-3">
+              <div className="flex justify-center space-x-3 rtl:space-x-reverse pt-3 mx-3">
 
                 <button>
                   <BsGoogle className='text-5xl cursor-pointer p-[7px] border border-gray-600 rounded-full transition duration-200 shadow-sm hover:shadow-md '/>

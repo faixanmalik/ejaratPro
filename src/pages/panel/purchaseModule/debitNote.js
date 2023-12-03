@@ -460,7 +460,7 @@ import useTranslation from 'next-translate/useTranslation';
                       <td className="p-1">
                         <div className='text-sm text-black font-semibold'>{parseInt(item.totalAmount).toLocaleString()}</div>
                       </td>
-                      <td className="flex items-center px-3 mr-5 py-4 space-x-4">
+                      <td className="flex items-center px-3 mr-5 py-4 space-x-4 rtl:space-x-reverse">
                         <button type='button' onClick={()=>{getData(item._id)}} 
                             className={`${isAdmin === false ? 'cursor-not-allowed': ''} font-medium text-blue-600 dark:text-blue-500 hover:underline`} disabled={isAdmin === false}>
                             <AiOutlineEdit className='text-lg'/>
@@ -502,7 +502,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                         <div ref={speceficComponentRef} className="bg-white px-4 py-5 sm:p-6">
 
-                          <div className='flex space-x-4 mb-14'>
+                          <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
 
                             <div className="w-full">
                               <label htmlFor="journalDate" className="block text-sm font-medium text-gray-700">
@@ -533,7 +533,7 @@ import useTranslation from 'next-translate/useTranslation';
                             </div>
                           </div>
 
-                          <div className='flex space-x-4 mb-14'>
+                          <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
                             <div className="w-full">
                               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                                 {t('supplierName')}
@@ -608,7 +608,7 @@ import useTranslation from 'next-translate/useTranslation';
                           </div>
 
 
-                          <div className='flex space-x-4 mb-14'>
+                          <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
                         
                             <div className="w-full">
                               <label htmlFor="address" className="block text-sm font-medium text-gray-700">
@@ -655,7 +655,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 
 
-                            <div className='flex space-x-4 my-10'>
+                            <div className='flex space-x-4 rtl:space-x-reverse my-10'>
 
                                 <table className="w-full text-sm text-left text-gray-500 ">
                                   <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -835,7 +835,7 @@ import useTranslation from 'next-translate/useTranslation';
                           </div> */}
 
                         </div>
-                        <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
+                        <div className="bg-gray-50 space-x-3 rtl:space-x-reverse px-4 py-3 text-right sm:px-6">
 
 
                           <ReactToPrint
