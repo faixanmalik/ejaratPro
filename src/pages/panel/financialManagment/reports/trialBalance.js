@@ -790,44 +790,43 @@ const TrialBalance = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
 }
 
 export async function getServerSideProps() {
-    if (!mongoose.connections[0].readyState) {
-      mongoose.set("strictQuery", false);
-      await mongoose.connect(process.env.MONGO_URI)
+  if (!mongoose.connections[0].readyState) {
+    mongoose.set("strictQuery", false);
+    await mongoose.connect(process.env.MONGO_URI)
+  }
+  let dbJournalVoucher = await JournalVoucher.find()
+  let dbCharts = await Charts.find()
+  let dbCreditSalesInvoice = await CreditSalesInvoice.find()
+  let dbSalesInvoice = await SalesInvoice.find()
+  let dbChequeTransaction = await ChequeTransaction.find()
+  let dbPurchaseInvoice = await PurchaseInvoice.find()
+  let dbDebitNote = await DebitNote.find()
+  let dbCreditNote = await CreditNote.find()
+  let dbReceiptVoucher = await ReceiptVoucher.find()
+  let dbPaymentVoucher = await PaymentVoucher.find()
+  let dbExpensesVoucher = await Expenses.find()
+  let dbProducts = await Product.find()
+  let dbPaymentMethod = await PaymentMethod.find()
+
+
+  // Pass data to the page via props
+  return {
+    props: {
+      dbJournalVoucher: JSON.parse(JSON.stringify(dbJournalVoucher)),
+      dbCharts: JSON.parse(JSON.stringify(dbCharts)),
+      dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),
+      dbChequeTransaction: JSON.parse(JSON.stringify(dbChequeTransaction)),
+      dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
+      dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)),
+      dbDebitNote: JSON.parse(JSON.stringify(dbDebitNote)),
+      dbCreditNote: JSON.parse(JSON.stringify(dbCreditNote)),
+      dbReceiptVoucher: JSON.parse(JSON.stringify(dbReceiptVoucher)),
+      dbPaymentVoucher: JSON.parse(JSON.stringify(dbPaymentVoucher)),
+      dbExpensesVoucher: JSON.parse(JSON.stringify(dbExpensesVoucher)),
+      dbProducts: JSON.parse(JSON.stringify(dbProducts)),
+      dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)),
     }
-    let dbJournalVoucher = await JournalVoucher.find()
-    let dbCharts = await Charts.find()
-
-    let dbCreditSalesInvoice = await CreditSalesInvoice.find()
-    let dbSalesInvoice = await SalesInvoice.find()
-    let dbChequeTransaction = await ChequeTransaction.find()
-    let dbPurchaseInvoice = await PurchaseInvoice.find()
-    let dbDebitNote = await DebitNote.find()
-    let dbCreditNote = await CreditNote.find()
-    let dbReceiptVoucher = await ReceiptVoucher.find()
-    let dbPaymentVoucher = await PaymentVoucher.find()
-    let dbExpensesVoucher = await Expenses.find()
-    let dbProducts = await Product.find()
-    let dbPaymentMethod = await PaymentMethod.find()
-
-
-    // Pass data to the page via props
-    return {
-      props: {
-        dbJournalVoucher: JSON.parse(JSON.stringify(dbJournalVoucher)),
-        dbCharts: JSON.parse(JSON.stringify(dbCharts)),
-        dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),
-        dbChequeTransaction: JSON.parse(JSON.stringify(dbChequeTransaction)),
-        dbSalesInvoice: JSON.parse(JSON.stringify(dbSalesInvoice)),
-        dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)),
-        dbDebitNote: JSON.parse(JSON.stringify(dbDebitNote)),
-        dbCreditNote: JSON.parse(JSON.stringify(dbCreditNote)),
-        dbReceiptVoucher: JSON.parse(JSON.stringify(dbReceiptVoucher)),
-        dbPaymentVoucher: JSON.parse(JSON.stringify(dbPaymentVoucher)),
-        dbExpensesVoucher: JSON.parse(JSON.stringify(dbExpensesVoucher)),
-        dbProducts: JSON.parse(JSON.stringify(dbProducts)),
-        dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)),
-      }
-    }
+  }
 }
 
 export default TrialBalance

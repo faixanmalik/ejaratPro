@@ -40,9 +40,9 @@
     "/panel/settings/paymentMethod": ["panel", "settings"],
     "/panel/payroll/employees": ["panel", "payroll"],
     "/panel/financialManagment/reports/generalLedger": ["panel", "reporting"],
-    "/panel/financialManagment/reports/trialBalance": ["panel", "reporting"]
+    "/panel/financialManagment/reports/trialBalance": ["panel", "reporting"],
+    "/panel/financialManagment/reports/profitAndLoss": ["panel", "reporting"]
 
-    
     
   }
 }
