@@ -16,5 +16,13 @@
   "accountName":"Account Name",
   "subAccount":"Sub-Account",
   "totalDebit":"Total Debit",
-  "totalCredit":"Total Credit"
+  "totalCredit":"Total Credit",
+
+  "profitAndLossTitle":"Profit & Loss Summary",
+  "amount":"Amount",
+  "gross":"Gross",
+  "profit":"Profit",
+  "loss":"Loss",
+  "fromOperations":"From Operations",
+  "net":"Net"
 }

@@ -18,9 +18,12 @@ import Expenses from 'models/Expenses';
 import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
 import ChequeTransaction from 'models/ChequeTransaction';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts  }) => {
+
+    const { t } = useTranslation('reporting')
 
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
@@ -748,7 +751,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-2">
                             <label htmlFor="fromDate" className="block text-sm font-medium text-gray-700">
-                                From:
+                                {t('from')}
                             </label>
                             <input
                                 type="date"
@@ -761,7 +764,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                         </div>
                         <div className="col-span-6 sm:col-span-2">
                             <label htmlFor="toDate" className="block text-sm font-medium text-gray-700">
-                                To:
+                                {t('to')}
                             </label>
                             <input
                                 type="date"
@@ -772,7 +775,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                                 className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
-                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>Update</button>
+                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>{t('update')}</button>
                     </div>
                 </div>
             </div>
@@ -783,7 +786,7 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
         <div className="md:col-span-1">
             <div className="px-4 mt-4 sm:px-0 flex">
                 <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">
-                    Profit & Loss Summary
+                    {t('profitAndLossTitle')}
                     {fDate && tDate &&
                         <span className='text-sm ml-1'>({fDate} {t('to')} {tDate})</span>
                     }
@@ -799,13 +802,13 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
-                                        Account Name
+                                        {t('accountName')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Account
+                                        {t('account')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Amount
+                                        {t('amount')}
                                     </th>
                                 </tr>
                             </thead>
@@ -848,24 +851,27 @@ const ProfitAndLoss = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             
                                 {index === administrationIndex - 1
                                 ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm font-bold ${grossProfit > 0 ? 'text-green-700' : 'text-red-700' } -mr-32`}>Gross {grossProfit > 0 ? 'Profit' : 'loss'}:
-                                        <span className='font-bold ml-1'>${ grossProfit.toLocaleString() }</span>
+                                    <td className={`text-sm font-bold ${grossProfit > 0 ? 'text-green-700' : 'text-red-700'} -mr-32`}>
+                                        {t('gross')} {grossProfit > 0 ? t('profit') : t('loss')}:
+                                        <span className='font-bold ml-1'>${grossProfit.toLocaleString()}</span>
                                     </td>
                                 </tr>: ''}
 
 
                                 {index === financeIndex - 1
                                 ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm font-bold ${profitFromOperations > 0 ? 'text-green-700' : 'text-red-700' } -mr-32`}>{profitFromOperations > 0 ? 'Profit' : 'loss'} From Operations:
-                                        <span className='font-bold ml-1'>${ profitFromOperations.toLocaleString() }</span>
+                                    <td className={`text-sm font-bold ${profitFromOperations > 0 ? 'text-green-700' : 'text-red-700'} -mr-32`}>
+                                        {profitFromOperations > 0 ? t('profit') : t('loss')} {t('fromOperations')}:
+                                        <span className='font-bold ml-1'>${profitFromOperations.toLocaleString()}</span>
                                     </td>
                                 </tr>: ''}
 
 
                                 {index === lastIndex
                                 ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm font-bold ${profitBeforeTax > 0 ? 'text-green-700' : 'text-red-700'  } -mr-32`}>Net {profitBeforeTax > 0 ? 'Profit' : 'loss'}:
-                                        <span className='font-bold ml-1'>${ profitBeforeTax.toLocaleString() }</span>
+                                    <td className={`text-sm font-bold ${profitBeforeTax > 0 ? 'text-green-700' : 'text-red-700'} -mr-32`}>
+                                        {t('net')} {profitBeforeTax > 0 ? t('profit') : t('loss')}:
+                                        <span className='font-bold ml-1'>${profitBeforeTax.toLocaleString()}</span>
                                     </td>
                                 </tr>: ''}
 

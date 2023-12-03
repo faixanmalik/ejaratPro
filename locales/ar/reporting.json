@@ -16,5 +16,14 @@
   "accountName":"إسم الحساب",
   "subAccount":"الحساب الفرعي",
   "totalDebit":"إجمالي الدين",
-  "totalCredit":"إجمالي الائتمان"
+  "totalCredit":"إجمالي الائتمان",
+
+
+  "profitAndLossTitle":"ملخص الربح والخسارة",
+  "amount":"كمية",
+  "gross":"إجمالي",
+  "profit":"ربح",
+  "loss":"خسارة",
+  "fromOperations":"من العمليات",
+  "net":"شبكة"
 }
