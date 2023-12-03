@@ -38,7 +38,8 @@
 
 
     "/panel/settings/paymentMethod": ["panel", "settings"],
-    "/panel/payroll/employees": ["panel", "payroll"]
+    "/panel/payroll/employees": ["panel", "payroll"],
+    "/panel/financialManagment/reports/generalLedger": ["panel", "reporting"]
 
     
     

@@ -19,19 +19,20 @@ import Product from 'models/Product';
 import { NavItem } from 'reactstrap';
 import PaymentMethod from 'models/PaymentMethod';
 import ChequeTransaction from 'models/ChequeTransaction';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) => {
 
     // Cash Receipt
+    const { t } = useTranslation('reporting')
+
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
     const [account, setAccount] = useState('')
     const [dbAccount, setDbAccount] = useState(false)
     const [isCash, setIsCash] = useState(false)
-
     const [newEntry, setNewEntry] = useState([])
-
     const [coaAccount, setCoaAccount] = useState('')
     
 
@@ -589,7 +590,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-1">
                             <label htmlFor="fromDate" className="block text-sm font-medium text-gray-700">
-                                From:
+                                {t('from')}
                             </label>
                             <input
                                 type="date"
@@ -602,7 +603,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                         </div>
                         <div className="col-span-6 sm:col-span-1">
                             <label htmlFor="toDate" className="block text-sm font-medium text-gray-700">
-                                To:
+                                {t('to')}
                             </label>
                             <input
                                 type="date"
@@ -615,7 +616,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                         </div>
                         <div className="col-span-6 sm:col-span-3">
                             <label htmlFor="account" className="block text-sm font-medium text-gray-700">
-                                Account:
+                                {t('account')}
                             </label>
                             <select id="account" name="account" onChange={handleChange} value={account} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option>select account</option>
@@ -624,7 +625,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                                 })}
                             </select>
                         </div>
-                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>Update</button>
+                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>{t('update')}</button>
                     </div>
                 </div>
             </div>
@@ -634,7 +635,7 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
     <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
             <div className="px-4 mt-4 sm:px-0 flex">
-                <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">General Ledger Summary</h3>
+                <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">{t('generalLedgerTitle')}</h3>
             </div>
         </div>
         <div className="md:col-span-2">
@@ -646,22 +647,22 @@ const GeneralLedger = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExp
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
-                                        Voucher No
+                                        {t('voucherNo')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Products / Accounts
+                                        {t('products')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Date
+                                        {t('date')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Debit
+                                        {t('debit')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Credit
+                                        {t('credit')}
                                     </th>
                                     <th scope="col" className="px-6 py-3 text-blue-800 font-bold">
-                                        Balance
+                                        {t('balance')}
                                     </th>
                                 </tr>
                             </thead>

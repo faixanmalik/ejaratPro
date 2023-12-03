@@ -1,0 +1,13 @@
+{
+  "generalLedgerTitle": "ملخص دفتر الأستاذ العام",
+  "from":"من",
+  "to":"ل",
+  "account":"حساب",
+  "update":"تحديث",
+  "voucherNo":"رقم القسيمة",
+  "products":"المنتجات / الحسابات",
+  "date":"تاريخ",
+  "debit":"دَين",
+  "credit":"ائتمان",
+  "balance":"توازن"
+}

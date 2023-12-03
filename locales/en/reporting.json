@@ -1,0 +1,13 @@
+{
+  "generalLedgerTitle": "General Ledger Summary",
+  "from":"From",
+  "to":"To",
+  "account":"Account",
+  "update":"Update",
+  "voucherNo":"Voucher No",
+  "products":"Products / Accounts",
+  "date":"Date",
+  "debit":"Debit",
+  "credit":"Credit",
+  "balance":"Balance"
+}
