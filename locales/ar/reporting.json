@@ -25,5 +25,12 @@
   "profit":"ربح",
   "loss":"خسارة",
   "fromOperations":"من العمليات",
-  "net":"شبكة"
+  "net":"شبكة",
+
+  "balanceSheetTitle":"ملخص الميزانية العمومية",
+  "totalAssets":"إجمالي الأصول",
+  "totalEquity":"مجموع الاسهم",
+  "totalLiabilities":"اجمالي المطلوبات",
+  "liabilities":"الإلتزامات"
+  
 }

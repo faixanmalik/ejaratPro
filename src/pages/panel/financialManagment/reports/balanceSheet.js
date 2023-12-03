@@ -18,9 +18,12 @@ import Expenses from 'models/Expenses';
 import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
 import ChequeTransaction from 'models/ChequeTransaction';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts, name }) => {
+
+    const { t } = useTranslation('reporting')
 
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
@@ -855,7 +858,7 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                     <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-5 sm:col-span-2">
                             <label htmlFor="fromDate" className="block text-sm font-medium text-gray-700">
-                                From:
+                                {t('from')}
                             </label>
                             <input
                                 type="date"
@@ -868,7 +871,7 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                         </div>
                         <div className="col-span-6 sm:col-span-2">
                             <label htmlFor="toDate" className="block text-sm font-medium text-gray-700">
-                                To:
+                                {t('to')}
                             </label>
                             <input
                                 type="date"
@@ -879,7 +882,7 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                                 className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
-                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>Update</button>
+                        <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>{t('update')}</button>
                     </div>
                 </div>
             </div>
@@ -890,7 +893,7 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
         <div className="md:col-span-1">
             <div className="px-4 mt-4 sm:px-0 flex">
                 <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">
-                    Balance Sheet Summary
+                    {t('balanceSheetTitle')}
                     {fDate && tDate &&
                         <span className='text-sm ml-1'>({fDate} to {tDate})</span>
                     }
@@ -906,13 +909,13 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" className="px-6 py-3">
-                                        Account Name
+                                        {t('accountName')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Account
+                                        {t('account')}
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Amount
+                                        {t('amount')}
                                     </th>
                                 </tr>
                             </thead>
@@ -950,21 +953,21 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
                             
                                 {index === assetsIndex - 1
                                 ? <tr className="flex float-right -mr-72 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm ${totalAssets > 0 ? 'text-green-700' : 'text-red-700' } -mr-32 font-bold`}>Total Assets:
+                                    <td className={`text-sm ${totalAssets > 0 ? 'text-green-700' : 'text-red-700' } -mr-32 font-bold`}>{t('totalAssets')}:
                                         <span className='font-bold ml-1'>${ totalAssets.toLocaleString() }</span>
                                     </td>
                                 </tr>: ''}
 
                                 {index === nonCurrentLiabilitiesIndex - 1
                                 ? <tr className="flex float-right -mr-72 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm ${totalEquity > 0 ? 'text-green-700' : 'text-red-700' } -mr-32 font-bold`}>Total Equity:
+                                    <td className={`text-sm ${totalEquity > 0 ? 'text-green-700' : 'text-red-700' } -mr-32 font-bold`}>{t('totalEquity')}:
                                         <span className='font-bold ml-1'>${ totalEquity.toLocaleString() }</span>
                                     </td>
                                 </tr>: ''}
 
                                 {index === lastIndex
                                 ? <tr className="flex float-right -mr-72 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm ${totalLiabilities > 0 ? 'text-red-700' : 'text-green-700' } -mr-32 font-bold`}>Total Liabilities:
+                                    <td className={`text-sm ${totalLiabilities > 0 ? 'text-red-700' : 'text-green-700' } -mr-32 font-bold`}>{t('totalLiabilities')}:
                                         <span className='font-bold ml-1'>${ totalLiabilities.toLocaleString() }</span>
                                     </td>
                                 </tr>: ''}
@@ -976,10 +979,10 @@ const BalanceSheet = ({ dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpe
 
 
                         {sortedDbCharts.length != 0 ? <div className="flex justify-around border-t-2 border-slate-200 pt-5 bg-slate-100 p-4 text-right sm:px-6">
-                            <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} ml-auto mr-16`}>Total Assets: 
+                            <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} ml-auto mr-16`}>{t('totalAssets')}: 
                                 <span className={`font-bold tracking-wider ml-1 `}>${totalAssets.toLocaleString()}</span>
                             </h1>
-                            <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} mr-32`}>Total Equity & Liabilities: 
+                            <h1 className={`text-sm ${totalAssets === totalEquityAndLiabilities ? 'text-green-700' : 'text-red-700'} mr-32`}>{t('totalEquity')} & {t('liabilities')}: 
                                 <span className='font-bold tracking-wider ml-1'>${totalEquityAndLiabilities.toLocaleString()}</span>
                             </h1>
                         </div>: ''}

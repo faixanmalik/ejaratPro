@@ -24,5 +24,12 @@
   "profit":"Profit",
   "loss":"Loss",
   "fromOperations":"From Operations",
-  "net":"Net"
+  "net":"Net",
+
+
+  "balanceSheetTitle":"Balance Sheet Summary",
+  "totalAssets":"Total Assets",
+  "totalEquity":"Total Equity",
+  "totalLiabilities":"Total Liabilities",
+  "liabilities":"Liabilities"
 }
