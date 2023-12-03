@@ -31,5 +31,10 @@
   "totalAssets":"Total Assets",
   "totalEquity":"Total Equity",
   "totalLiabilities":"Total Liabilities",
-  "liabilities":"Liabilities"
+  "liabilities":"Liabilities",
+
+
+  "contactsTitle":"Contact Transaction Summary",
+  "contacts":"Contacts",
+  "name":"Name"
 }

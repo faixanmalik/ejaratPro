@@ -42,7 +42,8 @@
     "/panel/financialManagment/reports/generalLedger": ["panel", "reporting"],
     "/panel/financialManagment/reports/trialBalance": ["panel", "reporting"],
     "/panel/financialManagment/reports/profitAndLoss": ["panel", "reporting"],
-    "/panel/financialManagment/reports/balanceSheet": ["panel", "reporting"]
+    "/panel/financialManagment/reports/balanceSheet": ["panel", "reporting"],
+    "/panel/financialManagment/reports/contactTransactionSummary": ["panel", "reporting"]
 
     
   }

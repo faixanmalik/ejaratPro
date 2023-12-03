@@ -17,6 +17,7 @@ import CreditNote from 'models/CreditNote';
 import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentVoucher from 'models/PaymentVoucher';
 import Expenses from 'models/Expenses';
+import useTranslation from 'next-translate/useTranslation';
 
 const ContactTransactionSummary = (
   { dbExpensesVoucher, dbPaymentVoucher, dbReceipts, 
@@ -25,6 +26,8 @@ const ContactTransactionSummary = (
     dbCharts,  dbContacts }) => {
 
   // Cash Receipt
+  const { t } = useTranslation('reporting')
+  
   const [fromDate, setFromDate] = useState('')
   const [toDate, setToDate] = useState('') 
   const [sortBy, setsortBy] = useState('')
@@ -133,7 +136,7 @@ const ContactTransactionSummary = (
           <div className="grid grid-cols-6 gap-6">
             <div className="col-span-6 sm:col-span-1">
                 <label htmlFor="fromDate" className="block text-sm font-medium text-gray-700">
-                    From:
+                    {t('from')}
                 </label>
                 <input
                     type="date"
@@ -146,7 +149,7 @@ const ContactTransactionSummary = (
             </div>
             <div className="col-span-6 sm:col-span-1">
                 <label htmlFor="toDate" className="block text-sm font-medium text-gray-700">
-                    To:
+                    {t('to')}
                 </label>
                 <input
                     type="date"
@@ -159,7 +162,7 @@ const ContactTransactionSummary = (
             </div>
             <div className="col-span-6 sm:col-span-3">
                 <label htmlFor="contact" className="block text-sm font-medium text-gray-700">
-                    Contacts:
+                    {t('contacts')}
                 </label>
                 <select id="contact" name="contact" onChange={handleChange} value={contact} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                     <option>select contact</option>
@@ -168,7 +171,7 @@ const ContactTransactionSummary = (
                     })}
                 </select>
             </div>
-            <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>Update</button>
+            <button onClick={submit} type='button' className='bg-blue-800 hover:bg-blue-900 text-white px-10 h-10 mt-4 rounded-lg'>{t('update')}</button>
           </div>
         </div>
       </div>
@@ -178,7 +181,7 @@ const ContactTransactionSummary = (
   <div className="md:grid md:grid-cols-1 md:gap-6">
     <div className="md:col-span-1">
       <div className="px-4 mt-4 sm:px-0 flex">
-        <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">Contact Transaction Summary</h3>
+        <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">{t('contactsTitle')}</h3>
       </div>
     </div>
     <div className="md:col-span-2">
@@ -189,22 +192,22 @@ const ContactTransactionSummary = (
               <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Voucher No
+                    {t('voucherNo')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Name
+                    {t('name')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Date
+                    {t('date')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Debit
+                    {t('debit')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Credit
+                    {t('credit')}
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Balance
+                    {t('balance')}
                   </th>
                 </tr>
               </thead>
