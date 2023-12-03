@@ -635,15 +635,17 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
     <Card>
       <CardBody className='bg-white'>
         <CardTitle tag="h5" className='font-medium'>{t('salesSummary')}</CardTitle>
+
         <CardSubtitle className="text-muted font-normal" tag="h6">
-          {t('yearlySalesReport')}
+            {t('yearlySalesReport')}
         </CardSubtitle>
+
         <Chart
-          type="area"
-          width="100%"
-          height="390"
-          options={chartoptions.options}
-          series={chartoptions.series}
+            type="area"
+            width="100%"
+            height="390"
+            options={chartoptions.options}
+            series={chartoptions.series}
         />
       </CardBody>
     </Card>
