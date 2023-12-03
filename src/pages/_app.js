@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 export default function App({ Component, pageProps }) {
 
   const router = useRouter();
+  console.log(router.locale);
 
   //  react top loading bar
   const [progress, setProgress] = useState(0)
@@ -48,11 +49,33 @@ export default function App({ Component, pageProps }) {
 
 
   return <>
-    <div dir='ltr'>
-      <Navbar key={key} user={user} logout={logout}/>
-      <LoadingBar color='#0800FF' height={3} progress={progress} waitingTime={300} onLoaderFinished={() => setProgress(0)}/>  
-      <Component {...pageProps}/>
-      <Footer/>
-    </div>
+    {router.locale === 'en' ? (
+      <div dir='ltr'>
+        <Navbar key={key} user={user} logout={logout} />
+        <LoadingBar
+          color='#0800FF'
+          height={3}
+          progress={progress}
+          waitingTime={300}
+          onLoaderFinished={() => setProgress(0)}
+        />
+        <Component {...pageProps} />
+        <Footer />
+      </div>
+    ) : (
+      <div dir='rtl'>
+        <Navbar key={key} user={user} logout={logout} />
+        <LoadingBar
+          color='#0800FF'
+          height={3}
+          progress={progress}
+          waitingTime={300}
+          onLoaderFinished={() => setProgress(0)}
+        />
+        <Component {...pageProps} />
+        <Footer />
+      </div>
+    )}
+    
   </>
 }

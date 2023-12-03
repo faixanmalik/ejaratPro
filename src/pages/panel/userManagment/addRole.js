@@ -166,7 +166,7 @@ const AddRole = ({dbRole}) => {
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-1 md:gap-6">
         <div className="md:col-span-1">
-          <div className="px-4 sm:px-0 flex">
+          <div className="px-4 sm:px-0 flex justify-between">
             <h3 className="text-lg font-bold leading-6 text-gray-900">{t('title')}</h3>
             <button onClick={()=>{
               setOpen(true),
@@ -174,7 +174,7 @@ const AddRole = ({dbRole}) => {
               setRoleName('')
               setIsOpenSaveChange(true)
               }} 
-              className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
+              className={`${isAdmin === false ? 'cursor-not-allowed': ''} bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
                {t('new')}
             </button>
           </div>  
