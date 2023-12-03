@@ -6,8 +6,7 @@ function Footer() {
     <footer className="bg-white">
 
       <div className='flex w-full items-center px-7 py-3'>
-
-        <div className='flex space-x-7 rtl:space-x-reverse w-10/12 items-center'>
+        <div className='flex space-x-7 rtl:space-x-reverse w-[67rem] items-center'>
 
           <div className='flex w-1/6 ltr:border-r-2 rtl:border-l-2 sm:border-gray-200'>
             <Link href={'/'} className='flex no-underline items-center'>

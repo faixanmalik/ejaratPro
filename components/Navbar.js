@@ -33,8 +33,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example({ logout , user }) {
-  const [open, setOpen] = useState(false)
+export default function Example() {
   const router = useRouter();
   
   let getLocale = locales.filter((item)=>{
@@ -45,8 +44,7 @@ export default function Example({ logout , user }) {
 
 
   return (
-    <div className="bg-white">
-
+    <header className="bg-white">
       <div className='flex w-full items-center px-7 py-3'>
 
         <div className='flex space-x-7 rtl:space-x-reverse w-9/12 items-center'>
@@ -135,7 +133,6 @@ export default function Example({ logout , user }) {
 
 
       </div>
-
-    </div>
+    </header>
   )
 }
