@@ -149,7 +149,7 @@ return (
               </CardBody>
             </div>
 
-            <div className='rounded-r-xl w-full bg-gradient-to-r from-blue-500 to-blue-900 flex justify-center text-white rounded-l-[8rem]'>
+            <div className='rounded-r-xl rounded-l-[8rem] rtl:rounded-l-xl rtl:rounded-r-[8rem] w-full bg-gradient-to-r from-blue-500 to-blue-900 rtl:from-blue-900 rtl:to-blue-500 flex justify-center text-white '>
               <div className='my-auto'>
                 <CardBody className="flex flex-col gap-2 items-center">
                   <h1 className='text-center font-bold'>{t('headingTitle')}</h1>          
