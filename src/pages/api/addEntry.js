@@ -247,46 +247,52 @@ export default async function handler(req, res) {
     
         // Receipt Voucher Invoice
         else if( path === 'ReceiptVoucher'){
-            const { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, project, attachment, path, importEntries, row } = req.body;
+          const { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, project, attachment, path, importEntries, row } = req.body;
 
-            if (Array.isArray(req.body.inputList)) {
-                const filteredInv = {
-                    ...req.body,
-                    // inputList: req.body.inputList.filter((input) => input.paidBy === 'Cheque'),
-                    type: path
-                };
+          const modifiedInputList = inputList.map((item) => {
+            return {
+              phoneNo,
+              email,
+              city,
+              reference,
+              amount,
+              inputList: [item], // Use an array with the current item
+              name,
+              memo,
+              journalDate,
+              journalNo,
+              totalPaid,
+              project,
+              attachment,
+              type:path,
+            };
+          })
 
-                if (filteredInv.inputList.length > 0) {
-                    let newEntry = new Cheque(filteredInv);
-                    await newEntry.save();
-                } else {
-                    console.log("inputList is empty, not saving to the database");
-                }
+          await Promise.all(
+            modifiedInputList.map(async (data) => {
+              const newEntry = new Cheque(data);
+              await newEntry.save();
+            })
+          );
 
+          for (const newItem of inputList) {
+            await CreditSalesInvoice.findOneAndUpdate({billNo:newItem.billNo}, { $inc: { amountPaid: newItem.paid } });
+          }
+
+          let Invoices = await CreditSalesInvoice.find()
+          for (const item of Invoices) {
+            if(item.amountPaid === item.totalAmount) {
+              await CreditSalesInvoice.findByIdAndUpdate(item.id, { billStatus: 'paid' });
             }
             else {
-                console.log("The 'inputList' property is not an array or doesn't exist in req.body");
+              await CreditSalesInvoice.findByIdAndUpdate(item.id, { billStatus: 'unpaid' });
             }
+          }
+          
+          let newEntry = new ReceiptVoucher( { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, project, attachment, type:path } );
+          await newEntry.save();
 
-
-            for (const newItem of inputList) {
-                await CreditSalesInvoice.findOneAndUpdate({billNo:newItem.billNo}, { $inc: { amountPaid: newItem.paid } });
-            }
-
-            let Invoices = await CreditSalesInvoice.find()
-            for (const item of Invoices) {
-                if(item.amountPaid === item.totalAmount) {
-                    await CreditSalesInvoice.findByIdAndUpdate(item.id, { billStatus: 'paid' });
-                }
-                else {
-                    await CreditSalesInvoice.findByIdAndUpdate(item.id, { billStatus: 'unpaid' });
-                }
-            }
-            
-            let newEntry = new ReceiptVoucher( { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, project, attachment, type:path } );
-            await newEntry.save();
-
-            res.status(200).json({ success: true, message: "Entry Added !" }) 
+          res.status(200).json({ success: true, message: "Entry Added !" }) 
         }
 
 

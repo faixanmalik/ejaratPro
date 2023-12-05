@@ -170,7 +170,6 @@ import useTranslation from 'next-translate/useTranslation';
         const newFilteredData = dbCheques.filter((item)=>{
           return item.name === urlName;
         });
-        console.log(newFilteredData)
         setFilteredData(newFilteredData)
       }
       else{
