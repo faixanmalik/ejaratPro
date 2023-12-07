@@ -124,7 +124,7 @@ export default function Example() {
               )}
             </Listbox>
           </div>
-          <div className='flex space-x-3 rtl:space-x-reverse'>
+          <div className='flex space-x-2 rtl:space-x-reverse'>
             <Link href={'/login'} className="text-sm font-bold text-black no-underline hover:text-gray-800">Sign in</Link>
             <span className="h-6 w-px bg-gray-800" aria-hidden="true" />
             <Link href={'/signup'} className="text-sm font-bold text-black no-underline hover:text-gray-800">Create account</Link>
