@@ -1,1 +1,0 @@
-global.Headers = global.Headers || require('node-fetch').Headers;

@@ -1,6 +1,5 @@
 import { useState , useEffect } from 'react'
 import '@/styles/globals.css'
-import './polyfills';
 import "../styles/style.scss";
 
 // React top loading bar
