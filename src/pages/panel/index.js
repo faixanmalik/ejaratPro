@@ -21,6 +21,7 @@ import ReceiptVoucher from 'models/ReceiptVoucher';
 import PaymentVoucher from 'models/PaymentVoucher';
 import Expenses from 'models/Expenses';
 import useTranslation from "next-translate/useTranslation";
+import { useEffect, useState } from "react";
 
 
 export default function Home({customer, dbProducts, supplier, employees, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) {
@@ -40,32 +41,33 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
   const { t } = useTranslation('panel')
 
   useEffect(() => {
+  
+
     let getUser = JSON.parse(localStorage.getItem("myUser"));
+    let userEmail = getUser.businessName;
     if(getUser){
       setUserEmail(getUser)
     }
 
     let filteredCustomer = customer.filter((item)=>{
-      return item.userEmail === getUser.email;
+      return item.userEmail === userEmail;
     })
     setFilteredCustomer(filteredCustomer)
     
     let filteredSupplier = supplier.filter((item)=>{
-      return item.userEmail === getUser.email;
+      return item.userEmail === userEmail;
     })
     setFilteredSupplier(filteredSupplier)
 
-
     let filteredEmployees = employees.filter((item)=>{
-      return item.userEmail === getUser.email;
+      return item.userEmail === userEmail;
     })
     setFilteredEmployees(filteredEmployees)
 
     let filteredProducts = dbProducts.filter((item)=>{
-      return item.userEmail === getUser.email;
+      return item.userEmail === userEmail;
     })
     setFilteredProducts(filteredProducts)
-
 
   }, [])
 
@@ -135,13 +137,13 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
         {/***Sales & Feed***/}
         <Row>
           <Col sm="12" lg="12">
-            <SalesChart dbProducts={dbProducts} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
+            <SalesChart dbProducts={dbProducts} userEmail={userEmail} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
           </Col>
         </Row>
 
         <Row>
           <Col sm="12" lg="12">
-            <AssetsChart dbProducts={dbProducts} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
+            <AssetsChart dbProducts={dbProducts} userEmail={userEmail} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
           </Col>
         </Row>
       </main>
@@ -161,6 +163,7 @@ export async function getServerSideProps() {
   let supplier = await Contact.find({"type": "Supplier"})
   let employees = await Employees.find()
   let dbProducts = await Product.find()
+
   let dbCharts = await Charts.find()
   let dbJournalVoucher = await JournalVoucher.find()
 

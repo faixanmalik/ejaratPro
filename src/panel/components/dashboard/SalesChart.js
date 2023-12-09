@@ -17,10 +17,10 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
 
     useEffect(() => {
         let getUser = JSON.parse(localStorage.getItem("myUser"));
-        setUserEmail(getUser.email)
+        setUserEmail(getUser.businessName)
 
         let filteredCharts = dbCharts.filter((item)=>{
-            return item.userEmail === getUser.email;
+            return item.userEmail === getUser.businessName;
         })
         setFilteredCharts(filteredCharts)
 
