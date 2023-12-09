@@ -12,7 +12,7 @@ import dbPaymentMethod from 'models/PaymentMethod';
 import useTranslation from 'next-translate/useTranslation';
 
 
-const PaymentMethod = ({dbPaymentMethods, charts}) => {
+const PaymentMethod = ({ userEmail, dbPaymentMethods, charts}) => {
 
   const [open, setOpen] = useState(false)
   const { t } = useTranslation('settings')
@@ -29,13 +29,26 @@ const PaymentMethod = ({dbPaymentMethods, charts}) => {
 
   // authentications
   const [isAdmin, setIsAdmin] = useState(false)
+  const [filteredInvoices, setFilteredInvoices] = useState([])
+  const [filteredCharts, setFilteredCharts] = useState([])
 
   useEffect(() => {
     const myUser = JSON.parse(localStorage.getItem('myUser'))
     if(myUser.department === 'Admin'){
       setIsAdmin(true)
     }
-  }, []);
+
+    let filteredInvoices = dbPaymentMethods.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredInvoices(filteredInvoices)
+
+    let filteredCharts = charts.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredCharts(filteredCharts)
+
+  }, [userEmail]);
 
   
   function handleRowCheckboxChange(e, id) {
@@ -46,7 +59,6 @@ const PaymentMethod = ({dbPaymentMethods, charts}) => {
     }
   }
 
-  
   const handleChange = (e) => {
     if(e.target.name === 'paymentType'){
       setPaymentType(e.target.value)
@@ -125,7 +137,7 @@ const PaymentMethod = ({dbPaymentMethods, charts}) => {
     e.preventDefault()
     
     // fetch the data from form to makes a file in local system
-    const data = { paymentType, chartsOfAccount, path:'PaymentMethod' };
+    const data = { userEmail, paymentType, chartsOfAccount, path:'PaymentMethod' };
     
       let res = await fetch(`/api/addEntry`, {
       method: 'POST',
@@ -214,7 +226,7 @@ const PaymentMethod = ({dbPaymentMethods, charts}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dbPaymentMethods.map((item, index)=>{
+                  {filteredInvoices.map((item, index)=>{
                     return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
@@ -238,7 +250,7 @@ const PaymentMethod = ({dbPaymentMethods, charts}) => {
                 </tbody>
 
               </table>
-                {dbPaymentMethods.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
+                {filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
             </div>
             </div>
           </form>
@@ -292,7 +304,7 @@ const PaymentMethod = ({dbPaymentMethods, charts}) => {
                                         className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                       >
                                         <option>Select Charts of Accounts</option>
-                                          {charts.map((item, index)=>{
+                                          {filteredCharts.map((item, index)=>{
                                             return <option key={index} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
                                           })}
                                       </select>
