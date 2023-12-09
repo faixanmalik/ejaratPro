@@ -21,7 +21,7 @@ import Link from 'next/link';
 import useTranslation from 'next-translate/useTranslation';
 
 
-const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
+const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
 
   const router = useRouter();
   const { t } = useTranslation('businessSetup')
@@ -52,6 +52,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
   const [allContact, setAllContact] = useState(dbContact)
   const [filterCharts, setFilterCharts] = useState('allContacts')
   const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
+  const [filteredInvoices, setFilteredInvoices] = useState([])
   
 
   // authentications
@@ -76,7 +77,12 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
       setIsAdmin(true)
     }
 
-  }, [filterCharts]);
+    let filteredInvoices = allContact.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredInvoices(filteredInvoices)
+
+  }, [filterCharts, userEmail]);
 
   useEffect(() => {
     setType('Tenant')
@@ -289,7 +295,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
     e.preventDefault()
     
     // fetch the data from form to makes a file in local system
-    const data = { name, type, accounts, email, phoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date, path:'contactList' };
+    const data = { userEmail, name, type, accounts, email, phoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date, path:'contactList' };
       let res = await fetch(`/api/addEntry`, {
       method: 'POST',
       headers: { 
@@ -427,7 +433,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
 
                 <tbody>
                   
-                  {allContact.map((item, index)=>{
+                  {filteredInvoices.map((item, index)=>{
                     return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
@@ -461,7 +467,7 @@ const ContactList = ({dbContact, dbAccounts, dbPaymentType}) => {
                 </tbody>
 
               </table>
-                {allContact.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
+                {filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
             </div>
             </div>
           </form>

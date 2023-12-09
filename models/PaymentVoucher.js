@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const PaymentInvoiceSchema = new mongoose.Schema({
      
+    userEmail:{type: String},
     inputList:{ type: Array },
     totalPaid:{ type: Number },
     totalBalance:{ type: Number },

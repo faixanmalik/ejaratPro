@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const TaxRateSchema = new mongoose.Schema({
 
+    userEmail:{type: String},
     name:{type: String},
     taxRate:{type: Number},
     accountDesc:{type: String},

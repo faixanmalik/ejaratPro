@@ -12,11 +12,11 @@ import { useRouter } from 'next/router';
 export default function App({ Component, pageProps }) {
 
   const router = useRouter();
-  console.log(router.locale);
 
   //  react top loading bar
   const [progress, setProgress] = useState(0)
   const [user, setUser] = useState({value: null})
+  const [userEmail, setUserEmail] = useState('')
   const [key, setKey] = useState(0)
 
   //  Use Effect for routerChange
@@ -31,11 +31,12 @@ export default function App({ Component, pageProps }) {
 
     let myUser = JSON.parse(localStorage.getItem("myUser"));
     if( myUser ){
+      setUserEmail(myUser.businessName);
       setUser({value: myUser.token , email: myUser.email, name: myUser.name, department: myUser.department });
       setKey(Math.random());
     }
     
-  }, [router.query])
+  }, [router.query, userEmail])
 
 
 
@@ -59,7 +60,7 @@ export default function App({ Component, pageProps }) {
           waitingTime={300}
           onLoaderFinished={() => setProgress(0)}
         />
-        <Component {...pageProps} />
+        <Component {...pageProps} userEmail={userEmail} />
         <Footer />
       </div>
     ) : (
@@ -72,7 +73,7 @@ export default function App({ Component, pageProps }) {
           waitingTime={300}
           onLoaderFinished={() => setProgress(0)}
         />
-        <Component {...pageProps} />
+        <Component {...pageProps} userEmail={userEmail} />
         <Footer />
       </div>
     )}

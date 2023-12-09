@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const ContractAndTenantSchema = new mongoose.Schema({
+
+    userEmail:{type: String},
     unitNo: Number,
     buildingNameInArabic: String,
     buildingNameInEnglish: String,

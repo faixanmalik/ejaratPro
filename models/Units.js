@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const UnitsSchema = new mongoose.Schema({
+
+    userEmail:{type: String},
     attachment: String,
     name: String,
     phoneNo: Number,

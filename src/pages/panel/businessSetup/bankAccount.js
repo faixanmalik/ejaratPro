@@ -16,7 +16,7 @@ import {XLSX, read, utils} from 'xlsx';
 import useTranslation from 'next-translate/useTranslation';
 
 
-const BankAccount = ({dbBankAccount, charts}) => {
+const BankAccount = ({dbBankAccount, charts, userEmail}) => {
 
 
   const [open, setOpen] = useState(false)
@@ -36,6 +36,8 @@ const BankAccount = ({dbBankAccount, charts}) => {
   // id For delete contact
   const [id, setId] = useState('')
   const [selectedIds, setSelectedIds] = useState([]);
+  const [filteredInvoices, setFilteredInvoices] = useState([])
+  const [filteredCharts, setFilteredCharts] = useState([])
 
   const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
 
@@ -47,7 +49,16 @@ const BankAccount = ({dbBankAccount, charts}) => {
     if(myUser.department === 'Admin'){
       setIsAdmin(true)
     }
-  }, []);
+    let filteredInvoices = dbBankAccount.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredInvoices(filteredInvoices)
+
+    let filteredCharts = charts.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredCharts(filteredCharts)
+  }, [userEmail]);
 
   
   function handleRowCheckboxChange(e, id) {
@@ -214,7 +225,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
     e.preventDefault()
     
     // fetch the data from form to makes a file in local system
-    const data = { bankBranch, accountNo, accountType, accountDesc, accountTitle, chartsOfAccount,  borrowingLimit, path:'bankAccount' };
+    const data = { userEmail, bankBranch, accountNo, accountType, accountDesc, accountTitle, chartsOfAccount,  borrowingLimit, path:'bankAccount' };
     
       let res = await fetch(`/api/addEntry`, {
       method: 'POST',
@@ -345,7 +356,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
 
                 <tbody>
                   
-                  {dbBankAccount.map((item, index)=>{
+                  {filteredInvoices.map((item, index)=>{
                     return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
@@ -379,7 +390,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
                 </tbody>
 
               </table>
-                {dbBankAccount.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No Bank Account found</h1> : ''}
+                {filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No Bank Account found</h1> : ''}
             </div>
             </div>
           </form>
@@ -463,7 +474,7 @@ const BankAccount = ({dbBankAccount, charts}) => {
                                         className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                       >
                                         <option>Select Charts of Accounts</option>
-                                          {charts.map((item)=>{
+                                          {filteredCharts.map((item)=>{
                                             return <option key={item.accountCode} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
                                           })}
                                       </select>

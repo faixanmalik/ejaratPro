@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const PurchaseInvoiceSchema = new mongoose.Schema({
+
+    userEmail:{type: String},
     inputList:{ type: Array },
     fullAmount:{ type: Number },
     fullTax:{ type: Number },

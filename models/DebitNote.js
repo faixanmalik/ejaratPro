@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const DebitNoteInvoiceSchema = new mongoose.Schema({
 
+    userEmail:{type: String},
     billNo: {type: String}, 
     inputList:{ type: Array },
     totalAmount:{ type: Number },

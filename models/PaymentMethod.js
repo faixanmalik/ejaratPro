@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const PaymentMethodSchema = new mongoose.Schema({
+  
+    userEmail:{type: String},
     paymentType:{type: String},
     chartsOfAccount:{type: String},
     

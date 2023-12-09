@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const BuildingsSchema = new mongoose.Schema({
 
+    userEmail:{type: String},
     receiveUnitsArray: { type: Array },
     nameInInvoice: { type: String },
     lessorName: { type: String },

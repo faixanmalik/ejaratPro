@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const ChartSchema = new mongoose.Schema({
+    userEmail:{type: String},
     accountCode:{type: Number},
     accountName:{type: String},
     account:{type: String},

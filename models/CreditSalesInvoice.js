@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const CreditSalesInvoiceSchema = new mongoose.Schema({
 
+    userEmail:{type: String},
     inputList:{ type: Array },
     contractId:{ type: String },
     fullAmount:{ type: Number },

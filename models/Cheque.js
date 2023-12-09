@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const ChequeSchema = new mongoose.Schema({
-     
+    
+    userEmail:{type: String},
     inputList:{ type: Array },
     fullAmount:{ type: Number },
     totalPaid:{ type: Number },
