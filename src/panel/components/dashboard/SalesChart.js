@@ -12,6 +12,20 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
     const [monthlyGrossProfit, setMonthlyGrossProfit] = useState([])
     const [monthlySales, setMonthlySales] = useState([])
     const { t } = useTranslation('panel')
+    const [userEmail, setUserEmail] = useState('')
+    const [filteredCharts, setFilteredCharts] = useState([])
+
+    useEffect(() => {
+        let getUser = JSON.parse(localStorage.getItem("myUser"));
+        setUserEmail(getUser.email)
+
+        let filteredCharts = dbCharts.filter((item)=>{
+            return item.userEmail === getUser.email;
+        })
+        setFilteredCharts(filteredCharts)
+
+        callFunctions();
+    }, [userEmail]);
 
 
     const monthData = [
@@ -42,19 +56,13 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
         }
     };
 
-    useEffect(() => {
-        callFunctions();
-    }, []);
-
-
-
   
   let monthlyGp = [];
   let monthlySale = []
   const submit = (fromDate, toDate)=>{
     let balance = [];
     
-    dbCharts.forEach(element => {
+    filteredCharts.forEach(element => {
 
         let dbAllEntries = [];
         let allVouchers = [];
@@ -524,7 +532,7 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
     let costOfGoodsSoldArray = [];
     let discountArray = [];
     
-    {dbCharts.map((item,index) => {
+    {filteredCharts.map((item,index) => {
       if(item.subAccount === 'Revenue' || item.subAccount === 'Other Income'){
         let sales = balance[index] && balance[index][balance[index].length-1]
         if(sales){    

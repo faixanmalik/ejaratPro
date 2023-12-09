@@ -1,4 +1,4 @@
-import { React, Fragment, useState } from 'react'
+import { React, Fragment, useState, useEffect } from 'react'
 import Logo from "../../logo/Logo";
 import { useRouter } from "next/router";
 import { Dialog, Transition } from '@headlessui/react'
@@ -30,6 +30,15 @@ const Sidebar2 = ({ showMobilemenu }) => {
   const { t } = useTranslation('panel')
   const location = router.pathname;
   const [open, setOpen] = useState(false)
+
+  const [isOwner, setisOwner] = useState(false)
+
+  useEffect(() => {
+    let myUser = JSON.parse(localStorage.getItem("myUser"));
+    if(myUser && myUser.department === 'admin'){
+      setisOwner(true)
+    }
+  }, [])
 
 
   return (
@@ -199,6 +208,9 @@ const Sidebar2 = ({ showMobilemenu }) => {
               <MenuItem href={`/${router.locale}/panel/userManagment/addRole`} icon={<BiUserCheck className='text-lg'/>} className={ location === '/panel/userManagment/addRole' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
                 {t('addRole')}
               </MenuItem>
+              {isOwner === true && <MenuItem href="/panel/userManagment/clients" icon={<FaUserFriends className='text-lg'/>} className={ location === '/panel/userManagment/clients' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+                Clients
+              </MenuItem>}
             </SubMenu>
 
             <SubMenu label={t('businessSetup')} icon={<IoBusinessOutline className='text-lg'/>}>
