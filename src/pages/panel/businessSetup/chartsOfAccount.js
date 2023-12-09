@@ -592,6 +592,7 @@ const ChartsOfAccounts = ({ userEmail, dbAllCharts }) => {
         </div>
       </Dialog>
     </Transition.Root>
+    
     </FullLayout>
     </ProSidebarProvider>
 
