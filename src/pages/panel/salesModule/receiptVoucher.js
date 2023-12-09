@@ -27,7 +27,7 @@ import useTranslation from 'next-translate/useTranslation';
     return classes.filter(Boolean).join(' ')
   }
 
-  const ReceiptVoucher = ({ dbVouchers, dbBankAccount, dbCreditSalesInvoice, dbPaymentMethod, dbContacts, dbEmployees, }) => {
+  const ReceiptVoucher = ({ userEmail, dbVouchers, dbBankAccount, dbCreditSalesInvoice, dbPaymentMethod, dbContacts, dbEmployees, }) => {
 
     const router = useRouter();
     const { t } = useTranslation('modules')
@@ -48,6 +48,11 @@ import useTranslation from 'next-translate/useTranslation';
     // authentications
     const [isAdmin, setIsAdmin] = useState(false)
 
+    const [filteredInvoices, setFilteredInvoices] = useState([])
+    const [filteredContacts, setFilteredContacts] = useState([])
+    const [filteredPaymentMethod, setFilteredPaymentMethod] = useState([])
+    const [filteredBankAccount, setFilteredBankAccount] = useState([])
+
     function handleRowCheckboxChange(e, id) {
       if (e.target.checked) {
         setSelectedIds([...selectedIds, id]);
@@ -58,6 +63,26 @@ import useTranslation from 'next-translate/useTranslation';
 
     useEffect(() => {
       setContacts(dbContacts, dbEmployees)
+
+      let filteredInvoices = dbVouchers.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
+      let filteredContacts = dbContacts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredContacts(filteredContacts)
+
+      let filteredPaymentMethod = dbPaymentMethod.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredPaymentMethod(filteredPaymentMethod)
+
+      let filteredBankAccount = dbBankAccount.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredBankAccount(filteredBankAccount)
 
       if(router.query.refer){
         let { name } = router.query;
@@ -89,7 +114,7 @@ import useTranslation from 'next-translate/useTranslation';
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
-    }, [router])
+    }, [router, userEmail])
 
 
     // JV
@@ -193,7 +218,7 @@ import useTranslation from 'next-translate/useTranslation';
       });
 
       // fetch the data from form to makes a file in local system
-      const data = { phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, attachment, path:'ReceiptVoucher' };
+      const data = { userEmail, phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, attachment, path:'ReceiptVoucher' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -301,7 +326,7 @@ import useTranslation from 'next-translate/useTranslation';
       setId('')
       setJournalDate(today)
 
-      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const invoiceNumber = (filteredInvoices.length + 1).toString().padStart(4, '0');
       const formattedInvoice = `RV-${invoiceNumber}`;
       setJournalNo(formattedInvoice)
       
@@ -409,7 +434,7 @@ import useTranslation from 'next-translate/useTranslation';
                     </tr>
                   </thead>
                   <tbody>
-                    {dbVouchers.map((item, index)=>{
+                    {filteredInvoices.map((item, index)=>{
                     return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
@@ -439,7 +464,7 @@ import useTranslation from 'next-translate/useTranslation';
                     
                   </tbody>
                 </table>
-                { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
               </div>
 
             </div>
@@ -507,7 +532,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select contacts</option>
-                                {dbContacts.map((item, index)=>{
+                                {filteredContacts.map((item, index)=>{
                                   return <option key={index} value={item.name}>{item.name} - {item.type}
                                   </option>
                                 })}
@@ -644,7 +669,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   <td className="p-2 max-w-[140px]">
                                     <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>paid By</option>
-                                      {dbPaymentMethod.map((item, index)=>{
+                                      {filteredPaymentMethod.map((item, index)=>{
                                         return <option key={index} value={item.paymentType}>{item.paymentType}</option>
                                       })}
                                     </select>
@@ -676,7 +701,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   <td className="p-2">
                                     <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>select bank</option>
-                                      {dbBankAccount.map((item, index)=>{
+                                      {filteredBankAccount.map((item, index)=>{
                                         return <option key={index} value={item.bankBranch}>{item.bankBranch}</option>
                                       })}
                                     </select>

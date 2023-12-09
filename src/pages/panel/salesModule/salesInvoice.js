@@ -29,7 +29,7 @@ import useTranslation from 'next-translate/useTranslation';
   }
 
 
-  const SalesInvoice = ({ dbVouchers, dbProducts, dbPaymentType, dbContacts, dbEmployees, dbTaxRate, dbProject }) => {
+  const SalesInvoice = ({ userEmail, dbVouchers, dbProducts, dbPaymentMethod, dbContacts, dbEmployees, dbTaxRate, dbProject }) => {
 
     const router = useRouter();
     const { t } = useTranslation('modules')
@@ -44,6 +44,12 @@ import useTranslation from 'next-translate/useTranslation';
 
     // authentications
     const [isAdmin, setIsAdmin] = useState(false)
+    const [filteredInvoices, setFilteredInvoices] = useState([])
+    const [filteredTaxRate, setFilteredTaxRate] = useState([])
+    const [filteredProduct, setFilteredProduct] = useState([])
+    const [filteredProject, setFilteredProject] = useState([])
+    const [filteredContacts, setFilteredContacts] = useState([])
+    const [filteredPaymentMethod, setFilteredPaymentMethod] = useState([])
 
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
 
@@ -59,11 +65,42 @@ import useTranslation from 'next-translate/useTranslation';
     useEffect(() => {
       setContacts(dbContacts, dbEmployees)
 
+      let filteredInvoices = dbVouchers.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
+      let filteredContacts = dbContacts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredContacts(filteredContacts)
+
+      let filteredPaymentMethod = dbPaymentMethod.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredPaymentMethod(filteredPaymentMethod)
+
+      let filteredTaxRate = dbTaxRate.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredTaxRate(filteredTaxRate)
+
+      let filteredProduct = dbProducts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredProduct(filteredProduct)
+
+      let filteredProject = dbProject.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredProject(filteredProject)
+      
+
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
-    }, [])
+    }, [userEmail])
 
     useEffect(() => {
       openSettings();
@@ -179,7 +216,7 @@ import useTranslation from 'next-translate/useTranslation';
       });
 
       // fetch the data from form to makes a file in local system
-      const data = { phoneNo, email, chqNo, discount, city, fromAccount:receivedBy, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'SalesInvoice' };
+      const data = { userEmail, phoneNo, email, chqNo, discount, city, fromAccount:receivedBy, receivedBy, project, dueDate, inputList, name,  memo, journalDate, journalNo, fullAmount, fullTax, totalAmount, attachment, path:'SalesInvoice' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -349,7 +386,7 @@ import useTranslation from 'next-translate/useTranslation';
       setJournalDate(today)
 
 
-      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const invoiceNumber = (filteredInvoices.length + 1).toString().padStart(4, '0');
       const formattedInvoice = `SI-${invoiceNumber}`;
       setJournalNo(formattedInvoice)
 
@@ -462,7 +499,7 @@ import useTranslation from 'next-translate/useTranslation';
                     </tr>
                   </thead>
                   <tbody>
-                    {dbVouchers.map((item, index)=>{
+                    {filteredInvoices.map((item, index)=>{
                     return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
@@ -498,7 +535,7 @@ import useTranslation from 'next-translate/useTranslation';
                     
                   </tbody>
                 </table>
-                { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
               </div>
 
             </div>
@@ -565,7 +602,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select contacts</option>
-                                {dbContacts.map((item, index)=>{
+                                {filteredContacts.map((item, index)=>{
                                   return <option key={index} value={item.name}>{item.name} - {item.type}
                                   </option>
                                 })}
@@ -623,7 +660,7 @@ import useTranslation from 'next-translate/useTranslation';
                             
                               <select id="project" name="project" onChange={ handleChange } value={project} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select project</option>
-                                {dbProject.map((item, index)=>{
+                                {filteredProject.map((item, index)=>{
                                   return <option key={index} value={item.name}>{item.name}</option>
                                 })}
                               </select>
@@ -641,7 +678,7 @@ import useTranslation from 'next-translate/useTranslation';
                               
                               <select id="receivedBy" name="receivedBy" onChange={ handleChange } value={receivedBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
                                 <option value=''>select received By</option>
-                                {dbPaymentType.map((item, index)=>{
+                                {filteredPaymentMethod.map((item, index)=>{
                                   return <option key={index} value={item.paymentType}>{item.paymentType}</option>
                                 })}
                               </select>
@@ -716,7 +753,7 @@ import useTranslation from 'next-translate/useTranslation';
                                       <td className="p-2 w-1/5">
                                         <select id="products" name="products" onChange={ e => change(e, index) } value={inputList.products} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                           <option value=''>select products</option>
-                                          {dbProducts.map((item, index)=>{
+                                          {filteredProduct.map((item, index)=>{
                                             return <option key={index} value={item.name}>{item.name}</option>
                                           })}
                                         </select>
@@ -746,7 +783,7 @@ import useTranslation from 'next-translate/useTranslation';
                                       <td className="p-2 w-1/6">
                                         <select id="taxRate" name="taxRate" onChange={ e => change(e, index) } value={inputList.taxRate} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                           <option>select tax</option>
-                                          {dbTaxRate.map((item, index)=>{
+                                          {filteredTaxRate.map((item, index)=>{
                                             return <option key={index} value={item.taxRate}>{item.name}({item.taxRate}%) </option>
                                           })}
                                         </select>
@@ -907,7 +944,7 @@ export async function getServerSideProps() {
   let dbEmployees = await Employees.find()
   let dbProducts = await Product.find()
   let dbTaxRate = await TaxRate.find()
-  let dbPaymentType = await PaymentType.find()
+  let dbPaymentMethod = await PaymentType.find()
   let dbProject = await Project.find()
 
   // Pass data to the page via props
@@ -917,7 +954,7 @@ export async function getServerSideProps() {
       dbContacts: JSON.parse(JSON.stringify(dbContacts)), 
       dbProducts: JSON.parse(JSON.stringify(dbProducts)), 
       dbTaxRate: JSON.parse(JSON.stringify(dbTaxRate)), 
-      dbPaymentType: JSON.parse(JSON.stringify(dbPaymentType)), 
+      dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)), 
       dbEmployees: JSON.parse(JSON.stringify(dbEmployees)), 
       dbProject: JSON.parse(JSON.stringify(dbProject)), 
     }
