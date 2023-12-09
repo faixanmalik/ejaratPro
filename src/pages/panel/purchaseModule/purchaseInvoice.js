@@ -22,7 +22,7 @@ import useTranslation from 'next-translate/useTranslation';
     return classes.filter(Boolean).join(' ')
   }
 
-  const PurchaseInvoice = ({ dbVouchers, dbCharts, dbContacts, dbEmployees, dbTaxRate }) => {
+  const PurchaseInvoice = ({ userEmail, dbVouchers, dbCharts, dbContacts, dbEmployees, dbTaxRate }) => {
     
     const [open, setOpen] = useState(false)
     const { t } = useTranslation('modules')
@@ -32,6 +32,11 @@ import useTranslation from 'next-translate/useTranslation';
 
     // authentications
     const [isAdmin, setIsAdmin] = useState(false)
+
+    const [filteredInvoices, setFilteredInvoices] = useState([])
+    const [filteredCharts, setFilteredCharts] = useState([])
+    const [filteredContacts, setFilteredContacts] = useState([])
+    const [filteredTaxRate, setFilteredTaxRate] = useState([])
   
 
     function handleRowCheckboxChange(e, id) {
@@ -49,7 +54,28 @@ import useTranslation from 'next-translate/useTranslation';
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
-    }, [])
+
+      let filteredInvoices = dbVouchers.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
+      let filteredCharts = dbCharts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredCharts(filteredCharts)
+
+      let filteredContacts = dbContacts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredContacts(filteredContacts)
+
+      let filteredTaxRate = dbTaxRate.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredTaxRate(filteredTaxRate)
+
+    }, [userEmail])
 
 
     // JV
@@ -143,8 +169,6 @@ import useTranslation from 'next-translate/useTranslation';
       }
     }
 
-
-
     // JV
     const submit = async(e)=>{
       e.preventDefault()
@@ -156,7 +180,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 
       // fetch the data from form to makes a file in local system
-      const data = { phoneNo, email, amountPaid, amountReceived, billStatus, city, address, reference, dueDate, inputList, name,  memo, journalDate, billNo, fullAmount, fullTax, totalAmount, attachment, path:'PurchaseInvoice' };
+      const data = { userEmail, phoneNo, email, amountPaid, amountReceived, billStatus, city, address, reference, dueDate, inputList, name,  memo, journalDate, billNo, fullAmount, fullTax, totalAmount, attachment, path:'PurchaseInvoice' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -428,7 +452,7 @@ import useTranslation from 'next-translate/useTranslation';
                     </tr>
                   </thead>
                   <tbody>
-                    {dbVouchers.map((item, index)=>{
+                    {filteredInvoices.map((item, index)=>{
                     return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
@@ -467,7 +491,7 @@ import useTranslation from 'next-translate/useTranslation';
                     
                   </tbody>
                 </table>
-                { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
               </div>
 
             </div>
@@ -535,7 +559,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select contacts</option>
-                                {dbContacts.map((item, index)=>{
+                                {filteredContacts.map((item, index)=>{
                                   return <option key={index} value={item.name}>{item.name} - {item.type}
                                   </option>
                                 })}
@@ -674,7 +698,7 @@ import useTranslation from 'next-translate/useTranslation';
                                       <td className="p-2 w-1/5">
                                         <select id="account" name="account" onChange={ e => change(e, index) } value={inputList.account} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                           <option value=''>select account</option>
-                                          {dbCharts.map((item, index)=>{
+                                          {filteredCharts.map((item, index)=>{
                                             return <option key={index} value={item.accountName}>{item.accountName}</option>
                                           })}
                                         </select>
@@ -704,7 +728,7 @@ import useTranslation from 'next-translate/useTranslation';
                                       <td className="p-2 w-1/6">
                                         <select id="taxRate" name="taxRate" onChange={ e => change(e, index) } value={inputList.taxRate} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                           <option>select tax</option>
-                                          {dbTaxRate.map((item, index)=>{
+                                          {filteredTaxRate.map((item, index)=>{
                                             return <option key={index} value={item.taxRate}>{item.name}({item.taxRate}%) </option>
                                           })}
                                         </select>

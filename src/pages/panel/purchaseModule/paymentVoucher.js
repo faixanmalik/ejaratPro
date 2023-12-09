@@ -23,7 +23,7 @@ import useTranslation from 'next-translate/useTranslation';
     return classes.filter(Boolean).join(' ')
   }
 
-  const PaymentVoucher = ({ dbVouchers, dbPurchaseInvoice, dbPaymentType, dbContacts, dbEmployees, }) => {
+  const PaymentVoucher = ({ userEmail, dbVouchers, dbPurchaseInvoice, dbPaymentMethod, dbContacts, dbEmployees, }) => {
     
     const [open, setOpen] = useState(false)
     const { t } = useTranslation('modules')
@@ -35,6 +35,10 @@ import useTranslation from 'next-translate/useTranslation';
 
     // authentications
     const [isAdmin, setIsAdmin] = useState(false)
+
+    const [filteredInvoices, setFilteredInvoices] = useState([])
+    const [filteredContacts, setFilteredContacts] = useState([])
+    const [filteredPaymentMethod, setFilteredPaymentMethod] = useState([])
 
     function handleRowCheckboxChange(e, id) {
       if (e.target.checked) {
@@ -51,7 +55,23 @@ import useTranslation from 'next-translate/useTranslation';
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
-    }, [])
+
+      let filteredInvoices = dbVouchers.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
+      let filteredContacts = dbContacts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredContacts(filteredContacts)
+
+      let filteredPaymentMethod = dbPaymentMethod.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredPaymentMethod(filteredPaymentMethod)
+
+    }, [userEmail])
 
 
     // JV
@@ -152,7 +172,7 @@ import useTranslation from 'next-translate/useTranslation';
       });
 
       // fetch the data from form to makes a file in local system
-      const data = { phoneNo, email, fromAccount:paidBy, city, reference, paidBy, amount:totalPaid, dueDate, inputList, name,  memo, journalDate, journalNo, totalPaid, totalBalance, attachment, path:'PaymentVoucher' };
+      const data = { userEmail, phoneNo, email, fromAccount:paidBy, city, reference, paidBy, amount:totalPaid, dueDate, inputList, name,  memo, journalDate, journalNo, totalPaid, totalBalance, attachment, path:'PaymentVoucher' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -263,7 +283,7 @@ import useTranslation from 'next-translate/useTranslation';
       setId('')
       setJournalDate(today)
 
-      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const invoiceNumber = (filteredInvoices.length + 1).toString().padStart(4, '0');
       const formattedInvoice = `PV-${invoiceNumber}`;
       setJournalNo(formattedInvoice)
       
@@ -372,7 +392,7 @@ import useTranslation from 'next-translate/useTranslation';
                     </tr>
                   </thead>
                   <tbody>
-                    {dbVouchers.map((item, index)=>{
+                    {filteredInvoices.map((item, index)=>{
                     return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
@@ -405,7 +425,7 @@ import useTranslation from 'next-translate/useTranslation';
                     
                   </tbody>
                 </table>
-                { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
               </div>
 
             </div>
@@ -472,7 +492,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select contacts</option>
-                                {dbContacts.map((item, index)=>{
+                                {filteredContacts.map((item, index)=>{
                                   return <option key={index} value={item.name}>{item.name} - {item.type}
                                   </option>
                                 })}
@@ -549,7 +569,7 @@ import useTranslation from 'next-translate/useTranslation';
                               
                               <select id="paidBy" name="paidBy" onChange={ handleChange } value={paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select paid By</option>
-                                {dbPaymentType.map((item, index)=>{
+                                {filteredPaymentMethod.map((item, index)=>{
                                   return <option key={index} value={item.paymentType}>{item.paymentType}</option>
                                 })}
                               </select>
@@ -784,7 +804,7 @@ export async function getServerSideProps() {
   let dbContacts = await Contact.find()
   let dbEmployees = await Employees.find()
   let dbAccounts = await Charts.find()
-  let dbPaymentType = await PaymentType.find()
+  let dbPaymentMethod = await PaymentType.find()
 
   let dbPurchaseInvoice = await PurchaseInvoice.find({billStatus: 'unpaid'})
 
@@ -794,7 +814,7 @@ export async function getServerSideProps() {
       dbVouchers: JSON.parse(JSON.stringify(dbVouchers)),
       dbContacts: JSON.parse(JSON.stringify(dbContacts)), 
       dbAccounts: JSON.parse(JSON.stringify(dbAccounts)),
-      dbPaymentType: JSON.parse(JSON.stringify(dbPaymentType)), 
+      dbPaymentMethod: JSON.parse(JSON.stringify(dbPaymentMethod)), 
       dbEmployees: JSON.parse(JSON.stringify(dbEmployees)),
       dbPurchaseInvoice: JSON.parse(JSON.stringify(dbPurchaseInvoice)), 
     }
