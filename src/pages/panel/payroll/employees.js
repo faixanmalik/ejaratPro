@@ -16,7 +16,7 @@ import {read, utils} from 'xlsx';
 import Role from 'models/Role';
 import useTranslation from 'next-translate/useTranslation';
 
-const Employees = ({ dbEmployee, dbRole }) => {
+const Employees = ({ userEmail, dbEmployee, dbRole }) => {
 
   const [open, setOpen] = useState(false)
   const { t } = useTranslation('payroll')
@@ -56,6 +56,8 @@ const Employees = ({ dbEmployee, dbRole }) => {
 
   // authentications
   const [isAdmin, setIsAdmin] = useState(false)
+  const [filteredInvoices, setFilteredInvoices] = useState([])
+  const [filteredRoles, setFilteredRoles] = useState([])
 
 
   useEffect(() => {
@@ -63,7 +65,18 @@ const Employees = ({ dbEmployee, dbRole }) => {
     if(myUser.department === 'Admin'){
       setIsAdmin(true)
     }
-  }, []);
+
+    let filteredInvoices = dbEmployee.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredInvoices(filteredInvoices)
+
+    let filteredRoles = dbRole.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredRoles(filteredRoles)
+    
+  }, [userEmail]);
 
 
   function handleRowCheckboxChange(e, id) {
@@ -311,7 +324,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
     e.preventDefault()
     
     // fetch the data from form to makes a file in local system
-    const data = { name, fatherName, dob, email, cnic,  phoneNo, citizenship, gender, maritalStatus, designation, department, workShift, workHour, employmentMode, payPolicy, basicPay, paymentMode, status, hireDate, siteName, joiningDate, country, streetAddress, city, state, zip, path:'employees' };
+    const data = { userEmail, name, fatherName, dob, email, cnic,  phoneNo, citizenship, gender, maritalStatus, designation, department, workShift, workHour, employmentMode, payPolicy, basicPay, paymentMode, status, hireDate, siteName, joiningDate, country, streetAddress, city, state, zip, path:'employees' };
       let res = await fetch(`/api/addEntry`, {
       method: 'POST',
       headers: { 
@@ -455,7 +468,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
 
                 <tbody>
                   
-                  {dbEmployee.map((item, index)=>{
+                  {filteredInvoices.map((item, index)=>{
                     return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
@@ -485,7 +498,7 @@ const Employees = ({ dbEmployee, dbRole }) => {
                 </tbody>
 
               </table>
-                {dbEmployee.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
+                {filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found</h1> : ''}
             </div>
             </div>
           </form>
