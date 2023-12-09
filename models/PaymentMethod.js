@@ -5,6 +5,7 @@ const PaymentMethodSchema = new mongoose.Schema({
     userEmail:{type: String},
     paymentType:{type: String},
     chartsOfAccount:{type: String},
+    isLocked:{type: Boolean, default: false}
     
   },{timestamps:true});
 

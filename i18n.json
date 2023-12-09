@@ -16,6 +16,7 @@
     "/panel/realEstate/contractTermination": ["panel", "realEstate"],
 
     "/panel/userManagment/addRole": ["panel", "users"],
+    "/panel/userManagment/clients": ["panel", "users"],
     
     "/panel/businessSetup/chartsOfAccount": ["panel", "businessSetup"],
     "/panel/businessSetup/taxRate": ["panel", "businessSetup"],

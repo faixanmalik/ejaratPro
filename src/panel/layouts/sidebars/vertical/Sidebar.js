@@ -14,7 +14,7 @@ import {HiOutlineBanknotes} from 'react-icons/hi2'
 
 import {BsBank, BsChatQuote, BsShop} from 'react-icons/bs'
 import {FiShoppingBag, FiUserPlus, FiUsers} from 'react-icons/fi'
-import {FaFileContract, FaRegBuilding, FaToriiGate} from 'react-icons/fa'
+import {FaFileContract, FaRegBuilding, FaToriiGate, FaUserFriends} from 'react-icons/fa'
 import {TbFileInvoice} from 'react-icons/tb'
 import {RiBankCardLine, RiBankLine, RiBillLine, RiCommunityLine} from 'react-icons/ri'
 import {SlCalender} from 'react-icons/sl'
@@ -35,7 +35,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
 
   useEffect(() => {
     let myUser = JSON.parse(localStorage.getItem("myUser"));
-    if(myUser && myUser.department === 'admin'){
+    if(myUser && myUser.department === 'Admin'){
       setisOwner(true)
     }
   }, [])

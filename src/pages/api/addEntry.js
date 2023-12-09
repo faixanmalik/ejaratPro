@@ -337,24 +337,103 @@ export default async function handler(req, res) {
         }
 
         else if( path === 'ChequeTransaction'){
-            const { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc, memo, journalDate, journalNo, attachment, path } = req.body;
+          const { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc, memo, journalDate, journalNo, attachment, path } = req.body;
 
-            let data = await ChequeTransaction.findOne({ userEmail, journalNo })
-            if( data ){
-                res.status(400).json({ success: false, message: "Already Found!" }) 
-            }
-            else{
-                let newEntry = new ChequeTransaction( { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc , memo, journalDate, journalNo, attachment, path } );
-                await Cheque.findByIdAndUpdate(chequeId, {chequeStatus: chequeStatus})
-                await newEntry.save();
-                res.status(200).json({ success: true, message: "Entry Added !" }) 
-            }
+          let data = await ChequeTransaction.findOne({ userEmail, journalNo })
+          if( data ){
+            res.status(400).json({ success: false, message: "Already Found!" }) 
+          }
+          else{
+            let newEntry = new ChequeTransaction( { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc , memo, journalDate, journalNo, attachment, path } );
+            await Cheque.findByIdAndUpdate(chequeId, {chequeStatus: chequeStatus})
+            await newEntry.save();
+            res.status(200).json({ success: true, message: "Entry Added !" }) 
+          }
+        }
+        else if( path === 'clients'){
+          const { businessName, email, password, firstName, lastName } = req.body;
+
+          try {
+
+            let preDefiendCOA = [
+              { isLocked: true, userEmail: businessName, accountCode: 100, accountName: 'Sales', account: 'Incomes', subAccount: 'Revenue', balance: 0, desc: 'Income from any normal business activity'},
+              { isLocked: true, userEmail: businessName, accountCode: 200, accountName: 'Purchases', account: 'Expenses', subAccount: 'Cost of sales', balance: 0, desc: 'Purchase description refers to the words mentioned in solicitation in order to describe the supplies or services to be acquired and comprises terms and conditions'},
+              { isLocked: true, userEmail: businessName, accountCode: 300, accountName: 'Accounts Receivable', account: 'Assets', subAccount: 'Current Assets', balance: 0, desc: 'he balance of money due to a firm for goods or services delivered or used but not yet paid for by customers'},
+              { isLocked: true, userEmail: businessName, accountCode: 400, accountName: 'Accounts Payable', account: 'Liabilities', subAccount: 'Current Liability', balance: 0, desc: 'Outstanding invoices the company has received from suppliers but has not yet paid at balance date'},
+              { isLocked: true, userEmail: businessName, accountCode: 500, accountName: 'Cost of Goods Sold', account: 'Expenses', subAccount: 'Cost of sales', balance: 0, desc: 'Cost of goods sold by the business'},
+              { isLocked: true, userEmail: businessName, accountCode: 600, accountName: 'Cash', account: 'Assets', subAccount: 'Current Assets', balance: 0, desc: 'Cash is legal tender—currency or coins—that can be used to exchange goods, debt, or services.'},
+              { isLocked: true, userEmail: businessName, accountCode: 700, accountName: 'Bank', account: 'Assets', subAccount: 'Current Assets', balance: 0, desc: 'This account represents the funds you have in your bank account.'},
+              { isLocked: true, userEmail: businessName, accountCode: 800, accountName: 'Owner A Share Capital', account: 'Equity', subAccount: 'Equity', balance: 0, desc: 'The value of shares purchased by the shareholders'},
+              { isLocked: true, userEmail: businessName, accountCode: 900, accountName: 'Retained Earnings', account: 'Equity', subAccount: 'Equity', balance: 0, desc: 'Accumulated Profit'},
+              { isLocked: true, userEmail: businessName, accountCode: 1000, accountName: 'Tax Payable', account: 'Liabilities', subAccount: 'Current Liability', balance: 0, desc: 'Income tax payable" is a liability reported for financial accounting purposes that indicates the amount that an organization expects to pay in income taxes within 12 months.'},
+              { isLocked: true, userEmail: businessName, accountCode: 1100, accountName: 'Stock', account: 'Assets', subAccount: 'Current Assets', balance: 0, desc: 'A stock is a general term used to describe the ownership certificates of any company' },
+              { isLocked: true, userEmail: businessName, accountCode: 1200, accountName: 'Sales Return', account: 'Incomes', subAccount: 'Revenue', balance: 0, desc: 'A sales return is a commodity or good that a customer returns to a seller for a full refund.' },
+              { isLocked: true, userEmail: businessName, accountCode: 1300, accountName: 'Sales Discount', account: 'Expenses', subAccount: 'Discount', balance: 0, desc: 'The sales discounts account appears in the income statement and is a contra revenue account, which means that it offsets gross sales, resulting in a smaller net sales figure' },
+              { isLocked: true, userEmail: businessName, accountCode: 1400, accountName: 'Purchase Return', account: 'Expenses', subAccount: 'Cost of sales', balance: 0, desc: 'when the buyer of merchandise, inventory, fixed assets, or other items sends these goods back to the seller' },
+              { isLocked: true, userEmail: businessName, accountCode: 1500, accountName: 'Office Expenses', account: 'Expenses', subAccount: 'Administration Expenses', balance: 0, desc: 'General expenses related to the running of the business office.' },
+              { isLocked: true, userEmail: businessName, accountCode: 1600, accountName: 'Wages and Salaries', account: 'Expenses', subAccount: 'Administration Expenses', balance: 0, desc: 'Payment to employees in exchange for their resources' },
+              { isLocked: true, userEmail: businessName, accountCode: 1700, accountName: 'Rent', account: 'Expenses', subAccount: 'Administration Expenses', balance: 0, desc: 'The payment to lease a building or area.' },
+              { isLocked: true, userEmail: businessName, accountCode: 1800, accountName: 'Finance Cost', account: 'Expenses', subAccount: 'Finance Cost', balance: 0, desc: 'the cost, interest, and other charges involved in the borrowing of money to build or purchase assets' },
+              { isLocked: true, userEmail: businessName, accountCode: 1900, accountName: 'Office Equipment', account: 'Assets', subAccount: 'Fixed Assets', balance: 0, desc: 'Office equipment that is owned and controlled by the business' },
+              { isLocked: true, userEmail: businessName, accountCode: 2000, accountName: 'Cheques wallet', account: 'Assets', subAccount: 'Current Assets', balance: 0, desc: 'A cheque is a negotiable instrument instructing a financial institution to pay a specific amount of a specific currency from a specified transactional account held in the drawers name with that institution. Both the drawer and payee may be natural persons or legal entities.' }
+            ]
+
+            let preDefiendTaxRate = [
+              { isLocked: true, userEmail: businessName, name: 'Output Vat', taxRate: 0, chartsOfAccount: 'Tax Payable' },
+            ]
+
+            let preDefiendPaymentMethod = [
+              { isLocked: true, userEmail: businessName, paymentType: 'Cash', chartsOfAccount: 'Cash' },
+              { isLocked: true, userEmail: businessName, paymentType: 'Bank', chartsOfAccount: 'Bank' },
+            ]
+
+            const userCOA = preDefiendCOA.map(item => ({
+              userEmail: item.userEmail,
+              isLocked: item.isLocked,
+              accountCode: item.accountCode,
+              accountName: item.accountName,
+              account: item.account,
+              subAccount: item.subAccount,
+              balance: item.balance,
+              desc: item.desc,
+            }));
+            await Charts.create(userCOA);
+
+              
+            const userTaxRate = preDefiendTaxRate.map(item => ({
+              userEmail: item.userEmail,
+              isLocked: item.isLocked,
+              name: item.name,
+              taxRate: item.taxRate,
+              chartsOfAccount: item.chartsOfAccount,
+            }));
+            await TaxRate.create(userTaxRate);
+
+
+            const userPaymentMethod = preDefiendPaymentMethod.map(item => ({
+              userEmail: item.userEmail,
+              isLocked: item.isLocked,
+              paymentType: item.paymentType,
+              chartsOfAccount: item.chartsOfAccount,
+            }));
+            await PaymentMethod.create(userPaymentMethod);
+
+              
+            let newEntry = new User( { businessName, email, password, firstName, lastName, } );
+            await newEntry.save();
             
+            res.status(200).json({ success: true, message: "Entry Added!" }) 
+
+          } catch (error) {
+            console.log(error)
+            res.status(400).json({ success: false, message: "Internal Server Error !" }) 
+          }
         }
 
 
+
         else{
-            res.status(400).json({ success: false, message: "Internal Server Error !" }) 
+          res.status(400).json({ success: false, message: "Internal Server Error !" }) 
         }
     }
     else{
