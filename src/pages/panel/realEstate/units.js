@@ -64,7 +64,7 @@ import useTranslation from 'next-translate/useTranslation';
     );
   }
 
-  const Units = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
+  const Units = ({ userEmail, dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
     const { t } = useTranslation('realEstate')
@@ -80,6 +80,8 @@ import useTranslation from 'next-translate/useTranslation';
 
     // authentications
     const [isAdmin, setIsAdmin] = useState(false)
+    const [filteredInvoices, setFilteredInvoices] = useState([])
+    const [filteredBuildings, setFilteredBuildings] = useState([])
 
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
     const [isChecked, setIsChecked] = useState(false);
@@ -109,6 +111,18 @@ import useTranslation from 'next-translate/useTranslation';
 
     useEffect(() => {
       setContacts(dbContacts)
+
+      let filteredInvoices = dbVouchers.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
+      let filteredBuildings = dbBuildings.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredBuildings(filteredBuildings)
+
+
 
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
@@ -200,7 +214,7 @@ import useTranslation from 'next-translate/useTranslation';
 
     useEffect(() => {
       
-      const newFilteredData = dbVouchers.filter((item)=>{
+      const newFilteredData = filteredInvoices.filter((item)=>{
         return item.buildingNameInEnglish.toLowerCase().includes(search.toLowerCase());
       });
       setFilteredData(newFilteredData)
@@ -349,7 +363,7 @@ import useTranslation from 'next-translate/useTranslation';
       e.preventDefault()
 
       // fetch the data from form to makes a file in local system
-      const data = { attachment, name, phoneNo, email, nameInBill, idNumber, expID, building, passPortNumber, expPassPort, buildingNameInArabic, buildingNameInEnglish, parkings, roof, country, city, area, electricityMeterNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, unitNo, balcony, ac, unitType, unitUse, bathroom, unitStatus, plotNo, rent, rentParking, size, waterMeterNumber, sewageNumber, view, notes , path:'Units' };
+      const data = { userEmail, attachment, name, phoneNo, email, nameInBill, idNumber, expID, building, passPortNumber, expPassPort, buildingNameInArabic, buildingNameInEnglish, parkings, roof, country, city, area, electricityMeterNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, unitNo, balcony, ac, unitType, unitUse, bathroom, unitStatus, plotNo, rent, rentParking, size, waterMeterNumber, sewageNumber, view, notes , path:'Units' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -593,8 +607,8 @@ import useTranslation from 'next-translate/useTranslation';
                 </label>
                 <select id="building" name="building" onChange={ handleChange } value={building} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select building</option>
-                  {dbBuildings.map((item, index)=>{
-                      return <option key={index} value={item.buildingNameInEnglish}>{item.buildingNameInEnglish}</option>
+                  {filteredBuildings.map((item, index)=>{
+                    return <option key={index} value={item.buildingNameInEnglish}>{item.buildingNameInEnglish}</option>
                   })}
                 </select>
               </div>
@@ -1086,13 +1100,13 @@ import useTranslation from 'next-translate/useTranslation';
     useEffect(() => {
 
       let pageSize = 10
-      let totalNoOfPages = Math.ceil(dbVouchers.length / pageSize);
+      let totalNoOfPages = Math.ceil(filteredInvoices.length / pageSize);
       
       setTotalNoOfPages(totalNoOfPages)
       
       const startIndex = (active - 1) * pageSize;
       const endIndex = startIndex + pageSize;
-      const currentItems = dbVouchers.slice(startIndex, endIndex);
+      const currentItems = filteredInvoices.slice(startIndex, endIndex);
       setFilteredData(currentItems)
 
     }, [active])
@@ -1998,7 +2012,7 @@ import useTranslation from 'next-translate/useTranslation';
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredData.map((item, index)=>{
+                      {filteredInvoices.map((item, index)=>{
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
@@ -2044,7 +2058,7 @@ import useTranslation from 'next-translate/useTranslation';
                       
                     </tbody>
                   </table>
-                  { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                  { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                 </div>
 
               </div>

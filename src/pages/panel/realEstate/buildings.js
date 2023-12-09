@@ -56,7 +56,7 @@ import useTranslation from 'next-translate/useTranslation';
     );
   }
 
-  const Buildings = ({ dbVouchers, dbContacts, dbCharts }) => {
+  const Buildings = ({ userEmail, dbVouchers, dbContacts, dbCharts }) => {
     
     const [open, setOpen] = useState(false)
 
@@ -65,10 +65,12 @@ import useTranslation from 'next-translate/useTranslation';
     const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
+    const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
 
     // authentications
     const [isAdmin, setIsAdmin] = useState(false)
-    const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
+    const [filteredInvoices, setFilteredInvoices] = useState([])
+    const [filteredContacts, setFilteredContacts] = useState([])
 
 
     function handleRowCheckboxChange(e, id) {
@@ -81,6 +83,16 @@ import useTranslation from 'next-translate/useTranslation';
 
     useEffect(() => {
       setContacts(dbContacts)
+
+      let filteredInvoices = dbVouchers.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
+      let filteredContacts = dbContacts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredContacts(filteredContacts)
 
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
@@ -153,7 +165,7 @@ import useTranslation from 'next-translate/useTranslation';
     const [increment, setIncrement] = useState(100)
 
     const [filteredData, setFilteredData] = useState([])
-
+    
 
 
     // Modals
@@ -391,7 +403,7 @@ import useTranslation from 'next-translate/useTranslation';
 
     useEffect(() => {
       
-      const newFilteredData = dbVouchers.filter((item)=>{
+      const newFilteredData = filteredInvoices.filter((item)=>{
         return item.buildingNameInEnglish.toLowerCase().includes(search.toLowerCase());
       });
       setFilteredData(newFilteredData)
@@ -403,7 +415,7 @@ import useTranslation from 'next-translate/useTranslation';
       e.preventDefault()
 
       // fetch the data from form to makes a file in local system
-      const data = { receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
+      const data = { userEmail, receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email , path:'Buildings' };
 
       let res = await fetch(`/api/addEntry`, {
         method: 'POST',
@@ -663,7 +675,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </label>
                 <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select contacts</option>
-                  {dbContacts.map((item, index)=>{
+                  {filteredContacts.map((item, index)=>{
                     return <option key={index} value={item.name}>{item.name} - {item.type}
                     </option>
                   })}
@@ -1891,7 +1903,7 @@ import useTranslation from 'next-translate/useTranslation';
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredData.map((item, index)=>{
+                      {filteredInvoices.map((item, index)=>{
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
@@ -1933,7 +1945,7 @@ import useTranslation from 'next-translate/useTranslation';
                       
                     </tbody>
                   </table>
-                  { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                  { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                 </div>
 
               </div>

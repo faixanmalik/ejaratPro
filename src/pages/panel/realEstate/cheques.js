@@ -68,11 +68,10 @@ import useTranslation from 'next-translate/useTranslation';
     );
   }
 
-  const Cheques = ({ dbPaymentMethod, dbCheques, dbContacts, dbBuildings, dbTenants }) => {
+  const Cheques = ({ userEmail, dbPaymentMethod, dbCheques, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
     const { t } = useTranslation('realEstate');
-
 
     const searchParams = useSearchParams()
     const openReceiptVoucher = searchParams.get('openReceiptVoucher')
@@ -96,6 +95,7 @@ import useTranslation from 'next-translate/useTranslation';
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
     const [isChecked, setIsChecked] = useState(false);
 		const [filteredData, setFilteredData] = useState([])
+    const [filteredInvoices, setFilteredInvoices] = useState([])
 
 
     // Sales Invoice States to show the cheque
@@ -157,12 +157,17 @@ import useTranslation from 'next-translate/useTranslation';
     useEffect(() => {
       setContacts(dbContacts)
 
+      let filteredInvoices = dbCheques.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
 
-    }, [dbCheques])
+    }, [dbCheques, userEmail])
 
     useEffect(() => {
 
@@ -211,17 +216,17 @@ import useTranslation from 'next-translate/useTranslation';
 
 		useEffect(() => {
 			// Calculate the total number of pages and update the state
-			const totalNoOfPages = Math.ceil(filteredData.length / pageSize);
+			const totalNoOfPages = Math.ceil(filteredInvoices.length / pageSize);
 			setTotalNoOfPages(totalNoOfPages);
-		}, [filteredData]);
+		}, [filteredInvoices]);
 
 		useEffect(() => {
 			const startIndex = (active - 1) * pageSize;
 			const endIndex = startIndex + pageSize;
-			const currentItems = filteredData.slice(startIndex, endIndex);
+			const currentItems = filteredInvoices.slice(startIndex, endIndex);
 	
 			if (currentItems.length > 0) {
-				setFilteredData(currentItems);
+				setFilteredInvoices(currentItems);
 			}
 		}, [active]);
 
@@ -680,7 +685,7 @@ import useTranslation from 'next-translate/useTranslation';
 											</tr>
                     </thead>
                     <tbody>
-                      {filteredData.map((item, index)=>{
+                      {filteredInvoices.map((item, index)=>{
 
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
 												<td className="w-4 p-4">
@@ -721,7 +726,7 @@ import useTranslation from 'next-translate/useTranslation';
                       
                     </tbody>
                   </table>
-                  { dbCheques.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                  { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                 </div>
 
               </div>

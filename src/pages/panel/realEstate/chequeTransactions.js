@@ -21,7 +21,7 @@ import PaymentMethod from 'models/PaymentMethod';
 import useTranslation from 'next-translate/useTranslation';
 
 
-const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
+const ChequeTransactions = ({ userEmail, dbPaymentMethod,dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
 
   const router = useRouter();
   const { t } = useTranslation('realEstate')
@@ -34,10 +34,13 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
   const [contacts, setContacts] = useState([])
   const [id, setId] = useState('')
   const [selectedIds, setSelectedIds] = useState([]);
-
-    // authentications
-  const [isAdmin, setIsAdmin] = useState(false)
   const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
+
+  // authentications
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [filteredInvoices, setFilteredInvoices] = useState([])
+  const [filteredCharts, setFilteredCharts] = useState([])
+  const [filteredContacts, setFilteredContacts] = useState([])
   
 
   function handleRowCheckboxChange(e, id) {
@@ -51,11 +54,27 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
   useEffect(() => {
 
+    let filteredInvoices = dbVouchers.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredInvoices(filteredInvoices)
+
+    let filteredCharts = dbCharts.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredCharts(filteredCharts)
+
+    let filteredContacts = dbContacts.filter((item)=>{
+      return item.userEmail === userEmail;
+    })
+    setFilteredContacts(filteredContacts)
+
+
     if(referCheque){
 
       let { name, email, amount, creditAccount, debitAccount } = router.query;
 
-      const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+      const invoiceNumber = (filteredInvoices.length + 1).toString().padStart(4, '0');
       const formattedInvoice = `FUND-${invoiceNumber}`;
       setJournalNo(formattedInvoice)
       setEmail(email)
@@ -283,7 +302,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
 
     // this code do the numbering like that 
     // FUND-0001 FUND-0002 FUND-0003
-    const invoiceNumber = (dbVouchers.length + 1).toString().padStart(4, '0');
+    const invoiceNumber = (filteredInvoices.length + 1).toString().padStart(4, '0');
     const formattedInvoice = `FUND-${invoiceNumber}`;
     setJournalNo(formattedInvoice)
 
@@ -389,8 +408,8 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                     </tr>
                   </thead>
                   <tbody>
-                    {dbVouchers.map((item)=>{ 
-                    return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
+                    {filteredInvoices.map((item, index)=>{ 
+                    return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
                           <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
@@ -425,7 +444,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                     
                   </tbody>
                 </table>
-                { dbVouchers.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
               </div>
 
             </div>
@@ -493,7 +512,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option>select contacts</option>
-                                {dbContacts.map((item)=>{
+                                {filteredContacts.map((item)=>{
                                   return <option key={item._id} value={item.name}>{item.name} - {item.type}
                                   </option>
                                 })}
@@ -558,7 +577,7 @@ const ChequeTransactions = ({ dbPaymentMethod,dbVouchers, dbCharts, dbContacts, 
                                   <td className="p-2 w-1/2">
                                     <select id="account" name="account" onChange={ e => change(e, index) } value={inputList.account} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option>select accounts</option>
-                                      {dbCharts.map((item)=>{
+                                      {filteredCharts.map((item)=>{
                                         return <option key={item._id} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
                                       })}
                                     </select>

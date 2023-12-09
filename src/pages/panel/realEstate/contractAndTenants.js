@@ -62,7 +62,7 @@ import useTranslation from 'next-translate/useTranslation';
     );
   }
 
-  const ContractAndTenants = ({ dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
+  const ContractAndTenants = ({ userEmail, dbVouchers, dbContacts, dbBuildings, dbTenants }) => {
     
     const router = useRouter();
     const { t } = useTranslation('realEstate')
@@ -81,6 +81,7 @@ import useTranslation from 'next-translate/useTranslation';
 
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
     const [isChecked, setIsChecked] = useState(false);
+    const [filteredInvoices, setFilteredInvoices] = useState([])
 
 
     function handleRowCheckboxChange(e, id) {
@@ -108,11 +109,16 @@ import useTranslation from 'next-translate/useTranslation';
     useEffect(() => {
       setContacts(dbContacts)
 
+      let filteredInvoices = dbVouchers.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredInvoices(filteredInvoices)
+
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
-    }, [])
+    }, [userEmail])
 
     const [search, setSearch] = useState('')
 
@@ -194,7 +200,7 @@ import useTranslation from 'next-translate/useTranslation';
 
     useEffect(() => {
       
-      const newFilteredData = dbVouchers.filter((item)=>{
+      const newFilteredData = filteredInvoices.filter((item)=>{
         return item.buildingNameInEnglish.toLowerCase().includes(search.toLowerCase());
       });
       setFilteredData(newFilteredData)
@@ -472,13 +478,13 @@ import useTranslation from 'next-translate/useTranslation';
     useEffect(() => {
 
       let pageSize = 10
-      let totalNoOfPages = Math.ceil(dbVouchers.length / pageSize);
+      let totalNoOfPages = Math.ceil(filteredInvoices.length / pageSize);
       
       setTotalNoOfPages(totalNoOfPages)
       
       const startIndex = (active - 1) * pageSize;
       const endIndex = startIndex + pageSize;
-      const currentItems = dbVouchers.slice(startIndex, endIndex);
+      const currentItems = filteredInvoices.slice(startIndex, endIndex);
       setFilteredData(currentItems)
 
     }, [active])
@@ -1416,7 +1422,7 @@ import useTranslation from 'next-translate/useTranslation';
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredData.map((item, index)=>{
+                      {filteredInvoices.map((item, index)=>{
                       return <tr key={index} className="text-[13px] bg-white border-b hover:bg-gray-50">
                         <td className="w-4 p-4">
                           <div className="flex items-center">
@@ -1457,7 +1463,7 @@ import useTranslation from 'next-translate/useTranslation';
                       
                     </tbody>
                   </table>
-                  { filteredData.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
+                  { filteredInvoices.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                 </div>
 
               </div>
