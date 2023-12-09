@@ -20,10 +20,10 @@ import Expenses from 'models/Expenses';
 import useTranslation from 'next-translate/useTranslation';
 
 const ContactTransactionSummary = (
-  { dbExpensesVoucher, dbPaymentVoucher, dbReceipts, 
+  { userEmail, dbExpensesVoucher, dbPaymentVoucher, dbReceipts, 
     dbCreditNotes, dbCreditNote, dbPurchaseInvoice, 
     dbSalesInvoice, dbCreditSalesInvoices, dbJournalVoucher, 
-    dbCharts,  dbContacts }) => {
+    dbContacts }) => {
 
   // Cash Receipt
   const { t } = useTranslation('reporting')
@@ -33,17 +33,23 @@ const ContactTransactionSummary = (
   const [sortBy, setsortBy] = useState('')
   const [contact, setContact] = useState('')
   const [filteredTrx, setFilteredTrx] = useState([])
+  const [filteredContacts, setFilteredContacts] = useState([])
 
+  useEffect(() => {
+    let filteredContacts = dbContacts.filter((item)=>{
+        return item.userEmail === userEmail;
+    })
+    setFilteredContacts(filteredContacts)
+}, [userEmail])
 
   const submit = ()=>{
 
     if(contact){
 
-
       let filteredTrx = []
       // Credit Sales Invoice
       dbCreditSalesInvoices = dbCreditSalesInvoices
-        .filter((item) => item.name === `${contact}`)
+        .filter((item) => item.name === `${contact}` && item.userEmail === userEmail)
         .map((item) => ({
           ...item,
           journalNo: item.billNo,
@@ -56,7 +62,7 @@ const ContactTransactionSummary = (
 
       // Credit Note Invoice
       dbCreditNotes = dbCreditNotes
-        .filter((item) => item.name === `${contact}`)
+        .filter((item) => item.name === `${contact}` && item.userEmail === userEmail)
         .map((item) => ({
           ...item,
           chequeStatus: 'Received',
@@ -68,7 +74,7 @@ const ContactTransactionSummary = (
 
       // Payment Voucher
       dbPaymentVoucher = dbPaymentVoucher
-        .filter((item) => item.name === `${contact}`)
+        .filter((item) => item.name === `${contact}` && item.userEmail === userEmail)
         .map((item) => ({
           ...item,
           chequeStatus: 'Received',
@@ -79,7 +85,7 @@ const ContactTransactionSummary = (
 
       // Receipts Voucher
       dbReceipts = dbReceipts
-        .filter((receipt) => receipt.name === `${contact}`)
+        .filter((receipt) => receipt.name === `${contact}` && item.userEmail === userEmail)
         .map((receipt) => {
           const filteredInputList = receipt.inputList;
           const totalAmount = filteredInputList.reduce((total, item) => total + parseInt(item.paid), 0);
@@ -166,8 +172,8 @@ const ContactTransactionSummary = (
                 </label>
                 <select id="contact" name="contact" onChange={handleChange} value={contact} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                     <option>select contact</option>
-                    {dbContacts.map((item) => {
-                        return <option key={item._id} value={item.name}>{item.name}</option>
+                    {filteredContacts.map((item) => {
+                      return <option key={item._id} value={item.name}>{item.name}</option>
                     })}
                 </select>
             </div>
