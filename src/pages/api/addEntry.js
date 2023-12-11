@@ -21,6 +21,7 @@ import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
 import Cheque from 'models/Cheque';
 import ChequeTransaction from 'models/ChequeTransaction';
+import User from 'models/User';
 
 
 export default async function handler(req, res) {
@@ -352,6 +353,7 @@ export default async function handler(req, res) {
         }
         else if( path === 'clients'){
           const { businessName, email, password, firstName, lastName } = req.body;
+         
 
           try {
 
@@ -421,7 +423,7 @@ export default async function handler(req, res) {
               
             let newEntry = new User( { businessName, email, password, firstName, lastName, } );
             await newEntry.save();
-            
+
             res.status(200).json({ success: true, message: "Entry Added!" }) 
 
           } catch (error) {
