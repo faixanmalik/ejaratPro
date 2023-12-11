@@ -9,5 +9,14 @@
   "addUser":"Add User",
   "viewOrEdit":"View / Edit",
   "saveChanges":"Save Changes",
-  "save":"Save"
+  "save":"Save",
+
+
+  "businessName":"Business Name",
+  "name":"Name",
+  "email":"Email",
+  "password":"Password",
+  "addClient":"Add Client",
+  "firstName":"First Name",
+  "lastName":"Last Name"
 }

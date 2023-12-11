@@ -9,5 +9,14 @@
   "addUser":"إضافة مستخدم",
   "viewOrEdit":"منظر / يحرر",
   "saveChanges":"حفظ التغييرات",
-  "save":"يحفظ"
+  "save":"يحفظ",
+
+
+  "businessName":"الاسم التجاري",
+  "name":"اسم",
+  "email":"بريد إلكتروني",
+  "password":"كلمة المرور",
+  "addClient":"إضافة عميل",
+  "firstName":"الاسم الأول",
+  "lastName":"اسم العائلة"
 }

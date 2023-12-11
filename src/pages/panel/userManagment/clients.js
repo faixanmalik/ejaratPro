@@ -9,12 +9,14 @@ import FullLayout from '@/panel/layouts/FullLayout';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import User from 'models/User';
 import Head from 'next/head';
+import useTranslation from 'next-translate/useTranslation';
 
 
 const Clients = ({dbUser}) => {
 
 
   const [open, setOpen] = useState(false)
+  const { t } = useTranslation('users')
 
   const [businessName, setBusinessName] = useState('')
   const [firstName, setFirstName] = useState('')
@@ -197,7 +199,7 @@ const Clients = ({dbUser}) => {
                 setIsOpenSaveChange(true)
               }} 
               className={`${isAdmin === false ? 'cursor-not-allowed': ''} ml-auto bg-blue-800 hover:bg-blue-900 text-white px-14 py-2 rounded-lg`} disabled={isAdmin === false}>
-               New
+               {t('new')}
             </button>
           </div>
         </div>
@@ -210,7 +212,7 @@ const Clients = ({dbUser}) => {
               <button button type="button" onClick={delEntry}
                 className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}
                 >
-                Delete
+                {t('delete')}
                 <AiOutlineDelete className='text-lg ml-2'/>
               </button>
             </div>
@@ -224,26 +226,26 @@ const Clients = ({dbUser}) => {
                   <tr>
                     <th scope="col" className="p-4">
                       <div className="flex items-center">
-                        <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                        <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark border:border-gray-600"/>
                       </div>
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Sr.
+                        {t('sr')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Business Name
+                        {t('businessName')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Name
+                        {t('name')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Email
+                        {t('email')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Password
+                        {t('password')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        <span className="">View / Edit</span>
+                        <span className="">{t('viewOrEdit')}</span>
                     </th>
                   </tr>
                 </thead>
@@ -254,7 +256,7 @@ const Clients = ({dbUser}) => {
                     return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
-                        <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                        <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark border:border-gray-600"/>
                       </div>
                     </td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
@@ -310,7 +312,7 @@ const Clients = ({dbUser}) => {
                       <div className="md:grid md:grid-cols-1 md:gap-6">
                         <div className="md:col-span-1">
                           <div className="px-4 sm:px-0">
-                            <h3 className="text-lg font-medium leading-6 text-gray-900">Add Client</h3>
+                            <h3 className="text-lg font-medium leading-6 text-gray-900">{t('addClient')}</h3>
                           </div>
                         </div>
                         <div className="mt-2 md:col-span-2 md:mt-0 w-full">
@@ -320,37 +322,37 @@ const Clients = ({dbUser}) => {
                                 <div className="grid grid-cols-6 gap-6">
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-3">
-                                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
-                                      <input onChange={handleChange} value={firstName} type="text" name="firstName" id="firstName" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"/>
+                                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">{t('firstName')}</label>
+                                      <input onChange={handleChange} value={firstName} type="text" name="firstName" id="firstName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
-                                      <input onChange={handleChange} value={lastName} type="text" name="lastName" id="lastName" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"/>
+                                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">{t('lastName')}</label>
+                                      <input onChange={handleChange} value={lastName} type="text" name="lastName" id="lastName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
-                                      <label htmlFor="businessName" className="block text-sm font-medium text-gray-700">Business Name</label>
-                                      <input onChange={handleChange} value={businessName} type="text" name="businessName" id="businessName" autoComplete="businessName" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <label htmlFor="businessName" className="block text-sm font-medium text-gray-700">{t('businessName')}</label>
+                                      <input onChange={handleChange} value={businessName} type="text" name="businessName" id="businessName" autoComplete="businessName" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
 
                                     <div className="col-span-6 sm:col-span-4">
-                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                                      <input onChange={handleChange} value={email} type="email" name="email" id="email" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t('email')}</label>
+                                      <input onChange={handleChange} value={email} type="email" name="email" id="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
                                     <div className="col-span-6">
-                                      <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
-                                      <input onChange={handleChange} value={password} type="text" name="password" id="password" autoComplete="password" className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
+                                      <label htmlFor="password" className="block text-sm font-medium text-gray-700">{t('password')}</label>
+                                      <input onChange={handleChange} value={password} type="text" name="password" id="password" autoComplete="password" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
                                     </div>
 
 
                                 </div>
                               </div>
                               <div className="bg-gray-50 space-x-3 px-4 py-3 text-right sm:px-6">
-                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save Changes</button>
-                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>}
+                                <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>
+                                {isOpenSaveChange && <button type="submit" className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('save')}</button>}
                             </div>
                             
                             </div>
