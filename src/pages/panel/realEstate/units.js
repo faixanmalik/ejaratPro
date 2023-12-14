@@ -913,7 +913,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="w-full">
                     <label htmlFor="view" className="block text-sm font-medium text-gray-700">
-                        {t('view')}
+                        {t('unitView')}
                     </label>
                     <input
                         type="text"

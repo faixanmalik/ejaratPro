@@ -13,6 +13,7 @@
   "investment": "Investment",
   "investmentStructure": "Investment Structure",
   "view":"View",
+  "unitView":"View",
   "edit":"Edit",
   "management": "Management/Investment Details",
   "receiveUnits": "Receive Units",
@@ -107,6 +108,7 @@
   "saveContract":"Save Contract",
   "type":"Type",
   "contractsTitle":"Contracts And Tenants",
+  "statement":"Statement ",
 
 
 

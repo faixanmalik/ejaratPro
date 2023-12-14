@@ -9,7 +9,7 @@
   "expenses":"نفقات",
   "export":"يصدّر",
   "import":"يستورد",
-  "delete":"يمسح",
+  "delete":"حذف",
   "accountCode":"رمز الحساب",
   "accountName":"إسم الحساب",
   "account":"حساب",
@@ -19,7 +19,7 @@
   "desc":"وصف",
   "asof":"اعتبارا من",
   "saveChanges":"حفظ التغييرات",
-  "save":"يحفظ",
+  "save":"حفظ",
 
 
   "taxRateTitle":"معدل الضريبة",

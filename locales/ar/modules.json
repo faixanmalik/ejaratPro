@@ -1,7 +1,7 @@
 {
   "purchaseInvoiceTitle":"فاتورة الشراء",
   "new":"جديد",
-  "delete":"يمسح",
+  "delete":"حذف",
   "printAll":"طباعة الكل",
   "billNo":"رقم الفاتوره",
   "date":"تاريخ",
@@ -28,9 +28,9 @@
   "addOrDel":"إضافة/حذف",
   "vat":"ضريبة القيمة المضافة",
   "memo":"مذكرة",
-  "print":"مطبعة",
+  "print":"طباعة",
   "saveChanges":"حفظ التغييرات",
-  "save":"يحفظ",
+  "save":"حفظ",
 
   "debitNoteTitle":"فواتير مذكرة الخصم",
   "accuralDate":"تاريخ الاستحقاق",

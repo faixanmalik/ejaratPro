@@ -209,7 +209,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
                 {t('addRole')}
               </MenuItem>
               {isOwner === true && <MenuItem href="/panel/userManagment/clients" icon={<FaUserFriends className='text-lg'/>} className={ location === '/panel/userManagment/clients' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
-                Clients
+                {t('clients')}
               </MenuItem>}
             </SubMenu>
 

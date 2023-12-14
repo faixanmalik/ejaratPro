@@ -1,7 +1,7 @@
 {
   "paymentMethodTitle":"طرق الدفع",
   "new":"جديد",
-  "delete":"يمسح",
+  "delete":"حذف",
   "sr":"الرقم التسلسلي",
   "paymentMethod":"طريقة الدفع او السداد",
   "chartsOfAccount":"مخططات الحساب",
@@ -9,5 +9,5 @@
   "addPaymentMethod":"إضافة طريقة دفع",
   "paymentType":"نوع الدفع",
   "saveChanges":"حفظ التغييرات",
-  "save":"يحفظ"
+  "save":"حفظ"
 }

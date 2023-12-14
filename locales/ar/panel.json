@@ -18,37 +18,38 @@
 
 
   "new": "جديد",
-  "dasboard": "لوحة القيادة",
+  "dasboard": "الشاشة الرئيسية",
 
   "realEstate": "العقارات", 
-  "buildingsAndOwners": "المباني والمالك",
+  "buildingsAndOwners": "المباني والمالكين",
   "units": "الوحدات",
-  "contractAndTenants": "العقد والمستأجرين",
+  "contractAndTenants": "العقود والمستأجرين",
   "fundsManagement": "إدارة الأموال",
-  "chequeTrx": "التحقق من المعاملة",
+  "chequeTrx": "حركات الأموال",
 
-  "userManagment": "إدارةالمستخدم",
+  "userManagment": "ادارة المستحدمين",
   "addRole": "أضف دور",
+  "clients":"المستخدمين",
 
-  "businessSetup": "إعداد الأعمال",
-  "chartsOfAccount": "مخططات الحسابات",
+  "businessSetup": "اعدادات العمل",
+  "chartsOfAccount": "شجرة الحسابات",
   "taxRate": "معدل الضريبة",
-  "contactList": "قائمة الإتصال",
+  "contactList": "العملاء والموردين",
   "productAndServices": "المنتجات والخدمات",
   "bankAccount": "حسابات بنكية",
 
-  "purchaseModule": "وحدة الشراء",
+  "purchaseModule": "المشتريات",
   "purchaseInvoice": "فاتورة الشراء",
   "debitNote": "بيان بالخصم",
   "expenses": "نفقات",
   "paymentVoucher": "قسيمة دفع",
 
-  "salesModule": "وحدة المبيعات",
+  "salesModule": "الايرادات",
   "salesInvoice": "فاتورة المبيعات",
-  "creditSaleInvoice": "فاتورة مبيعات الائتمان",
+  "creditSaleInvoice": "فاتورة مبيعات اجلة",
   "creditNote": "اشعار دائن",
-  "receiptVoucher": "سند القبض",
-  "journalVoucher": "قسيمة المجلة",
+  "receiptVoucher": "سندات القبض",
+  "journalVoucher": "سند قيد يومية",
 
   "payroll": "كشف رواتب",
   "employees": "موظفين",
@@ -57,9 +58,9 @@
   "generalLedger": "دفتر الأستاذ العام",
   "trialBalance": "ميزان المراجعة",
   "profitAndLoss": "الربح والخسارة",
-  "balanceSheet": "ورقة التوازن",
-  "contactTransaction": "معاملة الاتصال",
+  "balanceSheet": "المركز المالي",
+  "contactTransaction": "العملاء والموردين",
 
   "settings": "إعدادات",
-  "paymentMethod": "طريقة الدفع او السداد"
+  "paymentMethod": "طرق السداد"
 }
