@@ -122,13 +122,11 @@ import useTranslation from 'next-translate/useTranslation';
       })
       setFilteredBuildings(filteredBuildings)
 
-
-
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
-    }, [])
+    }, [userEmail])
 
     const [search, setSearch] = useState('')
 

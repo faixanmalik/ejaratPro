@@ -62,7 +62,6 @@ import useTranslation from 'next-translate/useTranslation';
 
     const { t } = useTranslation('realEstate')
 
-    const [contacts, setContacts] = useState([])
     const [id, setId] = useState('')
     const [selectedIds, setSelectedIds] = useState([]);
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
@@ -82,7 +81,6 @@ import useTranslation from 'next-translate/useTranslation';
     }
 
     useEffect(() => {
-      setContacts(dbContacts)
 
       let filteredInvoices = dbVouchers.filter((item)=>{
         return item.userEmail === userEmail;
@@ -98,7 +96,7 @@ import useTranslation from 'next-translate/useTranslation';
       if(myUser.department === 'Admin'){
         setIsAdmin(true)
       }
-    }, [])
+    }, [userEmail])
 
     const [attachment, setAttachment] = useState('')
     const [name, setName] = useState('')

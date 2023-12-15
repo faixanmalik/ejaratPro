@@ -95,7 +95,7 @@ const ChequeTransactions = ({ userEmail, dbPaymentMethod,dbVouchers, dbCharts, d
     if(myUser.department === 'Admin'){
       setIsAdmin(true)
     }
-  }, [router])
+  }, [router, userEmail])
   
     
 
