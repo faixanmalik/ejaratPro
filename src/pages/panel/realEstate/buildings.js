@@ -128,9 +128,7 @@ import useTranslation from 'next-translate/useTranslation';
     const [unitsPerFloor, setUnitsPerFloor] = useState('')
     const [parkings, setParkings] = useState('')
     const [roof, setRoof] = useState('')
-    const [country, setCountry] = useState('')
-    const [city, setCity] = useState('')
-    const [area, setArea] = useState('')
+    
     const [mizan, setMizan] = useState('')
     const [plotArea, setPlotArea] = useState('')
     const [floor, setFloor] = useState('')
@@ -148,6 +146,9 @@ import useTranslation from 'next-translate/useTranslation';
 
     const [unitNo, setUnitNo] = useState('')
     const [unitName, setUnitName] = useState('')
+    const [country, setCountry] = useState('')
+    const [city, setCity] = useState('')
+    const [area, setArea] = useState('')
     const [unitRent, setUnitRent] = useState('')
     const [unitType, setUnitType] = useState('')
     const [unitUse, setUnitUse] = useState('')
@@ -170,6 +171,9 @@ import useTranslation from 'next-translate/useTranslation';
     const [openUnitTypeModal, setOpenUnitTypeModal] = useState(false)
     const [openUnitUseModal, setOpenUnitUseModal] = useState(false)
     const [openNationalityModal, setOpenNationalityModal] = useState(false)
+    const [openCountryModal, setOpenCountryModal] = useState(false)
+    const [openCityModal, setOpenCityModal] = useState(false)
+    const [openAreaModal, setOpenAreaModal] = useState(false)
     const cancelButtonRef = useRef(null)
 
     
@@ -202,11 +206,49 @@ import useTranslation from 'next-translate/useTranslation';
     })
 
 
+    const [countriesArray, setCountriesArray] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const storedCountries = localStorage.getItem('countries');
+        return storedCountries ? JSON.parse(storedCountries) : ['UAE'];
+      } else {
+        return ['UAE'];
+      }
+    })
+    
+    const [citiesArray, setCitiesArray] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const storedCities = localStorage.getItem('cities');
+        return storedCities ? JSON.parse(storedCities) : ['Dubai'];
+      } else {
+        return ['Dubai'];
+      }
+    })
+
+
+    const [areasArray, setAreasArray] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const storedAreas = localStorage.getItem('areas');
+        return storedAreas ? JSON.parse(storedAreas) : ['Downtown'];
+      } else {
+        return ['Downtown'];
+      }
+    })
+
+
+    
+
+
     useEffect(() => {
+
       localStorage.setItem('unitTypes', JSON.stringify(unitTypesArray));
       localStorage.setItem('unitUses', JSON.stringify(unitUsesArray));
       localStorage.setItem('nationalities', JSON.stringify(nationalitiesArray));
-    }, [unitTypesArray, unitUsesArray, nationalitiesArray]);
+      localStorage.setItem('countries', JSON.stringify(countriesArray));
+      localStorage.setItem('cities', JSON.stringify(citiesArray));
+      localStorage.setItem('areas', JSON.stringify(areasArray));
+
+
+    }, [unitTypesArray, unitUsesArray, nationalitiesArray, countriesArray, citiesArray, areasArray]);
 
 
     useEffect(() => {
@@ -550,9 +592,6 @@ import useTranslation from 'next-translate/useTranslation';
     let adjectives = ['Agent', 'Owner' ];
     let buildingTypes = ['Management', 'Owned', 'Investment']
     let bankAccounts = ['Dubai Islamic Bank', 'Meezan Bank', 'Ajman Bank', 'FAB']
-    let countries = [ "United States", "China", "India", "Brazil", "Russia", "Japan", "United Kingdom", "Germany", "France", "Canada", "Australia", "South Korea", "Mexico", "Spain", "Italy", "Netherlands", "Switzerland", "Sweden", "Norway", "Denmark", "Finland", "Argentina", "Chile", "South Africa", "Egypt", "Nigeria", "Kenya", "Saudi Arabia", "United Arab Emirates"];
-    let cities = [ "New York City, USA", "Tokyo, Japan", "Mumbai, India", "Beijing, China", "London, United Kingdom", "Paris, France", "Moscow, Russia", "Cairo, Egypt", "Rio de Janeiro, Brazil", "Sydney, Australia", "Cape Town, South Africa", "Mexico City, Mexico", "Toronto, Canada", "Dubai, United Arab Emirates", "Seoul, South Korea", "Buenos Aires, Argentina", "Nairobi, Kenya"];
-    let areas = [ "North America", "South America", "Europe", "Asia", "Africa", "Oceania", "Middle East", "Central America", "Caribbean", "Mediterranean", "Scandinavia", "Balkans", "Southeast Asia", "Pacific Islands", "Arctic"];
     let investmentStructures = [ 'Fixed', 'of Rent %', 'of Collection %' ]
     let paymentSchedulings = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     let aces = ['Window', 'Split', 'Central']
@@ -591,6 +630,47 @@ import useTranslation from 'next-translate/useTranslation';
         setNationalitiesArray((prev) => [...prev, nationality]);
         setOpenNationalityModal(false);
         setNationality('')
+      }
+      else{
+        toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
+
+    const addCountry = (e)=>{
+      e.preventDefault();
+
+      if (country.trim() !== '') {
+        setCountriesArray((prev) => [...prev, country]);
+        setOpenCountryModal(false);
+        setCountry('')
+      }
+      else{
+        toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
+
+
+    const addCity = (e)=>{
+      e.preventDefault();
+
+      if (city.trim() !== '') {
+        setCitiesArray((prev) => [...prev, city]);
+        setOpenCityModal(false);
+        setCity('')
+      }
+      else{
+        toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
+    }
+
+
+    const addArea = (e)=>{
+      e.preventDefault();
+
+      if (area.trim() !== '') {
+        setAreasArray((prev) => [...prev, area]);
+        setOpenAreaModal(false);
+        setArea('')
       }
       else{
         toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
@@ -1095,37 +1175,257 @@ import useTranslation from 'next-translate/useTranslation';
                 />
               </div>
               <div className="w-full">
-                <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                  {t('country')}
-                </label>
+                
+                <div className='flex justify-between'>
+                  <label htmlFor="country" className="block text-sm font-medium text-gray-700">
+                    {t('country')}
+                  </label>
+                  <label onClick={()=>{setOpenCountryModal(true), setCountry('')}} htmlFor="unitType" className="block cursor-pointer text-sm font-medium text-green-700">
+                    {t('add')}?
+                  </label>
+                </div>
                 <select id="country" name="country" onChange={ handleChange } value={country} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select country</option>
-                  {countries.map((item, index)=>{
+                  {countriesArray.map((item, index)=>{
                     return <option key={index} value={item}>{item}</option>
                   })}
                 </select>
+                <Transition.Root show={openCountryModal} as={Fragment}>
+                  <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpenCountryModal}>
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                          enterTo="opacity-100 translate-y-0 sm:scale-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                              <div className="sm:items-start w-full">
+                                <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                                  <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                    {t('addCountry')}
+                                  </Dialog.Title>
+                                  <div className="mt-2">
+                                    <input
+                                      type="text"
+                                      onChange={handleChange}
+                                      name="country"
+                                      value={country}
+                                      id="country"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                onClick={(e) => addCountry(e)}
+                              >
+                                {t('save')}
+                              </button>
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                onClick={() => setOpenCountryModal(false)}
+                                ref={cancelButtonRef}
+                              >
+                                {t('cancel')}
+                              </button>
+                            </div>
+                          </Dialog.Panel>
+                        </Transition.Child>
+                      </div>
+                    </div>
+                  </Dialog>
+                </Transition.Root>
               </div>
               <div className="w-full">
-                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                  {t('city')}
-                </label>
+                <div className='flex justify-between'>
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                    {t('city')}
+                  </label>
+                  <label onClick={()=>{setOpenCityModal(true), setCity('')}} htmlFor="unitType" className="block cursor-pointer text-sm font-medium text-green-700">
+                    {t('add')}?
+                  </label>
+                </div>
                 <select id="city" name="city" onChange={ handleChange } value={city} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select city</option>
-                  {cities.map((item, index)=>{
+                  {citiesArray.map((item, index)=>{
                     return <option key={index} value={item}>{item}</option>
                   })}
                 </select>
+                <Transition.Root show={openCityModal} as={Fragment}>
+                  <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpenCityModal}>
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                          enterTo="opacity-100 translate-y-0 sm:scale-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                              <div className="sm:items-start w-full">
+                                <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                                  <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                    {t('addCity')}
+                                  </Dialog.Title>
+                                  <div className="mt-2">
+                                    <input
+                                      type="text"
+                                      onChange={handleChange}
+                                      name="city"
+                                      value={city}
+                                      id="city"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                onClick={(e) => addCity(e)}
+                              >
+                                {t('save')}
+                              </button>
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                onClick={() => setOpenCityModal(false)}
+                                ref={cancelButtonRef}
+                              >
+                                {t('cancel')}
+                              </button>
+                            </div>
+                          </Dialog.Panel>
+                        </Transition.Child>
+                      </div>
+                    </div>
+                  </Dialog>
+                </Transition.Root>
               </div>
               <div className="w-full">
-                <label htmlFor="area" className="block text-sm font-medium text-gray-700">
-                  {t('area')}
-                </label>
+                <div className='flex justify-between'>
+                  <label htmlFor="area" className="block text-sm font-medium text-gray-700">
+                    {t('area')}
+                  </label>
+                  <label onClick={()=>{setOpenAreaModal(true), setArea('')}} htmlFor="unitType" className="block cursor-pointer text-sm font-medium text-green-700">
+                    {t('add')}?
+                  </label>
+                </div>
                 <select id="area" name="area" onChange={ handleChange } value={area} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select area</option>
-                  {areas.map((item, index)=>{
+                  {areasArray.map((item, index)=>{
                     return <option key={index} value={item}>{item}</option>
                   })}
                 </select>
+                <Transition.Root show={openAreaModal} as={Fragment}>
+                  <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpenAreaModal}>
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                          enterTo="opacity-100 translate-y-0 sm:scale-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                          <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                              <div className="sm:items-start w-full">
+                                <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                                  <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                    {t('addArea')}
+                                  </Dialog.Title>
+                                  <div className="mt-2">
+                                    <input
+                                      type="text"
+                                      onChange={handleChange}
+                                      name="area"
+                                      value={area}
+                                      id="area"
+                                      className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                onClick={(e) => addArea(e)}
+                              >
+                                {t('save')}
+                              </button>
+                              <button
+                                type="button"
+                                className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                onClick={() => setOpenAreaModal(false)}
+                                ref={cancelButtonRef}
+                              >
+                                {t('cancel')}
+                              </button>
+                            </div>
+                          </Dialog.Panel>
+                        </Transition.Child>
+                      </div>
+                    </div>
+                  </Dialog>
+                </Transition.Root>
               </div>
               
             </div>

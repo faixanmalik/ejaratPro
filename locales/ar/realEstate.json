@@ -31,6 +31,13 @@
   "nationality":"جنسية",
   "add":"يضيف",
   "addNationality":"أضف الجنسية",
+
+  
+  "addCountry":"أضف البلد",
+  "addCity":"أضف مدينة",
+  "addArea":"أضف منطقة",
+
+
   "save":"حفظ",
   "cancel":"يلغي",
   "ibanNo":"رقم الآيبان",

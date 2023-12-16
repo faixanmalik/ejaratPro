@@ -31,6 +31,12 @@
   "nationality":"Nationality",
   "add":"add",
   "addNationality":"Add Nationality",
+
+  "addCountry":"Add Country",
+  "addCity":"Add City",
+  "addArea":"Add Area",
+
+  
   "save":"Save",
   "cancel":"Cancel",
   "ibanNo":"IBAN Number",
