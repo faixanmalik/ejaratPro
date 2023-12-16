@@ -649,7 +649,6 @@ import useTranslation from 'next-translate/useTranslation';
       }
     }
 
-
     const addCity = (e)=>{
       e.preventDefault();
 
@@ -662,7 +661,6 @@ import useTranslation from 'next-translate/useTranslation';
         toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
       }
     }
-
 
     const addArea = (e)=>{
       e.preventDefault();
