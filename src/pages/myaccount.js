@@ -5,6 +5,8 @@ import Head from 'next/head';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { MdClose } from 'react-icons/md';
 
 
 function Myaccount() {
@@ -21,6 +23,25 @@ function Myaccount() {
       fetchUser(myUser.token);
     }
   }, [])
+
+  const [src, setSrc] = useState('https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg');
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    
+    if (file) {
+      const blob = new Blob([file])
+      const img = URL.createObjectURL(blob);
+      setSrc(img);
+    }
+  };
+
+
+  const handleClickContainer = () => {
+    const inputElement = document.getElementById('imageInput');
+    inputElement.click();
+  };
+
 
   const [user, setUser] = useState({value: null})
   const [firstname, setFirstname] = useState('')
@@ -165,117 +186,152 @@ function Myaccount() {
     <ToastContainer position="bottom-center" autoClose={1000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable theme="light"/>
 
     <section className="text-gray-600 bg-white body-font relative">
-  <div className="container px-5 py-10 pb-52 mx-auto">
-    <div className="flex flex-col text-center w-full mb-7">
-      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Contact Us</h1>
-    </div>
-    <div className="lg:w-10/12 md:w-2/3 mx-auto">
+      <div className="container px-5 py-20 pb-36 mx-auto">
+        
+        <div className="lg:w-10/12 md:w-2/3 mx-auto">
 
-      {/* Account Details */}
-      <h1 className='pb-4 text-xl font-sans font-semibold text-indigo-700'>1. Account Details</h1>
-      <form method='POST' onSubmit={submit}>
-        <div className="flex flex-wrap -m-2">
-          <div className='w-full sm:flex'>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                <label htmlFor="name" className="leading-7 text-sm text-gray-600">First Name</label>
-                <input onChange={handleChange} value={firstname} type="text" id="firstname" name="firstname" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+          {/* Account Details */}
+          <h1 className='pb-4 text-xl font-sans font-semibold text-indigo-700'>1. Account Details</h1>
+          <form method='POST' onSubmit={submit}>
+            <div className="flex flex-wrap -m-2">
+              <div className='w-full sm:flex'>
+
+                <div className='flex-col w-9/12'>
+                  <div className="p-2 w-9/12">
+                    <div className="relative">
+                      <label htmlFor="name" className="leading-7 text-sm text-gray-600">First Name</label>
+                      <input onChange={handleChange} value={firstname} type="text" id="firstname" name="firstname" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    </div>
+                  </div>
+                  <div className="p-2 w-9/12">
+                    <div className="relative">
+                        <label htmlFor="lastname" className="leading-7 text-sm text-gray-600">Last Name</label>
+                        <input onChange={handleChange} value={lastname} type="text" id="lastname" name="lastname" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                    </div>
+                  </div>
+
+                </div>
+                <div>
+
+                  <div className="w-32 h-[7rem] text-center">
+                    <div className="relative w-52">
+                      <img
+                        className="w-32 h-36 rounded-lg absolute"
+                        src={src}
+                        alt=""
+                      />
+                      <div className="w-32 border-2 border-gray-400 flex flex-col ml-auto justify-between h-36 group hover:bg-gray-200 opacity-60 rounded-lg absolute cursor-pointer transition duration-500">
+                        
+                        <div className='flex flex-col ml-auto -mr-7 justify-end'>
+                          <AiOutlineEdit onClick={handleClickContainer} className="text-gray-700 p-[3px] border-2 border-gray-300 bg-white rounded-full text-2xl"/>
+                          <MdClose onClick={()=>setSrc('https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg')} className="text-gray-700 border-2 border-gray-300 bg-white rounded-full text-xl mt-[100px]"/>
+                          <MdClose onClick={()=>setSrc('https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg')} className="text-gray-700 border-2 border-gray-300 bg-white rounded-full text-xl mt-[100px]"/>
+                        </div>
+
+                      </div>
+                    </div>
+                    <input
+                      id="imageInput"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+
+                </div>
+
+                
+                
+
+
+              </div>
+            
+
+              <div className="p-2 w-full">
+                <div className="relative">
+                  <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
+                  {user && user.token ? <input value={user.email} type="text" className="cursor-not-allowed w-full bg-gray-100 bg-opacity-50 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" readOnly/>: 
+                  <input onChange={handleChange} value={email} type="text" id="email" name="email" className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="your.email@gmail.com" required  />}
+                </div>
+              </div>
+              <div className="p-2 w-full">
+                <div className="relative">
+                  <label htmlFor="phoneno" className="leading-7 text-sm text-gray-600">Phone No</label>
+                  <input onChange={handleChange} value={phoneno} type="Number" id="phoneno" name="phoneno" className="w-full bg-gray-100 bg-opacity-50 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="+92300-1234567"  />
+                </div>
+              </div>
+              <div className='w-full sm:flex'>
+                <div className="p-2 w-full sm:w-1/2">
+                  <div className="relative">
+                    <label htmlFor="streetAddress" className="leading-7 text-sm text-gray-600">Street Address</label>
+                    <input onChange={handleChange} value={streetAddress} type="text" id="streetAddress" name="streetAddress" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  </div>
+                </div>
+                <div className="p-2 w-full sm:w-1/2">
+                  <div className="relative">
+                    <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
+                    <input onChange={handleChange} value={state} type="text" id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  </div>
+                </div>
+                <div className="p-2 w-full sm:w-1/2">
+                  <div className="relative">
+                    <label htmlFor="zip" className="leading-7 text-sm text-gray-600">Zip</label>
+                    <input onChange={handleChange} value={zip} type="text" id="zip" name="zip" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  </div>
+                </div>
+
+              </div>
+
+              <div className="p-2 mt-3 md:mt-5 w-full bg-gray-50 rounded-md">
+                <button type='submit' className="flex ml-auto items-center bg-indigo-600 text-white rounded-xl font-semibold border-0 py-2 px-8 focus:outline-none hover:bg-indigo-700 text-lg md:mt-0">Save</button>
               </div>
             </div>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                  <label htmlFor="lastname" className="leading-7 text-sm text-gray-600">Last Name</label>
-                  <input onChange={handleChange} value={lastname} type="text" id="lastname" name="lastname" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
-          </div>
-          <div className="p-2 w-full">
-            <div className="relative">
-              <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-              {user && user.token ? <input value={user.email} type="text" className="w-full bg-gray-100 bg-opacity-50 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" readOnly/>: 
-              <input onChange={handleChange} value={email} type="text" id="email" name="email" className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="your.email@gmail.com" required  />}
-            </div>
-          </div>
-          <div className="p-2 w-full">
-            <div className="relative">
-              <label htmlFor="phoneno" className="leading-7 text-sm text-gray-600">Phone No</label>
-              <input onChange={handleChange} value={phoneno} type="Number" id="phoneno" name="phoneno" className="w-full bg-gray-100 bg-opacity-50 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="+92300-1234567"  />
-            </div>
-          </div>
-          <div className='w-full sm:flex'>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                <label htmlFor="streetAddress" className="leading-7 text-sm text-gray-600">Street Address</label>
-                <input onChange={handleChange} value={streetAddress} type="text" id="streetAddress" name="streetAddress" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
-                <input onChange={handleChange} value={state} type="text" id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                <label htmlFor="zip" className="leading-7 text-sm text-gray-600">Zip</label>
-                <input onChange={handleChange} value={zip} type="text" id="zip" name="zip" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
-
-          </div>
-
-          <div className="p-2 mt-3 md:mt-5 w-full bg-gray-50 rounded-md">
-            <button type='submit' className="flex ml-auto items-center bg-indigo-600 text-white rounded-xl font-semibold border-0 py-2 px-8 focus:outline-none hover:bg-indigo-700 text-lg md:mt-0">Save</button>
-          </div>
-        </div>
-      </form>
+          </form>
 
 
 
+          {/* Password Setting */}
+          <div className='mt-10'>
+            <h1 className='pb-5 text-xl font-sans font-semibold text-indigo-700'>2. Change Password</h1>
 
-
-
-      {/* Password Setting */}
-      <div className='mt-10'>
-        <h1 className='pb-5 text-xl font-sans font-semibold text-indigo-700'>2. Change Password</h1>
-
-        <form method='POST' onSubmit={changeUserPassword}>
-        <div className="flex flex-wrap -m-2">
-  
-          <div className='w-full sm:flex'>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                <label htmlFor="cpassword" className="leading-7 text-sm text-gray-600">Current Password</label>
-                <input onChange={handleChange} value={cpassword} type="password" id="cpassword" name="cpassword" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                <label htmlFor="npassword" className="leading-7 text-sm text-gray-600">New Password</label>
-                <input onChange={handleChange} value={npassword} type="password" id="npassword" name="npassword" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
-            <div className="p-2 w-full sm:w-1/2">
-              <div className="relative">
-                <label htmlFor="cnpassword" className="leading-7 text-sm text-gray-600">Confirm New Password</label>
-                <input onChange={handleChange} value={cnpassword} type="password" id="cnpassword" name="cnpassword" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-              </div>
-            </div>
-          </div>
-            <h1 id="checkPassword" className= 'text-sm text-red-600 ml-10 sm:ml-auto sm:mr-5 md:mr-0 lg:mr-24 xl:mr-28'></h1>
-
-          <div className="p-2 mt-3 md:mt-5 w-full bg-gray-50 rounded-md">
-            <button type='submit' className="flex ml-auto items-center bg-indigo-600 text-white rounded-xl font-semibold border-0 py-2 px-8 focus:outline-none hover:bg-indigo-700 text-lg md:mt-0">Save</button>
-          </div>
-        </div>
-        </form>
-      </div>
+            <form method='POST' onSubmit={changeUserPassword}>
+            <div className="flex flex-wrap -m-2">
       
-    </div>
+              <div className='w-full sm:flex'>
+                <div className="p-2 w-full sm:w-1/2">
+                  <div className="relative">
+                    <label htmlFor="cpassword" className="leading-7 text-sm text-gray-600">Current Password</label>
+                    <input onChange={handleChange} value={cpassword} type="password" id="cpassword" name="cpassword" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  </div>
+                </div>
+                <div className="p-2 w-full sm:w-1/2">
+                  <div className="relative">
+                    <label htmlFor="npassword" className="leading-7 text-sm text-gray-600">New Password</label>
+                    <input onChange={handleChange} value={npassword} type="password" id="npassword" name="npassword" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  </div>
+                </div>
+                <div className="p-2 w-full sm:w-1/2">
+                  <div className="relative">
+                    <label htmlFor="cnpassword" className="leading-7 text-sm text-gray-600">Confirm New Password</label>
+                    <input onChange={handleChange} value={cnpassword} type="password" id="cnpassword" name="cnpassword" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  </div>
+                </div>
+              </div>
+                <h1 id="checkPassword" className= 'text-sm text-red-600 ml-10 sm:ml-auto sm:mr-5 md:mr-0 lg:mr-24 xl:mr-28'></h1>
+
+              <div className="p-2 mt-3 md:mt-5 w-full bg-gray-50 rounded-md">
+                <button type='submit' className="flex ml-auto items-center bg-indigo-600 text-white rounded-xl font-semibold border-0 py-2 px-8 focus:outline-none hover:bg-indigo-700 text-lg md:mt-0">Save</button>
+              </div>
+            </div>
+            </form>
+          </div>
+          
+        </div>
 
 
-  </div>
-</section>
+      </div>
+    </section>
     </>
   )
 }
