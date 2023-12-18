@@ -2410,7 +2410,7 @@ import useTranslation from 'next-translate/useTranslation';
                       </svg>
                   </div>
                   <div className='pl-8'>
-                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchTitle')} required/>
+                    <input value={search} onChange={handleChange} type="text" id="search" name='search' className="block w-full p-2 text-sm text-gray-900 rounded-lg bg-gray-50 outline-none placeholder:text-gray-500" placeholder={t('searchUnit')} required/>
                   </div>
                 </div>
               </div>
