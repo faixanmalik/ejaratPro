@@ -74,6 +74,7 @@ function Myaccount() {
       setEmail(response.email)
       setphoneNo(response.phoneno)
       setState(response.state)
+      setTaxRigNo(response.taxRigNo)
       setstreetAddress(response.streetAddress)
       setZip(response.zip)
   }
@@ -120,7 +121,7 @@ function Myaccount() {
 
     
     // fetch the data from form to makes a file in local system
-    const data = { token: user.token, firstname, lastname, phoneno, streetAddress, state, zip  };
+    const data = { token: user.token, firstname, lastname, phoneno, streetAddress, state, zip, taxRigNo  };
    
       let res = await fetch(`/api/updateuser`, {
       method: 'POST',
@@ -229,7 +230,7 @@ function Myaccount() {
                         
                         <div className='flex flex-col ml-auto -mr-7 justify-end'>
                           <AiOutlineEdit onClick={handleClickContainer} className="text-gray-700 p-[3px] border-2 border-gray-300 bg-white rounded-full text-2xl"/>
-                          <MdClose onClick={()=>setSrc('https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg')} className="text-gray-700 border-2 border-gray-300 bg-white rounded-full text-xl mt-[100px]"/>
+                          <MdClose onClick={()=>setSrc('https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg')} className="text-gray-700 border-2 border-gray-300 bg-white rounded-full text-xl mt-[113px]"/>
                         </div>
 
                       </div>
@@ -257,11 +258,11 @@ function Myaccount() {
               <div className='w-full sm:flex space-x-3'>
                 <div className="w-full">
                   <label htmlFor="phoneno" className="leading-7 text-sm text-gray-600">Phone No</label>
-                  <input onChange={handleChange} value={phoneno} type="Number" id="phoneno" name="taxRigNo" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <input onChange={handleChange} value={phoneno} type="Number" id="phoneno" name="phoneno" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
                 <div className="w-full">
                   <label htmlFor="taxRigNo" className="leading-7 text-sm text-gray-600">Tax Rig. No</label>
-                  <input onChange={handleChange} value={taxRigNo} type="text" id="taxRigNo" name="taxRigNo" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                  <input onChange={handleChange} value={taxRigNo} type="Number" id="taxRigNo" name="taxRigNo" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
               </div>
               <div className='w-full sm:flex space-x-3'>
@@ -279,14 +280,11 @@ function Myaccount() {
                 </div>
 
               </div>
-
               <div className="p-2 mt-3 md:mt-5 w-full bg-gray-50 rounded-md">
                 <button type='submit' className="flex ml-auto items-center bg-indigo-600 text-white rounded-xl font-semibold border-0 py-2 px-8 focus:outline-none hover:bg-indigo-700 text-lg md:mt-0">Save</button>
               </div>
             </div>
           </form>
-
-
 
           {/* Password Setting */}
           <div className='mt-10'>
@@ -325,7 +323,6 @@ function Myaccount() {
           </div>
           
         </div>
-
 
       </div>
     </section>

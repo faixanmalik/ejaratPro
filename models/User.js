@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
     password: {type: String, required: true},
     streetAddress: {type: String },
     state: { type: String  },
+    taxRigNo: { type: Number  },
     zip: { type: Number },
 
   },{timestamps:true});
