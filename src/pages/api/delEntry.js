@@ -21,6 +21,7 @@ import Units from 'models/Units';
 import ContractAndTenant from 'models/ContractAndTenant';
 import Cheque from 'models/Cheque';
 import ChequeTransaction from 'models/ChequeTransaction';
+import User from 'models/User';
 
 
 export default async function handler(req, res) {
@@ -244,6 +245,13 @@ export default async function handler(req, res) {
             });
 
             await ChequeTransaction.deleteMany( { _id: { $in: selectedIds } } )
+            res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
+        }
+
+        else if( path === 'clients'){
+          const { selectedIds } = req.body;
+
+          await User.deleteMany( { _id: { $in: selectedIds } } )
             res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
 
