@@ -131,7 +131,6 @@ export default async function handler(req, res) {
           }   
         }
 
-
         // Credit Sales Invoice
         else if( path === 'CreditSalesInvoice'){
           const { userEmail, contractId, phoneNo, email, discount, billStatus, amountPaid, amountReceived, city, address, reference, dueDate, inputList, name,  memo, journalDate, billNo, fullAmount, fullTax, totalAmount, attachment, path, importEntries, row } = req.body;
@@ -209,7 +208,6 @@ export default async function handler(req, res) {
             await newEntry.save();
             res.status(200).json({ success: true, message: "Entry Added !" }) 
         }
-
 
         // Payment Voucher Invoice
         else if( path === 'PaymentVoucher'){
@@ -297,7 +295,6 @@ export default async function handler(req, res) {
           res.status(200).json({ success: true, message: "Entry Added !" }) 
         }
 
-
         // Receipt Voucher Invoice
         else if( path === 'Buildings'){
           const { userEmail, receiveUnitsArray, nameInInvoice, lessorName, adjective, buildingType, idNumber, expID, bank, passPortNumber, expPassPort, nationality, ibanNo, vatRegistrationNo, bankAccountNumber, tradeLicenseNo, buildingNameInArabic, buildingNameInEnglish, totalUnits, unitsPerFloor, parkings, roof, country, city, area, mizan, plotArea, floor, buildingArea, electricityMeterNo, titleDeedNo, contractStartDate, investmentStructure, gracePeriodFrom, contractEndDate, amount, gracePeriodTo, paymentScheduling, attachment, name, phoneNo, email, path, importEntries, row } = req.body;
@@ -377,7 +374,13 @@ export default async function handler(req, res) {
               { isLocked: true, userEmail: businessName, accountCode: 1700, accountName: 'Rent', account: 'Expenses', subAccount: 'Administration Expenses', balance: 0, desc: 'The payment to lease a building or area.' },
               { isLocked: true, userEmail: businessName, accountCode: 1800, accountName: 'Finance Cost', account: 'Expenses', subAccount: 'Finance Cost', balance: 0, desc: 'the cost, interest, and other charges involved in the borrowing of money to build or purchase assets' },
               { isLocked: true, userEmail: businessName, accountCode: 1900, accountName: 'Office Equipment', account: 'Assets', subAccount: 'Fixed Assets', balance: 0, desc: 'Office equipment that is owned and controlled by the business' },
-              { isLocked: true, userEmail: businessName, accountCode: 2000, accountName: 'Cheques wallet', account: 'Assets', subAccount: 'Current Assets', balance: 0, desc: 'A cheque is a negotiable instrument instructing a financial institution to pay a specific amount of a specific currency from a specified transactional account held in the drawers name with that institution. Both the drawer and payee may be natural persons or legal entities.' }
+              { isLocked: true, userEmail: businessName, accountCode: 2000, accountName: 'Cheques wallet', account: 'Assets', subAccount: 'Current Assets', balance: 0, desc: 'A cheque is a negotiable instrument instructing a financial institution to pay a specific amount of a specific currency from a specified transactional account held in the drawers name with that institution. Both the drawer and payee may be natural persons or legal entities.' },
+
+              { isLocked: true, userEmail: businessName, accountCode: 2100, accountName: 'Unit Rent Revenue', account: 'Incomes', subAccount: 'Revenue', balance: 0, desc: 'A cheque is a negotiable instrument instructing a financial institution to pay a specific amount of a specific currency from a specified transactional account held in the drawers name with that institution. Both the drawer and payee may be natural persons or legal entities.' },
+              { isLocked: true, userEmail: businessName, accountCode: 2200, accountName: 'Commission', account: 'Incomes', subAccount: 'Revenue', balance: 0, desc: 'Record office commision from rent contract' },
+              { isLocked: true, userEmail: businessName, accountCode: 2300, accountName: 'Parking Rent Revenue', account: 'Incomes', subAccount: 'Revenue', balance: 0, desc: 'Record Revenue Generated from parking contract' },
+              { isLocked: true, userEmail: businessName, accountCode: 2400, accountName: 'Tenant Security Deposit', account: 'Liabilities', subAccount: 'Current Liability', balance: 0, desc: 'Record deposit made by tenant' },
+              { isLocked: true, userEmail: businessName, accountCode: 2500, accountName: 'Unearned Rent Revenue', account: 'Liabilities', subAccount: 'Current Liability', balance: 0, desc: 'Record of unearned rent amount' },
             ]
 
             let preDefiendTaxRate = [
@@ -389,6 +392,14 @@ export default async function handler(req, res) {
               { isLocked: true, userEmail: businessName, paymentType: 'Bank', chartsOfAccount: 'Bank' },
             ]
 
+            let preDefiendServices = [
+              { isLocked: true, userEmail: businessName, code: 100, name: 'Unit Rent', linkAccount: 'Unit Rent Revenue', linkContract: 'unitRent', desc: '' },
+              { isLocked: true, userEmail: businessName, code: 200, name: 'Parking Rent', linkAccount: 'Parking Rent Revenue', linkContract: 'parkingRent', desc: '' },
+              { isLocked: true, userEmail: businessName, code: 300, name: 'Commission', linkAccount: 'Commission', linkContract: 'commission', desc: '' },
+              { isLocked: true, userEmail: businessName, code: 400, name: 'Security Deposit', linkAccount: 'Tenant Security Deposit', linkContract: 'securityDeposit', desc: '' },
+            ]
+
+            
             const userCOA = preDefiendCOA.map(item => ({
               userEmail: item.userEmail,
               isLocked: item.isLocked,
@@ -419,6 +430,19 @@ export default async function handler(req, res) {
               chartsOfAccount: item.chartsOfAccount,
             }));
             await PaymentMethod.create(userPaymentMethod);
+
+            
+            const userServices = preDefiendServices.map(item => ({
+              userEmail: item.userEmail,
+              isLocked: item.isLocked,
+              code: item.code,
+              name: item.name,
+              linkAccount: item.linkAccount,
+              linkContract: item.linkContract,
+              desc: item.desc
+
+            }));
+            await Product.create(userServices);
 
               
             let newEntry = new User( { businessName, email, password, firstName, lastName, } );
