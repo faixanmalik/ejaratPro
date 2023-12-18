@@ -213,18 +213,17 @@ function Myaccount() {
                 </div>
                 <div>
 
-                  <div className="w-32 h-[7rem] text-center">
+                  <div className="w-36 mt-3 h-[7rem] text-center">
                     <div className="relative w-52">
                       <img
-                        className="w-32 h-36 rounded-lg absolute"
+                        className="w-36 h-40 rounded-lg absolute"
                         src={src}
                         alt=""
                       />
-                      <div className="w-32 border-2 border-gray-400 flex flex-col ml-auto justify-between h-36 group hover:bg-gray-200 opacity-60 rounded-lg absolute cursor-pointer transition duration-500">
+                      <div className="w-36 h-40 border-2 border-gray-400 flex flex-col ml-auto justify-between group hover:bg-gray-200 opacity-60 rounded-lg absolute cursor-pointer transition duration-500">
                         
                         <div className='flex flex-col ml-auto -mr-7 justify-end'>
                           <AiOutlineEdit onClick={handleClickContainer} className="text-gray-700 p-[3px] border-2 border-gray-300 bg-white rounded-full text-2xl"/>
-                          <MdClose onClick={()=>setSrc('https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg')} className="text-gray-700 border-2 border-gray-300 bg-white rounded-full text-xl mt-[100px]"/>
                           <MdClose onClick={()=>setSrc('https://t3.ftcdn.net/jpg/03/34/83/22/360_F_334832255_IMxvzYRygjd20VlSaIAFZrQWjozQH6BQ.jpg')} className="text-gray-700 border-2 border-gray-300 bg-white rounded-full text-xl mt-[100px]"/>
                         </div>
 
@@ -240,10 +239,6 @@ function Myaccount() {
                   </div>
 
                 </div>
-
-                
-                
-
 
               </div>
             
