@@ -51,6 +51,7 @@ function Myaccount() {
   const [streetAddress, setstreetAddress] = useState('')
   const [state, setState] = useState('')
   const [zip, setZip] = useState('')
+  const [taxRigNo, setTaxRigNo] = useState('')
   const [cpassword, setCpassword] = useState('')
   const [npassword, setNpassword] = useState('')
   const [cnpassword, setCnpassword] = useState('')
@@ -161,6 +162,9 @@ function Myaccount() {
     else if (e.target.name === 'state') {
       setState(e.target.value)
     }
+    else if (e.target.name === 'taxRigNo') {
+      setTaxRigNo(e.target.value)
+    }
     else if (e.target.name === 'zip') {
       setZip(e.target.value)
     }
@@ -186,31 +190,32 @@ function Myaccount() {
     <ToastContainer position="bottom-center" autoClose={1000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable theme="light"/>
 
     <section className="text-gray-600 bg-white body-font relative">
-      <div className="container px-5 py-20 pb-36 mx-auto">
+      <div className="container px-5 pb-36 mx-auto">
         
+        <h1 className='text-center text-4xl text-gray-800 py-10'>Profile Settings</h1>
         <div className="lg:w-10/12 md:w-2/3 mx-auto">
 
           {/* Account Details */}
           <h1 className='pb-4 text-xl font-sans font-semibold text-indigo-700'>1. Account Details</h1>
           <form method='POST' onSubmit={submit}>
-            <div className="flex flex-wrap -m-2">
+            <div className="flex space-y-3 flex-wrap -m-2">
+
+
               <div className='w-full sm:flex'>
 
-                <div className='flex-col w-9/12'>
-                  <div className="p-2 w-9/12">
-                    <div className="relative">
-                      <label htmlFor="name" className="leading-7 text-sm text-gray-600">First Name</label>
-                      <input onChange={handleChange} value={firstname} type="text" id="firstname" name="firstname" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                    </div>
+                <div className='flex-col space-y-3 w-9/12'>
+                  <div className="w-9/12">
+                    <label htmlFor="name" className="leading-7 text-sm text-gray-600">First Name</label>
+                    <input onChange={handleChange} value={firstname} type="text" id="firstname" name="firstname" className="w-full py-1 px-3 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 leading-8 transition-colors duration-200 ease-in-out" />
                   </div>
-                  <div className="p-2 w-9/12">
+                  <div className="w-9/12">
                     <div className="relative">
                         <label htmlFor="lastname" className="leading-7 text-sm text-gray-600">Last Name</label>
                         <input onChange={handleChange} value={lastname} type="text" id="lastname" name="lastname" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                     </div>
                   </div>
-
                 </div>
+
                 <div>
 
                   <div className="w-36 mt-3 h-[7rem] text-center">
@@ -239,41 +244,38 @@ function Myaccount() {
                   </div>
 
                 </div>
-
               </div>
-            
 
-              <div className="p-2 w-full">
+              <div className="w-6/12">
                 <div className="relative">
                   <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-                  {user && user.token ? <input value={user.email} type="text" className="cursor-not-allowed w-full bg-gray-100 bg-opacity-50 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" readOnly/>: 
-                  <input onChange={handleChange} value={email} type="text" id="email" name="email" className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="your.email@gmail.com" required  />}
+                  {user && user.token ? <input value={user.email} type="text" className="cursor-not-allowed w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly/>: 
+                  <input onChange={handleChange} value={email} type="text" id="email" name="email" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" placeholder="your.email@gmail.com" required  />}
                 </div>
               </div>
-              <div className="p-2 w-full">
-                <div className="relative">
+           
+              <div className='w-full sm:flex space-x-3'>
+                <div className="w-full">
                   <label htmlFor="phoneno" className="leading-7 text-sm text-gray-600">Phone No</label>
-                  <input onChange={handleChange} value={phoneno} type="Number" id="phoneno" name="phoneno" className="w-full bg-gray-100 bg-opacity-50 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="+92300-1234567"  />
+                  <input onChange={handleChange} value={phoneno} type="Number" id="phoneno" name="taxRigNo" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                </div>
+                <div className="w-full">
+                  <label htmlFor="taxRigNo" className="leading-7 text-sm text-gray-600">Tax Rig. No</label>
+                  <input onChange={handleChange} value={taxRigNo} type="text" id="taxRigNo" name="taxRigNo" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
               </div>
-              <div className='w-full sm:flex'>
-                <div className="p-2 w-full sm:w-1/2">
-                  <div className="relative">
-                    <label htmlFor="streetAddress" className="leading-7 text-sm text-gray-600">Street Address</label>
-                    <input onChange={handleChange} value={streetAddress} type="text" id="streetAddress" name="streetAddress" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                  </div>
+              <div className='w-full sm:flex space-x-3'>
+                <div className="w-full">
+                  <label htmlFor="streetAddress" className="leading-7 text-sm text-gray-600">Street Address</label>
+                  <input onChange={handleChange} value={streetAddress} type="text" id="streetAddress" name="streetAddress" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
-                <div className="p-2 w-full sm:w-1/2">
-                  <div className="relative">
-                    <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
-                    <input onChange={handleChange} value={state} type="text" id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                  </div>
+                <div className="w-full">
+                  <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
+                  <input onChange={handleChange} value={state} type="text" id="state" name="state" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
-                <div className="p-2 w-full sm:w-1/2">
-                  <div className="relative">
-                    <label htmlFor="zip" className="leading-7 text-sm text-gray-600">Zip</label>
-                    <input onChange={handleChange} value={zip} type="text" id="zip" name="zip" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
-                  </div>
+                <div className="w-full">
+                  <label htmlFor="zip" className="leading-7 text-sm text-gray-600">Zip</label>
+                  <input onChange={handleChange} value={zip} type="text" id="zip" name="zip" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                 </div>
 
               </div>
