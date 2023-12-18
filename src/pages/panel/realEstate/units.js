@@ -1639,7 +1639,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="unitNo"
                         value={unitNo}
                         id="unitNo"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-full">
@@ -1652,7 +1652,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="buildingNameInArabic"
                         value={buildingNameInArabic}
                         id="buildingNameInArabic"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-full">
@@ -1665,7 +1665,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="buildingNameInEnglish"
                         value={buildingNameInEnglish}
                         id="buildingNameInEnglish"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-8/12">
@@ -1678,7 +1678,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="plotNo"
                         value={plotNo}
                         id="plotNo"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-8/12">
@@ -1691,7 +1691,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="rent"
                         value={rent}
                         id="rent"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
             </div>
@@ -1708,7 +1708,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="bathroom"
                         value={bathroom}
                         id="bathroom"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-8/12">
@@ -1721,7 +1721,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="parkings"
                         value={parkings}
                         id="parkings"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-8/12">
@@ -1734,7 +1734,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="rentParking"
                         value={rentParking}
                         id="rentParking"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-8/12">
@@ -1747,7 +1747,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="roof"
                         value={roof}
                         id="roof"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-8/12">
@@ -1760,7 +1760,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="balcony"
                         value={balcony}
                         id="balcony"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-8/12">
@@ -1773,7 +1773,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="size"
                         value={size}
                         id="size"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
             </div>
@@ -1789,7 +1789,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="electricityMeterNo"
                         value={electricityMeterNo}
                         id="electricityMeterNo"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
 
@@ -1803,7 +1803,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="waterMeterNumber"
                         value={waterMeterNumber}
                         id="waterMeterNumber"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
                 <div className="w-full">
@@ -1816,7 +1816,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="sewageNumber"
                         value={sewageNumber}
                         id="sewageNumber"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
 
@@ -1882,7 +1882,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="view"
                         value={view}
                         id="view"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
             </div>
@@ -1932,7 +1932,7 @@ import useTranslation from 'next-translate/useTranslation';
                     placeholder={t('addNotesHere')}
                     value={notes}
                     id="notes"
-                    className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </textarea>
             </div>
 
@@ -1964,33 +1964,33 @@ import useTranslation from 'next-translate/useTranslation';
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantName" className="block text-sm font-medium text-gray-700">{t('name')}</label>
-                  <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled type="tenantName" name="tenantName" id="tenantName" value={tenantName} className="cursor-not-allowed bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantEmail" className="block text-sm font-medium text-gray-700">{t('email')}</label>
-                  <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled value={tenantEmail} type="text" name="tenantEmail" id="tenantEmail" autoComplete="email" className="cursor-not-allowed bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantPhoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
-                  <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled value={tenantPhoneNo} type="number" name="tenantPhoneNo" id="tenantPhoneNo" className="cursor-not-allowed bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantOpeningBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
-                  <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input disabled value={tenantOpeningBalance} type="number" name="tenantOpeningBalance" id="tenantOpeningBalance" className="cursor-not-allowed bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantIdNumber" className="block text-sm font-medium text-gray-700">{t('idNumber')}</label>
-                  <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input onChange={handleChange} value={tenantIdNumber} type="number" name="tenantIdNumber" id="tenantIdNumber" className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
                 <div className="col-span-6 sm:col-span-1">
                   <label htmlFor="tenantExpIdNumber" className="block text-sm font-medium text-gray-700">{t('expID')}</label>
-                  <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                  <input onChange={handleChange} value={tenantExpIdNumber} type="date" name="tenantExpIdNumber" id="tenantExpIdNumber" className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                 </div>
 
               </div>
@@ -2012,7 +2012,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantPassPortNumber"
                         value={tenantPassPortNumber}
                         id="tenantPassPortNumber"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -2026,7 +2026,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantExpPassPort"
                         id="tenantExpPassPort"
                         value={tenantExpPassPort}
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -2040,7 +2040,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantVatRegistrationNo"
                         id="tenantVatRegistrationNo"
                         value={tenantVatRegistrationNo}
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div> 
                   </div>
@@ -2056,7 +2056,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantIbanNo"
                         value={tenantIbanNo}
                         id="tenantIbanNo"
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -2070,7 +2070,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantBank"
                         id="tenantBank"
                         value={tenantBank}
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
 
@@ -2084,7 +2084,7 @@ import useTranslation from 'next-translate/useTranslation';
                         name="tenantBankAccountNumber"
                         id="tenantBankAccountNumber"
                         value={tenantBankAccountNumber}
-                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                     
@@ -2128,7 +2128,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractStartDate"
                   value={newContractStartDate}
                   id="newContractStartDate"
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -2141,7 +2141,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractEndDate"
                   value={newContractEndDate}
                   id="newContractEndDate"
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -2154,7 +2154,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractUnitRent"
                   value={newContractUnitRent}
                   id="newContractUnitRent"
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -2170,7 +2170,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractCommission"
                   value={newContractCommission}
                   id="newContractCommission"
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -2183,7 +2183,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractRentParking"
                   value={newContractRentParking}
                   id="newContractRentParking"
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -2196,7 +2196,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractBouncedChequeFine"
                   value={newContractBouncedChequeFine}
                   id="newContractBouncedChequeFine"
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -2212,7 +2212,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractSecurityDeposit"
                   value={newContractSecurityDeposit}
                   id="newContractSecurityDeposit"
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="w-full">
@@ -2248,7 +2248,7 @@ import useTranslation from 'next-translate/useTranslation';
                   name="newContractNotes"
                   id="newContractNotes"
                   placeholder={t('addNotesHere')}
-                  className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                  className="bg-white mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                 </textarea>
                 
               </div>
