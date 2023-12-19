@@ -82,6 +82,7 @@ import useTranslation from 'next-translate/useTranslation';
     const [isAdmin, setIsAdmin] = useState(false)
     const [filteredInvoices, setFilteredInvoices] = useState([])
     const [filteredBuildings, setFilteredBuildings] = useState([])
+    const [filteredTenants, setFilteredTenants] = useState([])
 
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
     const [isChecked, setIsChecked] = useState(false);
@@ -121,6 +122,12 @@ import useTranslation from 'next-translate/useTranslation';
         return item.userEmail === userEmail;
       })
       setFilteredBuildings(filteredBuildings)
+
+      
+      let filteredTenants = dbTenants.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredTenants(filteredTenants)
 
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
@@ -499,7 +506,6 @@ import useTranslation from 'next-translate/useTranslation';
     // Modals
     const [openUnitTypeModal, setOpenUnitTypeModal] = useState(false)
     const [openUnitUseModal, setOpenUnitUseModal] = useState(false)
-    const [openNationalityModal, setOpenNationalityModal] = useState(false)
     const [openCountryModal, setOpenCountryModal] = useState(false)
     const [openCityModal, setOpenCityModal] = useState(false)
     const [openAreaModal, setOpenAreaModal] = useState(false)
@@ -1948,7 +1954,7 @@ import useTranslation from 'next-translate/useTranslation';
             <div className='flex justify-between'>
               <div className=''>
                 <Select size="md" label={t('tenantProfile')} name='tenant' id='tenant' value={tenant} onChange={(e) => setTenant(e)}>
-                  {dbTenants.map((item, index) => {
+                  {filteredTenants.map((item, index) => {
                     return <Option key={index} value={item.name}>{item.name}</Option>
                   })}
                 </Select>
