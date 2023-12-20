@@ -83,6 +83,7 @@ import useTranslation from 'next-translate/useTranslation';
     const [filteredInvoices, setFilteredInvoices] = useState([])
     const [filteredBuildings, setFilteredBuildings] = useState([])
     const [filteredTenants, setFilteredTenants] = useState([])
+    const [filteredContacts, setFilteredContacts] = useState([])
 
     const [isOpenSaveChange, setIsOpenSaveChange] = useState(true)
     const [isChecked, setIsChecked] = useState(false);
@@ -128,6 +129,11 @@ import useTranslation from 'next-translate/useTranslation';
         return item.userEmail === userEmail;
       })
       setFilteredTenants(filteredTenants)
+
+      let filteredContacts = dbContacts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredContacts(filteredContacts)
 
       const myUser = JSON.parse(localStorage.getItem('myUser'))
       if(myUser.department === 'Admin'){
@@ -349,7 +355,7 @@ import useTranslation from 'next-translate/useTranslation';
       }
       else if(name === 'name'){
         setName(value)
-        const newData = dbContacts.filter(item => item.name === value);
+        const newData = filteredContacts.filter(item => item.name === value);
         if(newData.length > 0){
           setEmail(newData[0].email)
           setPhoneNo(newData[0].phoneNo)
@@ -656,7 +662,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </label>
                 <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select contacts</option>
-                  {dbContacts.map((item, index)=>{
+                  {filteredContacts.map((item, index)=>{
                     return <option key={index} value={item.name}>{item.name} - {item.type}
                     </option>
                   })}
@@ -2295,7 +2301,7 @@ import useTranslation from 'next-translate/useTranslation';
       e.preventDefault();
 
       let data = {
-        unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,
+        userEmail, unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,
         tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,
         newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes,
         path: 'NewContract'

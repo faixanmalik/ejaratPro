@@ -427,7 +427,7 @@ import useTranslation from 'next-translate/useTranslation';
       }
       else if(name === 'name'){
         setName(value)
-        const newData = dbContacts.filter(item => item.name === value);
+        const newData = filteredContacts.filter(item => item.name === value);
         if(newData.length > 0){
           setEmail(newData[0].email)
           setPhoneNo(newData[0].phoneNo)
@@ -2153,7 +2153,6 @@ import useTranslation from 'next-translate/useTranslation';
                   documentTitle='Buildings and Owners'
                   pageStyle='print'
                 />
-
               </div>
             
             </div>
@@ -2161,6 +2160,7 @@ import useTranslation from 'next-translate/useTranslation';
               <div className="overflow-hidden shadow sm:rounded-md">
                 
                 <div className="mt-2 overflow-x-auto shadow-sm">
+                  
                   <table ref={componentRef} className="w-full text-sm text-left text-gray-500 ">
                     <thead className="text-[11px] text-gray-700 uppercase bg-[#e9ecf7]">
                       <tr className=''>
