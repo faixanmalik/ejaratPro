@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import mongoose from "mongoose";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,14 +19,19 @@ import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
 import ChequeTransaction from 'models/ChequeTransaction';
 import useTranslation from 'next-translate/useTranslation';
+import ReactToPrint from 'react-to-print';
+import { AiOutlinePrinter } from 'react-icons/ai';
 
 
 const BalanceSheet = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts, name }) => {
 
     const { t } = useTranslation('reporting')
+    const componentRef = useRef();
 
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
+    const [printButton, setPrintButton] = useState(false)
+
     const [sortedDbCharts, setSortedDbCharts] = useState([])
 
     const [totalAssets, setTotalAssets] = useState(0);
@@ -47,15 +52,14 @@ const BalanceSheet = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
       })
       setFilteredCharts(filteredCharts)
 
-
-      submit()
-
     }, [userEmail])
     
 
 
     let balance = [];
     const submit = ()=>{
+        setPrintButton(true);
+
         if(fromDate && toDate){
             setFDate(moment(fromDate).format('D MMM YYYY'))
             setTDate(moment(toDate).format('D MMM YYYY'))
@@ -895,7 +899,7 @@ const BalanceSheet = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
         </form>
     </div>
 
-    <div className="md:grid md:grid-cols-1 md:gap-6">
+    <div className="md:grid md:grid-cols-1 md:gap-2">
         <div className="md:col-span-1">
             <div className="px-4 mt-4 sm:px-0 flex">
                 <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">
@@ -905,10 +909,25 @@ const BalanceSheet = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
                     }
                 </h3>
             </div>
+            <div className='flex justify-end'>
+              {printButton == true ? <ReactToPrint
+                trigger={()=>{
+                  return <button 
+                    type="button"
+                    className='inline-flex items-center justify-center py-1 px-3 bg-blue-800 hover:bg-blue-900 text-white rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'>
+                    {t('print')}
+                    <AiOutlinePrinter className='text-lg ml-2'/>
+                  </button>
+                }}
+                content={() => componentRef.current}
+                documentTitle='Balance Sheet'
+                pageStyle='print'
+                />: ''}
+            </div>
         </div>
         <div className="md:col-span-2">
             <form method="POST">
-                <div className="overflow-hidden shadow sm:rounded-md">
+                <div ref={componentRef} className="overflow-hidden shadow sm:rounded-md">
 
                     <div className="overflow-x-auto shadow-sm">
                         <table className="w-full text-sm text-left text-gray-500 ">

@@ -896,7 +896,7 @@ import useTranslation from 'next-translate/useTranslation';
                         </div>
                         <div className="bg-gray-50 space-x-3 rtl:space-x-reverse px-4 py-3 text-right sm:px-6">
 
-                        <ReactToPrint
+                          <ReactToPrint
                             trigger={()=>{
                               return <button 
                                 type="button"

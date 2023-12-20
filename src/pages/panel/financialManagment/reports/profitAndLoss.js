@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import mongoose from "mongoose";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,14 +19,18 @@ import Product from 'models/Product';
 import PaymentMethod from 'models/PaymentMethod';
 import ChequeTransaction from 'models/ChequeTransaction';
 import useTranslation from 'next-translate/useTranslation';
+import ReactToPrint from 'react-to-print';
+import { AiOutlinePrinter } from 'react-icons/ai';
 
 
 const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts  }) => {
 
     const { t } = useTranslation('reporting')
+    const componentRef = useRef();
 
     const [fromDate, setFromDate] = useState('')
     const [toDate, setToDate] = useState('')
+    const [printButton, setPrintButton] = useState(false)
 
     const [grossProfit, setGrossProfit] = useState(0);
     const [profitFromOperations, setProfitFromOperations] = useState(0)
@@ -38,10 +42,6 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
     const [filteredCharts, setFilteredCharts] = useState([])
     const [sortedDbCharts, setSortedDbCharts] = useState([])
     
-
-    useEffect(() => {
-        submit()
-    }, [])
 
     useEffect(() => {
 
@@ -56,6 +56,7 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
     let balance = [];
     const submit = ()=>{
 
+        setPrintButton(true);
         if(fromDate && toDate){
             setFDate(moment(fromDate).format('D MMM YYYY'))
             setTDate(moment(toDate).format('D MMM YYYY'))
@@ -792,7 +793,7 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
         </form>
     </div>
 
-    <div className="md:grid md:grid-cols-1 md:gap-6">
+    <div className="md:grid md:grid-cols-1 md:gap-2">
         <div className="md:col-span-1">
             <div className="px-4 mt-4 sm:px-0 flex">
                 <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">
@@ -802,10 +803,25 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
                     }
                 </h3>
             </div>
+            <div className='flex justify-end'>
+              {printButton == true ? <ReactToPrint
+                trigger={()=>{
+                  return <button 
+                    type="button"
+                    className='inline-flex items-center justify-center py-1 px-3 bg-blue-800 hover:bg-blue-900 text-white rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500'>
+                    {t('print')}
+                    <AiOutlinePrinter className='text-lg ml-2'/>
+                  </button>
+                }}
+                content={() => componentRef.current}
+                documentTitle='Profit And Loss'
+                pageStyle='print'
+                />: ''}
+            </div>
         </div>
         <div className="md:col-span-2">
             <form method="POST">
-                <div className="overflow-hidden shadow sm:rounded-md">
+                <div ref={componentRef} className="overflow-hidden shadow sm:rounded-md">
 
                     <div className="overflow-x-auto shadow-sm">
                         <table className="w-full text-sm text-left text-gray-500 ">
@@ -827,19 +843,6 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
                             {/* All Vouchers */}
                             {sortedDbCharts.map((item,index) => {
 
-                                const administrationIndex = sortedDbCharts.findIndex(item => item.subAccount === 'Administration Expenses');
-                                const financeIndex = sortedDbCharts.findIndex((obj) => obj.subAccount === 'Finance Cost');
-
-                                let lastIndex = -1;
-
-                                for (let i = sortedDbCharts.length - 1; i >= 0; i--) {
-                                    if (sortedDbCharts[i].subAccount === 'Finance Cost') {
-                                        lastIndex = i;
-                                        break;
-                                    }
-                                }
-                                
-
                             return <tbody key={index}>
                                 <tr className="bg-white border-b hover:bg-gray-50">
                                     <td className="px-6 py-3 font-semibold">
@@ -858,37 +861,28 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
                                     }
                                 </tr>
 
-                            
-                                {index === administrationIndex - 1
-                                ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm font-bold ${grossProfit > 0 ? 'text-green-700' : 'text-red-700'} -mr-32`}>
-                                        {t('gross')} {grossProfit > 0 ? t('profit') : t('loss')}:
-                                        <span className='font-bold ml-1'>${grossProfit.toLocaleString()}</span>
-                                    </td>
-                                </tr>: ''}
-
-
-                                {index === financeIndex - 1
-                                ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm font-bold ${profitFromOperations > 0 ? 'text-green-700' : 'text-red-700'} -mr-32`}>
-                                        {profitFromOperations > 0 ? t('profit') : t('loss')} {t('fromOperations')}:
-                                        <span className='font-bold ml-1'>${profitFromOperations.toLocaleString()}</span>
-                                    </td>
-                                </tr>: ''}
-
-
-                                {index === lastIndex
-                                ? <tr className="flex float-right -mr-96 bg-slate-100 px-4 py-3 sm:px-6">
-                                    <td className={`text-sm font-bold ${profitBeforeTax > 0 ? 'text-green-700' : 'text-red-700'} -mr-32`}>
-                                        {t('net')} {profitBeforeTax > 0 ? t('profit') : t('loss')}:
-                                        <span className='font-bold ml-1'>${profitBeforeTax.toLocaleString()}</span>
-                                    </td>
-                                </tr>: ''}
-
                             </tbody>
-                            })}
 
+                            })}
                         </table>
+
+                        <div className='w-11/12 py-4 space-y-3'>
+
+                          <div className={`text-sm border-b-2 border-gray-700 text-end font-bold ${grossProfit > 0 ? 'text-green-700' : 'text-red-700'}`}>
+                            {t('gross')} {grossProfit > 0 ? t('profit') : t('loss')}:
+                            <span className='font-bold ml-1'>${grossProfit.toLocaleString()}</span>
+                          </div>
+
+                          <div className={`text-sm border-b-2 border-gray-700 text-end font-bold ${profitFromOperations > 0 ? 'text-green-700' : 'text-red-700'}`}>
+                            {profitFromOperations > 0 ? t('profit') : t('loss')} {t('fromOperations')}:
+                             <span className='font-bold ml-1'>${profitFromOperations.toLocaleString()}</span>
+                          </div>
+
+                          <div className={`text-sm border-b-2 border-gray-700 text-end font-bold ${profitBeforeTax > 0 ? 'text-green-700' : 'text-red-700'}`}>
+                            {t('net')} {profitBeforeTax > 0 ? t('profit') : t('loss')}:
+                            <span className='font-bold ml-1'>${profitBeforeTax.toLocaleString()}</span>
+                          </div>
+                        </div>
 
                         { sortedDbCharts.length === 0  ? <h1 className='text-red-600 text-center text-base my-3'>No data found!</h1> : ''}
                     </div>
