@@ -683,7 +683,7 @@ const TrialBalance = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
               <h3 className="text-lg mx-auto font-black tracking-wide leading-6 text-blue-800">
                 {t('trialBalanceTitle')}  
                 {fDate && tDate &&
-                    <span className='text-sm ml-1'>({fDate} {t('to')} {tDate})</span>
+                  <span className='text-sm ml-1'>({fDate} {t('to')} {tDate})</span>
                 }
               </h3>
             </div>
