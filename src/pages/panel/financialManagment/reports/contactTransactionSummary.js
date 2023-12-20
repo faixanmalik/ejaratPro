@@ -206,7 +206,7 @@ const ContactTransactionSummary = (
             </button>
           }}
           content={() => componentRef.current}
-          documentTitle={`${contact} Transactions Summary`}
+          documentTitle={`${userEmail} - (${contact}) Transactions Summary`}
           pageStyle='print'
           />: ''}
       </div>

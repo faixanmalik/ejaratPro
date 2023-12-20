@@ -668,7 +668,7 @@ const GeneralLedger = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
                   </button>
                 }}
                 content={() => componentRef.current}
-                documentTitle={`${account} Ledger`}
+                documentTitle={`${userEmail} (${account}) - Ledger`}
                 pageStyle='print'
                 />: ''}
             </div>

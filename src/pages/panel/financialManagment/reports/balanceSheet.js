@@ -920,7 +920,7 @@ const BalanceSheet = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
                   </button>
                 }}
                 content={() => componentRef.current}
-                documentTitle='Balance Sheet'
+                documentTitle={`${userEmail} - Balance Sheet`}
                 pageStyle='print'
                 />: ''}
             </div>

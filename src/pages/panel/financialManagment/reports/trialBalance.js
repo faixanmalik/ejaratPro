@@ -41,7 +41,6 @@ const TrialBalance = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
     const [tDate, setTDate] = useState('')
 
 
-
     let balance = [];
     const submit = ()=>{
 
@@ -688,6 +687,7 @@ const TrialBalance = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
               </h3>
             </div>
             <div className='flex justify-end'>
+              
               {printButton == true ? <ReactToPrint
                 trigger={()=>{
                   return <button 
@@ -698,7 +698,8 @@ const TrialBalance = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
                   </button>
                 }}
                 content={() => componentRef.current}
-                documentTitle='Trial Balance'
+                // documentTitle='Trial Balance'
+                documentTitle={`${userEmail} - Trial Balance`}
                 pageStyle='print'
                 />: ''}
             </div>

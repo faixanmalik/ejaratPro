@@ -814,7 +814,7 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
                   </button>
                 }}
                 content={() => componentRef.current}
-                documentTitle='Profit And Loss'
+                documentTitle={`${userEmail} - Profit And Loss`}
                 pageStyle='print'
                 />: ''}
             </div>
