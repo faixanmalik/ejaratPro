@@ -657,9 +657,14 @@ import useTranslation from 'next-translate/useTranslation';
           <div>
             <div className='flex space-x-4 rtl:space-x-reverse mb-14'>
               <div className="w-full">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                  {t('name')}
-                </label>
+                <div className='flex justify-between'>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                    {t('name')}
+                  </label>
+                  <Link target="_blank" href={'/panel/businessSetup/contactList?open=true'} className="no-underline block cursor-pointer text-sm font-medium text-green-700">
+                    {t('add')}?
+                  </Link>
+                </div>
                 <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                   <option value=''>select contacts</option>
                   {filteredContacts.map((item, index)=>{
