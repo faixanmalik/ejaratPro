@@ -573,7 +573,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Credit Sales Invoices'
+              documentTitle={`${userEmail} - Credit Sales Invoices`}
               pageStyle='print'
             />
           </div>
@@ -1027,7 +1027,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Credit Sales Invoice'
+                            documentTitle={`${userEmail} - Credit Sales Invoice`}
                             pageStyle='print'
                           />
                           <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>

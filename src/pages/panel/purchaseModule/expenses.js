@@ -416,7 +416,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Expense Invoices'
+              documentTitle={`${userEmail} - Expense Invoices`}
               pageStyle='print'
             />
           </div>
@@ -845,7 +845,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Expense Invoice'
+                            documentTitle={`${userEmail} - Expense Invoice`}
                             pageStyle='print'
                           />
 

@@ -409,7 +409,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Purchase Invoices'
+              documentTitle={`${userEmail} - Purchase Invoices`}
               pageStyle='print'
             />
           </div>
@@ -855,7 +855,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Purchase Invoice'
+                            documentTitle={`${userEmail} - Purchase Invoice`}
                             pageStyle='print'
                           />
                           <button type='button' onClick={()=>{editEntry(id)}} className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{t('saveChanges')}</button>

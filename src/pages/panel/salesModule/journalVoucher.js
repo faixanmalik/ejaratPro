@@ -320,7 +320,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Journal Vouchers'
+              documentTitle={`${userEmail} - Journal Vouchers`}
               pageStyle='print'
             />
           </div>
@@ -626,7 +626,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Journal Voucher'
+                            documentTitle={`${userEmail} - Journal Voucher`}
                             pageStyle='print'
                           />
 

@@ -400,7 +400,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Receipt Vouchers'
+              documentTitle={`${userEmail} - Receipt Vouchers`}
               pageStyle='print'
             />
           </div>
@@ -794,7 +794,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Receipt Voucher'
+                            documentTitle={`${userEmail} - Receipt Voucher`}
                             pageStyle='print'
                           />
 

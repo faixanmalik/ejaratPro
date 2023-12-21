@@ -698,7 +698,6 @@ const TrialBalance = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
                   </button>
                 }}
                 content={() => componentRef.current}
-                // documentTitle='Trial Balance'
                 documentTitle={`${userEmail} - Trial Balance`}
                 pageStyle='print'
                 />: ''}

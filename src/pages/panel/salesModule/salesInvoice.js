@@ -459,7 +459,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Sales Invoices'
+              documentTitle={`${userEmail} - Sales Invoices`}
               pageStyle='print'
             />
           </div>
@@ -906,7 +906,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Sales Invoice'
+                            documentTitle={`${userEmail} - Sales Invoice`}
                             pageStyle='print'
                           />
 

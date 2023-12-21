@@ -355,7 +355,7 @@ import useTranslation from 'next-translate/useTranslation';
                 </button>
               }}
               content={() => componentRef.current}
-              documentTitle='Payment Vouchers'
+              documentTitle={`${userEmail} - Payment Vouchers`}
               pageStyle='print'
             />
           </div>
@@ -769,7 +769,7 @@ import useTranslation from 'next-translate/useTranslation';
                               </button>
                             }}
                             content={() => speceficComponentRef.current}
-                            documentTitle='Payment Voucher'
+                            documentTitle={`${userEmail} - Payment Voucher`}
                             pageStyle='print'
                           />
 
