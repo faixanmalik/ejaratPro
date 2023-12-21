@@ -7,3 +7,8 @@ input {
   background-color: white; /* Set background color to black */
   /* Add any additional styles you need */
 }
+
+textarea{
+  color: black; /* Set text color to white */
+  background-color: white; /* Set background color to black */
+}

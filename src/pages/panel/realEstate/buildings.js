@@ -682,7 +682,7 @@ import { useRouter } from 'next/router';
     const saveUnit = async(e) => {
       e.preventDefault();
 
-      let unitNoIncrement = unitNo; // Starting unitNo value
+      let unitNoIncrement = parseInt(unitNo); // Starting unitNo value
 
       for (let i = 0; i < noOfFunctionLoop; i++) {
         const data = { unitNo: unitNoIncrement, unitName, unitRent, unitType, unitUse, unitSize, bathroom, parking, balcony, ac, unitStatus};

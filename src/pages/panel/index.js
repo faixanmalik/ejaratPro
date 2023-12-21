@@ -1,13 +1,17 @@
 import Head from "next/head";
 import { Col, Row } from "reactstrap";
+
 import SalesChart from "@/panel/components/dashboard/SalesChart";
 import TopCards from "@/panel/components/dashboard/TopCards";
+import AssetsChart from "@/panel/components/dashboard/AssetsChart";
+import Products from "@/panel/components/dashboard/Products";
+
+
 import mongoose from "mongoose";
 import Product from 'models/Product';
 import Contact from "models/Contact";
 import Charts from "models/Charts";
 import JournalVoucher from "models/JournalVoucher";
-import AssetsChart from "@/panel/components/dashboard/AssetsChart";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import FullLayout from "@/panel/layouts/FullLayout";
 import Employees from "models/Employees";
@@ -146,6 +150,15 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
             <AssetsChart dbProducts={dbProducts} userEmail={userEmail} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
           </Col>
         </Row>
+
+
+        <Row>
+          <Col sm="12" lg="12">
+            <Products dbProducts={dbProducts} userEmail={userEmail} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
+          </Col>
+        </Row>
+
+
       </main>
       </FullLayout>
       </ProSidebarProvider>
