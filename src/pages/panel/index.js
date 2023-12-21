@@ -4,7 +4,7 @@ import { Col, Row } from "reactstrap";
 import SalesChart from "@/panel/components/dashboard/SalesChart";
 import TopCards from "@/panel/components/dashboard/TopCards";
 import AssetsChart from "@/panel/components/dashboard/AssetsChart";
-import Products from "@/panel/components/dashboard/Products";
+import UnitsChart from "@/panel/components/dashboard/UnitsChart";
 
 
 import mongoose from "mongoose";
@@ -26,9 +26,10 @@ import PaymentVoucher from 'models/PaymentVoucher';
 import Expenses from 'models/Expenses';
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
+import Units from "models/Units";
 
 
-export default function Home({customer, dbProducts, supplier, employees, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) {
+export default function Home({customer, dbUnits, dbProducts, supplier, employees, dbExpensesVoucher, dbPaymentVoucher, dbReceiptVoucher, dbDebitNote, dbCreditNote, dbPurchaseInvoice, dbSalesInvoice, dbCreditSalesInvoice, dbJournalVoucher, dbCharts }) {
 
   const [filteredCustomer, setFilteredCustomer] = useState([])
   const [filteredSupplier, setFilteredSupplier] = useState([])
@@ -138,8 +139,20 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
             />
           </Col>
         </Row>
-        {/***Sales & Feed***/}
+
+
         <Row>
+          <Col sm="6" lg="6">
+            <UnitsChart userEmail={userEmail} dbUnits={dbUnits} />
+          </Col>
+          <Col sm="6" lg="6">
+            <UnitsChart userEmail={userEmail} dbUnits={dbUnits} />
+          </Col>
+        </Row>
+
+
+        {/***Sales & Feed***/}
+        <Row className="mt-4">
           <Col sm="12" lg="12">
             <SalesChart dbProducts={dbProducts} userEmail={userEmail} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
           </Col>
@@ -152,11 +165,7 @@ export default function Home({customer, dbProducts, supplier, employees, dbExpen
         </Row>
 
 
-        <Row>
-          <Col sm="12" lg="12">
-            <Products dbProducts={dbProducts} userEmail={userEmail} dbCharts={dbCharts} dbJournalVoucher={dbJournalVoucher} dbExpensesVoucher={dbExpensesVoucher} dbPaymentVoucher={dbPaymentVoucher} dbReceiptVoucher={dbReceiptVoucher} dbDebitNote={dbDebitNote} dbCreditNote={dbCreditNote} dbPurchaseInvoice={dbPurchaseInvoice} dbSalesInvoice={dbSalesInvoice} dbCreditSalesInvoice={dbCreditSalesInvoice}/>
-          </Col>
-        </Row>
+        
 
 
       </main>
@@ -176,6 +185,7 @@ export async function getServerSideProps() {
   let supplier = await Contact.find({"type": "Supplier"})
   let employees = await Employees.find()
   let dbProducts = await Product.find()
+  let dbUnits = await Units.find()
 
   let dbCharts = await Charts.find()
   let dbJournalVoucher = await JournalVoucher.find()
@@ -197,6 +207,7 @@ export async function getServerSideProps() {
       supplier: JSON.parse(JSON.stringify(supplier)),
       employees: JSON.parse(JSON.stringify(employees)),
       dbCharts: JSON.parse(JSON.stringify(dbCharts)),
+      dbUnits: JSON.parse(JSON.stringify(dbUnits)),
       dbJournalVoucher: JSON.parse(JSON.stringify(dbJournalVoucher)),
 
       dbCreditSalesInvoice: JSON.parse(JSON.stringify(dbCreditSalesInvoice)),

@@ -656,7 +656,7 @@ const SalesChart = ({dbProducts, dbExpensesVoucher, dbPaymentVoucher, dbReceiptV
         <Chart
             type="area"
             width="100%"
-            height="390"
+            height="350"
             options={chartoptions.options}
             series={chartoptions.series}
         />
