@@ -13,7 +13,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 
 
-const Products = ({dbUnits}) => {
+const UnitsChart = ({dbUnits}) => {
 
   const [availableUnits, setAvailableUnits] = useState(0)
   const [occupiedUnits, setOccupiedUnits] = useState(0)
@@ -70,6 +70,7 @@ const Products = ({dbUnits}) => {
     width: 280,
     height: 280,
     series: [availableUnits, occupiedUnits, bookedUnits, holdUnits, rentDisputeUnits],
+    // series: [70, 79, 50, 9, 25],
     options: {
       labels: ['Available', 'Occupied', 'Booked', 'Hold', 'Rent Dispute'],
       chart: {
@@ -111,4 +112,4 @@ const Products = ({dbUnits}) => {
   );
 };
 
-export default Products;
+export default UnitsChart;
