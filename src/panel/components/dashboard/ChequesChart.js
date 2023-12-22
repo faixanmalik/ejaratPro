@@ -27,9 +27,6 @@ const ChequesChart = ({dbCheques}) => {
     let getUser = JSON.parse(localStorage.getItem("myUser"));
     let userEmail = getUser.businessName;
     
-    console.log(dbCheques)
-
-    let chequeStatus = ['Received', 'Deposited', 'Returned', 'Refund to Customer', 'Refund to Supplier']
 
     let receivedCheques = dbCheques.filter((item)=>{
       if(item.userEmail === userEmail && item.chequeStatus === 'Received'){
@@ -79,7 +76,7 @@ const ChequesChart = ({dbCheques}) => {
     // series: [100, 79, 50, 59, 25],
     series: [receivedCheques, depositCheques, returnedCheques, refundToCustomerCheques, refundToSupplierCheques],
     options: {
-      labels: ['Available', 'Occupied', 'Booked', 'Hold', 'Rent Dispute'],
+      labels: ['Received', 'Deposited', 'Returned', 'Refund to Customer', 'Refund to Supplier'],
       chart: {
         toolbar: {
           show: false,
@@ -91,7 +88,7 @@ const ChequesChart = ({dbCheques}) => {
       dataLabels: {
         enabled: true,
       },
-      colors: ["#00897b", "#ff8f00", "#020617", "#1e88e5", "#d81b60"],
+      colors: ["#00897b", "#ff8f00", "#d81b60", "#1e88e5", "#020617"],
       legend: {
         show: false,
       },

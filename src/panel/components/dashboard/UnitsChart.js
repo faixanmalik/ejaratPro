@@ -82,7 +82,7 @@ const UnitsChart = ({dbUnits}) => {
         show: "",
       },
       dataLabels: {
-        enabled: false,
+        enabled: true,
       },
       colors: ["#00897b", "#ff8f00", "#020617", "#1e88e5", "#d81b60"],
       legend: {
