@@ -177,7 +177,7 @@ const Sidebar2 = ({ showMobilemenu }) => {
 
       <Sidebar width='250px' className=''>
         <Menu className='bg-white'>
-          <div className='flex justify-center mb-0'>
+          <div className='flex justify-center mb-3'>
             <button onClick={() => { setOpen(true) }} className='bg-blue-800 hover:bg-blue-900 mb-2 font-medium text-white px-24 py-2 rounded-lg'>{t('new')}</button>
           </div>
           
