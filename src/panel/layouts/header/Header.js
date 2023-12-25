@@ -46,7 +46,7 @@ const Header = ({ showMobmenu }) => {
                 src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60'
                 alt="avatar"
                 withBorder={true}
-                className="p-0.5"
+                className="p-0.5 cursor-pointer"
               />
             </MenuHandler>
             <MenuList className="">

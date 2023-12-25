@@ -61,7 +61,7 @@
   "contractStartDate":"Contract Start Date",
   "gracePeriodFrom":"Grace Period From",
   "contractEndDate":"Contract End Date",
-  "amount":"amount",
+  "amount":"Amount",
   "gracePeriodTo":"Grace Period To",
   "paymentScheduling":"Payment Scheduling",
   "unitNo":"Unit No",
