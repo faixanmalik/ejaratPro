@@ -11,7 +11,7 @@
   "amountReceived":"تم استلام المبلغ",
   "status":"حالة",
   "viewOrEdit":"منظر / يحرر",
-  "journalDate":"تاريخ المجلة",
+  "journalDate":"التاريخ",
   "supplierName":"اسم المورد",
   "phoneNo":"رقم الهاتف",
   "email":"بريد إلكتروني",
@@ -20,8 +20,8 @@
   "address":"عنوان",
   "dueDate":"تاريخ الاستحقاق",
   "account":"حساب",
-  "desc":"وصف",
-  "amount":"كمية",
+  "desc":"البيان",
+  "amount":"المبلغ",
   "taxRate":"معدل الضريبة",
   "taxAmount":"قيمة الضريبة",
   "total":"المجموع",
@@ -38,16 +38,16 @@
 
   "expensesTitle":"نفقات",
   "voucherNo":"رقم القسيمة",
-  "journalNo":"رقم المجلة",
-  "paidBy":"المدفوعة بواسطة",
+  "journalNo":"رقم السند",
+  "paidBy":"طريقة الدفع",
   "name":"اسم",
 
 
   "paymentVoucherTitle":"قسائم الدفع",
-  "balance":"توازن",
+  "balance":"الرصيد",
   "prevPaid":"المدفوعة السابقة",
-  "remaining":"متبقي",
-  "paid":"مدفوع",
+  "remaining":"المتبقي",
+  "paid":"المدفوع",
   "netBalance":"الرصيد الصافي",
   "totalBalance":"الرصيد الإجمالي",
   "totalPaid":"مجموع المبالغ المدفوعة",
@@ -55,7 +55,7 @@
   
   "salesInvoiceTitle":"فواتير المبيعات",
   "receivedBy":"استلمت من قبل",
-  "chqNo":"رقم الشيك",
+  "chqNo":"المرجع",
   "productAndServices":"المنتجات والخدمات",
 
 
@@ -72,6 +72,7 @@
   "receiptVoucherTitle":"إيصالات الاستلام",
   "view":"منظر",
   "vocherNo":"رقم القسيمة",
+  "bank":"البنك",
 
   "journalVoucherTitle":"قسائم المجلة",
   "debit":"دَين",

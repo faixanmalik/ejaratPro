@@ -33,7 +33,7 @@ import {
 } from "@material-tailwind/react";
 
 import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
-import { BiUserCircle } from 'react-icons/bi';
+import { BiExport, BiImport, BiUserCircle } from 'react-icons/bi';
 import { BsCashCoin } from 'react-icons/bs';
 import { FiUsers } from 'react-icons/fi';
 import Buildings from 'models/Buildings';
@@ -44,6 +44,8 @@ import Cheque from 'models/Cheque';
 import { useSearchParams } from 'next/navigation';
 import PaymentMethod from 'models/PaymentMethod';
 import useTranslation from 'next-translate/useTranslation';
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+import {XLSX, read, utils} from 'xlsx';
 
 
 
@@ -569,6 +571,62 @@ import useTranslation from 'next-translate/useTranslation';
     }
 
 
+    const hiddenFileInput = React.useRef(null);
+    const handleClick = event => {
+      hiddenFileInput.current.click();
+    };
+
+    const handleFileChange = (e)=>{
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const binaryData = event.target.result;
+        const workbook = read(binaryData,{type:'binary' });
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const parsedData = utils.sheet_to_json(worksheet, {header: 1});
+  
+        const header = ['journalNo','journalDate', 'name', 'chqNo' , 'dueDate', 'totalAmount', 'chequeStatus']
+        const heads = header.map(head => ({title:head , entry: head}))
+  
+        parsedData.splice(0,1)
+        convertToJson(header, parsedData)
+      };
+      reader.readAsBinaryString(file);
+    }
+
+    const convertToJson = (header, data)=>{
+      const row = [];
+      data.forEach(element => {
+        const rowData = {};
+        element.forEach((element, index) => {
+          rowData[header[index]] = element;
+        });
+        row.push(rowData);
+      });
+        importEntries(row);
+    }
+
+    const importEntries = async(row)=>{
+      const data = { userEmail, row, path:'importCheques', importEntries:'importEntries' };
+        let res = await fetch(`/api/addEntry`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        let response = await res.json()
+  
+        if(response.success === true){
+          window.location.reload();
+        }
+        else {
+          toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+        }
+    }
+
+
   return (
     <>
     <ProSidebarProvider>
@@ -610,6 +668,32 @@ import useTranslation from 'next-translate/useTranslation';
               </div>
 
               <div className='flex'>
+
+                <div className=''>
+                  <button type="button" onClick={handleClick} 
+                    className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                      {t('import')}
+                    <BiImport className='text-lg ml-2'/>
+                  </button>
+                  <input type="file"
+                    ref={hiddenFileInput}
+                    onChange={handleFileChange}
+                    style={{display:'none'}} 
+                  /> 
+                </div>
+
+                <div>
+                  <DownloadTableExcel
+                    filename="Cheques"
+                    sheet="Cheques"
+                    currentTableRef={componentRef.current}>
+                    <button type="button" className="text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2">
+                      {t('export')}
+                      <BiExport className='text-lg ml-2'/>
+                    </button>
+                  </DownloadTableExcel>
+                </div>
+
                 <ReactToPrint
                   trigger={()=>{
                     return <button 
@@ -625,6 +709,7 @@ import useTranslation from 'next-translate/useTranslation';
                 />
 
               </div>
+              
             </div>
 
             {isChecked === true ? <div className='flex justify-end my-2'>

@@ -174,5 +174,9 @@
   "refund":"استرداد",
   "reverseSecurityDeposit":"عكس إيداع الضمان",
   "returnCheques":"الشيكات المرتجعة",
-  "previewStatement":"بيان المعاينة"
+  "previewStatement":"بيان المعاينة",
+
+
+  "export":"Export",
+  "import":"Import"
 }

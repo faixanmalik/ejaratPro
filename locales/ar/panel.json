@@ -40,9 +40,9 @@
 
   "purchaseModule": "المشتريات",
   "purchaseInvoice": "فاتورة الشراء",
-  "debitNote": "بيان بالخصم",
-  "expenses": "نفقات",
-  "paymentVoucher": "قسيمة دفع",
+  "debitNote": "اشعار مدين",
+  "expenses": "المصاريف",
+  "paymentVoucher": "سند صرف",
 
   "salesModule": "الايرادات",
   "salesInvoice": "فاتورة المبيعات",

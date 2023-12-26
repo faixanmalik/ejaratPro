@@ -333,7 +333,7 @@ const ChartsOfAccounts = ({ userEmail, dbAllCharts }) => {
           </div>
         </div>
         <div className="mt-2 md:col-span-2 md:mt-0">
-        <div className='flex items-center space-x-2 rtl:space-x-reverse mb-1'>
+          <div className='flex items-center space-x-2 rtl:space-x-reverse mb-1'>
             <div>
               <DownloadTableExcel
                 filename="Charts Of Accounts"

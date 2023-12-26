@@ -172,6 +172,10 @@
   "refund":"Refund",
   "reverseSecurityDeposit":"Reverse Security Deposit",
   "returnCheques":"Return Cheques",
-  "previewStatement":"Preview Statement"
+  "previewStatement":"Preview Statement",
+
+
+  "export":"Export",
+  "import":"Import"
 
 }

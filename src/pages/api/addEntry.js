@@ -348,6 +348,27 @@ export default async function handler(req, res) {
             res.status(200).json({ success: true, message: "Entry Added !" }) 
           }
         }
+        else if( path === 'importCheques'){
+          const { userEmail, importEntries, row } = req.body;
+          
+          console.log(req.body)
+          try {
+
+            const updatedRow = row.map(item => ({
+              ...item,
+              userEmail: userEmail
+            }));
+            
+            if(importEntries){
+              await Cheque.insertMany(updatedRow);
+              res.status(200).json({ success: true, message: "Entry Added !" }) 
+            }
+            
+          } catch (error) {
+            console.log(error)
+          }
+          
+        }
         else if( path === 'clients'){
           const { businessName, email, password, firstName, lastName } = req.body;
          
