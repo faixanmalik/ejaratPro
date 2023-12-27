@@ -21,7 +21,7 @@ import PaymentMethod from 'models/PaymentMethod';
 import useTranslation from 'next-translate/useTranslation';
 
 
-const ChequeTransactions = ({ userEmail, dbPaymentMethod,dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
+const ChequeTransactions = ({ userEmail, dbPaymentMethod, dbVouchers, dbCharts, dbContacts, dbEmployees}) => {
 
   const router = useRouter();
   const { t } = useTranslation('realEstate')
@@ -175,7 +175,7 @@ const ChequeTransactions = ({ userEmail, dbPaymentMethod,dbVouchers, dbCharts, d
     });
 
     // fetch the data from form to makes a file in local system
-    const data = { totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc,  memo, journalDate, journalNo, attachment, path:'ChequeTransaction' };
+    const data = { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc,  memo, journalDate, journalNo, attachment, path:'ChequeTransaction' };
 
     if( totalDebit != totalCredit ){
       toast.error("Debit Credit values must be equal" , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });

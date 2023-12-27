@@ -337,7 +337,7 @@ export default async function handler(req, res) {
         else if( path === 'ChequeTransaction'){
           const { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc, memo, journalDate, journalNo, attachment, path } = req.body;
 
-          let data = await ChequeTransaction.findOne({ userEmail, journalNo })
+          let data = await ChequeTransaction.findOne({ journalNo })
           if( data ){
             res.status(400).json({ success: false, message: "Already Found!" }) 
           }

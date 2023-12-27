@@ -68,6 +68,9 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
   
   useEffect(() => {
 
+    let myUser = JSON.parse(localStorage.getItem("myUser"));
+    let userEmail = myUser.businessName;
+
     let headingData = dbContracts.filter((item)=> item._id === tenantId)
 
     if(headingData.length > 0) {
@@ -86,7 +89,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
     // Make the trx Array
     let filteredTrx = dbChequeTrx
     .filter((item) => {
-      if(item.email === headingData[0].tenantEmail){
+      if(item.email === headingData[0].tenantEmail && item.userEmail === userEmail){
         
         let inputList = item.inputList;
         
@@ -121,7 +124,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
 
     // Credit Sales Invoice
     dbCreditSalesInvoices = dbCreditSalesInvoices.map((item)=>{
-      if(item.email === headingData[0].tenantEmail){
+      if(item.email === headingData[0].tenantEmail && item.userEmail === userEmail){
         return {
           ...item,
           journalNo: item.billNo,
@@ -136,7 +139,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
 
     // Credit Note Invoice
     dbCreditNotes = dbCreditNotes.map((item)=>{
-      if(item.email === headingData[0].tenantEmail){
+      if(item.email === headingData[0].tenantEmail && item.userEmail === userEmail){
         return {
           ...item,
           chequeStatus: 'Received',
@@ -150,7 +153,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
 
     // Payment Voucher
     dbPaymentVoucher = dbPaymentVoucher.map((item)=>{
-      if(item.email === headingData[0].tenantEmail){
+      if(item.email === headingData[0].tenantEmail && item.userEmail === userEmail){
         return {
           ...item,
           chequeStatus: 'Received',
@@ -163,26 +166,40 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
 
     // Receipts Voucher
     dbReceipts = dbReceipts.map((receipt) => {
-      const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
-      const totalAmount = filteredInputList.reduce((total, item) => total + parseInt(item.paid), 0);
-      
-      if (filteredInputList.length > 0) {
-        receipt.inputList = filteredInputList;
-        return {
-          ...receipt,
-          chequeStatus: 'Deposited',
-          totalDebit: 0,
-          totalCredit: parseInt(totalAmount, 10),
-          balance:0
-        };
+
+      if(receipt.userEmail === userEmail){
+
+        const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
+        const totalAmount = filteredInputList.reduce((total, item) => total + parseInt(item.paid), 0);
+        
+        if (filteredInputList.length > 0) {
+          receipt.inputList = filteredInputList;
+          return {
+            ...receipt,
+            chequeStatus: 'Deposited',
+            totalDebit: 0,
+            totalCredit: parseInt(totalAmount, 10),
+            balance:0
+          };
+        }
       }
     });
+
+
+    filteredTrx = filteredTrx.filter(item => item !== undefined);
+    dbCreditSalesInvoices = dbCreditSalesInvoices.filter(item => item !== undefined);
+    dbCreditNotes = dbCreditNotes.filter(item => item !== undefined);
+    dbPaymentVoucher = dbPaymentVoucher.filter(item => item !== undefined);
+    dbReceipts = dbReceipts.filter(item => item !== undefined);
+
 
     filteredTrx = filteredTrx.concat( dbCreditSalesInvoices, dbReceipts, dbCreditNotes, dbPaymentVoucher);
     setFilteredTrx(filteredTrx);
     
 
   }, [tenantId])
+
+  
 
 
   const newContractData = [
