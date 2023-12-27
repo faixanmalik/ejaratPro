@@ -49,10 +49,10 @@ const Header = ({ showMobmenu }) => {
                 className="p-0.5 cursor-pointer"
               />
             </MenuHandler>
-            <MenuList className="">
+            <MenuList className="px-1 py-2">
               <MenuItem>{t('info')}</MenuItem>
               <MenuItem href="/myaccount">{t('editProfile')}</MenuItem>
-              <hr className="my-2" />
+              <hr className="my-1" />
               <MenuItem onClick={logout}>{t('logout')}</MenuItem>
             </MenuList>
           </Menu>
