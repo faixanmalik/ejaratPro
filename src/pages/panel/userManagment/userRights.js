@@ -211,7 +211,7 @@ const UserRights = ({dbEmployee}) => {
                 <tbody>
                   
                   {dbEmployee.map((item, index)=>{
-                    return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
+                    return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
                         <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
@@ -284,7 +284,7 @@ const UserRights = ({dbEmployee}) => {
                                       <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
                                       <select id="name" name="name" onChange={handleChange} value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>Select Employee</option>
-                                        {dbEmployee.map((item)=>{ return <option value={item.name}>{item.name}</option>})}
+                                        {dbEmployee.map((item, index)=>{ return <option key={index} value={item.name}>{item.name}</option>})}
                                       </select>
                                     </div>
 

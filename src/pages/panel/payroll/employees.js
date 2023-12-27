@@ -105,7 +105,8 @@ const Employees = ({ userEmail, dbEmployee, dbRole }) => {
 
       const header = ['sr','name', 'designation', 'siteName', 'basicPay']
 
-      const heads = header.map(head => ({title:head , entry: head}))
+      const heads = header.map((head, index) => ({ title: head, entry: head, key: index }));
+
       parsedData.splice(0,1)
       convertToJson(header, parsedData)
     };

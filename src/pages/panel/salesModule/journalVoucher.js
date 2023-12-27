@@ -360,8 +360,8 @@ import useTranslation from 'next-translate/useTranslation';
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredInvoices.map((item)=>{ 
-                    return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
+                    {filteredInvoices.map((item, index)=>{ 
+                    return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                       <td className="w-4 p-4">
                         <div className="flex items-center">
                           <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
@@ -464,8 +464,8 @@ import useTranslation from 'next-translate/useTranslation';
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option>select contacts</option>
-                                {filteredContacts.map((item)=>{
-                                  return <option key={item._id} value={item.name}>{item.name} - {item.type}
+                                {filteredContacts.map((item, index)=>{
+                                  return <option key={index} value={item.name}>{item.name} - {item.type}
                                   </option>
                                 })}
                               </select>
@@ -512,8 +512,8 @@ import useTranslation from 'next-translate/useTranslation';
                                     <td className="p-2 w-1/2">
                                       <select id="account" name="account" onChange={ e => change(e, index) } value={inputList.account} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>select accounts</option>
-                                        {filteredCharts.map((item)=>{
-                                          return <option key={item._id} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
+                                        {filteredCharts.map((item, index)=>{
+                                          return <option key={index} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
                                         })}
                                       </select>
                                     </td>

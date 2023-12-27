@@ -84,7 +84,8 @@ const TaxRate = ({ userEmail, dbTaxRate, charts}) => {
 
       const header = ['sr','name', 'taxRate', 'chartsOfAccount']
 
-      const heads = header.map(head => ({title:head , entry: head}))
+      const heads = header.map((head, index) => ({ title: head, entry: head, key: index }));
+
 
       parsedData.splice(0,1)
       convertToJson(header, parsedData)
@@ -327,7 +328,7 @@ const TaxRate = ({ userEmail, dbTaxRate, charts}) => {
                 <tbody>
                   
                   {filteredInvoices.map((item, index)=>{
-                    return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
+                    return <tr key={index} className="bg-white border-b hover:bg-gray-50">
                     <td className="w-4 p-4">
                       <div className="flex items-center">
                         <input id="checkbox-table-search-1" type="checkbox" onChange={e => handleRowCheckboxChange(e, item._id)} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>

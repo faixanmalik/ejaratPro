@@ -101,7 +101,7 @@ const ChartsOfAccounts = ({ userEmail, dbAllCharts }) => {
       const parsedData = utils.sheet_to_json(worksheet, {header: 1});
 
       const header = ['accountCode','accountName', 'account', 'subAccount' , 'balance']
-      const heads = header.map(head => ({title:head , entry: head}))
+      const heads = header.map((head, index) => ({ title: head, entry: head, key: index }));
 
       parsedData.splice(0,1)
       convertToJson(header, parsedData)
@@ -402,8 +402,8 @@ const ChartsOfAccounts = ({ userEmail, dbAllCharts }) => {
                   </thead>
                   <tbody>
                     
-                    {filteredInvoices.map((item)=>{
-                      return <tr key={item._id} className="bg-white border-b hover:bg-gray-50">
+                    {filteredInvoices.map((item, index)=>{
+                      return <tr key={index} className="bg-white border-b hover:bg-gray-50">
 
                       <td className="w-4 p-4">
                         <div className="flex items-center">

@@ -587,7 +587,8 @@ import {XLSX, read, utils} from 'xlsx';
         const parsedData = utils.sheet_to_json(worksheet, {header: 1});
   
         const header = ['journalNo','journalDate', 'name', 'chqNo' , 'dueDate', 'totalAmount', 'chequeStatus']
-        const heads = header.map(head => ({title:head , entry: head}))
+        const heads = header.map((head, index) => ({ title: head, entry: head, key: index }));
+
   
         parsedData.splice(0,1)
         convertToJson(header, parsedData)

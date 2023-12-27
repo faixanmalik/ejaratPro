@@ -480,8 +480,8 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
             <div className='flex w-full'>
               <Tabs value="contracts" className='w-full'>
                 <TabsHeader className='bg-[#f0f3f4]'>
-                  {newContractData.map(({ label, value, icon }) => (
-                    <Tab key={value} value={value}>
+                  {newContractData.map(({ label, index, value, icon }) => (
+                    <Tab key={index} value={value}>
                       <div className="flex items-center gap-2">
                         {React.createElement(icon, { className: "w-5 h-5" })}
                         {label}
@@ -490,8 +490,8 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
                   ))}
                 </TabsHeader>
                 <TabsBody className='w-full'>
-                  {newContractData.map(({ value, desc }) => (
-                    <TabPanel key={value} value={value} className='p-0'>
+                  {newContractData.map(({ value, index, desc }) => (
+                    <TabPanel key={index} value={value} className='p-0'>
                       {desc}
                     </TabPanel>
                   ))}

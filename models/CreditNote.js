@@ -16,7 +16,7 @@ const CreditNoteInvoiceSchema = new mongoose.Schema({
     city:{type: String},
     journalDate: {type: Date},
     dueDate: {type: Date},
-    journalNo: {type: String, unique: true},
+    journalNo: {type: String},
     name: {type: String},
     desc: {type: String},
     attachment: {type: Buffer},

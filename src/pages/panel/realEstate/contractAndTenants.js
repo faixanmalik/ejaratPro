@@ -1520,8 +1520,8 @@ import useTranslation from 'next-translate/useTranslation';
 
                             <Tabs value="unitDetails">
                               <TabsHeader className='bg-[#f0f3f4]'>
-                                {newContractData.map(({ label, value, icon }) => (
-                                  <Tab key={value} value={value}>
+                                {newContractData.map(({ label, index, value, icon }) => (
+                                  <Tab key={index} value={value}>
                                     <div className="flex items-center gap-2">
                                       {React.createElement(icon, { className: "w-5 h-5" })}
                                       {label}
@@ -1530,8 +1530,8 @@ import useTranslation from 'next-translate/useTranslation';
                                 ))}
                               </TabsHeader>
                               <TabsBody className='mt-5'>
-                                {newContractData.map(({ value, desc }) => (
-                                  <TabPanel key={value} value={value}>
+                                {newContractData.map(({ value, index, desc }) => (
+                                  <TabPanel key={index} value={value}>
                                     {desc}
                                   </TabPanel>
                                 ))}

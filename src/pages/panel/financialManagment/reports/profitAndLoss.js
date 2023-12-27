@@ -623,7 +623,7 @@ const ProfitAndLoss = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProd
         let distributionExpensesArray = [];
         let financeCostArray = [];
 
-        {filteredCharts.map((item,index) => {
+        {filteredCharts.forEach((item,index) => {
             if(item.subAccount === 'Revenue' || item.subAccount === 'Other Income'){
                 let sales = balance[index] && balance[index][balance[index].length-1]
                 if(sales){

@@ -178,8 +178,8 @@ const ContactTransactionSummary = (
                 </label>
                 <select id="contact" name="contact" onChange={handleChange} value={contact} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                     <option>select contact</option>
-                    {filteredContacts.map((item) => {
-                      return <option key={item._id} value={item.name}>{item.name}</option>
+                    {filteredContacts.map((item, index) => {
+                      return <option key={index} value={item.name}>{item.name}</option>
                     })}
                 </select>
             </div>

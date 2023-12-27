@@ -512,8 +512,8 @@ const ChequeTransactions = ({ userEmail, dbPaymentMethod, dbVouchers, dbCharts, 
                               </label>
                               <select id="name" name="name" onChange={ handleChange } value={name} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option>select contacts</option>
-                                {filteredContacts.map((item)=>{
-                                  return <option key={item._id} value={item.name}>{item.name} - {item.type}
+                                {filteredContacts.map((item, index)=>{
+                                  return <option key={index} value={item.name}>{item.name} - {item.type}
                                   </option>
                                 })}
                               </select>
@@ -577,8 +577,8 @@ const ChequeTransactions = ({ userEmail, dbPaymentMethod, dbVouchers, dbCharts, 
                                   <td className="p-2 w-1/2">
                                     <select id="account" name="account" onChange={ e => change(e, index) } value={inputList.account} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option>select accounts</option>
-                                      {filteredCharts.map((item)=>{
-                                        return <option key={item._id} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
+                                      {filteredCharts.map((item, index)=>{
+                                        return <option key={index} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
                                       })}
                                     </select>
                                   </td>

@@ -633,7 +633,7 @@ const BalanceSheet = ({ userEmail, dbPaymentMethod, dbChequeTransaction, dbProdu
 
 
 
-        {filteredCharts.map((item,index) => {
+        {filteredCharts.forEach((item,index) => {
             // thats for calculating cureent balance sheet balance
             if(item.subAccount === 'Fixed Assets'){
                 let fixedAssets = balance[index] && balance[index][balance[index].length-1]

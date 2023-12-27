@@ -119,7 +119,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
         { name: 'Security Deposit', index: 2, amount: newContractSecurityDeposit},
       ]
 
-      let updatedInputList = inputList.map((item, index) => {
+      let updatedInputList = inputList.forEach((item, index) => {
 
         if(item.products === 'Security Deposit'){
           const matchingItem = referData.find((referItem) => referItem.index === index);
@@ -462,8 +462,8 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
 
                           <Tabs value="endContract">
                             <TabsHeader className='bg-[#f0f3f4]'>
-                              {newContractData.map(({ label, value, icon }) => (
-                                <Tab key={value} value={value}>
+                              {newContractData.map(({ label, index, value, icon }) => (
+                                <Tab key={index} value={value}>
                                   <div className="flex items-center gap-2">
                                     {React.createElement(icon, { className: "w-5 h-5" })}
                                     {label}
@@ -472,8 +472,8 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
                               ))}
                             </TabsHeader>
                             <TabsBody className='mt-5'>
-                              {newContractData.map(({ value, desc }) => (
-                                <TabPanel key={value} value={value}>
+                              {newContractData.map(({ value, index, desc }) => (
+                                <TabPanel key={index} value={value}>
                                   {desc}
                                 </TabPanel>
                               ))}
