@@ -146,7 +146,7 @@ export default function Home({customer, dbUnits, dbCheques, dbProducts, supplier
         <Row>
           <Col sm="6" lg="6">
             <UnitsChart userEmail={userEmail} dbUnits={dbUnits} />
-          </Col>
+          </Col> 
           <Col sm="6" lg="6">
             <ChequesChart userEmail={userEmail} dbCheques={dbCheques} />
           </Col>

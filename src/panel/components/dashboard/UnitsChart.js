@@ -69,8 +69,8 @@ const UnitsChart = ({dbUnits}) => {
     type: "pie",
     width: 280,
     height: 280,
-    series: [availableUnits, occupiedUnits, bookedUnits, holdUnits, rentDisputeUnits],
     // series: [70, 79, 50, 9, 25],
+    series: [availableUnits, occupiedUnits, bookedUnits, holdUnits, rentDisputeUnits],
     options: {
       labels: ['Available', 'Occupied', 'Booked', 'Hold', 'Rent Dispute'],
       chart: {
