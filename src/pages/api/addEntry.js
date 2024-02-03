@@ -330,23 +330,28 @@ export default async function handler(req, res) {
 
             let newEntry = new ContractAndTenant( { userEmail, unitNo, buildingNameInArabic, buildingNameInEnglish, plotNo, rent, bathroom, parkings, rentParking, roof,  balcony, size,  electricityMeterNo, waterMeterNumber, sewageNumber, ac, unitType, unitUse, unitStatus, view, country, city,  area,  notes,tenant, tenantName, tenantEmail, tenantPhoneNo, tenantOpeningBalance, tenantPassPortNumber, tenantExpPassPort, tenantVatRegistrationNo, tenantIbanNo, tenantBank, tenantBankAccountNumber, tenantIdNumber, tenantExpIdNumber,newContractStartDate, newContractEndDate, newContractUnitRent, newContractCommission, newContractRentParking, newContractBouncedChequeFine, newContractStatus, newContractPaymentScheduling, newContractSecurityDeposit, newContractNotes, type:path } );
             await newEntry.save();
-
+            
             res.status(200).json({ success: true, message: "Entry Added !" }) 
         }
 
         else if( path === 'ChequeTransaction'){
           const { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc, memo, journalDate, journalNo, attachment, path } = req.body;
-
-          let data = await ChequeTransaction.findOne({ journalNo })
-          if( data ){
-            res.status(400).json({ success: false, message: "Already Found!" }) 
-          }
-          else{
+          
             let newEntry = new ChequeTransaction( { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc , memo, journalDate, journalNo, attachment, path } );
             await Cheque.findByIdAndUpdate(chequeId, {chequeStatus: chequeStatus})
             await newEntry.save();
             res.status(200).json({ success: true, message: "Entry Added !" }) 
-          }
+
+          // let data = await ChequeTransaction.findOne({ journalNo })
+          // if( data ){
+          //   res.status(400).json({ success: false, message: "Already Found!" }) 
+          // }
+          // else{
+          //   let newEntry = new ChequeTransaction( { userEmail, totalDebit , totalCredit, inputList, chequeStatus, chequeId, name, email, desc , memo, journalDate, journalNo, attachment, path } );
+          //   await Cheque.findByIdAndUpdate(chequeId, {chequeStatus: chequeStatus})
+          //   await newEntry.save();
+          //   res.status(200).json({ success: true, message: "Entry Added !" }) 
+          // }
         }
         else if( path === 'importCheques'){
           const { userEmail, importEntries, row } = req.body;
