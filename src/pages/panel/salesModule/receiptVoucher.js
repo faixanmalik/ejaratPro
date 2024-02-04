@@ -658,7 +658,7 @@ import useTranslation from 'next-translate/useTranslation';
 
                                 return <tr key={index} className="bg-white flex-col text-black border-b hover:bg-gray-50">
                                   <td className="p-2">
-                                    <select id="billNo" name="billNo" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.billNo} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="billNo" name="billNo" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.billNo} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
                                       <option value=''>Bill No</option>
                                       {filteredData.map((item, index)=>{
                                         return <option key={index} value={item.billNo}>{item.billNo}</option>
@@ -667,7 +667,7 @@ import useTranslation from 'next-translate/useTranslation';
                                   </td>
 
                                   <td className="p-2 max-w-[140px]">
-                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="paidBy" name="paidBy" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
                                       <option value=''>paid By</option>
                                       {filteredPaymentMethod.map((item, index)=>{
                                         return <option key={index} value={item.paymentType}>{item.paymentType}</option>
