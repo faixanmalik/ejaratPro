@@ -170,7 +170,7 @@ import useTranslation from 'next-translate/useTranslation';
         setType(e.target.value)
       }
       else if(e.target.name === 'name'){
-        const filteredData = dbCreditSalesInvoice.filter(item => item.name === e.target.value);
+        const filteredData = dbCreditSalesInvoice.filter(item => item.name === e.target.value && item.userEmail === userEmail);
         if(filteredData.length > 0){
           setFilteredData(filteredData)
           
@@ -647,7 +647,8 @@ import useTranslation from 'next-translate/useTranslation';
                               <tbody>
                               {inputList.map(( item , index)=>{
                                 let billNumber = item.billNo
-                                let getInvoiceBalance = dbCreditSalesInvoice.filter(element => element.billNo === billNumber)
+
+                                let getInvoiceBalance = dbCreditSalesInvoice.filter(element => element.billNo === billNumber && element.userEmail === userEmail);
 
                                 let invoiceBalance;
                                 let actualBalance;
