@@ -86,10 +86,11 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
         return item._id === contractId;
       })
       
-    
+      
       const { tenantName, buildingNameInEnglish, newContractUnitRent, newContractRentParking, newContractSecurityDeposit, unitNo, newContractStartDate, newContractEndDate } = filterContractData[0]
       
       let contractStartDate = moment(newContractStartDate).utc().format('YYYY-MM-DD')
+
       // let newContractEndDate = moment(newContractEndDate).utc().format('YYYY-MM-DD')
 
       if(contractEndDate){
@@ -105,22 +106,22 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
       let timeDifference = endDate.getTime() - startDate.getTime();
       let daysDifference = timeDifference / (1000 * 60 * 60 * 24) + 1;
       setTotalDays(daysDifference)
-
+      
       setContractStartDate(contractStartDate)
-
+      
       setTenant(tenantName)
       setBuildingNameInEnglish(buildingNameInEnglish)
       setUnitNo(unitNo)
-      
+
 
       let referData = [
         { name: 'Unit Rent', index: 0, amount: newContractUnitRent},
         { name: 'Parking Rent', index: 1, amount: newContractRentParking},
         { name: 'Security Deposit', index: 2, amount: newContractSecurityDeposit},
       ]
-
-      let updatedInputList = inputList.forEach((item, index) => {
-
+      
+      let updatedInputList = inputList.map((item, index) => {
+        
         if(item.products === 'Security Deposit'){
           const matchingItem = referData.find((referItem) => referItem.index === index);
 
@@ -137,7 +138,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
         }
         else{
           const matchingItem = referData.find((referItem) => referItem.index === index);
-
+          
           if (matchingItem) {
             return {
               ...item,
@@ -150,6 +151,7 @@ const ContractTermination = ({ dbProducts, dbTenants, dbContracts, dbContacts}) 
           return item;
         }
       });
+
       setInputList(updatedInputList);
     }
   }, [router, totalDays, contractEndDate])
