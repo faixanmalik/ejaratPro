@@ -169,7 +169,8 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
 
       if(receipt.userEmail === userEmail){
 
-        const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
+        // const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
+        const filteredInputList = receipt.inputList;
         const totalAmount = filteredInputList.reduce((total, item) => total + parseInt(item.paid), 0);
         
         if (filteredInputList.length > 0) {

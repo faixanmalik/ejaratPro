@@ -91,14 +91,14 @@ const ContactTransactionSummary = (
 
       // Receipts Voucher
       dbReceipts = dbReceipts
-        .filter((receipt) => receipt.name === `${contact}` && item.userEmail === userEmail)
-        .map((receipt) => {
-          const filteredInputList = receipt.inputList;
+        .filter((item) => item.name === `${contact}` && item.userEmail === userEmail)
+        .map((item) => {
+          const filteredInputList = item.inputList;
           const totalAmount = filteredInputList.reduce((total, item) => total + parseInt(item.paid), 0);
 
           if (filteredInputList.length > 0) {
             return {
-              ...receipt,
+              ...item,
               chequeStatus: 'Deposited',
               trxTotalDebit: 0,
               trxTotalCredit: parseInt(totalAmount, 10),
