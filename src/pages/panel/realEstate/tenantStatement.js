@@ -476,7 +476,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
           </CardBody>
         </Card>
 
-        <Card className="w-full mt-4">
+        <Card className="w-full my-4">
           <CardBody>
             <div className='flex w-full'>
               <Tabs value="contracts" className='w-full'>
