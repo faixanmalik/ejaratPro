@@ -221,9 +221,19 @@ export default async function handler(req, res) {
             }
         }
         else if (path === 'Buildings'){
-            const { selectedIds } = req.body;
-            await Buildings.deleteMany( { _id: { $in: selectedIds } } )
-            res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
+          const { selectedIds, userEmail } = req.body;
+
+          selectedIds.forEach( async(newItem) => {
+            let data = await Buildings.findById(newItem);
+            let units = data.receiveUnitsArray;
+            console.log(units)
+            // units.forEach(async element => {
+              // await Units.deleteMany({ userEmail: userEmail, unitNo: element.unitNo });
+            // });
+          });
+
+          // await Buildings.deleteMany( { _id: { $in: selectedIds } } )
+          // res.status(200).json({ success: true, message: "Deleted Successfully !" }) 
         }
         else if (path === 'Units'){
             const { selectedIds } = req.body;

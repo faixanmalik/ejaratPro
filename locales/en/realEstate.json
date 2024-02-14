@@ -31,6 +31,8 @@
   "nationality":"Nationality",
   "add":"add",
   "addNationality":"Add Nationality",
+  "deleteBuildings":"Delete Buildings",
+  "deleteBuildingsPara":"Are you sure you want to delete your Buildings? Make sure first delete its units.",
 
   "addCountry":"Add Country",
   "addCity":"Add City",

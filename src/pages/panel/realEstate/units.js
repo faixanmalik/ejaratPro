@@ -242,6 +242,14 @@ import useTranslation from 'next-translate/useTranslation';
         setTenantExpIdNumber(value);
       } else if (name === 'newContractStartDate') {
         setNewContractStartDate(value);
+
+        const newStartDate = new Date(value);
+        const newEndDate = new Date(newStartDate);
+
+        newEndDate.setFullYear(newStartDate.getFullYear() + 1);
+        newEndDate.setDate(newStartDate.getDate() - 1);
+        setNewContractEndDate(newEndDate.toISOString().split('T')[0]);
+
       } else if (name === 'newContractEndDate') {
         setNewContractEndDate(value);
       } else if (name === 'newContractUnitRent') {

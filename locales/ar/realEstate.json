@@ -31,6 +31,8 @@
   "nationality":"جنسية",
   "add":"يضيف",
   "addNationality":"أضف الجنسية",
+  "deleteBuildings":"حذف المباني",
+  "deleteBuildingsPara":".هل أنت متأكد أنك تريد حذف المباني الخاصة بك؟ تأكد أولاً من حذف وحداتها",
 
   
   "addCountry":"أضف البلد",
