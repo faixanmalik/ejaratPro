@@ -167,7 +167,7 @@ const TenantStatement = ({ dbContracts, dbChequeTrx, dbCheques, dbReceipts, dbCr
     // Receipts Voucher
     dbReceipts = dbReceipts.map((receipt) => {
 
-      if(receipt.userEmail === userEmail){
+      if(receipt.userEmail === userEmail && receipt.email === headingData[0].tenantEmail){
 
         // const filteredInputList = receipt.inputList.filter((item) => item.paidBy !== 'Cheque');
         const filteredInputList = receipt.inputList;
