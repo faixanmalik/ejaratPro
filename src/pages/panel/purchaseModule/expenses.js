@@ -620,9 +620,9 @@ import useTranslation from 'next-translate/useTranslation';
                               </label>
                               
                               <select id="paidBy" name="paidBy" onChange={ handleChange } value={paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                <option value=''>select paid By</option>
-                                {filteredPaymentMethod.map((item, index)=>{
-                                  return <option key={index} value={item.paymentType}>{item.paymentType}</option>
+                                <option value=''>select paid by</option>
+                                {filteredCharts.map((item, index)=>{
+                                  return <option key={index} value={item.accountName}>{item.accountName}</option>
                                 })}
                               </select>
                             </div>
