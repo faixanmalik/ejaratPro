@@ -23,7 +23,7 @@ import useTranslation from 'next-translate/useTranslation';
     return classes.filter(Boolean).join(' ')
   }
 
-  const PaymentVoucher = ({ userEmail, dbVouchers, dbPurchaseInvoice, dbPaymentMethod, dbContacts, dbEmployees, }) => {
+  const PaymentVoucher = ({ userEmail, dbVouchers, dbPurchaseInvoice, dbPaymentMethod, dbContacts, dbEmployees, dbAccounts }) => {
     
     const [open, setOpen] = useState(false)
     const { t } = useTranslation('modules')
@@ -37,6 +37,7 @@ import useTranslation from 'next-translate/useTranslation';
     const [isAdmin, setIsAdmin] = useState(false)
 
     const [filteredInvoices, setFilteredInvoices] = useState([])
+    const [filteredCharts, setFilteredCharts] = useState([])
     const [filteredContacts, setFilteredContacts] = useState([])
     const [filteredPaymentMethod, setFilteredPaymentMethod] = useState([])
 
@@ -60,6 +61,11 @@ import useTranslation from 'next-translate/useTranslation';
         return item.userEmail === userEmail;
       })
       setFilteredInvoices(filteredInvoices)
+
+      let filteredCharts = dbAccounts.filter((item)=>{
+        return item.userEmail === userEmail;
+      })
+      setFilteredCharts(filteredCharts)
 
       let filteredContacts = dbContacts.filter((item)=>{
         return item.userEmail === userEmail;
@@ -569,8 +575,8 @@ import useTranslation from 'next-translate/useTranslation';
                               
                               <select id="paidBy" name="paidBy" onChange={ handleChange } value={paidBy} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                 <option value=''>select paid By</option>
-                                {filteredPaymentMethod.map((item, index)=>{
-                                  return <option key={index} value={item.paymentType}>{item.paymentType}</option>
+                                {filteredCharts.map((item, index)=>{
+                                  return <option key={index} value={item.accountName}>{item.accountName}</option>
                                 })}
                               </select>
                             </div>
