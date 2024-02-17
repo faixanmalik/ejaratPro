@@ -125,10 +125,15 @@ import useTranslation from 'next-translate/useTranslation';
       setFilteredProduct(filteredProduct)
 
 
-
       if(router.query.refer){
+
         
         let { name, unitRent, commission, parkingRent, securityDeposit } = router.query;
+
+
+        const invoiceNumber = (filteredInvoices.length + 1).toString().padStart(4, '0');
+        const formattedInvoice = `Inv-${invoiceNumber}`;
+        setBillNo(formattedInvoice)
 
         setName(name)
         const newData = dbContacts.filter(item => item.name === name);

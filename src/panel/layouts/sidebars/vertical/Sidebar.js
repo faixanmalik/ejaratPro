@@ -226,6 +226,9 @@ const Sidebar2 = ({ showMobilemenu }) => {
               <MenuItem href={`/${router.locale}/panel/businessSetup/productAndServices`} icon={<MdProductionQuantityLimits className='text-lg'/>} className={ location === '/panel/businessSetup/productAndServices' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
                 {t('productAndServices')}
               </MenuItem>
+              <MenuItem href={`/${router.locale}/panel/businessSetup/paymentMethod`} icon={<MdPayment className='text-lg'/>} className={ location === '/panel/businessSetup/paymentMethod' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
+                {t('paymentMethod')}
+              </MenuItem>
               <MenuItem href={`/${router.locale}/panel/businessSetup/bankAccount`} icon={<BsBank className='text-lg'/>} className={ location === '/panel/businessSetup/bankAccounts' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
                 {t('bankAccount')}
               </MenuItem>
@@ -290,21 +293,6 @@ const Sidebar2 = ({ showMobilemenu }) => {
               <MenuItem href={`/${router.locale}/panel/financialManagment/reports/contactTransactionSummary`} icon={<HiOutlineDocumentReport className='text-lg'/>} className={ location === '/panel/financialManagment/reports/contactTransactionSummary' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
                 {t('contactTransaction')}
               </MenuItem>
-            </SubMenu>
-
-
-            <SubMenu label={t('settings')} icon={<AiOutlineSetting className='text-lg'/>}>
-              <MenuItem href={`/${router.locale}/panel/settings/paymentMethod`} icon={<MdPayment className='text-lg'/>} className={ location === '/panel/settings/paymentMethod' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
-                {t('paymentMethod')}
-              </MenuItem>
-
-              {/* <MenuItem href="/panel/settings/project" icon={<AiOutlineProject className='text-lg'/>} className={ location === '/panel/settings/project' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
-                {t('')}
-              </MenuItem>
-              <MenuItem href="/panel/settings/location" icon={<BiLocationPlus className='text-lg'/>} className={ location === '/panel/settings/location' ?  'text-indigo-700 bg-zinc-50 font-medium' : 'text-gray-600 font-medium'}>
-                {t('')}
-              </MenuItem> */}
-              
             </SubMenu>
             
           </Menu>

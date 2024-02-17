@@ -424,9 +424,6 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                           {t('phoneNo')}
                       </th>
                       <th scope="col" className="p-3">
-                          {t('balance')}
-                      </th>
-                      <th scope="col" className="p-3">
                           <span className="">{t('viewOrEdit')}</span>
                       </th>
                   </tr>
@@ -455,9 +452,6 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                     </td>
                     <td className="p-3">
                         {item.phoneNo}
-                    </td>
-                    <td className="p-3">
-                        {item.openingBalance}
                     </td>
                     <td className="flex items-center px-6 mr-5 py-4 space-x-4 rtl:space-x-reverse">
                       <button type='button' onClick={()=>{getData(item._id)}} 
@@ -599,10 +593,10 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                       </select>
                                     </div>
 
-                                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
+                                    {/* <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="openingBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
                                       <input onChange={handleChange} value={openingBalance} type="number" name="openingBalance" id="openingBalance" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
-                                    </div>
+                                    </div> */}
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="date" className="block text-sm font-medium text-gray-700">{t('date')}</label>
