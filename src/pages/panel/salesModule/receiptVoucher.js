@@ -274,9 +274,7 @@ import useTranslation from 'next-translate/useTranslation';
 
       if (response.success === true){
 
-        let dbJournalDate = moment(response.data.journalDate, 'YYYY-MM-DD', true).isValid()
-          ? moment(response.data.journalDate).utc().format('YYYY-MM-DD')
-          : '';
+        let dbJournalDate = moment(response.data.journalDate).utc().format('YYYY-MM-DD')
         
         setId(response.data._id)
         setFilteredData(response.data.inputList)
