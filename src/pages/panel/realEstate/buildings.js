@@ -2223,7 +2223,7 @@ import { useRouter } from 'next/router';
                     trigger={()=>{
                       return <button 
                         type='button'
-                        className={`${isAdmin === false ? 'cursor-not-allowed': ''} text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`} disabled={isAdmin === false}>
+                        className={`text-blue-800 flex hover:text-white border-2 border-blue-800 hover:bg-blue-800 font-semibold rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2`}>
                         {t('printAll')}
                         <AiOutlinePrinter className='text-lg ml-2'/>
                       </button>

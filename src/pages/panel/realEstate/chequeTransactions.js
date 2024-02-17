@@ -85,10 +85,6 @@ const ChequeTransactions = ({ userEmail, dbPaymentMethod, dbVouchers, dbCharts, 
         { journalNo:formattedInvoice, journalDate, account: debitAccount || '', credit: 0, debit: amount || 0},
       ])
     }
-    else{
-      openSettings()
-    }
-
 
     setContacts(dbContacts, dbEmployees)
     const myUser = JSON.parse(localStorage.getItem('myUser'))
