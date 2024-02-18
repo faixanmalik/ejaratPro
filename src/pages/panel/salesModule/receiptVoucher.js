@@ -794,8 +794,9 @@ import useTranslation from 'next-translate/useTranslation';
                                                         name="bankFullName"
                                                         value={bankFullName}
                                                         id="bankFullName"
+                                                        placeholder='i.e. DUBAI ISLAMIC BANK'
                                                         className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                      />
+                                                        />
                                                     </div>
                                                   </div>
                                                   <div className="mt-3 text-center sm:mt-0 w-1/2">
@@ -809,6 +810,7 @@ import useTranslation from 'next-translate/useTranslation';
                                                         name="bank"
                                                         value={bank}
                                                         id="bank"
+                                                        placeholder='i.e. DIB'
                                                         className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                       />
                                                     </div>
