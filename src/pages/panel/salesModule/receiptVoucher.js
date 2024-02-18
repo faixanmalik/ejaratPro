@@ -135,8 +135,8 @@ import useTranslation from 'next-translate/useTranslation';
 
     // JV
     const [inputList, setInputList] = useState([
-      { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
-      { billNo: '', date: journalDate, products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
+      { billNo: '', date: journalDate, products:'', bank:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
+      { billNo: '', date: journalDate, products:'', bank:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
     ]);
     const [reference, setReference] = useState('')
 
@@ -147,6 +147,12 @@ import useTranslation from 'next-translate/useTranslation';
       }
       else if(e.target.name === 'amount'){
         setAmount(e.target.value)
+      }
+      else if(e.target.name === 'bank'){
+        setBank(e.target.value)
+      }
+      else if(e.target.name === 'bankFullName'){
+        setBankFullName(e.target.value)
       }
       else if(e.target.name === 'city'){
         setCity(e.target.value)
@@ -175,7 +181,7 @@ import useTranslation from 'next-translate/useTranslation';
           setFilteredData(filteredData)
           
           setInputList(Array.from({ length: filteredData.length }, () => (
-            { id: '', billNo:'' , journalNo, chequeDueDate: '', desc: '', ref: '', date: journalDate, paidBy:'', balance: 0, paid: 0, netBalance: 0 }
+            { id: '', billNo:'' , journalNo, chequeDueDate: '', desc: '', ref: '', bank:'', date: journalDate, paidBy:'', balance: 0, paid: 0, netBalance: 0 }
           )))
         }
         else{
@@ -200,7 +206,7 @@ import useTranslation from 'next-translate/useTranslation';
     // JV
     const addLines = () => {
       setInputList([...inputList,
-        { billNo:'', products:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
+        { billNo:'', products:'', bank:'', desc:'', amount:'', taxRate:'', taxAmount:'', totalAmountPerItem:'' },
       ])
     }
     const delLines = (indexToDelete) => {
@@ -219,22 +225,23 @@ import useTranslation from 'next-translate/useTranslation';
 
       // fetch the data from form to makes a file in local system
       const data = { userEmail, phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, attachment, path:'ReceiptVoucher' };
+      console.log(data);
 
-      let res = await fetch(`/api/addEntry`, {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-      let response = await res.json()
+      // let res = await fetch(`/api/addEntry`, {
+      //   method: 'POST',
+      //   headers:{
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(data),
+      // })
+      // let response = await res.json()
 
-      if (response.success === true) {
-        router.push('?open=false');
-      }
-      else {
-        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      }
+      // if (response.success === true) {
+      //   router.push('?open=false');
+      // }
+      // else {
+      //   toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      // }
     }
 
 
@@ -342,6 +349,45 @@ import useTranslation from 'next-translate/useTranslation';
       setCity('')
       setAmount('')
       setIsOpenSaveChange(true)
+    }
+
+
+    const [bank, setBank] = useState('')
+    const [bankFullName, setBankFullName] = useState('')
+    const [openBankModal, setOpenBankModal] = useState(false)
+
+    const [bankAccountsArray, setBankAccountsArray] = useState(() => {
+      if (typeof window !== 'undefined') {
+        const storedBankAccounts = localStorage.getItem('bankAccounts');
+        return storedBankAccounts ? JSON.parse(storedBankAccounts) : [{bankShortName:'DIB', bankFullName:'Dubai Islamic Bank'}, {bankShortName:'EIB', bankFullName:'Emirates Islamic Bank'} ];
+      } else {
+        return [{bankShortName:'DIB', bankFullName:'Dubai Islamic Bank'}, {bankShortName:'EIB', bankFullName:'Emirates Islamic Bank'}];
+      }
+    })
+    const cancelButtonRef = useRef(null)
+
+    useEffect(() => {
+      localStorage.setItem('bankAccounts', JSON.stringify(bankAccountsArray));
+    }, [bankAccountsArray]);
+
+
+    const addBank = (e)=>{
+      e.preventDefault();
+
+      if (bank.trim() !== '' && bankFullName.trim() !== '') {
+        const updatedBankAccountsArray = [
+          ...bankAccountsArray,
+          { bankShortName: bank, bankFullName }
+        ];
+        console.log(updatedBankAccountsArray)
+        setBankAccountsArray(updatedBankAccountsArray);
+        setOpenBankModal(false);
+        setBank('')
+        setBankFullName('')
+      }
+      else{
+        toast.error('Please Enter Details', { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
     }
 
     // For print
@@ -628,8 +674,11 @@ import useTranslation from 'next-translate/useTranslation';
                                   <th scope="col" className="p-2">
                                       {t('dueDate')}
                                   </th>
-                                  <th scope="col" className="p-2">
+                                  <th scope="col" className="p-2 flex justify-between">
                                       {t('bank')}
+                                      <label onClick={()=>{setOpenBankModal(true), setBank(''), setBankFullName('')}} htmlFor="bank" className="block cursor-pointer text-sm font-medium text-green-700">
+                                        add?
+                                      </label>
                                   </th>
                                   <th scope="col" className="p-2">
                                       {t('balance')}
@@ -698,13 +747,98 @@ import useTranslation from 'next-translate/useTranslation';
                                   </td>
 
                                   <td className="p-2">
-                                    <select id="bank" name="bank" onChange={ e=> change(e, index, item._id, actualBalance, item.amountPaid, item.billNo) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                                    <select id="bank" name="bank" onChange={ e=> change(e, index) } value={item.bank} className="mt-1 p-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                       <option value=''>select bank</option>
-                                      {filteredBankAccount.map((item, index)=>{
-                                        return <option key={index} value={item.bankBranch}>{item.bankBranch}</option>
+                                      {bankAccountsArray.map((item, index)=>{
+                                        return <option key={index} value={item.bankShortName}>{item.bankShortName}</option>
                                       })}
                                     </select>
                                   </td>
+                                  <Transition.Root show={openBankModal} as={Fragment}>
+                                    <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpenBankModal}>
+                                      <Transition.Child
+                                        as={Fragment}
+                                        enter="ease-out duration-300"
+                                        enterFrom="opacity-0"
+                                        enterTo="opacity-100"
+                                        leave="ease-in duration-200"
+                                        leaveFrom="opacity-100"
+                                        leaveTo="opacity-0"
+                                      >
+                                        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                      </Transition.Child>
+
+                                      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                          <Transition.Child
+                                            as={Fragment}
+                                            enter="ease-out duration-300"
+                                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                            enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                            leave="ease-in duration-200"
+                                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                          >
+                                            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                                <div className="w-full flex space-x-5">
+                                                  
+                                                  <div className="mt-3 text-center sm:mt-0 w-1/2">
+                                                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                                      Bank Full Name
+                                                    </Dialog.Title>
+                                                    <div className="mt-2">
+                                                      <input
+                                                        type="text"
+                                                        onChange={handleChange}
+                                                        name="bankFullName"
+                                                        value={bankFullName}
+                                                        id="bankFullName"
+                                                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                      />
+                                                    </div>
+                                                  </div>
+                                                  <div className="mt-3 text-center sm:mt-0 w-1/2">
+                                                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                                      Bank Short Name
+                                                    </Dialog.Title>
+                                                    <div className="mt-2">
+                                                      <input
+                                                        type="text"
+                                                        onChange={handleChange}
+                                                        name="bank"
+                                                        value={bank}
+                                                        id="bank"
+                                                        className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                      />
+                                                    </div>
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                <button
+                                                  type="button"
+                                                  className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                                                  onClick={(e) => addBank(e)}
+                                                >
+                                                  save
+                                                </button>
+                                                <button
+                                                  type="button"
+                                                  className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+                                                  onClick={() => setOpenBankModal(false)}
+                                                  ref={cancelButtonRef}
+                                                >
+                                                  cancel
+                                                </button>
+                                              </div>
+                                            </Dialog.Panel>
+                                          </Transition.Child>
+                                        </div>
+                                      </div>
+                                    </Dialog>
+                                  </Transition.Root>
 
                                   <td className="p-2 text-center ">
                                     {actualBalance ? actualBalance?.toLocaleString() : ''}
