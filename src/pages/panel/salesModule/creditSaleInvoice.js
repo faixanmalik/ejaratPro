@@ -274,6 +274,7 @@ import useTranslation from 'next-translate/useTranslation';
       
       inputList.forEach(item => {
         item.date = journalDate;
+        item.billNo = billNo;
       });
       
       // fetch the data from form to makes a file in local system

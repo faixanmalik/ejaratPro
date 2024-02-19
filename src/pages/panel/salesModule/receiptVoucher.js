@@ -243,7 +243,6 @@ import useTranslation from 'next-translate/useTranslation';
       }
     }
 
-
     const delEntry = async()=>{
 
       const data = { selectedIds , path: 'ReceiptVoucher' };
