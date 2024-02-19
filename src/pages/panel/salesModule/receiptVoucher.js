@@ -225,23 +225,22 @@ import useTranslation from 'next-translate/useTranslation';
 
       // fetch the data from form to makes a file in local system
       const data = { userEmail, phoneNo, email, city, reference, amount, inputList, name,  memo, journalDate, journalNo, totalPaid, attachment, path:'ReceiptVoucher' };
-      console.log(data);
 
-      // let res = await fetch(`/api/addEntry`, {
-      //   method: 'POST',
-      //   headers:{
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(data),
-      // })
-      // let response = await res.json()
+      let res = await fetch(`/api/addEntry`, {
+        method: 'POST',
+        headers:{
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      let response = await res.json()
 
-      // if (response.success === true) {
-      //   router.push('?open=false');
-      // }
-      // else {
-      //   toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
-      // }
+      if (response.success === true) {
+        router.push('?open=false');
+      }
+      else {
+        toast.error(response.message , { position: "bottom-center", autoClose: 1000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light", });
+      }
     }
 
 
@@ -379,7 +378,6 @@ import useTranslation from 'next-translate/useTranslation';
           ...bankAccountsArray,
           { bankShortName: bank, bankFullName }
         ];
-        console.log(updatedBankAccountsArray)
         setBankAccountsArray(updatedBankAccountsArray);
         setOpenBankModal(false);
         setBank('')
