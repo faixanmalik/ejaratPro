@@ -518,7 +518,7 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t('email')}</label>
-                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
@@ -548,12 +548,12 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6">
                                       <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">{t('streetAddress')}</label>
-                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"  required/>
+                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                                       <label htmlFor="city" className="block text-sm font-medium text-gray-700">{t('city')}</label>
-                                      <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
+                                      <input onChange={handleChange} value={city} type="text" name="city" id="city" autoComplete="address-level2" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       />
                                     </div>
 
@@ -570,7 +570,7 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="taxRigNo" className="block text-sm font-medium text-gray-700">{t('taxRegNo')}</label>
-                                      <input onChange={handleChange} value={taxRigNo} type="number" name="taxRigNo" id="taxRigNo" autoComplete="taxRigNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={taxRigNo} type="number" name="taxRigNo" id="taxRigNo" autoComplete="taxRigNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3">
