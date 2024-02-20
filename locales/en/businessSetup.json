@@ -43,7 +43,6 @@
   "streetAddress":"Street Address",
   "city":"City",
   "country":"Country",
-  "phoneNo":"Phone Number",
   "state":"State / Province",
   "zip":"ZIP / Postal code",
   "taxRegNo":"Tax Reg.No",
@@ -52,6 +51,9 @@
   "openingBalance":"Opening Balance",
   "date":"Date",
   "email":"Email",
+  "phoneNo":"Phone Number",
+  "secondaryEmail":"Secondary Email",
+  "secondaryPhoneNo":"Secondary Phone No",
 
   "productTitle": "Product and Services",
   "code":"Code",

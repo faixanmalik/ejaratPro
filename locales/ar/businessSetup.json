@@ -51,6 +51,8 @@
   "openingBalance":"الرصيد الافتتاحي",
   "date":"تاريخ",
   "email":"بريد إلكتروني",
+  "secondaryEmail":"البريد الإلكتروني الثانوي",
+  "secondaryPhoneNo":"رقم الهاتف الثانوي",
 
   "productTitle": "المنتجات والخدمات",
   "code":"شفرة",

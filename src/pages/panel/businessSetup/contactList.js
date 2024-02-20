@@ -37,6 +37,8 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
   const [type, setType] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNo, setPhoneNo] = useState('')
+  const [secondaryEmail, setSecondaryEmail] = useState('')
+  const [secondaryPhoneNo, setSecondaryPhoneNo] = useState('')
   const [country, setCountry] = useState('United States')
   const [streetAddress, setStreetAddress] = useState('')
   const [city, setCity] = useState('')
@@ -178,6 +180,12 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
     else if(e.target.name === 'phoneNo'){
       setPhoneNo(e.target.value)
     }
+    else if(e.target.name === 'secondaryEmail'){
+      setSecondaryEmail(e.target.value)
+    }
+    else if(e.target.name === 'secondaryPhoneNo'){
+      setSecondaryPhoneNo(e.target.value)
+    }
     else if(e.target.name === 'country'){
       setCountry(e.target.value)
     }
@@ -216,7 +224,7 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
   const editEntry = async(id)=>{
     
 
-    const data = { id, name, type, accounts, email, phoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date ,  path: 'contactList'};
+    const data = { id, name, type, accounts, email, phoneNo, secondaryEmail, secondaryPhoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date ,  path: 'contactList'};
     
     let res = await fetch(`/api/editEntry`, {
       method: 'POST',
@@ -278,6 +286,8 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
         setType(response.contact.type)
         setEmail(response.contact.email)
         setPhoneNo(response.contact.phoneNo)
+        setSecondaryEmail(response.contact.secondaryEmail)
+        setSecondaryPhoneNo(response.contact.secondaryPhoneNo)
         setCountry(response.contact.country)
         setStreetAddress(response.contact.streetAddress)
         setCity(response.contact.city)
@@ -296,7 +306,7 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
     e.preventDefault()
     
     // fetch the data from form to makes a file in local system
-    const data = { userEmail, name, type, accounts, email, phoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date, path:'contactList' };
+    const data = { userEmail, name, type, accounts, email, phoneNo, secondaryEmail, secondaryPhoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date, path:'contactList' };
       let res = await fetch(`/api/addEntry`, {
       method: 'POST',
       headers: { 
@@ -315,7 +325,7 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
   }
 
   const openSettings = async ()=>{
-    setIsOpenSaveChange(true), setName(''), setType(''), setEmail(''), setPhoneNo(''), setCountry('United States'), setStreetAddress(''), setCity(''), setState(''), setZip(''), setTaxRigNo(''), setTerms('Due on receipt'), setOpeningBalance(''), setPaymentMethod('Cash'), setDate('')
+    setIsOpenSaveChange(true), setName(''), setType(''), setEmail(''), setPhoneNo(''), setSecondaryEmail(''), setSecondaryPhoneNo(''), setCountry('United States'), setStreetAddress(''), setCity(''), setState(''), setZip(''), setTaxRigNo(''), setTerms('Due on receipt'), setOpeningBalance(''), setPaymentMethod('Cash'), setDate('')
   }
 
   let contactType = ['Customer','Supplier', 'Tenant', 'Owner']
@@ -515,12 +525,6 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                       </select>
                                     </div>
 
-
-                                    <div className="col-span-6 sm:col-span-3">
-                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t('email')}</label>
-                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-                                    </div>
-
                                     {/* <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="accounts" className="block text-sm font-medium text-gray-700">{t('accounts')}</label>
                                       <select id="accounts" name="accounts" onChange={handleChange} value={accounts} autoComplete="accounts" className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
@@ -532,8 +536,23 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                     </div> */}
 
                                     <div className="col-span-6 sm:col-span-3">
+                                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t('email')}</label>
+                                      <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                    </div>
+
+                                    <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
                                       <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                    </div>
+
+                                    <div className="col-span-6 sm:col-span-3">
+                                      <label htmlFor="secondaryEmail" className="block text-sm font-medium text-gray-700">{t('secondaryEmail')}</label>
+                                      <input onChange={handleChange} value={secondaryEmail} type="text" name="secondaryEmail" id="secondaryEmail" autoComplete="secondaryEmail" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                    </div>
+
+                                    <div className="col-span-6 sm:col-span-3">
+                                      <label htmlFor="secondaryPhoneNo" className="block text-sm font-medium text-gray-700">{t('secondaryPhoneNo')}</label>
+                                      <input onChange={handleChange} value={secondaryPhoneNo} type="number" name="secondaryPhoneNo" id="secondaryPhoneNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-2">
