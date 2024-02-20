@@ -573,13 +573,13 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="state" className="block text-sm font-medium text-gray-700">{t('state')}</label>
-                                      <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-s requiredm"
+                                      <input onChange={handleChange} value={state} type="text" name="state" id="state" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                       />
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="zip" className="block text-sm font-medium text-gray-700">{t('zip')}</label>
-                                      <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
+                                      <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-4">
@@ -616,11 +616,6 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                       <label htmlFor="openingBalance" className="block text-sm font-medium text-gray-700">{t('openingBalance')}</label>
                                       <input onChange={handleChange} value={openingBalance} type="number" name="openingBalance" id="openingBalance" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div> */}
-
-                                    <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                                      <label htmlFor="date" className="block text-sm font-medium text-gray-700">{t('date')}</label>
-                                      <input onChange={handleChange} value={date} type="date" name="date" id="date" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
-                                    </div>
 
                                 </div>
                               </div>

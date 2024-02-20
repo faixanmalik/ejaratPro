@@ -44,7 +44,7 @@
   "city":"City",
   "country":"Country",
   "state":"State / Province",
-  "zip":"ZIP / Postal code",
+  "zip":"PO Box",
   "taxRegNo":"Tax Reg.No",
   "paymentMethod":"Payment Method",
   "terms":"Terms",

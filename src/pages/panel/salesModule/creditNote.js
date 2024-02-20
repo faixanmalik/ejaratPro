@@ -102,6 +102,8 @@ import useTranslation from 'next-translate/useTranslation';
 
 
       if(router.query.refer){
+
+        openSettings()
         
         let { name, unitRent, commission, parkingRent, securityDeposit } = router.query;
 
