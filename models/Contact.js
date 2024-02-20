@@ -8,6 +8,8 @@ const ContactSchema = new mongoose.Schema({
     accounts:{type: String},
     email:{type: String},
     phoneNo:{type: Number},
+    secondaryEmail:{type: String},
+    secondaryPhoneNo:{type: Number},
     country:{type: String},
     streetAddress: {type: String},
     city: {type: String},

@@ -76,7 +76,7 @@ export default async function handler(req, res) {
           }
         }
         else if( path === 'contactList'){
-          const { userEmail, name, type, accounts, email, phoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date, row, importEntries } = req.body;
+          const { userEmail, name, type, accounts, email, phoneNo, secondaryEmail, secondaryPhoneNo, country, streetAddress, city, state, zip, taxRigNo, paymentMethod, terms , openingBalance, date, row, importEntries } = req.body;
 
           if(importEntries){
             await Contact.insertMany(row);
