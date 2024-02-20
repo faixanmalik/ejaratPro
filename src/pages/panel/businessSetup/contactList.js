@@ -521,7 +521,7 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                       <input onChange={handleChange} value={email} type="text" name="email" id="email" autoComplete="email" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
-                                    <div className="col-span-6 sm:col-span-3">
+                                    {/* <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="accounts" className="block text-sm font-medium text-gray-700">{t('accounts')}</label>
                                       <select id="accounts" name="accounts" onChange={handleChange} value={accounts} autoComplete="accounts" className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>select accounts</option>
@@ -529,14 +529,14 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                           return <option key={index} value={item.accountName}>{item.accountCode} - {item.accountName}</option>
                                         })}
                                       </select>
-                                    </div>
+                                    </div> */}
 
                                     <div className="col-span-6 sm:col-span-3">
                                       <label htmlFor="phoneNo" className="block text-sm font-medium text-gray-700">{t('phoneNo')}</label>
                                       <input onChange={handleChange} value={phoneNo} type="number" name="phoneNo" id="phoneNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
-                                    <div className="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="country" className="block text-sm font-medium text-gray-700">{t('country')}</label>
                                       <select id="country" name="country" onChange={handleChange} value={country} autoComplete="country" className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option>select country</option>
@@ -544,11 +544,6 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                           return <option key={index} value={item}>{item}</option>
                                         })}
                                       </select>
-                                    </div>
-
-                                    <div className="col-span-6">
-                                      <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">{t('streetAddress')}</label>
-                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
                                     <div className="col-span-6 sm:col-span-6 lg:col-span-2">
@@ -568,12 +563,17 @@ const ContactList = ({ userEmail, dbContact, dbAccounts, dbPaymentType}) => {
                                       <input onChange={handleChange} value={zip} type="number" name="zip" id="zip" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required/>
                                     </div>
 
+                                    <div className="col-span-4">
+                                      <label htmlFor="streetAddress" className="block text-sm font-medium text-gray-700">{t('streetAddress')}</label>
+                                      <input onChange={handleChange} value={streetAddress} type="text" name="streetAddress" id="streetAddress" autoComplete="streetAddress" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+                                    </div>
+
                                     <div className="col-span-6 sm:col-span-3 lg:col-span-2">
                                       <label htmlFor="taxRigNo" className="block text-sm font-medium text-gray-700">{t('taxRegNo')}</label>
                                       <input onChange={handleChange} value={taxRigNo} type="number" name="taxRigNo" id="taxRigNo" autoComplete="taxRigNo" className="mt-1 p-2 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
                                     </div>
 
-                                    <div className="col-span-6 sm:col-span-3">
+                                    <div className="col-span-6 sm:col-span-2">
                                       <label htmlFor="paymentMethod" className="block text-sm font-medium text-gray-700">{t('paymentMethod')}</label>
                                       <select id="paymentMethod" name="paymentMethod" onChange={handleChange} value={paymentMethod} className="mt-1 py-2 block w-full rounded-md border border-gray-300 bg-white px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                                         <option value={''}>Select Payment Method</option>
