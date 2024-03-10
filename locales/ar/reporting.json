@@ -4,38 +4,38 @@
   "to":"ل",
   "account":"حساب",
   "update":"تحديث",
-  "voucherNo":"رقم القسيمة",
+  "voucherNo":"رقم السند",
   "products":"المنتجات / الحسابات",
   "date":"تاريخ",
-  "debit":"دَين",
-  "credit":"ائتمان",
-  "balance":"توازن",
-  "print":"مطبعة",
+  "debit":"مدين",
+  "credit":"دائن",
+  "balance":"الرصيد",
+  "print":"طباعة",
 
 
   "trialBalanceTitle":"ملخص ميزان المراجعة",
   "accountName":"إسم الحساب",
   "subAccount":"الحساب الفرعي",
-  "totalDebit":"إجمالي الدين",
-  "totalCredit":"إجمالي الائتمان",
+  "totalDebit":"الاجمالي المدين",
+  "totalCredit":"الاجمالي الدائن",
 
 
   "profitAndLossTitle":"ملخص الربح والخسارة",
-  "amount":"كمية",
-  "gross":"إجمالي",
-  "profit":"ربح",
-  "loss":"خسارة",
-  "fromOperations":"من العمليات",
+  "amount":"المبلغ",
+  "gross":"الاجمالي",
+  "profit":"الربح",
+  "loss":"الخسارة",
+  "fromOperations":"الصافي",
   "net":"شبكة",
 
   "balanceSheetTitle":"ملخص الميزانية العمومية",
   "totalAssets":"إجمالي الأصول",
-  "totalEquity":"مجموع الاسهم",
-  "totalLiabilities":"اجمالي المطلوبات",
+  "totalEquity":"اجمالي حقوق الملكية",
+  "totalLiabilities":"اجمالي الالتزامات",
   "liabilities":"الإلتزامات",
 
 
-  "contactsTitle":"ملخص معاملة الاتصال",
+  "contactsTitle":"كشف الحساب",
   "contacts":"جهات الاتصال",
   "name":"اسم"
   

@@ -42,7 +42,7 @@
 
   "save":"حفظ",
   "cancel":"يلغي",
-  "ibanNo":"رقم الآيبان",
+  "ibanNo":"الغاء",
   "vatRegistrationNo":"رقم تسجيل ضريبة القيمة المضافة",
   "bankAccountNumber":"رقم الحساب المصرفي",
   "tradeLicenseNo":"رقم الرخصة التجارية",
@@ -89,8 +89,8 @@
   "reserveUnits":"الوحدات الاحتياطية",
   "newContract":"عقد جديد",
   "building":"البناية",
-  "plotNo":"عدد مؤامرة",
-  "rent":"إيجار",
+  "plotNo":"رقم الارض",
+  "rent":"ايجار الوحدة",
   "rentParking":"إيجار مواقف السيارات",
   "size":"المساحة",
   "sewageNumber":"رقم الصرف الصحي",
@@ -179,6 +179,6 @@
   "previewStatement":"بيان المعاينة",
 
 
-  "export":"Export",
-  "import":"Import"
+  "export":"يصدّر",
+  "import":"يستورد"
 }

@@ -118,17 +118,16 @@ export default async function handler(req, res) {
         else if( path === 'journalVoucher'){
           const { userEmail, totalDebit , totalCredit, inputList, name, dec, memo, journalDate, journalNo, attachment, path } = req.body;
 
-          let dbJV = await JournalVoucher.findOne({ journalNo })
-
-          if( dbJV ){
-            res.status(400).json({ success: false, message: "Already Found!" }) 
+          try {
+              let newEntry = new JournalVoucher( { userEmail, totalDebit , totalCredit, inputList , name, dec , memo, journalDate, journalNo, attachment, path } );
+              await newEntry.save();
+              
+              res.status(200).json({ success: true, message: "Entry Added !" }) 
+              
+          } catch (error) {
+              console.error(error);
           }
-          else{
-            let newEntry = new JournalVoucher( { userEmail, totalDebit , totalCredit, inputList , name, dec , memo, journalDate, journalNo, attachment, path } );
-            await newEntry.save();
-            
-            res.status(200).json({ success: true, message: "Entry Added !" }) 
-          }   
+          
         }
 
         // Credit Sales Invoice
@@ -488,6 +487,6 @@ export default async function handler(req, res) {
         }
     }
     else{
-        res.status(400).json({ success: false, message: "Internal Server Error !" }) 
+      res.status(400).json({ success: false, message: "Internal Server Error !" }) 
     }
 }

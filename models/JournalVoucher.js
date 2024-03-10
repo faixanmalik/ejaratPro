@@ -8,7 +8,7 @@ const JournalVoucherSchema = new mongoose.Schema({
     totalCredit:{ type: Number },
     memo:{type: String},
     journalDate: {type: Date},
-    journalNo: {type: String, unique: true},
+    journalNo: {type: String},
     name: {type: String},
     desc: {type: String},
     attachment: {type: Buffer},
